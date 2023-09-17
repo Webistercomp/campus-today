@@ -17,20 +17,26 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+    return Inertia::render('Homepage', [
+        'title' => 'Campus Today | E-Learning CPNS'
     ]);
 });
 
-Route::get('/test-react', function () {
-    return Inertia::render('Test', [
-        'company' => 'Webister',
-        'initSetup' => '17-09-2023'
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+// Route::get('/test-react', function () {
+//     return Inertia::render('Test', [
+//         'company' => 'Webister',
+//         'initSetup' => '17-09-2023'
+//     ]);
+// });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
