@@ -1,7 +1,12 @@
-export default function InputError({ message, className = '', ...props }) {
-    return message ? (
-        <p {...props} className={'text-sm text-red-600 ' + className}>
-            {message}
+export default function InputError({ message, className = "", ...props }) {
+    return (
+        <p
+            {...props}
+            className={`text-sm ${
+                message !== undefined ? "text-red-600" : "text-transparent"
+            } ${className}`}
+        >
+            {message || "error"}
         </p>
-    ) : null;
+    );
 }
