@@ -1,117 +1,169 @@
-import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import InputError from "@/Components/InputError";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import CTIcon from "@/images/ct_ 2.png";
+import IllusAuth from "@/images/illus-auth.png";
+import EnvelopeIcon from "@/icons/EnvelopeIcon";
+import TextInput from "@/Components/TextInput";
+import LockIcon from "@/icons/LockIcon";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
     });
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
+            reset("password", "password_confirmation");
         };
     }, []);
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('register'));
+        post(route("register"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Register" />
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
+        <>
+            <Head title="Sign In" />
+            <div className="font-poppins flex h-screen">
+                <div className="basis-3/5 px-48">
+                    <img
+                        src={CTIcon}
+                        alt="Ct-icon"
+                        className="aspect-auto w-36 mb-4"
                     />
+                    <div className="max-w-md">
+                        <h1 className="font-semibold text-2xl">Sign Up</h1>
 
-                    <InputError message={errors.name} className="mt-2" />
+                        <p className="mt-6">
+                            if you already have an account, you can{" "}
+                            <Link
+                                href={route("login")}
+                                className="text-primary hover:underline"
+                            >
+                                Login here
+                            </Link>
+                        </p>
+
+                        <form
+                            onSubmit={submit}
+                            className="mt-8 flex flex-col gap-2"
+                        >
+                            <div className="flex flex-col mb-4">
+                                <label
+                                    htmlFor="username"
+                                    className="text-slate-400"
+                                >
+                                    Username
+                                </label>
+                                <TextInput
+                                    id="username"
+                                    icon={<EnvelopeIcon />}
+                                    placeholder="Enter your username"
+                                    type="text"
+                                    isFocused={true}
+                                    autoComplete="username"
+                                    value={data.name}
+                                    onChange={(e) =>
+                                        setData("name", e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="flex flex-col">
+                                <label
+                                    htmlFor="email"
+                                    className="text-slate-400"
+                                >
+                                    Email
+                                </label>
+                                <TextInput
+                                    id="email"
+                                    icon={<EnvelopeIcon />}
+                                    placeholder="Enter your email address"
+                                    type="email"
+                                    isFocused={true}
+                                    autoComplete="username"
+                                    value={data.email}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
+                                />
+
+                                <InputError
+                                    message={errors.email}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="flex flex-col">
+                                <label
+                                    htmlFor="password"
+                                    className="text-slate-400"
+                                >
+                                    Password
+                                </label>
+                                <TextInput
+                                    id="password"
+                                    icon={<LockIcon />}
+                                    placeholder="Enter your email address"
+                                    type="password"
+                                    autoComplete="current-password"
+                                    value={data.password}
+                                    onChange={(e) =>
+                                        setData("password", e.target.value)
+                                    }
+                                />
+
+                                <InputError
+                                    message={errors.password}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="flex flex-col">
+                                <label
+                                    htmlFor="password_confirmation"
+                                    className="text-slate-400"
+                                >
+                                    Confirm Password
+                                </label>
+                                <TextInput
+                                    id="password_confirmation"
+                                    icon={<LockIcon />}
+                                    placeholder="Enter your email address"
+                                    type="password"
+                                    value={data.password_confirmation}
+                                    onChange={(e) =>
+                                        setData(
+                                            "password_confirmation",
+                                            e.target.value
+                                        )
+                                    }
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="btn btn-primary text-white rounded-full shadow-lg mt-8"
+                                disabled={processing}
+                            >
+                                Register
+                            </button>
+                        </form>
+                    </div>
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
+                <div className="basis-2/5 p-6">
+                    <div className="bg-[#000842] w-full min-h-full rounded-2xl flex items-start justify-center">
+                        <img src={IllusAuth} alt="illustration" />
+                    </div>
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ml-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+            </div>
+        </>
     );
 }

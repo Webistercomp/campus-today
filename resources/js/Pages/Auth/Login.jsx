@@ -1,97 +1,165 @@
-import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import InputError from "@/Components/InputError";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import CTIcon from "@/images/ct_ 2.png";
+import IllusAuth from "@/images/illus-auth.png";
+import EnvelopeIcon from "@/icons/EnvelopeIcon";
+import TextInput from "@/Components/TextInput";
+import LockIcon from "@/icons/LockIcon";
+import FbIcon from "@/images/fb-icon.png";
+import GoogleIcon from "@/images/google-icon.png";
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
         remember: false,
     });
 
     useEffect(() => {
         return () => {
-            reset('password');
+            reset("password");
         };
     }, []);
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('login'));
+        post(route("login"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
-
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
+        <>
+            <Head title="Sign In" />
+            <div className="font-poppins flex h-screen">
+                <div className="basis-3/5 px-48">
+                    <img
+                        src={CTIcon}
+                        alt="Ct-icon"
+                        className="aspect-auto w-36 mb-4"
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
-                        />
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    <div className="max-w-md">
+                        <h1 className="font-semibold text-2xl">Sign In</h1>
+                        <p className="mt-6">
+                            if you don't have an account, you can{" "}
+                            <Link
+                                href={route("register")}
+                                className="text-primary hover:underline"
+                            >
+                                Register here
+                            </Link>
+                        </p>
+                        <form
+                            onSubmit={submit}
+                            className="mt-8 flex flex-col gap-4"
                         >
-                            Forgot your password?
-                        </Link>
-                    )}
+                            <div className="flex flex-col">
+                                <label
+                                    htmlFor="email"
+                                    className="text-slate-400"
+                                >
+                                    Email
+                                </label>
+                                <TextInput
+                                    id="email"
+                                    icon={<EnvelopeIcon />}
+                                    placeholder="Enter your email address"
+                                    type="email"
+                                    isFocused={true}
+                                    autoComplete="username"
+                                    value={data.email}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
+                                />
 
-                    <PrimaryButton className="ml-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
+                                <InputError
+                                    message={errors.email}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="flex flex-col">
+                                <label
+                                    htmlFor="password"
+                                    className="text-slate-400"
+                                >
+                                    Password
+                                </label>
+                                <TextInput
+                                    id="password"
+                                    icon={<LockIcon />}
+                                    placeholder="Enter your email address"
+                                    type="password"
+                                    autoComplete="current-password"
+                                    value={data.password}
+                                    onChange={(e) =>
+                                        setData("password", e.target.value)
+                                    }
+                                />
+
+                                <InputError
+                                    message={errors.password}
+                                    className="mt-2"
+                                />
+
+                                <div className="flex items-center justify-between gap-2 mt-2">
+                                    <label className="label cursor-pointer flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            checked={data.remember}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "remember",
+                                                    e.target.checked
+                                                )
+                                            }
+                                            className="checkbox checkbox-primary"
+                                        />
+                                        <span className="label-text ml-2">
+                                            Remember me
+                                        </span>
+                                    </label>
+                                    {canResetPassword && (
+                                        <Link
+                                            href={route("password.request")}
+                                            className="text-slate-500 text-sm hover:underline"
+                                        >
+                                            Forgot Password?
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="btn btn-primary text-white rounded-full shadow-lg"
+                                disabled={processing}
+                            >
+                                Login
+                            </button>
+
+                            <p className="text-center text-slate-400">
+                                or continue with
+                            </p>
+
+                            <div className="flex gap-4 mx-auto">
+                                <Link href="#">
+                                    <img src={FbIcon} alt="facebook-icon" />
+                                </Link>
+                                <Link href="#">
+                                    <img src={GoogleIcon} alt="google-icon" />
+                                </Link>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
-        </GuestLayout>
+                <div className="basis-2/5 p-6">
+                    <div className="bg-[#000842] w-full min-h-full rounded-2xl flex items-start justify-center">
+                        <img src={IllusAuth} alt="illustration" />
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
