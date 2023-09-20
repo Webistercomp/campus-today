@@ -14,9 +14,28 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                poppins: ['Poppins'],
             },
         },
+    },
+
+    daisyui: {
+        themes: [
+            {
+                mytheme: {
+                    "primary": "#2887C6",
+                    "secondary": "#f000b8",
+                    "accent": "#1dcdbc",
+                    "neutral": "#2b3440",
+                    "base-100": "#ffffff",
+                    "info": "#3abff8",
+                    "success": "#36d399",
+                    "warning": "#fbbd23",
+                    "error": "#f87272",
+                },
+            },
+        ],
     },
 
     plugins: [daisyui, forms({ strategy: 'class' })],
