@@ -33,11 +33,13 @@ export default function Login({ canResetPassword }) {
             <Head title="Sign In" />
             <div className="font-poppins flex h-screen">
                 <div className="basis-3/5 px-48">
-                    <img
-                        src={CTIcon}
-                        alt="Ct-icon"
-                        className="aspect-auto w-36 mb-4"
-                    />
+                    <Link href="/">
+                        <img
+                            src={CTIcon}
+                            alt="Ct-icon"
+                            className="aspect-auto w-36 mb-4"
+                        />
+                    </Link>
                     <div className="max-w-md">
                         <h1 className="font-semibold text-2xl">Sign In</h1>
                         <p className="mt-6">

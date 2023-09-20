@@ -32,11 +32,13 @@ export default function Register() {
             <Head title="Sign In" />
             <div className="font-poppins flex h-screen">
                 <div className="basis-3/5 px-48">
-                    <img
-                        src={CTIcon}
-                        alt="Ct-icon"
-                        className="aspect-auto w-36 mb-4"
-                    />
+                    <Link href="/">
+                        <img
+                            src={CTIcon}
+                            alt="Ct-icon"
+                            className="aspect-auto w-36 mb-4"
+                        />
+                    </Link>
                     <div className="max-w-md">
                         <h1 className="font-semibold text-2xl">Sign Up</h1>
 
@@ -67,7 +69,6 @@ export default function Register() {
                                     placeholder="Enter your username"
                                     type="text"
                                     isFocused={true}
-                                    autoComplete="username"
                                     value={data.name}
                                     onChange={(e) =>
                                         setData("name", e.target.value)
@@ -88,7 +89,6 @@ export default function Register() {
                                     placeholder="Enter your email address"
                                     type="email"
                                     isFocused={true}
-                                    autoComplete="username"
                                     value={data.email}
                                     onChange={(e) =>
                                         setData("email", e.target.value)
@@ -113,7 +113,6 @@ export default function Register() {
                                     icon={<LockIcon />}
                                     placeholder="Enter your email address"
                                     type="password"
-                                    autoComplete="current-password"
                                     value={data.password}
                                     onChange={(e) =>
                                         setData("password", e.target.value)
