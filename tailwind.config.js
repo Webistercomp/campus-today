@@ -17,6 +17,44 @@ export default {
                 // sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 poppins: ['Poppins'],
             },
+            colors: {
+                pelorous: {
+                    DEFAULT: "#39A1C8",
+                    300: '#79BFDA',
+                    500: '#39A1C8',
+                    700: '#1F5B71',
+                },
+                apple: {
+                    DEFAULT: "#53BD41",
+                    300: '#8AD27D',
+                    500: '#53BD41',
+                    700: '#2E6A24',
+                },
+                'selective-yellow': {
+                    DEFAULT: '#FFBA06',
+                    300: '#FFD158',
+                    500: '#FFBA06',
+                    700: '#956C00',
+                },
+                'fuzzy-brown': {
+                    DEFAULT: "#C94C4A",
+                    300: '#DC8A89',
+                    500: '#C94C4A',
+                    700: '#7D2725',
+                },
+                indigo: {
+                    DEFAULT: "#3A6FBE",
+                    300: '#759BD5',
+                    500: '#3A6FBE',
+                    700: '#203D68',
+                },
+                'twilight-blue': {
+                    DEFAULT: "#F3FEFF"
+                },
+                'ct-grey': {
+                    DEFAULT: "#363636",
+                }
+            }
         },
     },
 
