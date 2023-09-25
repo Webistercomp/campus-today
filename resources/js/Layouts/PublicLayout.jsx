@@ -9,7 +9,7 @@ export default function PublicLayout({ children }) {
         const h = ref.current.clientHeight;
         const doc = document.querySelector("html");
         doc.style.scrollBehavior = "smooth";
-        doc.style.scrollPaddingTop = `${h}px`;
+        doc.style.scrollPaddingTop = `${h - 30}px`;
     }, []);
 
     return (
