@@ -32,7 +32,7 @@ export default function Footer() {
                             <span>+62 851-7214-7217</span>
                         </Link>
                     </p>
-                    <p className="mt-6">
+                    <div className="mt-6">
                         Temukan Kami <br />
                         <ul className="flex gap-4 items-center py-2">
                             <li>
@@ -61,7 +61,7 @@ export default function Footer() {
                                 </Link>
                             </li>
                         </ul>
-                    </p>
+                    </div>
                 </aside>
                 <div className="flex gap-14 pt-24">
                     <nav className="flex flex-col gap-2">
