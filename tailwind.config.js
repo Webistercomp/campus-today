@@ -53,6 +53,12 @@ export default {
                 },
                 'ct-grey': {
                     DEFAULT: "#363636",
+                },
+                'curious-blue': {
+                    DEFAULT: "#2A8AC9",
+                    300: '#66AFDF',
+                    500: '#2A8AC9',
+                    700: '#174A6C',
                 }
             }
         },
