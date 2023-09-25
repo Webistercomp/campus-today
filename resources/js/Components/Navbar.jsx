@@ -20,13 +20,13 @@ export default forwardRef(function Navbar({}, ref) {
                         <Link href="#benefit">Keunggulan</Link>
                     </li>
                     <li>
-                        <Link>Testimoni</Link>
+                        <Link href="#testimoni">Testimoni</Link>
                     </li>
                     <li>
-                        <Link>Paket</Link>
+                        <Link href="#paket">Paket</Link>
                     </li>
                     <li>
-                        <Link>Blog</Link>
+                        <Link href="#blog">Blog</Link>
                     </li>
                 </ul>
             </div>
