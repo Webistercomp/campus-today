@@ -14,7 +14,7 @@ export default function PublicLayout({ children }) {
 
     return (
         <div className="min-h-screen font-poppins">
-            <Navbar ref={ref} />
+            <Navbar isAuthed={false} ref={ref} />
 
             <div>{children}</div>
 
