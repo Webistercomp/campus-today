@@ -80,6 +80,90 @@ export default function Homepage(props) {
         },
     ];
 
+    const bimbelPacket = [
+        {
+            type: "Gratis",
+            price: 3000000,
+            benefit: [
+                "Fokus Seleksi Kemampuan Dasar (SKD)",
+                "20 Kali Pertemuan via zoom",
+                "Free Akses dashboard Campus Today",
+                "Free 1 Paket buku SKD",
+                "Akses Try Out Gratis",
+                "Try Out Premium SKD Sistem CAT",
+                "Kunci dan Pembahasan Try Out Lengkap",
+                "Ranking Try Out Nasional",
+                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
+                "Materi SKD",
+                "Try Out Exclusive Platinum SKD Sistem CAT dengan Pembahasan Video",
+                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
+                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
+                "Video Materi SKD (TWK, TIU dan TKP)",
+                "Video Series SKD",
+            ],
+            nonBenefit: [],
+            isPopular: false,
+        },
+        {
+            type: "Friendly",
+            price: 6000000,
+            benefit: [
+                "Fokus SNBP, UTBK dan Sekolah Kedinasan",
+                "40 Kali Pertemuan via zoom",
+                "Free Akses Recording",
+                "1 kelas maksimal 10 orang",
+                "Free Akses dashboard Campus Today",
+                "Free 2 Paket buku UTBK dan Kedinasan Soal UTBK",
+                "Akses Try Out Gratis",
+                "Try Out Premium UTBK dan Sekolah Kedinasan",
+                "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
+                "Kunci dan Pembahasan Try Out Lengkap",
+                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
+                "Materi Sekolah Kedinasan dan UTBK Terupdate",
+                "Video Series SKD, UTBK, dan UM",
+                "Ranking Try Out Nasional",
+                "Try Out Exclusive Platinum SKD Sistem CAT, dan UTBK dengan Pembahasan Video",
+                "Try Out Exclusive Platinum SKD Sistem CAT dengan Pembahasan Video",
+                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
+                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
+                "Video Materi SKD (TWK, TIU dan TKP)",
+                "Video Series SKD dan UTBK",
+            ],
+            nonBenefit: [],
+            isPopular: true,
+        },
+        {
+            type: "Ambisius",
+            price: 15000000,
+            benefit: [
+                "Fokus SNBP, UTBK, UM dan Sekolah Kedinasan",
+                "80 Kali Pertemuan via zoom",
+                "Tes Minat Bakat",
+                "Free Akses Recording",
+                "1 kelas maksimal 5 orang",
+                "Free Akses dashboard Campus Today",
+                "Free 3 Paket buku UTBK, UM dan Sekolah Kedinasan",
+                "Free 2 Paket buku UTBK dan Kedinasan",
+                "Akses Try Out Gratis",
+                "Try Out Premium UTBK dan Sekolah Kedinasan",
+                "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
+                "Kunci dan Pembahasan Try Out Lengkap",
+                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
+                "Materi Sekolah Kedinasan dan UTBK Terupdate",
+                "Video Series SKD, UTBK, dan UM",
+                "Ranking Try Out Nasional",
+                "Try Out Exclusive Platinum SKD Sistem CAT, dan UTBK dengan Pembahasan Video",
+                "Try Out Exclusive Platinum SKD Sistem CAT dengan Pembahasan Video",
+                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
+                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
+                "Video Materi SKD (TWK, TIU dan TKP)",
+                "Video Series SKD dan UTBK",
+            ],
+            nonBenefit: [],
+            isPopular: false,
+        },
+    ];
+
     const FAQ = [
         {
             question: "Bagaimana cara membuat akun di Campus Today?",
@@ -417,7 +501,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue">
+            <section className="px-36 py-14 bg-twilight-blue" id="testimoni">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     #ApaKata
                     <span>
@@ -438,7 +522,7 @@ export default function Homepage(props) {
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Paket Try Out
                 </h1>
-                <div className="flex gap-4 max-w-5xl justify-center mx-auto">
+                <div className="flex gap-4 max-w-5xl justify-center items-stretch mx-auto">
                     {tryOutPacket.map((dt) => (
                         <PacketCard {...dt} />
                     ))}
@@ -458,7 +542,7 @@ export default function Homepage(props) {
                     </p>
                 </div>
                 <div className="flex gap-4 max-w-5xl justify-center mx-auto">
-                    {tryOutPacket.map((dt) => (
+                    {bimbelPacket.map((dt) => (
                         <PacketCard {...dt} />
                     ))}
                 </div>
