@@ -9,6 +9,7 @@ import KnowIllus from "@/images/illus-knowledge.png";
 import LearningAmico from "@/images/learning-amico.png";
 import ExamBro from "@/images/exams-bro.png";
 import FAQCard from "@/Components/FAQCard";
+import ArticleCard from "@/Components/ArticleCard";
 
 export default function Dashboard({ auth }) {
     const FAQ = [
@@ -163,6 +164,20 @@ export default function Dashboard({ auth }) {
                         <FAQCard key={i} index={i} {...dt} />
                     ))}
                 </div>
+            </section>
+
+            <section className="px-36 py-14 bg-twilight-blue text-center">
+                <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
+                    Artikel
+                </h1>
+                <div className="flex gap-6 mx-auto">
+                    <ArticleCard />
+                    <ArticleCard />
+                    <ArticleCard />
+                </div>
+                <button className="btn btn-primary text-curious-blue bg-white hover:bg-slate-100 mt-10 border-none shadow-lg">
+                    Baca Selengkapnya
+                </button>
             </section>
         </AuthenticatedLayout>
     );
