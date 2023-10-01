@@ -17,8 +17,6 @@ class DatabaseSeeder extends Seeder
         DatabaseSeeder::call([
             RoleSeeder::class,
             UserSeeder::class,
-            PacketTypeSeeder::class,
-            RoleMenuSeeder::class,
             PacketSeeder::class,
             TryoutSeeder::class,
             QuestionSeeder::class,

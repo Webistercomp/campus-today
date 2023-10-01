@@ -14,7 +14,7 @@ class PacketSeeder extends Seeder
     public function run(): void
     {
         Packet::create([
-            'role_menu_id' => 1,
+            'role_id' => 1,
             'name' => 'Packet Mandiri 1',
             'price_not_discount' => 100000,
             'price_discount' => 90000,
@@ -29,7 +29,7 @@ class PacketSeeder extends Seeder
             'type' => 'mandiri'
         ]);
         Packet::create([
-            'role_menu_id' => 1,
+            'role_id' => 1,
             'name' => 'Packet Bimbel 1',
             'price_not_discount' => 100000,
             'price_discount' => 80000,

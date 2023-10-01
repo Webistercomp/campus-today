@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('packets', function (Blueprint $table) {
             $table->id();
-            $table->integer('role_menu_id');
+            $table->integer('role_id');
             $table->string('name');
             $table->integer('price_not_discount');
             $table->integer('price_discount')->nullable();
