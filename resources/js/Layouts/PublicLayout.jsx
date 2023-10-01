@@ -1,8 +1,8 @@
 import Footer from "@/Components/Footer";
 import Navbar from "@/Components/Navbar";
-import React, { useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function AuthenticatedLayout({ user, header, children }) {
+export default function PublicLayout({ children }) {
     const ref = useRef(null);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
     return (
         <div className="min-h-screen font-poppins">
-            <Navbar isAuthed={true} ref={ref} />
+            <Navbar isAuthed={false} ref={ref} />
 
             <div>{children}</div>
 
