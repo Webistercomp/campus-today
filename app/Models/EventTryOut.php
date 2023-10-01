@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class EventTryOut extends Model
 {
     use HasFactory;
+
+    function participants() {
+        return $this->hasMany(Participant::class);
+    }
 }

@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
+
+    function users() {
+        return $this->hasMany(User::class);
+    }
+
+    function packets() {
+        return $this->hasMany(Packet::class);
+    }
 }

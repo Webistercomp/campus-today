@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Video extends Model
 {
     use HasFactory;
+
+    function videoType() {
+        return $this->belongsTo(VideoType::class);
+    }
 }
