@@ -34,24 +34,32 @@ export default function PacketCard({
                     per member, per month
                 </p>
                 <div className="divider"></div>
-                <div className="text-left mt-6 max-w-xs text-sm">
+                <table className="text-left mt-6 max-w-xs text-sm">
                     {benefit.map((str) => (
-                        <span className="inline-flex items-center gap-2">
-                            <CheckIcon
-                                className={`${
-                                    isPopular ? "fill-white" : "fill-black"
-                                } self-start`}
-                            />
-                            <span className="basis-[85%]">{str}</span>
-                        </span>
+                        <tr className="flex items-start gap-2 mb-[2px]">
+                            <td>
+                                <CheckIcon
+                                    className={`${
+                                        isPopular ? "fill-white" : "fill-black"
+                                    } self-start`}
+                                />
+                            </td>
+                            <td>
+                                <span className="basis-[85%]">{str}</span>
+                            </td>
+                        </tr>
                     ))}
                     {nonBenefit.map((str) => (
-                        <span className="inline-flex items-center gap-2 mt-1">
-                            <XIcon className="fill-red-500 self-start" />
-                            <span className="basis-[85%]">{str}</span>
-                        </span>
+                        <tr className="flex items-start gap-2 mb-[2px]">
+                            <td>
+                                <XIcon className="fill-red-500 self-start" />
+                            </td>
+                            <td>
+                                <span className="basis-[85%]">{str}</span>
+                            </td>
+                        </tr>
                     ))}
-                </div>
+                </table>
             </div>
             <button
                 className={`btn btn-info capitalize px-10 self-center ${

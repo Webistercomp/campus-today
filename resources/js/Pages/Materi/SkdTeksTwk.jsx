@@ -102,9 +102,12 @@ export default function SkdTeksTwk({ title }) {
                         mollitia!
                     </p>
                 </div>
-                <button className="btn btn-primary text-white capitalize mt-6 self-end px-6">
+                <Link
+                    href={route("materi.complete")}
+                    className="btn btn-primary text-white capitalize mt-6 self-end px-6"
+                >
                     Lanjut &raquo;
-                </button>
+                </Link>
             </section>
         </AuthenticatedLayout>
     );

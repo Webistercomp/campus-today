@@ -16,31 +16,18 @@ export default forwardRef(function Navbar({ isAuthed }, ref) {
                     </Link>
                     <ul className="menu menu-horizontal px-1 gap-4 items-center">
                         <li>
-                            <Link href="">Home</Link>
+                            <Link href={route("base")}>Home</Link>
                         </li>
                         <li>
                             <Link href="">Artikel</Link>
                         </li>
                         <div className="divider divider-horizontal"></div>
-                        <div className="dropdown dropdown-end">
-                            <button
-                                tabIndex={0}
-                                className="h-fit p-2 rounded-full bg-twilight-blue hover:bg-slate-200 transition-all duration-300"
-                            >
-                                <ProfileIcon />
-                            </button>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                            >
-                                <li>
-                                    <a>Item 1</a>
-                                </li>
-                                <li>
-                                    <a>Item 2</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <Link
+                            href=""
+                            className="h-fit p-2 rounded-full bg-twilight-blue hover:bg-slate-200 transition-all duration-300"
+                        >
+                            <ProfileIcon />
+                        </Link>
                     </ul>
                 </div>
             </nav>
