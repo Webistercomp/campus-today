@@ -3,3 +3,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .tab-active {
+        @apply after:h-1 after:w-1/5 after:absolute after:bg-curious-blue after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:rounded-full;
+    }
+
+    .materi {
+        @apply bg-white hover:bg-slate-200;
+    }
+
+    .materi-active {
+        @apply bg-curious-blue text-white hover:bg-curious-blue-700;
+    }
+
+    .judul-materi {
+        @apply text-curious-blue text-2xl font-semibold mb-4;
+    }
+
+    .subjudul-materi {
+        @apply text-black text-lg mb-2;
+    }
+
+    .isi-materi {
+        @apply text-base mb-2 text-justify;
+    }
+
+    .gambar-materi {
+        @apply mb-2;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: 0;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
