@@ -4,7 +4,7 @@ import ArrowRightIcon from "@/icons/ArrowRightIcon";
 import BookIcon from "@/icons/BookIcon";
 import PoliceIcon from "@/icons/PoliceIcon";
 import VideoPlayIcon from "@/icons/VideoPlayIcon";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import KnowIllus from "@/images/illus-knowledge.png";
 import LearningAmico from "@/images/learning-amico.png";
 import ExamBro from "@/images/exams-bro.png";
@@ -112,9 +112,12 @@ export default function Dashboard({ auth }) {
                         <h4 className="text-white text-4xl font-semibold">
                             Wujudkan Potensi Terbaik dengan Materi Premium
                         </h4>
-                        <button className="btn bg-white border-none text-curious-blue-300 capitalize text-xl">
+                        <Link
+                            href={route("belipaket")}
+                            className="btn bg-white border-none text-curious-blue-300 capitalize text-xl"
+                        >
                             Beli Paket
-                        </button>
+                        </Link>
                     </div>
                     <img
                         src={KnowIllus}

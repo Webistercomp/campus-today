@@ -1,0 +1,36 @@
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link } from "@inertiajs/react";
+import EWallet from "@/images/e-wallet-rafiki.png";
+
+export default function Verification({ title, nama_paket }) {
+    return (
+        <AuthenticatedLayout>
+            <Head title={title} />
+
+            <section className="flex flex-col gap-4 max-w-3xl mx-auto text-center items-center">
+                <img
+                    src={EWallet}
+                    alt="E-Wallet Illustration"
+                    className="aspect-auto max-w-sm mx-auto"
+                />
+                <p>
+                    Terima kasih telah melakukan pembayaran untuk paket{" "}
+                    <span className="text-curious-blue font-semibold">
+                        {nama_paket}
+                    </span>
+                    , proses akan dilanjutkan ke verifikasi admin selama 1x24
+                    jam atau bisa menghubungi admin secara langsung melalui
+                    Whatsapp di bawah ini
+                </p>
+                <div className="flex flex-col gap-2 mt-4">
+                    <Link href={route("base")}>
+                        <button className="btn btn-primary w-full">Home</button>
+                    </Link>
+                    <Link>
+                        <button className="btn w-full">Chat Admin</button>
+                    </Link>
+                </div>
+            </section>
+        </AuthenticatedLayout>
+    );
+}

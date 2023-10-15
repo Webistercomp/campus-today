@@ -41,4 +41,8 @@
     .scrollbar-hide::-webkit-scrollbar {
         display: none;
     }
+
+    .custom-underline {
+        @apply relative after:absolute after:h-1 after:w-1/2 after:bg-curious-blue after:rounded-full after:-bottom-2 after:left-1/2 after:-translate-x-1/2;
+    }
 }

@@ -1,5 +1,6 @@
 import CheckIcon from "@/icons/CheckIcon";
 import XIcon from "@/icons/XIcon";
+import { Link } from "@inertiajs/react";
 
 export default function PacketCard({
     type,
@@ -10,7 +11,7 @@ export default function PacketCard({
 }) {
     return (
         <div
-            className={`basis-1/3 p-8 flex flex-col items-start justify-between rounded-xl shadow-lg gap-6 border-2 border-pelorous-300 ${
+            className={`text-left basis-1/3 p-8 flex flex-col items-start justify-between rounded-xl shadow-lg gap-6 border-2 border-pelorous-300 ${
                 isPopular ? "bg-curious-blue" : "bg-white"
             }`}
         >
@@ -61,15 +62,17 @@ export default function PacketCard({
                     ))}
                 </table>
             </div>
-            <button
-                className={`btn btn-info capitalize px-10 self-center ${
-                    isPopular
-                        ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
-                        : "text-white"
-                }`}
-            >
-                Beli Sekarang
-            </button>
+            <Link href={route("belipaket.friendly")}>
+                <button
+                    className={`btn btn-info capitalize px-10 self-center ${
+                        isPopular
+                            ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
+                            : "text-white bg-black hover:bg-slate-700"
+                    }`}
+                >
+                    Beli Sekarang
+                </button>
+            </Link>
         </div>
     );
 }

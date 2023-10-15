@@ -63,6 +63,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/materi/complete', function () {
         return Inertia::render('Materi/Completed', ['title' => 'Completed', 'name' => 'Farhan Hikmatullah D']);
     })->name('materi.complete');
+
+    Route::get('/beli-paket', function () {
+        return Inertia::render('BeliPaket/index', ['title' => 'Beli Paket']);
+    })->name('belipaket');
+    Route::get('/beli-paket/friendly', function () {
+        return Inertia::render('BeliPaket/Deskripsi', ['title' => 'Paket Friendly', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly');
+    Route::get('/beli-paket/friendly/checkout', function () {
+        return Inertia::render('BeliPaket/Checkout', ['title' => 'Checkout', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly.checkout');
+    Route::get('/beli-paket/friendly/checkout/payment', function () {
+        return Inertia::render('BeliPaket/Payment', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly.checkout.payment');
+    Route::get('/beli-paket/friendly/checkout/verification', function () {
+        return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly.checkout.verification');
 });
 
 require __DIR__ . '/auth.php';
