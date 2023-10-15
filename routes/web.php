@@ -20,7 +20,7 @@ Route::get('/', function () {
     return Inertia::render('Homepage', [
         'title' => 'Campus Today | E-Learning CPNS'
     ]);
-});
+})->name('home');
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
