@@ -14,9 +14,19 @@ class MaterialTypeSeeder extends Seeder
     public function run(): void
     {
         MaterialType::create([
-            'packet_id' => 1,
-            'name' => 'Materi Type 1',
-            'description' => 'Materi Type 1'
+            'roles' => '[2, 3, 4, 6]',
+            'name' => 'Materi SKD',
+            'description' => 'SKD adalah singkatan dari Seleksi Kompetensi Dasar yang dilakukan Pemerintah pada seleksi CPNS dan PPPK'
+        ]);
+        MaterialType::create([
+            'roles' => '[2, 3, 5, 6]',
+            'name' => 'Materi UTBK',
+            'description' => 'Materi UTBK'
+        ]);
+        MaterialType::create([
+            'roles' => '[2, 3, 6]',
+            'name' => 'Materi UM',
+            'description' => 'Materi UM'
         ]);
     }
 }

@@ -15,8 +15,16 @@ class MaterialSeeder extends Seeder
     {
         Material::create([
             'material_type_id' => 1,
-            'name' => 'Materi 1',
-            'description' => 'Materi 1',
+            'title' => 'TWK - Judul Materi',
+            'description' => 'Deskripsi Materi',
+            'type' => 'teks'
+        ]);
+        
+        Material::create([
+            'material_type_id' => 1,
+            'title' => 'TWK Video - Judul Materi',
+            'description' => 'Deskripsi Materi Video',
+            'type' => 'video'
         ]);
     }
 }
