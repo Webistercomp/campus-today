@@ -4,7 +4,7 @@ import ArrowRightIcon from "@/icons/ArrowRightIcon";
 import BookIcon from "@/icons/BookIcon";
 import PoliceIcon from "@/icons/PoliceIcon";
 import VideoPlayIcon from "@/icons/VideoPlayIcon";
-import { Head } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import KnowIllus from "@/images/illus-knowledge.png";
 import LearningAmico from "@/images/learning-amico.png";
 import ExamBro from "@/images/exams-bro.png";
@@ -52,10 +52,13 @@ export default function Dashboard({ auth, articles }) {
         >
             <Head title="Dashboard" />
 
-            <section className="bg-twilight-blue py-14 mt-20 px-28">
+            <section className="bg-white py-14">
                 <h1 className="font-bold text-2xl">Mulai Belajar</h1>
                 <div className="flex gap-8 justify-between mt-6">
-                    <div className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer">
+                    <Link
+                        href={route("materi.skd")}
+                        className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
+                    >
                         <PoliceIcon className="basis-1/5 fill-curious-blue" />
                         <div className="basis-4/5 flex flex-col justify-center gap-4">
                             <h4 className="text-xl font-semibold">
@@ -68,8 +71,11 @@ export default function Dashboard({ auth, articles }) {
                                 </span>
                             </p>
                         </div>
-                    </div>
-                    <div className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer">
+                    </Link>
+                    <Link
+                        href={route("materi.skb")}
+                        className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
+                    >
                         <BookIcon className="basis-1/5 fill-curious-blue" />
                         <div className="basis-4/5 flex flex-col justify-center gap-4">
                             <h4 className="text-xl font-semibold">
@@ -82,8 +88,8 @@ export default function Dashboard({ auth, articles }) {
                                 </span>
                             </p>
                         </div>
-                    </div>
-                    <div className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer">
+                    </Link>
+                    <div className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150">
                         <VideoPlayIcon className="basis-1/5 fill-curious-blue" />
                         <div className="basis-4/5 flex flex-col justify-center gap-4">
                             <h4 className="text-xl font-semibold">
@@ -100,15 +106,18 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="bg-twilight-blue px-28 py-14">
+            <section className="bg-white py-14">
                 <div className="bg-gradient-to-b from-curious-blue-500 to-curious-blue-300 px-20 py-6 rounded-2xl flex justify-between items-center">
                     <div className="flex flex-col items-start gap-14 basis-1/2">
                         <h4 className="text-white text-4xl font-semibold">
                             Wujudkan Potensi Terbaik dengan Materi Premium
                         </h4>
-                        <button className="btn bg-white border-none text-curious-blue-300 capitalize text-xl">
+                        <Link
+                            href={route("belipaket")}
+                            className="btn bg-white border-none text-curious-blue-300 capitalize text-xl"
+                        >
                             Beli Paket
-                        </button>
+                        </Link>
                     </div>
                     <img
                         src={KnowIllus}
@@ -118,7 +127,7 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="bg-twilight-blue px-28 py-14">
+            <section className="bg-white py-14">
                 <div>
                     <h1 className="font-bold text-2xl">TryOut</h1>
                     <p className="mt-2">
@@ -155,7 +164,7 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue">
+            <section className="px-36 py-14 bg-white">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Kamu Nanya, Kami Jawab
                 </h1>
@@ -166,7 +175,7 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue text-center">
+            <section className="px-36 py-14 bg-white text-center">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Artikel
                 </h1>
