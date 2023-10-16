@@ -12,4 +12,8 @@ class Material extends Model
     function materialType() {
         return $this->belongsTo(MaterialType::class);
     }
+
+    function chapters() {
+        return $this->hasMany(Chapter::class);
+    }
 }
