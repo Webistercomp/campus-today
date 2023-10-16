@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('material_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('packet_id');
+            $table->json('roles');
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('icon')->nullable();
