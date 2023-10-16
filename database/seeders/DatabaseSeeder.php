@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\PacketMandiri;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +14,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        DatabaseSeeder::call([
+            RoleSeeder::class,
+            UserSeeder::class,
+            PacketSeeder::class,
+            TryoutSeeder::class,
+            QuestionSeeder::class,
+            AnswerSeeder::class,
+            MaterialTypeSeeder::class,
+            MaterialSeeder::class,
+            ChapterSeeder::class,
+            VideoTypeSeeder::class,
+            VideoSeeder::class,
+            ScheduleBimbelSeeder::class,
+            EventTryOutSeeder::class,
+            ParticipantSeeder::class,
+            ArticleSeeder::class,
+            InstagramFeedSeeder::class,
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+            AdminSeeder::class,
+        ]);
     }
 }

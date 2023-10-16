@@ -1,18 +1,17 @@
-export default function ArticleCard({ photoURL, title, desc }) {
+export default function ArticleCard({ image, title, desc }) {
     return (
         <div className="card w-96 bg-base-100 shadow-xl text-left cursor-pointer">
             <figure>
                 <img
-                    src=""
-                    alt=""
+                    src={image}
+                    alt={title}
                     className="bg-slate-500 w-full aspect-video"
                 />
             </figure>
             <div className="card-body">
-                <h2 className="card-title">Judul Artikel</h2>
+                <h2 className="card-title">{title}</h2>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur. Consequat tincidunt
-                    sollicitudin magna viverra ullamcorper.
+                    {desc}
                 </p>
             </div>
         </div>

@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +16,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Homepage', [
-        'title' => 'Campus Today | E-Learning CPNS'
-    ]);
-})->name('base');
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -79,6 +73,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/beli-paket/friendly/checkout/verification', function () {
         return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
     })->name('belipaket.friendly.checkout.verification');
+});
+
+Route::prefix('materiskd')->group(function() {
+    Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
+    Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');
+    Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
+    Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
+    Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
 });
 
 require __DIR__ . '/auth.php';

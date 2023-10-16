@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('packets', function (Blueprint $table) {
             $table->id();
             $table->integer('role_id');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->integer('price_not_discount');
+            $table->integer('price_discount')->nullable();
+            $table->integer('discount')->nullable();
+            $table->string('description')->nullable();
+            $table->json('benefits')->nullable();
+            $table->string('icon')->nullable();
+            $table->enum('type', ['mandiri', 'bimbel'])->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('packets');
     }
 };

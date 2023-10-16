@@ -11,7 +11,7 @@ import ExamBro from "@/images/exams-bro.png";
 import FAQCard from "@/Components/FAQCard";
 import ArticleCard from "@/Components/ArticleCard";
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, articles }) {
     const FAQ = [
         {
             question: "Bagaimana cara membuat akun di Campus Today?",
@@ -180,9 +180,15 @@ export default function Dashboard({ auth }) {
                     Artikel
                 </h1>
                 <div className="flex gap-6 mx-auto">
-                    <ArticleCard />
-                    <ArticleCard />
-                    <ArticleCard />
+                    {articles.slice(Math.max(articles.length - 3, 0)).map((article, i) => {                      
+                        // Return the element. Also pass key     
+                        return (<ArticleCard 
+                            title={article.title} 
+                            desc={article.description} 
+                            image={article.image}
+                        />) 
+                        
+                    })}
                 </div>
                 <button className="btn btn-primary text-curious-blue bg-white hover:bg-slate-100 mt-10 border-none shadow-lg">
                     Baca Selengkapnya
