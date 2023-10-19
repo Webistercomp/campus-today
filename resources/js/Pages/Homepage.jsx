@@ -198,7 +198,7 @@ export default function Homepage(props) {
             <Head title={props.title} />
 
             <section
-                className="flex h-screen items-center bg-twilight-blue"
+                className="flex h-screen items-center bg-white"
                 id="homepage"
             >
                 <div className="basis-[60%] px-36">
@@ -235,7 +235,7 @@ export default function Homepage(props) {
             </section>
 
             <section
-                className="w-full text-center py-14 bg-twilight-blue"
+                className="w-full text-center py-14 bg-white"
                 id="about-us"
             >
                 <div className="mx-auto max-w-4xl">
@@ -257,7 +257,7 @@ export default function Homepage(props) {
             </section>
 
             <section
-                className="mx-auto text-center py-14 px-36 bg-twilight-blue"
+                className="mx-auto text-center py-14 px-36 bg-white"
                 id="college-path"
             >
                 <h1 className="text-3xl max-w-lg mx-auto font-bold text-slate-700 mb-12">
@@ -350,7 +350,7 @@ export default function Homepage(props) {
             </section>
 
             <section
-                className="mx-auto text-center py-14 px-36 bg-twilight-blue"
+                className="mx-auto text-center py-14 px-36 bg-white"
                 id="benefit"
             >
                 <h1 className="text-3xl font-bold text-slate-700 mb-12">
@@ -427,7 +427,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue">
+            <section className="px-36 py-14 bg-white">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     #ApaKata
                     <span>
@@ -447,13 +447,13 @@ export default function Homepage(props) {
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
+                        allowFullScreen
                         className="mx-auto"
                     ></iframe>
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue">
+            <section className="px-36 py-14 bg-white">
                 <div className="grid grid-cols-3 grid-rows-2 gap-2">
                     <div className="w-full aspect-[4/3] text-6xl font-bold flex items-center">
                         Fasilitas Belajar
@@ -501,7 +501,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue" id="testimoni">
+            <section className="px-36 py-14 bg-white" id="testimoni">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     #ApaKata
                     <span>
@@ -518,7 +518,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue" id="paket">
+            <section className="px-36 py-14 bg-white" id="paket">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Paket Try Out
                 </h1>
@@ -529,7 +529,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue">
+            <section className="px-36 py-14 bg-white">
                 <div className="max-w-3xl mx-auto">
                     <h1 className="text-3xl font-bold text-slate-700 mb-4 text-center">
                         Kelas Bimbel online
@@ -548,7 +548,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue" id="testimoni">
+            <section className="px-36 py-14 bg-white" id="testimoni">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Testimoni Buku Kedinasan
                 </h1>
@@ -561,7 +561,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue">
+            <section className="px-36 py-14 bg-white">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Kamu Nanya, Kami Jawab
                 </h1>
@@ -572,7 +572,7 @@ export default function Homepage(props) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-twilight-blue">
+            <section className="px-36 py-14 bg-white">
                 <div className="bg-[#00A8E8] text-center text-white px-6 py-20 rounded-2xl relative overflow-clip">
                     <div className="absolute bg-[#6366F1] bg-opacity-40 w-screen h-screen top-[85%] -left-44 rotate-[15deg]"></div>
                     <div className="absolute bg-[#4338CA] bg-opacity-40 w-screen h-screen top-[85%] -right-44 -rotate-[15deg]"></div>

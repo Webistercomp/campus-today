@@ -25,6 +25,55 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/materi/skd', function () {
+        return Inertia::render('Materi/Skd', ['title' => 'Materi SKD']);
+    })->name('materi.skd');
+    Route::get('/materi/skb', function () {
+        return Inertia::render('Materi/Skb', ['title' => 'Materi SKB']);
+    })->name('materi.skb');
+
+    Route::get('/materi/skd/teks', function () {
+        return Inertia::render('Materi/SkdTeks', ['title' => 'Materi Teks SKD']);
+    })->name('materi.skd.teks');
+    Route::get('/materi/skb/teks', function () {
+        return Inertia::render('Materi/SkbTeks', ['title' => 'Materi Teks SKB']);
+    })->name('materi.skb.teks');
+
+    Route::get('materi/skd/teks/twk', function () {
+        return Inertia::render('Materi/SkdTeksTwk', ['title' => 'TWK | Teks']);
+    })->name('materi.skd.teks.twk');
+
+    Route::get('/materi/skd/video', function () {
+        return Inertia::render('Materi/SkdVideo', ['title' => 'Materi Video SKD']);
+    })->name('materi.skd.video');
+    Route::get('/materi/skb/video', function () {
+        return Inertia::render('Materi/SkbVideo', ['title' => 'Materi Video SKB']);
+    })->name('materi.skb.video');
+
+    Route::get('/materi/skd/video/twk', function () {
+        return Inertia::render('Materi/SkdVideoTwk', ['title' => 'TWK | Video']);
+    })->name('materi.skd.video.twk');
+
+    Route::get('/materi/complete', function () {
+        return Inertia::render('Materi/Completed', ['title' => 'Completed', 'name' => 'Farhan Hikmatullah D']);
+    })->name('materi.complete');
+
+    Route::get('/beli-paket', function () {
+        return Inertia::render('BeliPaket/index', ['title' => 'Beli Paket']);
+    })->name('belipaket');
+    Route::get('/beli-paket/friendly', function () {
+        return Inertia::render('BeliPaket/Deskripsi', ['title' => 'Paket Friendly', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly');
+    Route::get('/beli-paket/friendly/checkout', function () {
+        return Inertia::render('BeliPaket/Checkout', ['title' => 'Checkout', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly.checkout');
+    Route::get('/beli-paket/friendly/checkout/payment', function () {
+        return Inertia::render('BeliPaket/Payment', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly.checkout.payment');
+    Route::get('/beli-paket/friendly/checkout/verification', function () {
+        return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
+    })->name('belipaket.friendly.checkout.verification');
 });
 
 Route::prefix('materiskd')->group(function() {
@@ -36,31 +85,3 @@ Route::prefix('materiskd')->group(function() {
 });
 
 require __DIR__ . '/auth.php';
-
-Route::prefix('admin')->group(function() {
-    Route::get('login', [AdminController::class, 'showLoginForm'])->name('admin.loginForm');
-    Route::post('login', [AdminController::class, 'login'])->name('admin.login');
-    Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
-    //Admin Home page after login
-    Route::group(['middleware'=>'checkAdmin'], function() {
-        Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
-    });
-});
-
-
-
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
-// Route::get('/test-react', function () {
-//     return Inertia::render('Test', [
-//         'company' => 'Webister',
-//         'initSetup' => '17-09-2023'
-//     ]);
-// });

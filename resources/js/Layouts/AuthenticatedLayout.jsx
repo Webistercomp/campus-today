@@ -13,12 +13,12 @@ export default function AuthenticatedLayout({ user, header, children }) {
     }, []);
 
     return (
-        <div className="min-h-screen font-poppins">
+        <div className="min-h-screen font-poppins bg-white overflow-x-clip">
             <Navbar isAuthed={true} ref={ref} />
 
-            <div>{children}</div>
+            <div className="pt-24 px-28 bg-white">{children}</div>
 
-            <Footer />
+            {route().current() === "dashboard" ? <Footer /> : ""}
         </div>
     );
 }
