@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\ProfileController;
@@ -35,6 +36,16 @@ Route::prefix('materiskd')->group(function() {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::prefix('admin')->group(function() {
+    Route::get('login', [AdminController::class, 'showLoginForm'])->name('admin.loginForm');
+    Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
+    //Admin Home page after login
+    Route::group(['middleware'=>'checkAdmin'], function() {
+        Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
+    });
+});
 
 
 
