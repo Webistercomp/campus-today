@@ -23,7 +23,7 @@ export default function SKD({ title }) {
                 </h1>
                 <div className="flex gap-8 mt-6">
                     <Link
-                        href={route("materi.skb.teks")}
+                        href={route("material.type.teks", 'skd')}
                         className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all"
                     >
                         <img
@@ -42,7 +42,7 @@ export default function SKD({ title }) {
                         </div>
                     </Link>
                     <Link
-                        href={route("materi.skb.video")}
+                        href={route("material.type.video", 'skd')}
                         className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all"
                     >
                         <img

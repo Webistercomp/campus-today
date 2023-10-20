@@ -15,20 +15,20 @@ class ChapterSeeder extends Seeder
     {
         Chapter::create([
             'material_id' => 1,
-            'judul' => 'Judul 1',
-            'subjudul' => 'Subjudul 1',
+            'judul' => 'Bab 1',
+            'subjudul' => 'Subjudul',
             'body' => 'Lorem ipsum dolor sit amet'
         ]);
         Chapter::create([
             'material_id' => 1,
-            'judul' => 'Judul 2',
-            'subjudul' => 'Subjudul 2',
+            'judul' => 'Bab 2',
+            'subjudul' => 'Subjudul',
             'body' => 'Lorem ipsum dolor sit amet'
         ]);
         Chapter::create([
             'material_id' => 1,
-            'judul' => 'Judul 3',
-            'subjudul' => 'Subjudul 3',
+            'judul' => 'Bab 3',
+            'subjudul' => 'Subjudul',
             'body' => 'Lorem ipsum dolor sit amet'
         ]);
     }

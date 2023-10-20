@@ -16,7 +16,7 @@ export default forwardRef(function Navbar({ isAuthed }, ref) {
                     </Link>
                     <ul className="menu menu-horizontal px-1 gap-4 items-center">
                         <li>
-                            <Link href={route("base")}>Home</Link>
+                            <Link href={route("dashboard")}>Home</Link>
                         </li>
                         <li>
                             <Link href="">Artikel</Link>
