@@ -144,9 +144,11 @@ export default function Dashboard({ auth, articles }) {
                         <h3 className="uppercase font-semibold text-xl">
                             TryOut Gratis
                         </h3>
-                        <button className="btn btn-primary capitalize text-white px-8">
-                            Mulai
-                        </button>
+                        <Link href={route("tryout")}>
+                            <button className="btn btn-primary capitalize text-white px-8">
+                                Mulai
+                            </button>
+                        </Link>
                     </div>
                     <div className="flex flex-col basis-1/2 bg-white shadow-xl py-10 gap-2 items-center rounded-xl">
                         <img
@@ -180,15 +182,18 @@ export default function Dashboard({ auth, articles }) {
                     Artikel
                 </h1>
                 <div className="flex gap-6 mx-auto">
-                    {articles.slice(Math.max(articles.length - 3, 0)).map((article, i) => {                      
-                        // Return the element. Also pass key     
-                        return (<ArticleCard 
-                            title={article.title} 
-                            desc={article.description} 
-                            image={article.image}
-                        />) 
-                        
-                    })}
+                    {articles
+                        .slice(Math.max(articles.length - 3, 0))
+                        .map((article, i) => {
+                            // Return the element. Also pass key
+                            return (
+                                <ArticleCard
+                                    title={article.title}
+                                    desc={article.description}
+                                    image={article.image}
+                                />
+                            );
+                        })}
                 </div>
                 <button className="btn btn-primary text-curious-blue bg-white hover:bg-slate-100 mt-10 border-none shadow-lg">
                     Baca Selengkapnya

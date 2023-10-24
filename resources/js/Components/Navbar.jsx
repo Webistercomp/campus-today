@@ -16,7 +16,7 @@ export default forwardRef(function Navbar({ isAuthed }, ref) {
                     </Link>
                     <ul className="menu menu-horizontal px-1 gap-4 items-center">
                         <li>
-                            <Link href={route("base")}>Home</Link>
+                            <Link href={route("home")}>Home</Link>
                         </li>
                         <li>
                             <Link href="">Artikel</Link>
@@ -36,7 +36,7 @@ export default forwardRef(function Navbar({ isAuthed }, ref) {
 
     return (
         <nav
-            className="navbar fixed bg-twilight-blue shadow-lg px-28 z-50 top-0"
+            className="navbar fixed bg-white shadow-lg px-28 z-50 top-0"
             ref={ref}
         >
             <div className="flex justify-between w-full">

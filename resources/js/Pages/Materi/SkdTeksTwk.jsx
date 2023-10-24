@@ -15,7 +15,7 @@ export default function SkdTeksTwk({ title }) {
                     {title}
                 </h1>
 
-                <div className="flex flex-col gap-2 mt-6 overflow-y-scroll scrollbar-hide flex-auto">
+                <div className="flex flex-col gap-2 mt-6 overflow-y-hidden hover:overflow-y-scroll gutter-stable flex-auto">
                     <button className="btn materi materi-active capitalize">
                         Judul Materi Pertama
                     </button>

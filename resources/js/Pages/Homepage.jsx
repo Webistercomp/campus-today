@@ -12,158 +12,14 @@ import TestiCard from "@/Components/TestiCard";
 import PacketCard from "@/Components/PacketCard";
 import MockUpHp from "@/images/mockup-hp.png";
 import FAQCard from "@/Components/FAQCard";
+import diary from "@/images/diary.png";
+import web from "@/images/web.png";
+import holding from "@/images/holding.png";
+import notes from "@/images/notes.png";
+import prof from "@/images/prof.png";
+import CampusToday from "@/images/campus-today.png";
 
-export default function Homepage(props) {
-    const tryOutPacket = [
-        {
-            type: "Gratis",
-            price: 0,
-            benefit: ["Akses Tryout Gratis"],
-            nonBenefit: [
-                "Try Out Premium SKD Sistem CAT",
-                "Try Out Premium UTBK",
-                "Kunci dan Pembahasan Try Out Lengkap",
-                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
-                "Latihan Soal UTBK",
-                "Materi SKD, UTBK, UM Terupdate",
-                "Ranking Try Out Nasional",
-                "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
-                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
-                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
-                "Video Materi SKD (TWK, TIU dan TKP), UTBK, dan UM.",
-                "Video Series SKD, UTBK, dan UM",
-            ],
-            isPopular: false,
-        },
-        {
-            type: "Friendly",
-            price: 120000,
-            benefit: [
-                "Akses Tryout Gratis",
-                "Try Out Premium SKD Sistem CAT",
-                "Try Out Premium UTBK",
-                "Kunci dan Pembahasan Try Out Lengkap",
-                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
-                "Latihan Soal UTBK",
-                "Materi SKD, UTBK, UM Terupdate",
-                "Ranking Try Out Nasional",
-            ],
-            nonBenefit: [
-                "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
-                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
-                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
-                "Video Materi SKD (TWK, TIU dan TKP), UTBK, dan UM.",
-                "Video Series SKD, UTBK, dan UM",
-            ],
-            isPopular: true,
-        },
-        {
-            type: "Ambisius",
-            price: 200000,
-            benefit: [
-                "Akses Tryout Gratis",
-                "Try Out Premium SKD Sistem CAT",
-                "Try Out Premium UTBK",
-                "Kunci dan Pembahasan Try Out Lengkap",
-                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
-                "Latihan Soal UTBK",
-                "Materi SKD, UTBK, UM Terupdate",
-                "Ranking Try Out Nasional",
-                "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
-                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
-                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
-                "Video Materi SKD (TWK, TIU dan TKP), UTBK, dan UM.",
-                "Video Series SKD, UTBK, dan UM",
-            ],
-            nonBenefit: [],
-            isPopular: false,
-        },
-    ];
-
-    const bimbelPacket = [
-        {
-            type: "Gratis",
-            price: 3000000,
-            benefit: [
-                "Fokus Seleksi Kemampuan Dasar (SKD)",
-                "20 Kali Pertemuan via zoom",
-                "Free Akses dashboard Campus Today",
-                "Free 1 Paket buku SKD",
-                "Akses Try Out Gratis",
-                "Try Out Premium SKD Sistem CAT",
-                "Kunci dan Pembahasan Try Out Lengkap",
-                "Ranking Try Out Nasional",
-                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
-                "Materi SKD",
-                "Try Out Exclusive Platinum SKD Sistem CAT dengan Pembahasan Video",
-                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
-                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
-                "Video Materi SKD (TWK, TIU dan TKP)",
-                "Video Series SKD",
-            ],
-            nonBenefit: [],
-            isPopular: false,
-        },
-        {
-            type: "Friendly",
-            price: 6000000,
-            benefit: [
-                "Fokus SNBP, UTBK dan Sekolah Kedinasan",
-                "40 Kali Pertemuan via zoom",
-                "Free Akses Recording",
-                "1 kelas maksimal 10 orang",
-                "Free Akses dashboard Campus Today",
-                "Free 2 Paket buku UTBK dan Kedinasan Soal UTBK",
-                "Akses Try Out Gratis",
-                "Try Out Premium UTBK dan Sekolah Kedinasan",
-                "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
-                "Kunci dan Pembahasan Try Out Lengkap",
-                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
-                "Materi Sekolah Kedinasan dan UTBK Terupdate",
-                "Video Series SKD, UTBK, dan UM",
-                "Ranking Try Out Nasional",
-                "Try Out Exclusive Platinum SKD Sistem CAT, dan UTBK dengan Pembahasan Video",
-                "Try Out Exclusive Platinum SKD Sistem CAT dengan Pembahasan Video",
-                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
-                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
-                "Video Materi SKD (TWK, TIU dan TKP)",
-                "Video Series SKD dan UTBK",
-            ],
-            nonBenefit: [],
-            isPopular: true,
-        },
-        {
-            type: "Ambisius",
-            price: 15000000,
-            benefit: [
-                "Fokus SNBP, UTBK, UM dan Sekolah Kedinasan",
-                "80 Kali Pertemuan via zoom",
-                "Tes Minat Bakat",
-                "Free Akses Recording",
-                "1 kelas maksimal 5 orang",
-                "Free Akses dashboard Campus Today",
-                "Free 3 Paket buku UTBK, UM dan Sekolah Kedinasan",
-                "Free 2 Paket buku UTBK dan Kedinasan",
-                "Akses Try Out Gratis",
-                "Try Out Premium UTBK dan Sekolah Kedinasan",
-                "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
-                "Kunci dan Pembahasan Try Out Lengkap",
-                "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
-                "Materi Sekolah Kedinasan dan UTBK Terupdate",
-                "Video Series SKD, UTBK, dan UM",
-                "Ranking Try Out Nasional",
-                "Try Out Exclusive Platinum SKD Sistem CAT, dan UTBK dengan Pembahasan Video",
-                "Try Out Exclusive Platinum SKD Sistem CAT dengan Pembahasan Video",
-                "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
-                "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
-                "Video Materi SKD (TWK, TIU dan TKP)",
-                "Video Series SKD dan UTBK",
-            ],
-            nonBenefit: [],
-            isPopular: false,
-        },
-    ];
-
+export default function Homepage({ title, packets }) {
     const FAQ = [
         {
             question: "Bagaimana cara membuat akun di Campus Today?",
@@ -193,9 +49,12 @@ export default function Homepage(props) {
         },
     ];
 
+    const mandiriPacket = packets.filter((dt) => dt.type === "mandiri");
+    const bimbelPacket = packets.filter((dt) => dt.type === "bimbel");
+
     return (
         <PublicLayout>
-            <Head title={props.title} />
+            <Head title={title} />
 
             <section
                 className="flex h-screen items-center bg-white"
@@ -240,10 +99,7 @@ export default function Homepage(props) {
             >
                 <div className="mx-auto max-w-4xl">
                     <h1 className="text-3xl font-bold text-slate-700 mb-6">
-                        Tentang <br />
-                        <span>
-                            <TextLogo />
-                        </span>
+                        Tentang Kami
                     </h1>
                     <p className="text-lg text-slate-500">
                         Campus Today telah mengantarkan ratusan siswa dan siswi
@@ -354,8 +210,10 @@ export default function Homepage(props) {
                 id="benefit"
             >
                 <h1 className="text-3xl font-bold text-slate-700 mb-12">
-                    Benefit Belajar Bersama
-                    <TextLogo />
+                    Benefit Belajar Bersama{" "}
+                    <span>
+                        <img src={CampusToday} alt="" className="h-8 mx-auto" />
+                    </span>
                 </h1>
                 <div className="flex gap-6">
                     <div className="basis-2/5 flex flex-col text-right gap-4 justify-between">
@@ -429,15 +287,7 @@ export default function Homepage(props) {
 
             <section className="px-36 py-14 bg-white">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
-                    #ApaKata
-                    <span>
-                        <span className="text-pelorous">M</span>
-                        <span className="text-apple">e</span>
-                        <span className="text-selective-yellow">r</span>
-                        <span className="text-fuzzy-brown">e</span>
-                        <span className="text-apple">k</span>
-                        <span className="text-indigo">a</span>
-                    </span>
+                    #ApaKata<span className="text-[#DA5957]">Mereka</span>
                 </h1>
                 <div>
                     <iframe
@@ -454,45 +304,70 @@ export default function Homepage(props) {
             </section>
 
             <section className="px-36 py-14 bg-white">
-                <div className="grid grid-cols-3 grid-rows-2 gap-2">
-                    <div className="w-full aspect-[4/3] text-6xl font-bold flex items-center">
+                <div className="grid grid-cols-3 grid-rows-2 gap-3 items-stretch">
+                    <div className="w-full aspect-[3/2] text-6xl font-bold flex items-center">
                         Fasilitas Belajar
                     </div>
-                    <div className="w-full aspect-[4/3] bg-gradient-to-b from-pelorous-500 to-pelorous-300 rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2">
-                        <h3 className="font-semibold">
+                    <div className="w-full aspect-[3/2] bg-gradient-to-b from-[#5A73BD] to-[#D971CE] rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2 relative">
+                        <img
+                            src={diary}
+                            alt=""
+                            className="w-64 absolute -right-10"
+                        />
+                        <h3 className="font-semibold relative">
                             Try Out & Latihan Soal
                         </h3>
-                        <p>
+                        <p className="relative w-2/3">
                             #SobatCampus percaya deh, semakin sering mengerjakan
                             soal, kamu bakal #MakinJago
                         </p>
                     </div>
-                    <div className="w-full aspect-[4/3] bg-gradient-to-b from-apple-500 to-apple-300 rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2">
-                        <h3 className="font-semibold">Materi Teks</h3>
-                        <p>
+                    <div className="w-full aspect-[3/2] bg-gradient-to-b from-[#0D4A9B] to-[#1A8BBF] rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2 relative">
+                        <img
+                            src={web}
+                            alt=""
+                            className="w-56 absolute right-0"
+                        />
+                        <h3 className="font-semibold relative">Materi Teks</h3>
+                        <p className="relative w-2/3">
                             Materi yang lengkap menjadikan kamu agar lebih siap
                             menerima cara-cara baru dalam mengerjakan tipe soal.
                         </p>
                     </div>
-                    <div className="w-full aspect-[4/3] bg-gradient-to-b from-selective-yellow-500 to-selective-yellow-300 rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2">
-                        <h3 className="font-semibold">Pojok Video</h3>
-                        <p>
+                    <div className="w-full aspect-[3/2] bg-gradient-to-b from-[#6C45E1] to-[#B998F8] rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2 relative">
+                        <img
+                            src={holding}
+                            alt=""
+                            className="w-64 absolute right-0"
+                        />
+                        <h3 className="font-semibold relative">Pojok Video</h3>
+                        <p className="relative w-2/3">
                             Terdapat banyak video pengerjaan soal dengan cara
                             jitu ala Campus Today.
                         </p>
                     </div>
-                    <div className="w-full aspect-[4/3] bg-gradient-to-b from-fuzzy-brown-500 to-fuzzy-brown-300 rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2">
-                        <h3 className="font-semibold">
+                    <div className="w-full aspect-[3/2] bg-gradient-to-b from-[#076FA1] to-[#00B4DE] rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2 relative">
+                        <img
+                            src={notes}
+                            alt=""
+                            className="w-56 absolute right-0"
+                        />
+                        <h3 className="font-semibold relative">
                             Event Try Out Nasional
                         </h3>
-                        <p>
+                        <p className="relative w-2/3">
                             Bertujuan mengukur kemampuan #SobatCampus untuk
                             bersaing dengan skala yang lebih luas.
                         </p>
                     </div>
-                    <div className="w-full aspect-[4/3] bg-gradient-to-b from-indigo-500 to-indigo-300 rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2">
-                        <h3 className="font-semibold">Kelas Bimbel</h3>
-                        <p>
+                    <div className="w-full aspect-[3/2] bg-gradient-to-b from-[#5F3733] to-[#895E59] rounded-3xl text-white p-8 flex flex-col justify-center text-xl gap-2 relative">
+                        <img
+                            src={prof}
+                            alt=""
+                            className="w-64 absolute -right-16"
+                        />
+                        <h3 className="font-semibold relative">Kelas Bimbel</h3>
+                        <p className="relative w-2/3">
                             Bimbel online yang menyediakan berbagai macam fitur
                             dan konseling terkait pemilihan Perguruan Tinggi
                             Negeri maupun Kedinasan.
@@ -503,15 +378,7 @@ export default function Homepage(props) {
 
             <section className="px-36 py-14 bg-white" id="testimoni">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
-                    #ApaKata
-                    <span>
-                        <span className="text-pelorous">M</span>
-                        <span className="text-apple">e</span>
-                        <span className="text-selective-yellow">r</span>
-                        <span className="text-fuzzy-brown">e</span>
-                        <span className="text-apple">k</span>
-                        <span className="text-indigo">a</span>
-                    </span>
+                    #ApaKata<span className="text-[#DA5957]">Mereka</span>
                 </h1>
                 <div className="">
                     <TestiCard />
@@ -523,8 +390,8 @@ export default function Homepage(props) {
                     Paket Try Out
                 </h1>
                 <div className="flex gap-4 max-w-5xl justify-center items-stretch mx-auto">
-                    {tryOutPacket.map((dt) => (
-                        <PacketCard {...dt} />
+                    {mandiriPacket.map((dt) => (
+                        <PacketCard key={dt.id} {...dt} />
                     ))}
                 </div>
             </section>
@@ -543,7 +410,7 @@ export default function Homepage(props) {
                 </div>
                 <div className="flex gap-4 max-w-5xl justify-center mx-auto">
                     {bimbelPacket.map((dt) => (
-                        <PacketCard {...dt} />
+                        <PacketCard key={dt.id} {...dt} />
                     ))}
                 </div>
             </section>
