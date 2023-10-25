@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Chapter;
+use App\Models\Material;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,23 +14,16 @@ class ChapterSeeder extends Seeder
      */
     public function run(): void
     {
-        Chapter::create([
-            'material_id' => 1,
-            'judul' => 'Bab 1',
-            'subjudul' => 'Subjudul',
-            'body' => 'Lorem ipsum dolor sit amet'
-        ]);
-        Chapter::create([
-            'material_id' => 1,
-            'judul' => 'Bab 2',
-            'subjudul' => 'Subjudul',
-            'body' => 'Lorem ipsum dolor sit amet'
-        ]);
-        Chapter::create([
-            'material_id' => 1,
-            'judul' => 'Bab 3',
-            'subjudul' => 'Subjudul',
-            'body' => 'Lorem ipsum dolor sit amet'
-        ]);
+        $materials = Material::all();
+        foreach($materials as $material) {
+            for($i = 1; $i <= 3; $i++) {
+                Chapter::create([
+                    'material_id' => $material->id,
+                    'judul' => 'Bab ' . $i,
+                    'subjudul' => 'Subjudul',
+                    'body' => 'Lorem ipsum dolor sit amet'
+                ]);
+            }
+        }
     }
 }

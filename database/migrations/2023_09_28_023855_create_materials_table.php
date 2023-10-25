@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->integer('material_type_id');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->string('title');
             $table->string('description')->nullable();
             $table->enum('type', ['teks', 'video']);

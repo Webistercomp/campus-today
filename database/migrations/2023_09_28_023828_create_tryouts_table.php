@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tryouts', function (Blueprint $table) {
             $table->id();
             $table->integer('packet_id');
+            $table->string('code')->unique();
             $table->string('name');
             $table->integer('time')->nullable();
             $table->string('description')->nullable();
