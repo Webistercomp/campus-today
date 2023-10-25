@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -26,38 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/materi/skd', function () {
-        return Inertia::render('Materi/Skd', ['title' => 'Materi SKD']);
-    })->name('materi.skd');
-    Route::get('/materi/skb', function () {
-        return Inertia::render('Materi/Skb', ['title' => 'Materi SKB']);
-    })->name('materi.skb');
-
-    Route::get('/materi/skd/teks', function () {
-        return Inertia::render('Materi/SkdTeks', ['title' => 'Materi Teks SKD']);
-    })->name('materi.skd.teks');
-    Route::get('/materi/skb/teks', function () {
-        return Inertia::render('Materi/SkbTeks', ['title' => 'Materi Teks SKB']);
-    })->name('materi.skb.teks');
-
-    Route::get('materi/skd/teks/twk', function () {
-        return Inertia::render('Materi/SkdTeksTwk', ['title' => 'TWK | Teks']);
-    })->name('materi.skd.teks.twk');
-
-    Route::get('/materi/skd/video', function () {
-        return Inertia::render('Materi/SkdVideo', ['title' => 'Materi Video SKD']);
-    })->name('materi.skd.video');
-    Route::get('/materi/skb/video', function () {
-        return Inertia::render('Materi/SkbVideo', ['title' => 'Materi Video SKB']);
-    })->name('materi.skb.video');
-
-    Route::get('/materi/skd/video/twk', function () {
-        return Inertia::render('Materi/SkdVideoTwk', ['title' => 'TWK | Video']);
-    })->name('materi.skd.video.twk');
-
-    Route::get('/materi/complete', function () {
-        return Inertia::render('Materi/Completed', ['title' => 'Completed', 'name' => 'Farhan Hikmatullah D']);
-    })->name('materi.complete');
+    Route::get('/materi/complete/{materialid}', [MaterialController::class, 'complete'])->name('material.complete');
+    Route::get('/materi/{type}', [MaterialController::class, 'materialType'])->name('material.type');
+    Route::get('/materi/{type}/teks', [MaterialController::class, 'materialTeks'])->name('material.type.teks');
+    Route::get('/materi/{type}/teks/{materialcode}/{id?}', [MaterialController::class, 'materialTeksSubtype'])->name('material.type.teks.subtype');
+    Route::get('/materi/{type}/video', [MaterialController::class, 'materialVideo'])->name('material.type.video');
+    Route::get('/materi/{type}/video/{materialcode}/{id?}', [MaterialController::class, 'materialVideoSubtype'])->name('material.type.video.subtype');
 
     Route::get('/beli-paket', function () {
         return Inertia::render('BeliPaket/index', ['title' => 'Beli Paket']);
@@ -104,3 +80,14 @@ Route::prefix('materiskd')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+Route::prefix('admin')->group(function() {
+    Route::get('login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
+    Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+    Route::middleware('checkAdmin')->group(function() {
+        Route::get('', [AdminController::class, 'index'])->name('admin.home');
+    });
+});

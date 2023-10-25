@@ -31,8 +31,6 @@ class DatabaseSeeder extends Seeder
             ParticipantSeeder::class,
             ArticleSeeder::class,
             InstagramFeedSeeder::class,
-
-            AdminSeeder::class,
         ]);
     }
 }

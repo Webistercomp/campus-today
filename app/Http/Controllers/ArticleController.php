@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Intervention\Image\Facades\Image;
 
 class ArticleController extends Controller
 {
@@ -12,7 +14,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Articles', [
+            'articles' => Article::all()
+        ]);
     }
 
     /**
@@ -28,7 +32,27 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => '',
+            'body' => 'required',
+            'image' => 'image'
+        ]);
+
+        $newArticle = new Article;
+        $newArticle->title = $request->title;
+        $newArticle->description = $request->description;
+        $newArticle->body = $request->body;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(300, 300)->save( storage_path('/uploads/' . $filename ) );
+            $newArticle->image = $filename;
+        };
+
+        $newArticle->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -36,7 +60,9 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return Inertia::render('Article', [
+            'article' => $article
+        ]);
     }
 
     /**
@@ -44,7 +70,9 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return Inertia::render('ArticleEdit', [
+            'article' => $article
+        ]);
     }
 
     /**
@@ -52,7 +80,20 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $newArticle = new Article;
+        $newArticle->title = $request->title;
+        $newArticle->description = $request->description;
+        $newArticle->body = $request->body;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(300, 300)->save( storage_path('/uploads/' . $filename ) );
+            $newArticle->image = $filename;
+        };
+
+        $newArticle->save();
+
+        return redirect()->back();
     }
 
     /**

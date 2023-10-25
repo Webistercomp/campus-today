@@ -56,7 +56,7 @@ export default function Dashboard({ auth, articles }) {
                 <h1 className="font-bold text-2xl">Mulai Belajar</h1>
                 <div className="flex gap-8 justify-between mt-6">
                     <Link
-                        href={route("materi.skd")}
+                        href={route("material.type", "skd")}
                         className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
                     >
                         <PoliceIcon className="basis-1/5 fill-curious-blue" />
@@ -73,7 +73,7 @@ export default function Dashboard({ auth, articles }) {
                         </div>
                     </Link>
                     <Link
-                        href={route("materi.skb")}
+                        href={route("material.type", "skb")}
                         className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
                     >
                         <BookIcon className="basis-1/5 fill-curious-blue" />
