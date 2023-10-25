@@ -28,12 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/materi/complete', [MaterialController::class, 'complete'])->name('material.complete');
+    Route::get('/materi/complete/{materialid}', [MaterialController::class, 'complete'])->name('material.complete');
     Route::get('/materi/{type}', [MaterialController::class, 'materialType'])->name('material.type');
     Route::get('/materi/{type}/teks', [MaterialController::class, 'materialTeks'])->name('material.type.teks');
     Route::get('/materi/{type}/teks/{materialcode}/{id?}', [MaterialController::class, 'materialTeksSubtype'])->name('material.type.teks.subtype');
     Route::get('/materi/{type}/video', [MaterialController::class, 'materialVideo'])->name('material.type.video');
-    Route::get('/materi/{type}/video/{subtype}', [MaterialController::class, 'materialVideoSubtype'])->name('material.type.video.subtype');
+    Route::get('/materi/{type}/video/{materialcode}/{id?}', [MaterialController::class, 'materialVideoSubtype'])->name('material.type.video.subtype');
 
     Route::get('/beli-paket', function () {
         return Inertia::render('BeliPaket/index', ['title' => 'Beli Paket']);
