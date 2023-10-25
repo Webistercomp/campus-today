@@ -50,9 +50,28 @@ Route::middleware('auth')->group(function () {
     Route::get('/beli-paket/friendly/checkout/verification', function () {
         return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
     })->name('belipaket.friendly.checkout.verification');
+
+    Route::get('/try-out', function () {
+        return Inertia::render('TryOut/TryOut', ['title' => 'TryOut']);
+    })->name('tryout');
+    Route::get('/try-out/skd', function () {
+        return Inertia::render('TryOut/TryOutSKD', ['title' => 'TryOut SKD']);
+    })->name('tryout.skd');
+    Route::get('/try-ouy/hasil', function () {
+        return Inertia::render('TryOut/Hasil', ['title' => 'Hasil TryOut']);
+    })->name('tryout.hasil');
+    Route::get('/try-out/confirm', function () {
+        return Inertia::render('TryOut/ConfirmTryOut', ['title' => 'Nama TryOut']);
+    })->name('tryout.confirm');
+    Route::get('/try-out/success', function () {
+        return Inertia::render('TryOut/TryOutSuccess', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
+    })->name('tryout.success');
+    Route::get('/try-out/failed', function () {
+        return Inertia::render('TryOut/TryOutFailed', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
+    })->name('tryout.failed');
 });
 
-Route::prefix('materiskd')->group(function() {
+Route::prefix('materiskd')->group(function () {
     Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
     Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');
     Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');

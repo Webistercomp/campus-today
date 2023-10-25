@@ -6,7 +6,7 @@
 
 @layer components {
     .tab-active {
-        @apply after:h-1 after:w-1/5 after:absolute after:bg-curious-blue after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:rounded-full;
+        @apply after:h-1 after:min-w-[20px] after:w-full after:max-w-[20%] after:absolute after:bg-curious-blue after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:rounded-full;
     }
 
     .materi {
@@ -42,7 +42,26 @@
         display: none;
     }
 
+    .gutter-stable {
+        scrollbar-gutter: stable;
+    }
+
     .custom-underline {
         @apply relative after:absolute after:h-1 after:w-1/2 after:bg-curious-blue after:rounded-full after:-bottom-2 after:left-1/2 after:-translate-x-1/2;
+    }
+
+    .list-lower-alpha {
+        list-style-type: lower-alpha;
+        @apply ml-6;
+    }
+
+    .list-upper-alpha {
+        list-style-type: upper-alpha;
+        @apply ml-6;
+    }
+
+    .list-stripe {
+        list-style-type: "-";
+        @apply ml-6;
     }
 }

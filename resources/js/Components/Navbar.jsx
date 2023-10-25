@@ -36,7 +36,7 @@ export default forwardRef(function Navbar({ isAuthed }, ref) {
 
     return (
         <nav
-            className="navbar fixed bg-twilight-blue shadow-lg px-28 z-50 top-0"
+            className="navbar fixed bg-white shadow-lg px-28 z-50 top-0"
             ref={ref}
         >
             <div className="flex justify-between w-full">
