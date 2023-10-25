@@ -58,7 +58,7 @@ export default function SkdTeksTwk({ title, type, material, chapters, chapter, n
                     </Link>
                 : 
                     <Link
-                        href={route("material.complete")}
+                        href={route("material.complete", material.id)}
                         className="btn btn-primary text-white capitalize mt-6 self-end px-6"
                     >
                         Lanjut &raquo;

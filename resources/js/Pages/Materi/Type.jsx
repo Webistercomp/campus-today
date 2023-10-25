@@ -3,7 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import DocRafiki from "@/images/document-rafiki.png";
 import WebinarRafiki from "@/images/webinar-rafiki.png";
 
-export default function SKD({ title }) {
+export default function SKD({ title, type }) {
     return (
         <AuthenticatedLayout>
             <Head title={title} />
@@ -23,7 +23,7 @@ export default function SKD({ title }) {
                 </h1>
                 <div className="flex gap-8 mt-6">
                     <Link
-                        href={route("material.type.teks", 'skd')}
+                        href={route("material.type.teks", type)}
                         className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all"
                     >
                         <img
@@ -42,7 +42,7 @@ export default function SKD({ title }) {
                         </div>
                     </Link>
                     <Link
-                        href={route("material.type.video", 'skd')}
+                        href={route("material.type.video", type)}
                         className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all"
                     >
                         <img
