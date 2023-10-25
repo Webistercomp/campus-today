@@ -13,13 +13,16 @@ export default function SKD({ title, type }) {
                     <li>
                         <Link href={route("dashboard")}>Dashboard</Link>
                     </li>
-                    <li>{title}</li>
+                    <li className="capitalize">
+                        {title}&nbsp;
+                        <span className="uppercase">{type}</span>
+                    </li>
                 </ul>
             </div>
 
             <section>
-                <h1 className="text-3xl text-curious-blue font-semibold">
-                    {title}
+                <h1 className="text-3xl text-curious-blue font-semibold capitalize">
+                    {title} <span className="uppercase">{type}</span>
                 </h1>
                 <div className="flex gap-8 mt-6">
                     <Link

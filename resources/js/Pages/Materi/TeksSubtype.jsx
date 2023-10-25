@@ -1,13 +1,23 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function SkdTeksTwk({ title, type, material, chapters, chapter, nextChapter}) {
+export default function SkdTeksTwk({
+    title,
+    type,
+    material,
+    chapters,
+    chapter,
+    nextChapter,
+}) {
     return (
         <AuthenticatedLayout>
             <Head title={title} />
 
             <section className="mt-4 w-1/5 float-left fixed top-28 pr-8 flex flex-col pb-8 h-[calc(100vh_-_200px)]">
-                <Link onClick={() => history.back()} className="link-hover">
+                <Link
+                    href={route("material.type.teks", [type])}
+                    className="link-hover"
+                >
                     &laquo; Kembali ke Materi
                 </Link>
 
@@ -16,28 +26,37 @@ export default function SkdTeksTwk({ title, type, material, chapters, chapter, n
                 </h1>
 
                 <div className="flex flex-col gap-2 mt-6 overflow-y-scroll scrollbar-hide flex-auto">
-                    {chapters.map(function(chap, i) {
-                        if(chap.id == chapter.id){
-                            return <a 
-                                className="btn materi materi-active capitalize"
-                                key={i}
-                                href={route('material.type.teks.subtype', [type, material.code, chap.id])}
-                            >
-                                {chap.judul}
-                            </a>;
-                        }
-                        else {
-                            return <a 
-                                className="btn materi capitalize"
-                                key={i}
-                                href={route('material.type.teks.subtype', [type, material.code, chap.id])}
-                            >
-                                {chap.judul}
-                            </a>;
-                        }
-
-                        }.bind())
-                    }
+                    {chapters.map(
+                        function (chap, i) {
+                            if (chap.id == chapter.id) {
+                                return (
+                                    <a
+                                        className="btn materi materi-active capitalize"
+                                        key={i}
+                                        href={route(
+                                            "material.type.teks.subtype",
+                                            [type, material.code, chap.id]
+                                        )}
+                                    >
+                                        {chap.judul}
+                                    </a>
+                                );
+                            } else {
+                                return (
+                                    <a
+                                        className="btn materi capitalize"
+                                        key={i}
+                                        href={route(
+                                            "material.type.teks.subtype",
+                                            [type, material.code, chap.id]
+                                        )}
+                                    >
+                                        {chap.judul}
+                                    </a>
+                                );
+                            }
+                        }.bind()
+                    )}
                 </div>
             </section>
 
@@ -45,25 +64,27 @@ export default function SkdTeksTwk({ title, type, material, chapters, chapter, n
                 <div>
                     <h5 className="judul-materi">{chapter.judul}</h5>
                     <h6 className="subjudul-materi">{chapter.subjudul}</h6>
-                    <p className="isi-materi">
-                        {chapter.body}
-                    </p>
+                    <p className="isi-materi">{chapter.body}</p>
                 </div>
-                {nextChapter ? 
+                {nextChapter ? (
                     <Link
-                        href={route("material.type.teks.subtype", [type, material.code, nextChapter.id])}
+                        href={route("material.type.teks.subtype", [
+                            type,
+                            material.code,
+                            nextChapter.id,
+                        ])}
                         className="btn btn-primary text-white capitalize mt-6 self-end px-6"
                     >
                         Lanjut &raquo;
                     </Link>
-                : 
+                ) : (
                     <Link
                         href={route("material.complete", material.id)}
                         className="btn btn-primary text-white capitalize mt-6 self-end px-6"
                     >
                         Lanjut &raquo;
                     </Link>
-                }
+                )}
             </section>
         </AuthenticatedLayout>
     );
