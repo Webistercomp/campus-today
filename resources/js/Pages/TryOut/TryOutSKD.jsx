@@ -5,9 +5,9 @@ import PaperFillIcon from "@/icons/PaperFillIcon";
 import PaperIcon from "@/icons/PaperIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function TryOutSKD({ title }) {
+export default function TryOutSKD({ auth, title }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">

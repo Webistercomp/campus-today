@@ -125,7 +125,7 @@ export default function TryOutContent() {
     const onClickSubmitAnswer = () => {};
 
     return (
-        <section>
+        <section className="mt-6">
             <div className="flex w-full items-center justify-between">
                 <h1 className="text-3xl text-curious-blue font-semibold">
                     Nama TryOut
@@ -256,7 +256,7 @@ export default function TryOutContent() {
                         <form method="dialog">
                             <button className="btn capitalize">Batal</button>
                         </form>
-                        <button className="btn btn-success capitalize mr-8">
+                        <button className="btn btn-success capitalize mr-8 text-white">
                             Kirim
                         </button>
                     </div>

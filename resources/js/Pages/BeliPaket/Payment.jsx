@@ -1,9 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Payment({ title, nama_paket }) {
+export default function Payment({ auth, title, nama_paket }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">
@@ -45,7 +45,14 @@ export default function Payment({ title, nama_paket }) {
                         />
                     </div>
                     <div className="flex justify-between mt-16">
-                        <button className="btn">Kembali</button>
+                        <Link
+                            href={route(
+                                `belipaket.${nama_paket.toLowerCase()}.checkout`
+                            )}
+                            className="btn"
+                        >
+                            Kembali
+                        </Link>
                         <Link
                             href={route(
                                 `belipaket.${nama_paket.toLowerCase()}.checkout.verification`

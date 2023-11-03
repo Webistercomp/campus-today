@@ -3,12 +3,12 @@ import PacketCard from "@/Components/PacketCard";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function BeliPaket({ title, packets }) {
+export default function BeliPaket({ auth, title, packets }) {
     const mandiriPacket = packets.filter((dt) => dt.type === "mandiri");
     const bimbelPacket = packets.filter((dt) => dt.type === "bimbel");
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">

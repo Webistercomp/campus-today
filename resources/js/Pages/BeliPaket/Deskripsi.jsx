@@ -4,7 +4,7 @@ import XIcon from "@/icons/XIcon";
 import { Head, Link } from "@inertiajs/react";
 import EWallet from "@/images/e-wallet-rafiki.png";
 
-export default function Deskripsi({ title, nama_paket }) {
+export default function Deskripsi({ auth, title, nama_paket }) {
     const deskripsiPaket = {
         type: "Friendly",
         price: 120000,
@@ -29,7 +29,7 @@ export default function Deskripsi({ title, nama_paket }) {
     };
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">

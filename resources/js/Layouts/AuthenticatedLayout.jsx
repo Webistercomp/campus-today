@@ -16,7 +16,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
         <div className="min-h-screen font-poppins bg-white overflow-x-clip">
             <Navbar isAuthed={true} user={user} ref={ref} />
 
-            <div className="pt-32 px-28 bg-white">{children}</div>
+            <div className="pt-24 px-28 bg-white">{children}</div>
 
             {route().current() === "dashboard" ? <Footer /> : ""}
         </div>

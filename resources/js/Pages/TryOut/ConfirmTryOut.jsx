@@ -3,11 +3,11 @@ import { Head, Link } from "@inertiajs/react";
 import { useState } from "react";
 import TryOutContent from "./TryOutContent";
 
-export default function ConfirmTryOut({ title }) {
+export default function ConfirmTryOut({ auth, title }) {
     const [isReady, setIsReady] = useState(false);
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             {/* Open the modal using document.getElementById('ID').showModal() method */}
@@ -34,7 +34,7 @@ export default function ConfirmTryOut({ title }) {
             </dialog>
 
             {!isReady ? (
-                <section>
+                <section className="mt-6">
                     <h1 className="text-3xl text-curious-blue font-semibold">
                         Soal TryOut 'Nama TryOut'
                     </h1>

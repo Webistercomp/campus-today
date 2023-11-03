@@ -53,7 +53,7 @@ export default function Dashboard({ auth, articles }) {
         >
             <Head title="Dashboard" />
 
-            <section className="bg-white py-14">
+            <section className="bg-white mt-6">
                 <h1 className="font-bold text-2xl">Mulai Belajar</h1>
                 <div className="flex gap-8 justify-between mt-6">
                     <Link
@@ -107,7 +107,7 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="bg-white py-14">
+            <section className="bg-white mt-12">
                 <div className="bg-gradient-to-b from-curious-blue-500 to-curious-blue-300 px-20 py-6 rounded-2xl flex justify-between items-center">
                     <div className="flex flex-col items-start gap-14 basis-1/2">
                         <h4 className="text-white text-4xl font-semibold">
@@ -128,7 +128,7 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="bg-white py-14">
+            <section className="bg-white mt-12">
                 <div>
                     <h1 className="font-bold text-2xl">
                         TryOut dan Tes Minat Bakat
@@ -182,7 +182,7 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-white">
+            <section className="px-36 mt-12 bg-white">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Kamu Nanya, Kami Jawab
                 </h1>
@@ -193,7 +193,7 @@ export default function Dashboard({ auth, articles }) {
                 </div>
             </section>
 
-            <section className="px-36 py-14 bg-white text-center">
+            <section className="px-36 mt-12 bg-white text-center">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Artikel
                 </h1>

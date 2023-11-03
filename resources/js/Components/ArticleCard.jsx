@@ -1,6 +1,6 @@
 export default function ArticleCard({ image, title, desc }) {
     return (
-        <div className="card w-full bg-base-100 shadow-xl text-left cursor-pointer">
+        <div className="card w-full max-w-md bg-base-100 shadow-xl text-left cursor-pointer">
             <figure>
                 <img
                     src={image}

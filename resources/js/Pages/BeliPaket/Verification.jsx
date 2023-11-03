@@ -2,9 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import EWallet from "@/images/e-wallet-rafiki.png";
 
-export default function Verification({ title, nama_paket }) {
+export default function Verification({ auth, title, nama_paket }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <section className="flex flex-col gap-4 max-w-3xl mx-auto text-center items-center">
@@ -23,8 +23,10 @@ export default function Verification({ title, nama_paket }) {
                     Whatsapp di bawah ini
                 </p>
                 <div className="flex flex-col gap-2 mt-4">
-                    <Link href={route("base")}>
-                        <button className="btn btn-primary w-full">Home</button>
+                    <Link href={route("dashboard")}>
+                        <button className="btn btn-primary w-full text-white">
+                            Home
+                        </button>
                     </Link>
                     <Link>
                         <button className="btn w-full">Chat Admin</button>

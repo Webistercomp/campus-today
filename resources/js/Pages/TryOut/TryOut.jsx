@@ -3,9 +3,9 @@ import { Head, Link } from "@inertiajs/react";
 import DocRaf from "@/images/document-rafiki.png";
 import WebRaf from "@/images/webinar-rafiki.png";
 
-export default function TryOut({ title }) {
+export default function TryOut({ auth, title }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">

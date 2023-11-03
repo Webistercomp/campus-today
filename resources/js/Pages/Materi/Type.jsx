@@ -3,9 +3,9 @@ import { Head, Link } from "@inertiajs/react";
 import DocRafiki from "@/images/document-rafiki.png";
 import WebinarRafiki from "@/images/webinar-rafiki.png";
 
-export default function SKD({ title, type }) {
+export default function SKD({ auth, title, type }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">

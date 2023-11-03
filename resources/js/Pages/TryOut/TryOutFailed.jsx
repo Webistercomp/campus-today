@@ -2,9 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import WebinarPana from "@/images/webinar-pana.png";
 
-export default function TryOutFailed({ title, name }) {
+export default function TryOutFailed({ auth, title, name }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <section className="mx-auto max-w-lg text-center mt-10">

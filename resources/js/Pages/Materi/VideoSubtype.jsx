@@ -2,6 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
 export default function SkdVideoTwk({
+    auth,
     type,
     material,
     chapters,
@@ -9,7 +10,7 @@ export default function SkdVideoTwk({
     nextChapter,
 }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={material.judul} />
 
             <section className="mt-4 w-1/5 float-left fixed top-28 pr-8 flex flex-col pb-8 h-[calc(100vh_-_200px)]">

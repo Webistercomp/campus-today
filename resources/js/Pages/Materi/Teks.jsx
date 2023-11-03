@@ -2,9 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DocumentIcon from "@/icons/DocumentIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function SKdTeks({ title, type, materials }) {
+export default function SKdTeks({ auth, title, type, materials }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">

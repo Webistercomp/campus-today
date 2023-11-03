@@ -2,9 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import CompletedImg from "@/images/completed-pana.png";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Completed({ title, user, material }) {
+export default function Completed({ auth, title, user, material }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <section className="mx-auto max-w-lg text-center mt-10">

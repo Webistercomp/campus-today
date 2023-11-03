@@ -3,9 +3,9 @@ import DocumentIcon from "@/icons/DocumentIcon";
 import PlayIcon from "@/icons/PlayIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function SkdVideo({ title, type, materials }) {
+export default function SkdVideo({ auth, title, type, materials }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">
