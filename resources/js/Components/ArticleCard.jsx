@@ -1,6 +1,6 @@
 export default function ArticleCard({ image, title, desc }) {
     return (
-        <div className="card w-96 bg-base-100 shadow-xl text-left cursor-pointer">
+        <div className="card w-full bg-base-100 shadow-xl text-left cursor-pointer">
             <figure>
                 <img
                     src={image}
@@ -10,9 +10,7 @@ export default function ArticleCard({ image, title, desc }) {
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{title}</h2>
-                <p>
-                    {desc}
-                </p>
+                <p className="line-clamp-3">{desc}</p>
             </div>
         </div>
     );
