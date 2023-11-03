@@ -8,6 +8,7 @@ import { Head, Link, router } from "@inertiajs/react";
 import KnowIllus from "@/images/illus-knowledge.png";
 import LearningAmico from "@/images/learning-amico.png";
 import ExamBro from "@/images/exams-bro.png";
+import LearningBro from "@/images/learning-bro.png";
 import FAQCard from "@/Components/FAQCard";
 import ArticleCard from "@/Components/ArticleCard";
 
@@ -129,7 +130,9 @@ export default function Dashboard({ auth, articles }) {
 
             <section className="bg-white py-14">
                 <div>
-                    <h1 className="font-bold text-2xl">TryOut</h1>
+                    <h1 className="font-bold text-2xl">
+                        TryOut dan Tes Minat Bakat
+                    </h1>
                     <p className="mt-2">
                         Uji Kemampuan Anda Dengan Soal Latihan
                     </p>
@@ -137,12 +140,25 @@ export default function Dashboard({ auth, articles }) {
                 <div className="flex gap-4 mt-8">
                     <div className="flex flex-col basis-1/2 bg-white shadow-xl py-10 gap-2 items-center rounded-xl">
                         <img
+                            src={ExamBro}
+                            alt="exam-bro"
+                            className="basis-4/5"
+                        />
+                        <h3 className="uppercase font-semibold text-xl">
+                            Event TryOut
+                        </h3>
+                        <button className="btn btn-primary capitalize text-white px-8">
+                            Mulai
+                        </button>
+                    </div>
+                    <div className="flex flex-col basis-1/2 bg-white shadow-xl py-10 gap-2 items-center rounded-xl">
+                        <img
                             src={LearningAmico}
                             alt="learning-amico"
                             className="basis-4/5"
                         />
                         <h3 className="uppercase font-semibold text-xl">
-                            TryOut Gratis
+                            TryOut Gratis & Platinum
                         </h3>
                         <Link href={route("tryout")}>
                             <button className="btn btn-primary capitalize text-white px-8">
@@ -152,12 +168,12 @@ export default function Dashboard({ auth, articles }) {
                     </div>
                     <div className="flex flex-col basis-1/2 bg-white shadow-xl py-10 gap-2 items-center rounded-xl">
                         <img
-                            src={ExamBro}
-                            alt="exam-bro"
+                            src={LearningBro}
+                            alt="learning-bro"
                             className="basis-4/5"
                         />
                         <h3 className="uppercase font-semibold text-xl">
-                            Event TryOut
+                            Tes Minat Bakat
                         </h3>
                         <button className="btn btn-primary capitalize text-white px-8">
                             Mulai
