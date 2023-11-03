@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Packet;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,7 +25,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/materi/{type}/video/{materialcode}/{id?}', [MaterialController::class, 'materialVideoSubtype'])->name('material.type.video.subtype');
 
     Route::get('/beli-paket', function () {
-        return Inertia::render('BeliPaket/index', ['title' => 'Beli Paket']);
+        return Inertia::render('BeliPaket/Index', ['title' => 'Beli Paket', 'packets' => Packet::all()]);
     })->name('belipaket');
     Route::get('/beli-paket/friendly', function () {
         return Inertia::render('BeliPaket/Deskripsi', ['title' => 'Paket Friendly', 'nama_paket' => 'Friendly']);
@@ -69,6 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/try-out/failed', function () {
         return Inertia::render('TryOut/TryOutFailed', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
     })->name('tryout.failed');
+
+    Route::get('/article', function () {
+        return Inertia::render('Article', ['title' => 'Artikel']);
+    })->name('article');
 });
 
 Route::prefix('materiskd')->group(function () {
@@ -82,12 +87,12 @@ Route::prefix('materiskd')->group(function () {
 require __DIR__ . '/auth.php';
 
 
-Route::prefix('admin')->group(function() {
+Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');
     Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-    Route::middleware('checkAdmin')->group(function() {
+    Route::middleware('checkAdmin')->group(function () {
         Route::get('', [AdminController::class, 'index'])->name('admin.home');
     });
 });
