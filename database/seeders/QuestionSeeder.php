@@ -16,6 +16,17 @@ class QuestionSeeder extends Seeder
         Question::create([
             'tryout_id' => 1,
             'question' => 'What is the meaning of life?',
+            'type' => 'twk'
+        ]);
+        Question::create([
+            'tryout_id' => 1,
+            'question' => 'Are you having existentialism crisis?',
+            'type' => 'tiu'
+        ]);
+        Question::create([
+            'tryout_id' => 1,
+            'question' => 'Why are you doing all this?',
+            'type' => 'tkp'
         ]);
     }
 }

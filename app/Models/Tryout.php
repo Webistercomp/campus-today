@@ -9,8 +9,8 @@ class Tryout extends Model
 {
     use HasFactory;
 
-    function packet() {
-        return $this->belongsTo(Packet::class);
+    function materialType() {
+        return $this->belongsTo(MaterialType::class);
     }
 
     function questions() {

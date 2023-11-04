@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Timer from "@/Components/Timer";
 
-export default function TryOutContent() {
+export default function Test() {
     const [question, setQuestion] = useState(() => [
         {
             no: 1,

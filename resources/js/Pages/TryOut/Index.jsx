@@ -22,7 +22,7 @@ export default function TryOut({ title }) {
                     {title}
                 </h1>
                 <div className="grid grid-cols-2 gap-4 mt-6">
-                    <Link href={route("tryout.skd")}>
+                    <Link href={route("tryout.type", "skd")}>
                         <div className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
                             <img
                                 src={DocRaf}
@@ -40,22 +40,24 @@ export default function TryOut({ title }) {
                             </div>
                         </div>
                     </Link>
-                    <div className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
-                        <img
-                            src={WebRaf}
-                            alt=""
-                            className="basis-1/5 aspect-auto w-40"
-                        />
-                        <div className="flex flex-col basis-4/5 gap-2 pr-20">
-                            <h4 className="uppercase text-black font-semibold text-2xl">
-                                TryOut SKB
-                            </h4>
-                            <p className="text-curious-blue">
-                                Kerjain SKB sesuai bidang formasi yang kamu
-                                pilih
-                            </p>
+                    <Link href={route("tryout.type", "skb")}>
+                        <div className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
+                            <img
+                                src={WebRaf}
+                                alt=""
+                                className="basis-1/5 aspect-auto w-40"
+                            />
+                            <div className="flex flex-col basis-4/5 gap-2 pr-20">
+                                <h4 className="uppercase text-black font-semibold text-2xl">
+                                    TryOut SKB
+                                </h4>
+                                <p className="text-curious-blue">
+                                    Kerjain SKB sesuai bidang formasi yang kamu
+                                    pilih
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                     <Link href={route("tryout.hasil")}>
                         <div className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
                             <img
