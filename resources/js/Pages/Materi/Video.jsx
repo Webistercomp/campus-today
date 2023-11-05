@@ -3,7 +3,7 @@ import DocumentIcon from "@/icons/DocumentIcon";
 import PlayIcon from "@/icons/PlayIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function SkdVideo({ title, type, materials }) {
+export default function SkdVideo({ title, type, materialType, materials }) {
     return (
         <AuthenticatedLayout>
             <Head title={title} />
@@ -14,7 +14,7 @@ export default function SkdVideo({ title, type, materials }) {
                         <Link href={route("dashboard")}>Dashboard</Link>
                     </li>
                     <li>
-                        <Link href={route("material.type", 'skd')}>Materi SKD</Link>
+                        <Link href={route("material.type", type)}>{materialType.name}</Link>
                     </li>
                     <li>{title}</li>
                 </ul>
@@ -25,26 +25,28 @@ export default function SkdVideo({ title, type, materials }) {
                     {title}
                 </h1>
 
-                <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
-                    <div className="flex gap-14 w-full">
-                        <a className="text-center relative cursor-pointer tab-active">
-                            Tes Wawasan Kebangsaan
-                        </a>
-                        <a className="text-center relative cursor-pointer">
-                            Tes Intelegensia Umum
-                        </a>
-                        <a className="text-center relative cursor-pointer">
-                            Tes Karakteristik Pribadi
-                        </a>
+                {type == 'videoseries' ? '' :  
+                    <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
+                        <div className="flex gap-14 w-full">
+                            <a className="text-center relative cursor-pointer tab-active">
+                                Tes Wawasan Kebangsaan
+                            </a>
+                            <a className="text-center relative cursor-pointer">
+                                Tes Intelegensia Umum
+                            </a>
+                            <a className="text-center relative cursor-pointer">
+                                Tes Karakteristik Pribadi
+                            </a>
+                        </div>
+                        <div className="form-control">
+                            <input
+                                type="text"
+                                placeholder="Cari"
+                                className="input input-bordered w-24 md:w-auto"
+                            />
+                        </div>
                     </div>
-                    <div className="form-control">
-                        <input
-                            type="text"
-                            placeholder="Cari"
-                            className="input input-bordered w-24 md:w-auto"
-                        />
-                    </div>
-                </div>
+                }
 
                 <div className="flex gap-6 mt-6">
                     {materials.map((material, i) => {                      

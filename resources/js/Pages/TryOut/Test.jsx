@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Timer from "@/Components/Timer";
 
-export default function Test() {
+export default function Test({title, user, tryout, tryoutHistory, timeLeft}) {
     const [question, setQuestion] = useState(() => [
         {
             no: 1,
@@ -83,6 +83,7 @@ export default function Test() {
         },
     ]);
     const [active, setActive] = useState(1);
+    let no = 1;
     const [activeQuestion, setActiveQuestion] = useState(
         question.filter((q) => q.no === active)[0]
     );
@@ -128,10 +129,10 @@ export default function Test() {
         <section>
             <div className="flex w-full items-center justify-between">
                 <h1 className="text-3xl text-curious-blue font-semibold">
-                    Nama TryOut
+                    {title}
                 </h1>
                 <div className="border-2 border-curious-blue-300 px-6 py-1 rounded-lg">
-                    <Timer durationMinutes={110} />
+                    <Timer durationMinutes={timeLeft} /> {/* timeLeft in seconds */}
                 </div>
             </div>
 
@@ -151,7 +152,7 @@ export default function Test() {
                             key={i}
                             onClick={() => setActive(q.no)}
                         >
-                            {q.no}
+                            {no++}
                         </div>
                     ))}
                 </div>

@@ -52,12 +52,13 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
     })->name('belipaket.friendly.checkout.verification');
 
-    Route::get('/try-out', [TryoutController::class, 'index'])->name('tryout');
-    Route::get('/try-ouy/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
-    Route::get('/try-out/success', [TryoutController::class, 'success'])->name('tryout.success');
-    Route::get('/try-out/failed', [TryoutController::class, 'failed'])->name('tryout.failed');
-    Route::get('/try-out/test/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
-    Route::get('/try-out/{type}', [TryoutController::class, 'type'])->name('tryout.type');
+    Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
+    Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
+    Route::get('/tryout/success', [TryoutController::class, 'success'])->name('tryout.success');
+    Route::get('/tryout/failed', [TryoutController::class, 'failed'])->name('tryout.failed');
+    Route::get('/tryout/test/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
+    Route::get('/tryout/{type}', [TryoutController::class, 'type'])->name('tryout.type');
+    Route::post('/tryout/{user_id}/{tryout_id}', [TryoutController::class, 'start_tryout'])->name('tryout.start');
 });
 
 Route::prefix('materiskd')->group(function () {

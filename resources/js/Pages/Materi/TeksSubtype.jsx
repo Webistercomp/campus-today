@@ -7,7 +7,7 @@ export default function SkdTeksTwk({ title, type, material, chapters, chapter, n
             <Head title={title} />
 
             <section className="mt-4 w-1/5 float-left fixed top-28 pr-8 flex flex-col pb-8 h-[calc(100vh_-_200px)]">
-                <Link onClick={() => history.back()} className="link-hover">
+                <Link href={material.type == 'teks' ? route('material.type.teks', type) : route('material.type.video', type)} className="link-hover">
                     &laquo; Kembali ke Materi
                 </Link>
 

@@ -3,8 +3,9 @@ import { Head, Link } from "@inertiajs/react";
 import { useState } from "react";
 import TryOutContent from "./Test";
 
-export default function ConfirmTryOut({ title, tryout }) {
+export default function ConfirmTryOut({ title, user_id, tryout }) {
     const [isReady, setIsReady] = useState(false);
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     return (
         <AuthenticatedLayout>
@@ -22,12 +23,11 @@ export default function ConfirmTryOut({ title, tryout }) {
                     <div className="modal-action">
                         <form method="dialog" className="flex gap-4">
                             <button className="btn">Tidak</button>
-                            <Link href={route("tryout.type", tryout.material_type.code)}>
+                            <Link href={route("tryout.start", [user_id, tryout.id])} method="POST">
                                 <button className="btn btn-primary">
                                     Mulai
                                 </button>
                             </Link>
-                                
                         </form>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ export default function ConfirmTryOut({ title, tryout }) {
             {!isReady ? (
                 <section>
                     <h1 className="text-3xl text-curious-blue font-semibold">
-                        Soal TryOut 'Nama TryOut'
+                        Soal TryOut {tryout.name}
                     </h1>
 
                     <div className="mt-6">
@@ -53,8 +53,7 @@ export default function ConfirmTryOut({ title, tryout }) {
                                         Tes Intelegensia Umum (TIU) : {tryout.jumlah_tiu} Soal
                                     </li>
                                     <li>
-                                        Tes Karakteristik Pribadi (TKP) : {tryout.jumlah_tkp}
-                                        Soal
+                                        Tes Karakteristik Pribadi (TKP) : {tryout.jumlah_tkp} Soal
                                     </li>
                                 </ol>
                             </li>

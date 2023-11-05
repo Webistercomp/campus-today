@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/react";
 export default function SkdVideoTwk({ type, material, chapters, chapter, nextChapter }) {
     return (
         <AuthenticatedLayout>
-            <Head title={material.judul} />
+            <Head title={material.title} />
 
             <section className="mt-4 w-1/5 float-left fixed top-28 pr-8 flex flex-col pb-8 h-[calc(100vh_-_200px)]">
                 <Link className="link-hover" onClick={() => history.back()}>
@@ -12,7 +12,7 @@ export default function SkdVideoTwk({ type, material, chapters, chapter, nextCha
                 </Link>
 
                 <h1 className="text-3xl text-curious-blue font-semibold mt-4">
-                    {material.judul}
+                    {material.title}
                 </h1>
 
                 <div className="flex flex-col gap-2 mt-6 overflow-y-scroll scrollbar-hide flex-auto">

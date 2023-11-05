@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\MaterialType;
 use App\Models\Packet;
 use Inertia\Inertia;
 
@@ -18,8 +19,10 @@ class HomeController extends Controller
     }
 
     function dashboard() {
+        $materialTypes = MaterialType::all();
         $articles = Article::all();
         return Inertia::render('Dashboard', [
+            'materialTypes' => $materialTypes,
             'articles' => $articles
         ]);
     }

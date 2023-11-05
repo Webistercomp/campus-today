@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MaterialType;
 use App\Models\Tryout;
+use App\Models\TryoutHistory;
+use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TryoutController extends Controller
@@ -14,7 +18,11 @@ class TryoutController extends Controller
      */
     public function index()
     {
-        return Inertia::render('TryOut/Index', ['title' => 'TryOut']);
+        $materialTypes = MaterialType::all();
+        return Inertia::render('TryOut/Index', [
+            'title' => 'TryOut',
+            'materialTypes' => $materialTypes
+        ]);
     }
 
     public function hasil() {
@@ -22,15 +30,49 @@ class TryoutController extends Controller
     }
 
     public function confirm($id) {
+        $user = Auth::user();
         $tryout = Tryout::with('materialType', 'questions.answers')->find($id);
+        $tryoutHistory = TryoutHistory::where('user_id', $user->id)
+                        ->where('tryout_id', $tryout->id)
+                        ->first();
+        if($tryoutHistory) {
+            $finishTimestamp = Carbon::parse($tryoutHistory->finish_timestamp);
+            $now = Carbon::now();
+            $timeLeft = $finishTimestamp->diffInSeconds($now); // seconds
+            if($now <= $finishTimestamp) {
+                return Inertia::render('TryOut/Test', [
+                    'title' => 'Nama Tryout',
+                    'user' => $user,
+                    'tryout' => $tryout,
+                    'tryoutHistory' => $tryoutHistory,
+                    'timeLeft' => $timeLeft,
+                ]);
+            }
+        }
+
         $tryout->jumlah_soal = $tryout->questions->count();
         $tryout->jumlah_twk = $tryout->questions->where('type', 'twk')->count();
         $tryout->jumlah_tiu = $tryout->questions->where('type', 'tiu')->count();
         $tryout->jumlah_tkp = $tryout->questions->where('type', 'tkp')->count();
         return Inertia::render('TryOut/Confirm', [
             'title' => 'Nama TryOut',
+            'user_id' => $user->id,
             'tryout' => $tryout,
         ]);
+    }
+
+    public function start_tryout($user_id, $tryout_id) {
+        $tryout = Tryout::find($tryout_id);
+        $tryout_time = $tryout->time;
+        $start = Carbon::now();
+        $finish = Carbon::now()->addMinutes($tryout_time);
+        TryoutHistory::create([
+            'user_id' => $user_id,
+            'tryout_id' => $tryout_id,
+            'start_timestamp' => $start->toDateTimeString(),
+            'finish_timestamp' => $finish->toDateTimeString(),
+        ]);
+        return redirect()->route('tryout.confirm', $tryout_id);
     }
 
     public function success() {

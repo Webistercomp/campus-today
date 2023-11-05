@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Material;
+use App\Models\MaterialType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -11,6 +12,9 @@ use Inertia\Inertia;
 class MaterialController extends Controller
 {
     function materialType($type) {
+        if($type == "videoseries") {
+            return redirect()->route('material.type.video', $type);
+        }
         return Inertia::render('Materi/Type', [
             'title' => 'Materi SKD', 
             'type' => $type
@@ -25,7 +29,7 @@ class MaterialController extends Controller
                     ->where('type', 'teks')
                     ->get();
         return Inertia::render('Materi/Teks', [
-            'title' => 'Materi Teks SKD',
+            'title' => 'Judul',
             'type' => $type,
             'materials' => $materials,
         ]);
@@ -64,6 +68,7 @@ class MaterialController extends Controller
     }
 
     function materialVideo($type) {
+        $materialType = MaterialType::where('code', $type)->first();
         $materials = Material::with('materialType')
                     ->whereHas('materialType', function($q) use ($type) {
                         $q->where('code', $type);
@@ -71,8 +76,9 @@ class MaterialController extends Controller
                     ->where('type', 'video')
                     ->get();
         return Inertia::render('Materi/Video', [
-            'title' => 'Materi Video SKD',
+            'title' => $materialType->name,
             'type' => $type,
+            'materialType' => $materialType,
             'materials' => $materials
         ]);
     }
