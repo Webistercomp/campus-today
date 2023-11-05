@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('video_types', function (Blueprint $table) {
+        Schema::create('tryout_histories', function (Blueprint $table) {
             $table->id();
-            $table->integer('packet_id');
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->integer('user_id');
+            $table->integer('tryout_id');
+            $table->timestamp('start_timestamp')->nullable();
+            $table->timestamp('finish_timestamp')->nullable();
+            $table->integer('score')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('video_types');
+        Schema::dropIfExists('tryout_histories');
     }
 };

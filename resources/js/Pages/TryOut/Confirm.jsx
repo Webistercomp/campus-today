@@ -1,10 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import { useState } from "react";
-import TryOutContent from "./TryOutContent";
+import TryOutContent from "./Test";
 
-export default function ConfirmTryOut({ auth, title }) {
+export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
     const [isReady, setIsReady] = useState(false);
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -22,12 +23,11 @@ export default function ConfirmTryOut({ auth, title }) {
                     <div className="modal-action">
                         <form method="dialog" className="flex gap-4">
                             <button className="btn">Tidak</button>
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => setIsReady(!isReady)}
-                            >
-                                Mulai
-                            </button>
+                            <Link href={route("tryout.start", [user_id, tryout.id])} method="POST">
+                                <button className="btn btn-primary">
+                                    Mulai
+                                </button>
+                            </Link>
                         </form>
                     </div>
                 </div>
@@ -36,25 +36,24 @@ export default function ConfirmTryOut({ auth, title }) {
             {!isReady ? (
                 <section className="mt-6">
                     <h1 className="text-3xl text-curious-blue font-semibold">
-                        Soal TryOut 'Nama TryOut'
+                        Soal TryOut {tryout.name}
                     </h1>
 
                     <div className="mt-6">
                         <ol className="list-decimal list-inside [&>li]:mb-4">
-                            <li>Waktu pengerjaan soal Try Out SKD 110 Menit</li>
+                            <li>Waktu pengerjaan soal Try Out SKD {tryout.time} Menit</li>
                             <li>
-                                Jumlah soal SKD 110 yang terdiri dari 3 (tiga)
+                                Jumlah soal SKD {tryout.jumlah_soal} soal, yang terdiri dari 3 (tiga)
                                 bagian sub tes antara lain:
                                 <ol className="list-inside list-lower-alpha">
                                     <li>
-                                        Tes Wawasan Kebangsaan (TWK) : 30 Soal
+                                        Tes Wawasan Kebangsaan (TWK) : {tryout.jumlah_twk} Soal
                                     </li>
                                     <li>
-                                        Tes Intelegensia Umum (TIU) : 35 Soal
+                                        Tes Intelegensia Umum (TIU) : {tryout.jumlah_tiu} Soal
                                     </li>
                                     <li>
-                                        Tes Karakteristik Pribadi (TKP) : 45
-                                        Soal
+                                        Tes Karakteristik Pribadi (TKP) : {tryout.jumlah_tkp} Soal
                                     </li>
                                 </ol>
                             </li>
@@ -86,7 +85,7 @@ export default function ConfirmTryOut({ auth, title }) {
                     </div>
 
                     <div className="flex gap-4">
-                        <Link href={route("tryout.skd")}>
+                        <Link href={route("tryout.type", tryout.material_type.code)}>
                             <button className="btn capitalize">
                                 &laquo; Kembali
                             </button>

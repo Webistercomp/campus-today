@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Answer;
+use App\Models\Question;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,10 +14,16 @@ class AnswerSeeder extends Seeder
      */
     public function run(): void
     {
-        Answer::create([
-            'question_id' => 1,
-            'answer' => '42',
-            'is_correct' => true,
-        ]); 
+        $questions = Question::all();
+        foreach($questions as $question) {
+            $correct_answer = rand(0, 4);
+            for($i=0; $i<4; $i++) {
+                Answer::create([
+                    'question_id' => $question->id,
+                    'answer' => 'Jawaban ' . $i,
+                    'is_correct' => ($correct_answer == $i ? true : false),
+                ]); 
+            }
+        }
     }
 }

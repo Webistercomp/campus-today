@@ -9,7 +9,7 @@ class Video extends Model
 {
     use HasFactory;
 
-    function videoType() {
-        return $this->belongsTo(VideoType::class);
+    function materialType() {
+        return $this->belongsTo(MaterialType::class);
     }
 }

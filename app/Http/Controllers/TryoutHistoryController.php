@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VideoType;
+use App\Models\TryoutHistory;
 use Illuminate\Http\Request;
 
-class VideoTypeController extends Controller
+class TryoutHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class VideoTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(VideoType $videoType)
+    public function show(TryoutHistory $tryoutHistory)
     {
         //
     }
@@ -42,7 +42,7 @@ class VideoTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(VideoType $videoType)
+    public function edit(TryoutHistory $tryoutHistory)
     {
         //
     }
@@ -50,7 +50,7 @@ class VideoTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, VideoType $videoType)
+    public function update(Request $request, TryoutHistory $tryoutHistory)
     {
         //
     }
@@ -58,7 +58,7 @@ class VideoTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(VideoType $videoType)
+    public function destroy(TryoutHistory $tryoutHistory)
     {
         //
     }

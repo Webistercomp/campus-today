@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DocumentIcon from "@/icons/DocumentIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function SKdTeks({ auth, title, type, materials }) {
+export default function Teks({ auth, title, type, materials }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />

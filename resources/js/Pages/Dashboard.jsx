@@ -12,7 +12,7 @@ import LearningBro from "@/images/learning-bro.png";
 import FAQCard from "@/Components/FAQCard";
 import ArticleCard from "@/Components/ArticleCard";
 
-export default function Dashboard({ auth, articles }) {
+export default function Dashboard({ auth, articles, materialTypes }) {
     const FAQ = [
         {
             question: "Bagaimana cara membuat akun di Campus Today?",
@@ -56,54 +56,26 @@ export default function Dashboard({ auth, articles }) {
             <section className="bg-white mt-6">
                 <h1 className="font-bold text-2xl">Mulai Belajar</h1>
                 <div className="flex gap-8 justify-between mt-6">
-                    <Link
-                        href={route("material.type", "skd")}
-                        className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
-                    >
-                        <PoliceIcon className="basis-1/5 fill-curious-blue" />
-                        <div className="basis-4/5 flex flex-col justify-center gap-4">
-                            <h4 className="text-xl font-semibold">
-                                MATERI SKD
-                            </h4>
-                            <p className="text-curious-blue font-semibold flex items-end gap-6">
-                                Belajar{" "}
-                                <span>
-                                    <ArrowRightIcon />
-                                </span>
-                            </p>
-                        </div>
-                    </Link>
-                    <Link
-                        href={route("material.type", "skb")}
-                        className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
-                    >
-                        <BookIcon className="basis-1/5 fill-curious-blue" />
-                        <div className="basis-4/5 flex flex-col justify-center gap-4">
-                            <h4 className="text-xl font-semibold">
-                                MATERI SKB
-                            </h4>
-                            <p className="text-curious-blue font-semibold flex items-end gap-6">
-                                Belajar{" "}
-                                <span>
-                                    <ArrowRightIcon />
-                                </span>
-                            </p>
-                        </div>
-                    </Link>
-                    <div className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150">
-                        <VideoPlayIcon className="basis-1/5 fill-curious-blue" />
-                        <div className="basis-4/5 flex flex-col justify-center gap-4">
-                            <h4 className="text-xl font-semibold">
-                                VIDEO SERIES
-                            </h4>
-                            <p className="text-curious-blue font-semibold flex items-end gap-6">
-                                Belajar{" "}
-                                <span>
-                                    <ArrowRightIcon />
-                                </span>
-                            </p>
-                        </div>
-                    </div>
+                    {materialTypes.map((materialType, i) => {
+                        return <Link
+                            href={route("material.type", materialType.code)}
+                            className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
+                            key={i}
+                        >
+                            <PoliceIcon className="basis-1/5 fill-curious-blue" />
+                            <div className="basis-4/5 flex flex-col justify-center gap-4">
+                                <h4 className="text-xl font-semibold">
+                                    {materialType.name}
+                                </h4>
+                                <p className="text-curious-blue font-semibold flex items-end gap-6">
+                                    Belajar{" "}
+                                    <span>
+                                        <ArrowRightIcon />
+                                    </span>
+                                </p>
+                            </div>
+                        </Link>;
+                    })}
                 </div>
             </section>
 

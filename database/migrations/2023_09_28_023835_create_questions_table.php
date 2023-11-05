@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('tryout_id');
             $table->string('question');
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

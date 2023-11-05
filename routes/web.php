@@ -6,6 +6,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Packet;
+use App\Http\Controllers\TryoutController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -52,24 +53,13 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
     })->name('belipaket.friendly.checkout.verification');
 
-    Route::get('/try-out', function () {
-        return Inertia::render('TryOut/TryOut', ['title' => 'TryOut']);
-    })->name('tryout');
-    Route::get('/try-out/skd', function () {
-        return Inertia::render('TryOut/TryOutSKD', ['title' => 'TryOut SKD']);
-    })->name('tryout.skd');
-    Route::get('/try-ouy/hasil', function () {
-        return Inertia::render('TryOut/Hasil', ['title' => 'Hasil TryOut']);
-    })->name('tryout.hasil');
-    Route::get('/try-out/confirm', function () {
-        return Inertia::render('TryOut/ConfirmTryOut', ['title' => 'Nama TryOut']);
-    })->name('tryout.confirm');
-    Route::get('/try-out/success', function () {
-        return Inertia::render('TryOut/TryOutSuccess', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
-    })->name('tryout.success');
-    Route::get('/try-out/failed', function () {
-        return Inertia::render('TryOut/TryOutFailed', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
-    })->name('tryout.failed');
+    Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
+    Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
+    Route::get('/tryout/success', [TryoutController::class, 'success'])->name('tryout.success');
+    Route::get('/tryout/failed', [TryoutController::class, 'failed'])->name('tryout.failed');
+    Route::get('/tryout/test/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
+    Route::get('/tryout/{type}', [TryoutController::class, 'type'])->name('tryout.type');
+    Route::post('/tryout/{user_id}/{tryout_id}', [TryoutController::class, 'start_tryout'])->name('tryout.start');
 
     Route::get('/article', function () {
         return Inertia::render('Article', ['title' => 'Artikel']);

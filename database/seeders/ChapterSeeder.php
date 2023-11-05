@@ -19,7 +19,7 @@ class ChapterSeeder extends Seeder
             for($i = 1; $i <= 3; $i++) {
                 Chapter::create([
                     'material_id' => $material->id,
-                    'judul' => 'Bab ' . $i,
+                    'judul' => $material->title . ' Bab ' . $i,
                     'subjudul' => 'Subjudul',
                     'body' => 'Lorem ipsum dolor sit amet'
                 ]);
