@@ -2,9 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import DoneRafiki from "@/images/done-rafiki.png";
 
-export default function TryOutSuccess({ title, name }) {
+export default function TryOutSuccess({ auth, title, name }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <section className="mx-auto max-w-lg text-center mt-10">

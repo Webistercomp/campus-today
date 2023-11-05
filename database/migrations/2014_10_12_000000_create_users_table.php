@@ -19,6 +19,14 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->default(0);
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('nohp')->nullable();
+            $table->string('pekerjaan')->nullable();
+            $table->enum('jenis_kelamin', ['Pria', 'Wanita'])->nullable();
+            $table->string('kota_kabupaten')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('pendidikan_terakhir')->nullable();
+            $table->string('institusi')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

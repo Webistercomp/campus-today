@@ -4,9 +4,9 @@ import ExamIcon from "@/icons/ExamIcon";
 import ClockFillIcon from "@/icons/ClockFillIcon";
 import PaperFillIcon from "@/icons/PaperFillIcon";
 
-export default function Hasil({ title }) {
+export default function Hasil({ auth, title }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">

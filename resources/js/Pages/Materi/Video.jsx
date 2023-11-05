@@ -3,9 +3,9 @@ import DocumentIcon from "@/icons/DocumentIcon";
 import PlayIcon from "@/icons/PlayIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function SkdVideo({ title, type, materialType, materials }) {
+export default function SkdVideo({ auth, title, type, materialType, materials }) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <div className="text-sm breadcrumbs my-6">
@@ -16,13 +16,12 @@ export default function SkdVideo({ title, type, materialType, materials }) {
                     <li>
                         <Link href={route("material.type", type)}>{materialType.name}</Link>
                     </li>
-                    <li>{title}</li>
                 </ul>
             </div>
 
             <section>
                 <h1 className="text-3xl text-curious-blue font-semibold">
-                    {title}
+                    {title} <span className="uppercase">{type}</span>
                 </h1>
 
                 {type == 'videoseries' ? '' :  
@@ -49,23 +48,30 @@ export default function SkdVideo({ title, type, materialType, materials }) {
                 }
 
                 <div className="flex gap-6 mt-6">
-                    {materials.map((material, i) => {                      
-                        // Return the element. Also pass key     
-                        return (<Link
-                            href={route("material.type.video.subtype", [material.material_type.code, material.code])}
-                            className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all"
-                            key={i}
-                        >
-                            <div className="bg-curious-blue aspect-square flex items-center justify-center h-full rounded-lg p-4">
-                                <PlayIcon className="w-12 stroke-white" />
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h4 className="uppercase text-curious-blue font-semibold text-lg">
-                                    {material.title}
-                                </h4>
-                                <p className="text-black">{material.description}</p>
-                            </div>
-                        </Link>) 
+                    {materials.map((material, i) => {
+                        // Return the element. Also pass key
+                        return (
+                            <Link
+                                href={route("material.type.video.subtype", [
+                                    material.material_type.code,
+                                    material.code,
+                                ])}
+                                className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all"
+                                key={i}
+                            >
+                                <div className="bg-curious-blue aspect-square flex items-center justify-center h-full rounded-lg p-4">
+                                    <PlayIcon className="w-12 stroke-white" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <h4 className="uppercase text-curious-blue font-semibold text-lg">
+                                        {material.title}
+                                    </h4>
+                                    <p className="text-black">
+                                        {material.description}
+                                    </p>
+                                </div>
+                            </Link>
+                        );
                     })}
                 </div>
             </section>
