@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-export default function Timer({ durationMinutes }) {
+export default function Timer({ durationSeconds }) {
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [stop, setStop] = useState(false);
-    const expired = new Date().getTime() + durationMinutes * 60 * 1000;
+    const expired = new Date().getTime() + durationSeconds * 1000;
 
     const handleIsExpired = () => {
         window.alert("WAKTU SUDAH HABIS !!");

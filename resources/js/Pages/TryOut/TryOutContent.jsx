@@ -131,7 +131,7 @@ export default function TryOutContent() {
                     Nama TryOut
                 </h1>
                 <div className="border-2 border-curious-blue-300 px-6 py-1 rounded-lg">
-                    <Timer durationMinutes={110} />
+                    <Timer durationSeconds={7200} />
                 </div>
             </div>
 
