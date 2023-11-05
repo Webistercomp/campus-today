@@ -5,7 +5,6 @@ import TryOutContent from "./Test";
 
 export default function ConfirmTryOut({ title, user_id, tryout }) {
     const [isReady, setIsReady] = useState(false);
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     return (
         <AuthenticatedLayout>
