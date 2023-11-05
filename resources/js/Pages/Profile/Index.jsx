@@ -2,24 +2,25 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
-import { Head } from "@inertiajs/react";
+import axios from 'axios';
+import { Head, Link } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function Profile({ auth, mustVerifyEmail, status }) {
+export default function Profile({ auth }) {
     const { user } = auth;
     const [isEdit, setIsEdit] = useState(false);
     const [data, setData] = useState({
         name: user.name,
-        tanggallahir: new Date("2002-03-06").toLocaleDateString("id-ID", {
+        tanggallahir: user.tanggal_lahir ? new Date(user.tanggal_lahir).toLocaleDateString("id-ID", {
             dateStyle: "long",
-        }),
-        nohp: "081234567890",
-        pekerjaan: "Web Dev",
-        gender: "Pria",
-        kota: "Banyuwangi",
-        provinsi: "Jawa Timur",
-        pendidikan: "S-1",
-        institusi: "UIN Suka",
+        }) : '-',
+        nohp: user.nohp ?? '-',
+        pekerjaan: user.pekerjaan ?? '-',
+        gender: user.jenis_kelamin ?? '-',
+        kota: user.kota_kabupaten ?? '-',
+        provinsi: user.provinsi ?? '-',
+        pendidikan: user.pendidikan ?? '-',
+        institusi: user.institusi ?? '-',
     });
 
     const formatDateHTML = (dateString, join = "-", format = "dmy") => {
@@ -39,7 +40,7 @@ export default function Profile({ auth, mustVerifyEmail, status }) {
         setData({ ...data, [field]: newData });
     };
 
-    const onSaveProfile = () => {
+    const onSaveProfile = async () => {
         return setIsEdit(false);
     };
 
@@ -77,12 +78,14 @@ export default function Profile({ auth, mustVerifyEmail, status }) {
                             >
                                 Batalkan
                             </button>
-                            <button
-                                className="btn btn-primary capitalize text-white"
-                                onClick={() => onSaveProfile()}
-                            >
-                                Simpan Profil
-                            </button>
+                            <Link href={route('profile.update')} method="PUT">
+                                <button
+                                    className="btn btn-primary capitalize text-white"
+                                    onClick={() => onSaveProfile()}
+                                >
+                                    Simpan Profil
+                                </button>
+                            </Link>
                         </div>
                     )}
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,26 +16,28 @@ class ProfileController extends Controller {
     /**
      * Display the user's profile form.
      */
-    public function index(Request $request): Response {
-        return Inertia::render('Profile/Index', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
-        ]);
+    public function index() {
+        return Inertia::render('Profile/Index');
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse {
-        $request->user()->fill($request->validated());
+    public function update(Request $request) {
+        $userid = Auth::user()->id;
+        $user = User::find($userid);
+        $user->name = $request->name ?? $user->name;
+        $user->tanggallahir = $request->tanggallahir ?? $user->tanggallahir;
+        $user->nohp = $request->nohp ?? $user->nohp;
+        $user->pekerjaan = $request->pekerjaan ?? $user->pekerjaan;
+        $user->jenis_kelamin = $request->gender ?? $user->jenis_kelamin;
+        $user->kota_kabupaten = $request->kota ?? $user->kota_kabupaten;
+        $user->provinsi = $request->provinsi ?? $user->provinsi;
+        $user->pendidikan = $request->pendidikan ?? $user->pendidikan;
+        $user->institusi = $request->institusi ?? $user->institusi;
+        $user->save();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit');
+        return redirect()->back();
     }
 
     /**
