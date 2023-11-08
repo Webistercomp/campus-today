@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
+use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,13 +28,13 @@ class ProfileController extends Controller {
         $userid = Auth::user()->id;
         $user = User::find($userid);
         $user->name = $request->name ?? $user->name;
-        $user->tanggallahir = $request->tanggallahir ?? $user->tanggallahir;
+        $user->tanggal_lahir = DateTime::createFromFormat("Y-m-d", $request->tanggallahir) ?? DateTime::createFromFormat("Y-m-d", $user->tanggal_lahir);
         $user->nohp = $request->nohp ?? $user->nohp;
         $user->pekerjaan = $request->pekerjaan ?? $user->pekerjaan;
         $user->jenis_kelamin = $request->gender ?? $user->jenis_kelamin;
         $user->kota_kabupaten = $request->kota ?? $user->kota_kabupaten;
         $user->provinsi = $request->provinsi ?? $user->provinsi;
-        $user->pendidikan = $request->pendidikan ?? $user->pendidikan;
+        $user->pendidikan_terakhir = $request->pendidikan ?? $user->pendidikan_terakhir;
         $user->institusi = $request->institusi ?? $user->institusi;
         $user->save();
 

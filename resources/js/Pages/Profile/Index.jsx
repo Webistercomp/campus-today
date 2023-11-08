@@ -2,8 +2,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
-import axios from 'axios';
-import { Head, Link } from "@inertiajs/react";
+import axios from "axios";
+import { Head, Link, router } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function Profile({ auth }) {
@@ -11,17 +11,16 @@ export default function Profile({ auth }) {
     const [isEdit, setIsEdit] = useState(false);
     const [data, setData] = useState({
         name: user.name,
-        tanggallahir: user.tanggal_lahir ? new Date(user.tanggal_lahir).toLocaleDateString("id-ID", {
-            dateStyle: "long",
-        }) : '-',
-        nohp: user.nohp ?? '-',
-        pekerjaan: user.pekerjaan ?? '-',
-        gender: user.jenis_kelamin ?? '-',
-        kota: user.kota_kabupaten ?? '-',
-        provinsi: user.provinsi ?? '-',
-        pendidikan: user.pendidikan ?? '-',
-        institusi: user.institusi ?? '-',
+        tanggallahir: user.tanggal_lahir ?? null,
+        nohp: user.nohp ?? null,
+        pekerjaan: user.pekerjaan ?? null,
+        gender: user.jenis_kelamin ?? null,
+        kota: user.kota_kabupaten ?? null,
+        provinsi: user.provinsi ?? null,
+        pendidikan: user.pendidikan_terakhir ?? null,
+        institusi: user.institusi ?? null,
     });
+    const [prevData, setPrevData] = useState(data);
 
     const formatDateHTML = (dateString, join = "-", format = "dmy") => {
         var [date, month, year] = [
@@ -36,11 +35,30 @@ export default function Profile({ auth }) {
         return [year, month, date].join(join);
     };
 
+    const parseToLocaleDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString("id-ID", {
+            dateStyle: "long",
+        });
+    };
+
     const onChangeUserData = (field, newData) => {
         setData({ ...data, [field]: newData });
     };
 
     const onSaveProfile = async () => {
+        const url = route("profile");
+        const putData = router.put(url, {
+            ...data,
+            tanggallahir: formatDateHTML(data.tanggallahir),
+        });
+        const response = putData;
+        setIsEdit(false);
+        setPrevData(data);
+        return route("profile");
+    };
+
+    const onCancelEdit = () => {
+        setData(prevData);
         return setIsEdit(false);
     };
 
@@ -74,18 +92,16 @@ export default function Profile({ auth }) {
                         <div className="flex gap-4">
                             <button
                                 className="btn capitalize"
-                                onClick={() => setIsEdit(!isEdit)}
+                                onClick={() => onCancelEdit()}
                             >
                                 Batalkan
                             </button>
-                            <Link href={route('profile.update')} method="PUT">
-                                <button
-                                    className="btn btn-primary capitalize text-white"
-                                    onClick={() => onSaveProfile()}
-                                >
-                                    Simpan Profil
-                                </button>
-                            </Link>
+                            <button
+                                className="btn btn-primary capitalize text-white"
+                                onClick={() => onSaveProfile()}
+                            >
+                                Simpan Profil
+                            </button>
                         </div>
                     )}
                 </div>
@@ -105,48 +121,58 @@ export default function Profile({ auth }) {
                     <div className="grid grid-flow-col grid-cols-2 grid-rows-[repeat(7,_minmax(0,_1fr))] gap-6 gap-x-14 w-full mt-6">
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">Nama</p>
-                            <p className="text-curious-blue">{data.name}</p>
+                            <p className="text-curious-blue">
+                                {data.name ?? "-"}
+                            </p>
                         </div>
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">
                                 Tanggal lahir
                             </p>
                             <p className="text-curious-blue">
-                                {data.tanggallahir}
+                                {parseToLocaleDate(data.tanggallahir) ?? "-"}
                             </p>
                         </div>
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">No. HP</p>
-                            <p className="text-curious-blue">{data.nohp}</p>
+                            <p className="text-curious-blue">
+                                {data.nohp ?? "-"}
+                            </p>
                         </div>
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">
                                 Pekerjaan
                             </p>
                             <p className="text-curious-blue">
-                                {data.pekerjaan}
+                                {data.pekerjaan ?? "-"}
                             </p>
                         </div>
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">Gender</p>
-                            <p className="text-curious-blue">{data.gender}</p>
+                            <p className="text-curious-blue">
+                                {data.gender ?? "-"}
+                            </p>
                         </div>
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">
                                 Kota/Kabupaten
                             </p>
-                            <p className="text-curious-blue">{data.kota}</p>
+                            <p className="text-curious-blue">
+                                {data.kota ?? "-"}
+                            </p>
                         </div>
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">Provinsi</p>
-                            <p className="text-curious-blue">{data.provinsi}</p>
+                            <p className="text-curious-blue">
+                                {data.provinsi ?? "-"}
+                            </p>
                         </div>
                         <div className="flex justify-start items-center">
                             <p className="text-slate-700 basis-1/3">
                                 Pendidikan terakhir
                             </p>
                             <p className="text-curious-blue">
-                                {data.pendidikan}
+                                {data.pendidikan ?? "-"}
                             </p>
                         </div>
                         <div className="flex justify-start items-center">
@@ -154,7 +180,7 @@ export default function Profile({ auth }) {
                                 Institusi
                             </p>
                             <p className="text-curious-blue">
-                                {data.institusi}
+                                {data.institusi ?? "-"}
                             </p>
                         </div>
                     </div>
@@ -188,15 +214,15 @@ export default function Profile({ auth }) {
                             </label>
                             <input
                                 id="tanggallahir"
-                                value={formatDateHTML(data.tanggallahir)}
+                                value={
+                                    data.tanggallahir
+                                        ? formatDateHTML(data.tanggallahir)
+                                        : ""
+                                }
                                 onChange={(ev) =>
                                     onChangeUserData(
                                         ev.target.id,
-                                        new Date(
-                                            ev.target.value
-                                        ).toLocaleDateString("id-ID", {
-                                            dateStyle: "long",
-                                        })
+                                        parseToLocaleDate(ev.target.value)
                                     )
                                 }
                                 type="date"
@@ -248,17 +274,19 @@ export default function Profile({ auth }) {
                             >
                                 Gender
                             </label>
-                            <input
+                            <select
+                                name="gender"
                                 id="gender"
-                                value={data.gender}
                                 onChange={(ev) =>
                                     onChangeUserData(
                                         ev.target.id,
                                         ev.target.value
                                     )
                                 }
-                                className="input input-primary input-sm basis-2/3"
-                            />
+                            >
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
                         </div>
                         <div className="flex justify-start items-center">
                             <label
