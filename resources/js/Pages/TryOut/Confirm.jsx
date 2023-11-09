@@ -5,13 +5,11 @@ import TryOutContent from "./Test";
 
 export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
     const [isReady, setIsReady] = useState(false);
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
-            {/* Open the modal using document.getElementById('ID').showModal() method */}
             <dialog id="confirmation-modal" className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">
@@ -23,12 +21,15 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
                     <div className="modal-action">
                         <form method="dialog" className="flex gap-4">
                             <button className="btn">Tidak</button>
-                            <Link href={route("tryout.start", [user_id, tryout.id])} method="POST">
-                                <button className="btn btn-primary">
-                                    Mulai
-                                </button>
-                            </Link>
                         </form>
+                        <Link
+                            href={route("tryout.start", [user_id, tryout.id])}
+                            method="POST"
+                            className="btn btn-primary"
+                            as="button"
+                        >
+                            Mulai
+                        </Link>
                     </div>
                 </div>
             </dialog>
@@ -41,19 +42,26 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
 
                     <div className="mt-6">
                         <ol className="list-decimal list-inside [&>li]:mb-4">
-                            <li>Waktu pengerjaan soal Try Out SKD {tryout.time} Menit</li>
                             <li>
-                                Jumlah soal SKD {tryout.jumlah_soal} soal, yang terdiri dari 3 (tiga)
-                                bagian sub tes antara lain:
+                                Waktu pengerjaan soal Try Out SKD {tryout.time}{" "}
+                                Menit
+                            </li>
+                            <li>
+                                Jumlah soal SKD {tryout.jumlah_soal} soal, yang
+                                terdiri dari 3 (tiga) bagian sub tes antara
+                                lain:
                                 <ol className="list-inside list-lower-alpha">
                                     <li>
-                                        Tes Wawasan Kebangsaan (TWK) : {tryout.jumlah_twk} Soal
+                                        Tes Wawasan Kebangsaan (TWK) :{" "}
+                                        {tryout.jumlah_twk} Soal
                                     </li>
                                     <li>
-                                        Tes Intelegensia Umum (TIU) : {tryout.jumlah_tiu} Soal
+                                        Tes Intelegensia Umum (TIU) :{" "}
+                                        {tryout.jumlah_tiu} Soal
                                     </li>
                                     <li>
-                                        Tes Karakteristik Pribadi (TKP) : {tryout.jumlah_tkp} Soal
+                                        Tes Karakteristik Pribadi (TKP) :{" "}
+                                        {tryout.jumlah_tkp} Soal
                                     </li>
                                 </ol>
                             </li>
@@ -85,7 +93,12 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
                     </div>
 
                     <div className="flex gap-4">
-                        <Link href={route("tryout.type", tryout.material_type.code)}>
+                        <Link
+                            href={route(
+                                "tryout.type",
+                                tryout.material_type.code
+                            )}
+                        >
                             <button className="btn capitalize">
                                 &laquo; Kembali
                             </button>
