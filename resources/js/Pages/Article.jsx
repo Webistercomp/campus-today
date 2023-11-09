@@ -2,41 +2,8 @@ import ArticleCard from "@/Components/ArticleCard";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Article({ title, auth }) {
-    const { user } = auth;
-
-    const articleData = [
-        {
-            image: "",
-            title: "Judul Artikel",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ducimus ipsam quidem porro quam dolore esse perferendis provident iste voluptatibus.",
-        },
-        {
-            image: "",
-            title: "Judul Artikel",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ducimus ipsam quidem porro quam dolore esse perferendis provident iste voluptatibus.",
-        },
-        {
-            image: "",
-            title: "Judul Artikel",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ducimus ipsam quidem porro quam dolore esse perferendis provident iste voluptatibus.",
-        },
-        {
-            image: "",
-            title: "Judul Artikel",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ducimus ipsam quidem porro quam dolore esse perferendis provident iste voluptatibus.",
-        },
-        {
-            image: "",
-            title: "Judul Artikel",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ducimus ipsam quidem porro quam dolore esse perferendis provident iste voluptatibus.",
-        },
-        {
-            image: "",
-            title: "Judul Artikel",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ducimus ipsam quidem porro quam dolore esse perferendis provident iste voluptatibus.",
-        },
-    ];
+export default function Article({ title, auth, article }) {
+    const articleData = article;
 
     const formatDate = (date) => {
         const stringDate = new Date(date).toLocaleDateString("id-ID", {
@@ -47,7 +14,7 @@ export default function Article({ title, auth }) {
     };
 
     return (
-        <AuthenticatedLayout user={user}>
+        <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
 
             <section className="w-full pb-20">

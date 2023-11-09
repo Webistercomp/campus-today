@@ -1,4 +1,4 @@
-export default function ArticleCard({ image, title, desc }) {
+export default function ArticleCard({ image, title, body }) {
     return (
         <div className="card w-full max-w-md bg-base-100 shadow-xl text-left cursor-pointer">
             <figure>
@@ -10,7 +10,7 @@ export default function ArticleCard({ image, title, desc }) {
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{title}</h2>
-                <p className="line-clamp-3">{desc}</p>
+                <p className="line-clamp-3">{body}</p>
             </div>
         </div>
     );
