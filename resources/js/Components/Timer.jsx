@@ -38,7 +38,9 @@ export default function Timer({ durationSeconds }) {
 
     return (
         <span>
-            {hours} : {minutes} : {seconds}
+            {String(hours).length < 2 ? `0${hours}` : `${hours}`} :{" "}
+            {String(minutes).length < 2 ? `0${minutes}` : `${minutes}`} :{" "}
+            {String(seconds).length < 2 ? `0${seconds}` : `${seconds}`}
         </span>
     );
 }

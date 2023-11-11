@@ -57,24 +57,26 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                 <h1 className="font-bold text-2xl">Mulai Belajar</h1>
                 <div className="flex gap-8 justify-between mt-6">
                     {materialTypes.map((materialType, i) => {
-                        return <Link
-                            href={route("material.type", materialType.code)}
-                            className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
-                            key={i}
-                        >
-                            <PoliceIcon className="basis-1/5 fill-curious-blue" />
-                            <div className="basis-4/5 flex flex-col justify-center gap-4">
-                                <h4 className="text-xl font-semibold">
-                                    {materialType.name}
-                                </h4>
-                                <p className="text-curious-blue font-semibold flex items-end gap-6">
-                                    Belajar{" "}
-                                    <span>
-                                        <ArrowRightIcon />
-                                    </span>
-                                </p>
-                            </div>
-                        </Link>;
+                        return (
+                            <Link
+                                href={route("material.type", materialType.code)}
+                                className="basis-1/3 p-6 bg-white shadow-lg rounded-lg flex gap-4 cursor-pointer hover:bg-slate-100 transition-all duration-150"
+                                key={i}
+                            >
+                                <PoliceIcon className="basis-1/5 fill-curious-blue" />
+                                <div className="basis-4/5 flex flex-col justify-center gap-4">
+                                    <h4 className="text-xl font-semibold">
+                                        {materialType.name}
+                                    </h4>
+                                    <p className="text-curious-blue font-semibold flex items-end gap-6">
+                                        Belajar{" "}
+                                        <span>
+                                            <ArrowRightIcon />
+                                        </span>
+                                    </p>
+                                </div>
+                            </Link>
+                        );
                     })}
                 </div>
             </section>
@@ -165,7 +167,7 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                 </div>
             </section>
 
-            <section className="px-36 mt-12 bg-white text-center">
+            <section className="px-36 mt-12 bg-white text-center pb-8">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Artikel
                 </h1>
@@ -183,9 +185,12 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                             );
                         })}
                 </div>
-                <button className="btn btn-primary text-curious-blue bg-white hover:bg-slate-100 mt-10 border-none shadow-lg">
+                <Link
+                    href={route("article")}
+                    className="btn btn-primary text-curious-blue bg-white hover:bg-slate-100 mt-10 border-none shadow-lg"
+                >
                     Baca Selengkapnya
-                </button>
+                </Link>
             </section>
         </AuthenticatedLayout>
     );

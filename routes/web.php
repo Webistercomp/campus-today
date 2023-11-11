@@ -7,6 +7,7 @@ use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Packet;
 use App\Http\Controllers\TryoutController;
+use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/tryout/{user_id}/{tryout_id}', [TryoutController::class, 'start_tryout'])->name('tryout.start');
 
     Route::get('/article', function () {
-        return Inertia::render('Article', ['title' => 'Artikel']);
+        return Inertia::render('Article', ['title' => 'Artikel', 'article' => Article::all()]);
     })->name('article');
 });
 
