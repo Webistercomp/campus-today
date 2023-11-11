@@ -14,8 +14,10 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Articles', [
-            'articles' => Article::all()
+        return Inertia::render('Article', [
+            'title' => 'Articles',
+            'articles' => Article::all(),
+            'latest_article' => Article::latest()->first(),
         ]);
     }
 
