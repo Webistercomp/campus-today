@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->integer('time')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('is_event')->default(false);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

@@ -14,7 +14,11 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
         })
         if(postData.status == 200) {
             document.getElementById("confirmation-modal").close();
-            window.location.href = route('tryout.test', tryout.id);
+            if(tryout.is_event) {
+                window.location.href = route('event-tryout.test', tryout.id);
+            } else {
+                window.location.href = route('tryout.test', tryout.id);
+            }
         }
     }
 

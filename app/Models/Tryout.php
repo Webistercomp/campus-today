@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tryout extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     function materialType() {
         return $this->belongsTo(MaterialType::class);

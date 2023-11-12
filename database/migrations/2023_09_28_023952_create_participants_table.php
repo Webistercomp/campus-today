@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->integer('event_try_out_id');
+            $table->integer('tryout_id');
             $table->integer('user_id');
-            $table->integer('score1')->nullable();
-            $table->integer('score2')->nullable();
-            $table->integer('score3')->nullable();
+            $table->json('detail_score')->nullable();
             $table->integer('final_score')->nullable();
             $table->enum('status', ['lulus', 'tidak_lulus'])->nullable();
             $table->timestamps();

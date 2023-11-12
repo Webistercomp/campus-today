@@ -22,10 +22,21 @@ class TryoutSeeder extends Seeder
                     'code' => 'to' . $code[$i-2] . ($j + 1),
                     'name' => 'Tryout ' . ($j + 1),
                     'time' => 100,
-                    'description' => 'Tryout ' . ($j + 1)
+                    'description' => 'Tryout ' . ($j + 1),
+                    'is_event' => false,
+                    'active' => 1,
                 ]);
             }
         }
         
+        Tryout::create([
+            'material_type_id' => 2,
+            'code' => 'event1',
+            'name' => 'Event Tryout ' . ($j + 1),
+            'time' => 100,
+            'description' => 'Event Tryout ' . ($j + 1),
+            'is_event' => true,
+            'active' => 1,
+        ]);
     }
 }

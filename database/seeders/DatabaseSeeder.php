@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
             VideoSeeder::class,
             ChapterSeeder::class,
             ScheduleBimbelSeeder::class,
-            EventTryOutSeeder::class,
             ParticipantSeeder::class,
             ArticleSeeder::class,
             InstagramFeedSeeder::class,

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
@@ -57,13 +58,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
-    Route::get('/tryout/success', [TryoutController::class, 'success'])->name('tryout.success');
-    Route::get('/tryout/failed', [TryoutController::class, 'failed'])->name('tryout.failed');
+    Route::get('/tryout/success/{id}', [TryoutController::class, 'success'])->name('tryout.success');
+    Route::get('/tryout/failed/{id}', [TryoutController::class, 'failed'])->name('tryout.failed');
     Route::get('/tryout/confirm/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
     Route::get('/tryout/test/{id}', [TryoutController::class, 'test'])->name('tryout.test');
     Route::get('/tryout/{type}', [TryoutController::class, 'type'])->name('tryout.type');
     Route::post('/tryout/scoring', [TryoutController::class, 'scoring'])->name('tryout.scoring');
     Route::post('/tryout', [TryoutController::class, 'start_tryout'])->name('tryout.start');
+
+    Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
+    Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');

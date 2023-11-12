@@ -13,14 +13,6 @@ class ParticipantSeeder extends Seeder
      */
     public function run(): void
     {
-        Participant::create([
-            'event_try_out_id' => 1,
-            'user_id' => 1,
-            'score1' => 0,
-            'score2' => 0,
-            'score3' => 0,
-            'final_score' => 0,
-            'status' => 'lulus'
-        ]);
+        
     }
 }
