@@ -3,7 +3,7 @@ import DocumentIcon from "@/icons/DocumentIcon";
 import PlayIcon from "@/icons/PlayIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function SkdVideo({ auth, title, type, materialType, materials }) {
+export default function SkdVideo({ auth, title, type, materialType, materials, group_types }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -24,28 +24,22 @@ export default function SkdVideo({ auth, title, type, materialType, materials })
                     {title} <span className="uppercase">{type}</span>
                 </h1>
 
-                {type == 'videoseries' ? '' :  
-                    <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
-                        <div className="flex gap-14 w-full">
-                            <a className="text-center relative cursor-pointer tab-active">
-                                Tes Wawasan Kebangsaan
+                <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
+                    <div className="flex gap-14 w-full">
+                        {group_types.map((group_type, i) => {
+                            return <a className="text-center relative cursor-pointer tab-active" key={i}>
+                                {group_type.name}
                             </a>
-                            <a className="text-center relative cursor-pointer">
-                                Tes Intelegensia Umum
-                            </a>
-                            <a className="text-center relative cursor-pointer">
-                                Tes Karakteristik Pribadi
-                            </a>
-                        </div>
-                        <div className="form-control">
-                            <input
-                                type="text"
-                                placeholder="Cari"
-                                className="input input-bordered w-24 md:w-auto"
-                            />
-                        </div>
+                        })}
                     </div>
-                }
+                    <div className="form-control">
+                        <input
+                            type="text"
+                            placeholder="Cari"
+                            className="input input-bordered w-24 md:w-auto"
+                        />
+                    </div>
+                </div>
 
                 <div className="flex gap-6 mt-6">
                     {materials.map((material, i) => {

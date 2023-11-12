@@ -60,7 +60,7 @@ export default function SkdTeksTwk({
 
             <section className="mt-8 float-right w-4/5 relative pl-10 py-16 flex flex-col">
                 <div>
-                    <h5 className="judul-materi">{chapter.judul}</h5>
+                    <h4 className="judul-materi">{chapter.judul}</h4>
                     <h6 className="subjudul-materi">{chapter.subjudul}</h6>
                     <p className="isi-materi">{chapter.body}</p>
                 </div>

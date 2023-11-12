@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chapter;
+use App\Models\GroupType;
 use App\Models\Material;
 use App\Models\MaterialType;
 use Illuminate\Http\Request;
@@ -21,16 +22,19 @@ class MaterialController extends Controller {
     }
 
     function materialTeks($type) {
-        $materials = Material::with('materialType')
+        $materials = Material::with('materialType', 'groupType')
             ->whereHas('materialType', function ($q) use ($type) {
                 $q->where('code', $type);
             })
             ->where('type', 'teks')
             ->get();
+        $material_type = MaterialType::where('code', $type)->first();
+        $groupTypes = GroupType::where('material_type_id', $material_type->id)->get();
         return Inertia::render('Materi/Teks', [
             'title' => 'Judul',
             'type' => $type,
             'materials' => $materials,
+            'group_types' => $groupTypes
         ]);
     }
 
@@ -68,17 +72,19 @@ class MaterialController extends Controller {
 
     function materialVideo($type) {
         $materialType = MaterialType::where('code', $type)->first();
-        $materials = Material::with('materialType')
+        $materials = Material::with('materialType', 'groupType')
             ->whereHas('materialType', function ($q) use ($type) {
                 $q->where('code', $type);
             })
             ->where('type', 'video')
             ->get();
+        $groupTypes = GroupType::where('material_type_id', $materialType->id)->get();
         return Inertia::render('Materi/Video', [
             'title' => $materialType->name,
             'type' => $type,
             'materialType' => $materialType,
-            'materials' => $materials
+            'materials' => $materials,
+            'group_types' => $groupTypes
         ]);
     }
 

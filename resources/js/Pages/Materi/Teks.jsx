@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DocumentIcon from "@/icons/DocumentIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Teks({ auth, title, type, materials }) {
+export default function Teks({ auth, title, type, materials, group_types }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -34,15 +34,11 @@ export default function Teks({ auth, title, type, materials }) {
 
                 <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
                     <div className="flex gap-14 w-full">
-                        <a className="text-center relative cursor-pointer tab-active">
-                            Tes Wawasan Kebangsaan
-                        </a>
-                        <a className="text-center relative cursor-pointer">
-                            Tes Intelegensia Umum
-                        </a>
-                        <a className="text-center relative cursor-pointer">
-                            Tes Karakteristik Pribadi
-                        </a>
+                        {group_types.map((group_type, i) => {
+                            return <a className="text-center relative cursor-pointer tab-active" key={i}>
+                                {group_type.name}
+                            </a>
+                        })}
                     </div>
                     <div className="form-control">
                         <input
