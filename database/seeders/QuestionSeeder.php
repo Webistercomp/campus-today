@@ -14,14 +14,26 @@ class QuestionSeeder extends Seeder
      */
     public function run(): void
     {
-        $tryouts = Tryout::all();
+        $tryouts = Tryout::with('materialType')->get();
         foreach($tryouts as $tryout) {
-            for($i=0; $i<5; $i++) {
-                Question::create([
-                    'tryout_id' => $tryout->id,
-                    'question' => 'Question ' . $i,
-                    'type' => $tryout->code,
-                ]);
+            if($tryout->materialType->code == "um" || $tryout->materialType->code == "utbk") {
+                for($i=0; $i<5; $i++) {
+                    Question::create([
+                        'tryout_id' => $tryout->id,
+                        'group_type_id' => rand(1,4),
+                        'question' => 'Question ' . $i,
+                    ]);
+                }
+            } else if($tryout->materialType->code == "skd" || $tryout->materialType->code == "skb"){
+                for($i=0; $i<5; $i++) {
+                    Question::create([
+                        'tryout_id' => $tryout->id,
+                        'group_type_id' => rand(5,7),
+                        'question' => 'Question ' . $i,
+                    ]);
+                }
+            } else {
+
             }
         }
     }

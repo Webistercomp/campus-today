@@ -16,4 +16,8 @@ class Question extends Model
     function answers() {
         return $this->hasMany(Answer::class);
     }
+
+    function groupType() {
+        return $this->belongsTo(GroupType::class);
+    }
 }

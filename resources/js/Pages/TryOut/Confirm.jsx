@@ -2,9 +2,21 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import { useState } from "react";
 import TryOutContent from "./Test";
+import axios from 'axios';
 
-export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
+export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soal, code }) {
     const [isReady, setIsReady] = useState(false);
+
+    const start_tryout = async () => {
+        const postData = await axios.post(route('tryout.start', tryout.id), {
+            tryout_id: tryout.id,
+            user_id: user_id
+        })
+        if(postData.status == 200) {
+            document.getElementById("confirmation-modal").close();
+            window.location.href = route('tryout.test', tryout.id);
+        }
+    }
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -22,14 +34,12 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
                         <form method="dialog" className="flex gap-4">
                             <button className="btn">Tidak</button>
                         </form>
-                        <Link
-                            href={route("tryout.start", [user_id, tryout.id])}
-                            method="POST"
+                        <button 
                             className="btn btn-primary"
                             as="button"
-                        >
+                            onClick={start_tryout}>
                             Mulai
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </dialog>
@@ -40,57 +50,103 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout }) {
                         Soal TryOut {tryout.name}
                     </h1>
 
-                    <div className="mt-6">
-                        <ol className="list-decimal list-inside [&>li]:mb-4">
-                            <li>
-                                Waktu pengerjaan soal Try Out SKD {tryout.time}{" "}
-                                Menit
-                            </li>
-                            <li>
-                                Jumlah soal SKD {tryout.jumlah_soal} soal, yang
-                                terdiri dari 3 (tiga) bagian sub tes antara
-                                lain:
-                                <ol className="list-inside list-lower-alpha">
-                                    <li>
-                                        Tes Wawasan Kebangsaan (TWK) :{" "}
-                                        {tryout.jumlah_twk} Soal
-                                    </li>
-                                    <li>
-                                        Tes Intelegensia Umum (TIU) :{" "}
-                                        {tryout.jumlah_tiu} Soal
-                                    </li>
-                                    <li>
-                                        Tes Karakteristik Pribadi (TKP) :{" "}
-                                        {tryout.jumlah_tkp} Soal
-                                    </li>
-                                </ol>
-                            </li>
-                            <li>
-                                Perhatikan Ambang Batas dari setiap sub tes:
-                                <ol className="list-inside list-lower-alpha">
-                                    <li>Tes Wawasan Kebangsaan (TWK) : 65</li>
-                                    <li>Tes Intelegensia Umum (TIU) : 80</li>
-                                    <li>
-                                        Tes Karakteristik Pribadi (TKP) : 156
-                                    </li>
-                                </ol>
-                            </li>
-                            <li>
-                                Pembobotan Nilai Tes SKD
-                                <ul className="list-inside list-stripe">
-                                    <li>
-                                        TKP benar bernilai paling rendah 1.
-                                        paling tinggi 5, dan tidak menjawab 0
-                                        (nol)
-                                    </li>
-                                    <li>
-                                        TIU dan TWK benar bernilai 5 dan salah
-                                        atau tidak menjawab bernilai 0 (nol)
-                                    </li>
-                                </ul>
-                            </li>
-                        </ol>
-                    </div>
+                    {(code == 'skd' || code == 'skb') ? (
+                        <div className="mt-6">
+                            <ol className="list-decimal list-inside [&>li]:mb-4">
+                                <li>
+                                    Waktu pengerjaan soal Try Out {code.toUpperCase()} {tryout.time}{" "}
+                                    Menit
+                                </li>
+                                <li>
+                                    Jumlah soal {code.toUpperCase()} {tryout.jumlah_soal} soal, yang
+                                    terdiri dari 3 (tiga) bagian sub tes antara
+                                    lain:
+                                    <ol className="list-inside list-lower-alpha">
+                                        <li>
+                                            Tes Wawasan Kebangsaan (TWK) :{" "}
+                                            {jumlah_soal.twk} Soal
+                                        </li>
+                                        <li>
+                                            Tes Intelegensia Umum (TIU) :{" "}
+                                            {jumlah_soal.tiu} Soal
+                                        </li>
+                                        <li>
+                                            Tes Karakteristik Pribadi (TKP) :{" "}
+                                            {jumlah_soal.tkp} Soal
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    Perhatikan Ambang Batas dari setiap sub tes:
+                                    <ol className="list-inside list-lower-alpha">
+                                        <li>Tes Wawasan Kebangsaan (TWK) : 65</li>
+                                        <li>Tes Intelegensia Umum (TIU) : 80</li>
+                                        <li>
+                                            Tes Karakteristik Pribadi (TKP) : 156
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    Pembobotan Nilai Tes SKD
+                                    <ul className="list-inside list-stripe">
+                                        <li>
+                                            TKP benar bernilai paling rendah 1.
+                                            paling tinggi 5, dan tidak menjawab 0
+                                            (nol)
+                                        </li>
+                                        <li>
+                                            TIU dan TWK benar bernilai 5 dan salah
+                                            atau tidak menjawab bernilai 0 (nol)
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                        ) : ('')
+                    }
+
+                    {(code == 'um' || code == 'utbk') ? (
+                        <div className="mt-6">
+                            <ol className="list-decimal list-inside [&>li]:mb-4">
+                                <li>
+                                    Waktu pengerjaan soal Try Out {code.toUpperCase()} {tryout.time}{" "}
+                                    Menit
+                                </li>
+                                <li>
+                                    Jumlah soal {code.toUpperCase()} {tryout.jumlah_soal} soal, yang
+                                    terdiri dari 4 (tiga) bagian sub tes antara
+                                    lain:
+                                    <ol className="list-inside list-lower-alpha">
+                                        <li>
+                                            Matematika :{" "}
+                                            {jumlah_soal.mtk} Soal
+                                        </li>
+                                        <li>
+                                            Fisika :{" "}
+                                            {jumlah_soal.fis} Soal
+                                        </li>
+                                        <li>
+                                            Biologi :{" "}
+                                            {jumlah_soal.bio} Soal
+                                        </li>
+                                        <li>
+                                            Kimia :{" "}
+                                            {jumlah_soal.kim} Soal
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    Pembobotan Nilai Tes {code.toUpperCase()}
+                                    <ul className="list-inside list-stripe">
+                                        <li>
+                                            Benar bernilai 1, salah atau tidak menjawab bernilai 0 (nol) 
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                        ) : ('')
+                    }
 
                     <div className="flex gap-4">
                         <Link

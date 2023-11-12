@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialController;
@@ -58,13 +59,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
     Route::get('/tryout/success', [TryoutController::class, 'success'])->name('tryout.success');
     Route::get('/tryout/failed', [TryoutController::class, 'failed'])->name('tryout.failed');
-    Route::get('/tryout/test/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
+    Route::get('/tryout/confirm/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
+    Route::get('/tryout/test/{id}', [TryoutController::class, 'test'])->name('tryout.test');
     Route::get('/tryout/{type}', [TryoutController::class, 'type'])->name('tryout.type');
-    Route::post('/tryout/{user_id}/{tryout_id}', [TryoutController::class, 'start_tryout'])->name('tryout.start');
+    Route::post('/tryout/scoring', [TryoutController::class, 'scoring'])->name('tryout.scoring');
+    Route::post('/tryout', [TryoutController::class, 'start_tryout'])->name('tryout.start');
 
-    Route::get('/article', function () {
-        return Inertia::render('Article', ['title' => 'Artikel', 'article' => Article::all()]);
-    })->name('article');
+    Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
 });
 
 Route::prefix('materiskd')->group(function () {

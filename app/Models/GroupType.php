@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class GroupType extends Model
 {
     use HasFactory;
+
+    function material() {
+        return $this->hasMany(Material::class);
+    }
 }

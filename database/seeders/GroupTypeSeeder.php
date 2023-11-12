@@ -14,30 +14,37 @@ class GroupTypeSeeder extends Seeder
     public function run(): void
     {
         GroupType::create([
-            'name' => 'Fisika',
-            'code' => 'fis',
-        ]);
-        GroupType::create([
-            'name' => 'Biologi',
-            'code' => 'bio',
-        ]);
-        GroupType::create([
-            'name' => 'Kimia',
-            'code' => 'kim',
-        ]);
-        GroupType::create([
+            'material_type_id' => 1,
             'name' => 'Matematika',
             'code' => 'mtk',
         ]);
         GroupType::create([
+            'material_type_id' => 1,
+            'name' => 'Fisika',
+            'code' => 'fis',
+        ]);
+        GroupType::create([
+            'material_type_id' => 1,
+            'name' => 'Biologi',
+            'code' => 'bio',
+        ]);
+        GroupType::create([
+            'material_type_id' => 1,
+            'name' => 'Kimia',
+            'code' => 'kim',
+        ]);
+        GroupType::create([
+            'material_type_id' => 2,
             'name' => 'Tes Wawasan Kebangsaan',
             'code' => 'twk',
         ]);
         GroupType::create([
+            'material_type_id' => 2,
             'name' => 'Tes Intelegensi Umum',
             'code' => 'tiu',
         ]);
         GroupType::create([
+            'material_type_id' => 2,
             'name' => 'Tes Karakteristik Pribadi',
             'code' => 'tkp',
         ]);

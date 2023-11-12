@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('group_types', function (Blueprint $table) {
             $table->id();
+            $table->integer('material_type_id');
             $table->string('name');
             $table->string('code');
             $table->timestamps();

@@ -3,6 +3,8 @@ import Timer from "@/Components/Timer";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { data } from "autoprefixer";
+import { Link } from "@inertiajs/react";
+import axios from "axios";
 
 export default function Test({
     auth,
@@ -11,20 +13,22 @@ export default function Test({
     tryout,
     tryoutHistory,
     timeLeft,
+    axios_base_url
 }) {
     let no = 1;
     const [tryOutDataStorage, saveTryOutDataStorage] = useLocalStorage(
         "TRY_OUT_DATA",
         []
     );
-
+    
     const [tryOutData, setTryOutData] = useState(
         () =>
-            tryOutDataStorage ||
+            JSON.stringify(tryOutDataStorage) != '[]' ? tryOutDataStorage : null ||
             tryout.questions.map((question, i) => {
                 return { ...question, no: i + 1, jawaban: null };
             })
     );
+
 
     const [active, setActive] = useState(1);
     const [activeQuestion, setActiveQuestion] = useState(
@@ -67,12 +71,21 @@ export default function Test({
         return document.getElementById("confirm_send_ans_modal").showModal();
     };
 
-    const onClickSubmitAnswer = () => {
+    const onClickSubmitAnswer = async () => {
         const finalTryOutData = tryOutData.map((data) => {
             return { question_id: data.id, answer_id: data.jawaban };
         });
+        const finalData = {
+            tryout_id: tryout.id,
+            user_id: user.id,
+            tryout_data: finalTryOutData,
+        }
+        const postData = await axios.post(route("tryout.scoring"), {
+            ...finalData
+        })
+        console.log(postData);
 
-        console.log(finalTryOutData);
+        return window.location.href = route("tryout.success", tryout.id);
     };
 
     return (
