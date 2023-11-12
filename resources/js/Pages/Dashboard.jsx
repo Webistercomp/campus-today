@@ -181,12 +181,13 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                                     title={article.title}
                                     desc={article.description}
                                     image={article.image}
+                                    key={i}
                                 />
                             );
                         })}
                 </div>
                 <Link
-                    href={route("article")}
+                    href={route("article.index")}
                     className="btn btn-primary text-curious-blue bg-white hover:bg-slate-100 mt-10 border-none shadow-lg"
                 >
                     Baca Selengkapnya
