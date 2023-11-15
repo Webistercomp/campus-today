@@ -9,6 +9,8 @@ class Packet extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     function role() {
         return $this->belongsTo(Role::class);
     }

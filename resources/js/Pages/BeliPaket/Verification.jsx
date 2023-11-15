@@ -20,7 +20,8 @@ export default function Verification({ auth, title, nama_paket }) {
                     </span>
                     , proses akan dilanjutkan ke verifikasi admin selama 1x24
                     jam atau bisa menghubungi admin secara langsung melalui
-                    Whatsapp di bawah ini
+                    Whatsapp di bawah ini <br /> <br />
+                    <span className="text-curious-blue font-semibold text-xl">08123456789</span>
                 </p>
                 <div className="flex flex-col gap-2 mt-4">
                     <Link href={route("dashboard")}>

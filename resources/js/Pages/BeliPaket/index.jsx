@@ -3,10 +3,10 @@ import PacketCard from "@/Components/PacketCard";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function BeliPaket({ auth, title, packets }) {
-    const mandiriPacket = packets.filter((dt) => dt.type === "mandiri");
-    const bimbelPacket = packets.filter((dt) => dt.type === "bimbel");
+export default function BeliPaket({ auth, title, packetMandiri, packetBimbel }) {
 
+    console.log("packet mandiri: ", packetMandiri)
+    console.log("packet bimbel: ", packetBimbel)
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -34,8 +34,8 @@ export default function BeliPaket({ auth, title, packets }) {
                         #SobatCampus
                     </p>
                     <div className="flex gap-4 relative px-14 mt-12">
-                        {mandiriPacket.map((dt, i) => (
-                            <PacketCard key={i} {...dt} />
+                        {packetMandiri.map((packet, i) => (
+                            <PacketCard key={i} {...packet} />
                         ))}
                     </div>
                 </div>
@@ -51,8 +51,8 @@ export default function BeliPaket({ auth, title, packets }) {
                         dibimbing oleh Mentor terbaik dari Campus Today.
                     </p>
                     <div className="flex gap-4 relative px-14 mt-12">
-                        {bimbelPacket.map((dt, i) => (
-                            <PacketCard key={i} {...dt} />
+                        {packetBimbel.map((packet, i) => (
+                            <PacketCard key={i} {...packet} />
                         ))}
                     </div>
                 </div>

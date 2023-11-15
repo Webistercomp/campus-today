@@ -30,43 +30,24 @@ class PacketSeeder extends Seeder
             'Kalkulator TIU',
             'Video Series SKD, UTBK, dan UM.',
         ];
-        Packet::create([
-            'role_id' => 1,
-            'name' => 'Gratis',
-            'price_not_discount' => 0,
-            'price_discount' => null,
-            'discount' => null,
-            'description' => 'Paket Gratis',
-            'benefits' => json_encode(array_slice($benefits, 0, 0)),
-            'icon' => null,
-            'type' => 'mandiri'
-        ]);
-        Packet::create([
-            'role_id' => 2,
-            'name' => 'Friendly',
-            'price_not_discount' => 180000,
-            'price_discount' => 120000,
-            'discount' => 33,
-            'description' => 'Paket Friendly',
-            'benefits' => json_encode(array_slice($benefits, 0, 7)),
-            'icon' => null,
-            'type' => 'mandiri'
-        ]);
-        Packet::create([
-            'role_id' => 3,
-            'name' => 'Ambisius',
-            'price_not_discount' => 300000,
-            'price_discount' => 200000,
-            'discount' => 33,
-            'description' => 'Paket Ambisius',
-            'benefits' => json_encode(array_slice($benefits, 0, 13)),
-            'icon' => null,
-            'type' => 'mandiri'
-        ]);
+        $benefit1 = [];
+        $benefit2 = [];
+        $benefit3 = [];
+        for($i=1; $i<=3; $i++) {
+            if($i == 1) {
+                $benefit1['v'] = array_slice($benefits, 0, 1);
+                $benefit1['x'] = array_slice($benefits, 1, 14);
+            } else if($i == 2) {
+                $benefit2['v'] = array_slice($benefits, 0, 7);
+                $benefit2['x'] = array_slice($benefits, 7, 14);
+            } else if($i == 3) {
+                $benefit3['v'] = array_slice($benefits, 0, 14);
+                $benefit3['x'] = array_slice($benefits, 14, 14);
+            }
+        }
 
-
-        // bimbel
-        $benefitsPremium = [
+        $benefit4 = [];
+        $benefit4v = [
             'Fokus Seleksi Kemampuan Dasar (SKD)',
             '20 Kali Pertemuan via zoom',
             'Free Akses dashboard Campus Today',
@@ -84,19 +65,8 @@ class PacketSeeder extends Seeder
             'Kalkulator TIU',
             'Video Series SKD',
         ];
-        Packet::create([
-            'role_id' => 4,
-            'name' => 'Premium',
-            'price_not_discount' => 4000000,
-            'price_discount' => 3000000,
-            'discount' => 25,
-            'description' => 'Paket Premium',
-            'benefits' => json_encode($benefitsPremium),
-            'icon' => null,
-            'type' => 'bimbel'
-        ]);
-
-        $benefitsPlatinum = [
+        $benefit5 = [];
+        $benefit5v = [
             'Fokus SNBP, UTBK dan Sekolah Kedinasan',
             '40 kali Pertemuan via zoom',
             'Tes Minat dan Bakat',
@@ -119,19 +89,8 @@ class PacketSeeder extends Seeder
             'Kalkulator TIU',
             'Video Series SKD dan UTBK.',
         ];
-        Packet::create([
-            'role_id' => 5,
-            'name' => 'Platinum',
-            'price_not_discount' => 7000000,
-            'price_discount' => 6000000,
-            'discount' => 14,
-            'description' => 'Paket Platinum',
-            'benefits' => json_encode($benefitsPlatinum),
-            'icon' => null,
-            'type' => 'bimbel'
-        ]);
-        
-        $benefitsGold = [
+        $benefit6 = [];
+        $benefit6v = [
             'Fokus SNBP, UTBK, UM, dan Sekolah Kedinasan',
             '80 kali Pertemuan via zoom',
             'Tes Minat dan Bakat',
@@ -155,7 +114,77 @@ class PacketSeeder extends Seeder
             'Kalkulator TIU',
             'Video Series SKD, UTBK, dan UM.',
         ];
+        for($i=4; $i<=6; $i++) {
+            if($i == 4) {
+                $benefit4['v'] = $benefit4v;
+                $benefit4['x'] = [];
+            } else if($i == 5) {
+                $benefit5['v'] = $benefit5v;
+                $benefit5['x'] = [];
+            } else if($i == 6) {
+                $benefit6['v'] = $benefit6v;
+                $benefit6['x'] = [];
+            }
+        }
+    
+        Packet::create([
+            'role_id' => 1,
+            'name' => 'Gratis',
+            'price_not_discount' => 0,
+            'price_discount' => null,
+            'discount' => null,
+            'description' => 'Paket Gratis',
+            'benefits' => json_encode($benefit1),
+            'icon' => null,
+            'type' => 'mandiri'
+        ]);
+        Packet::create([
+            'role_id' => 2,
+            'name' => 'Friendly',
+            'price_not_discount' => 180000,
+            'price_discount' => 120000,
+            'discount' => 33,
+            'description' => 'Paket Friendly',
+            'benefits' => json_encode($benefit2),
+            'icon' => null,
+            'type' => 'mandiri'
+        ]);
+        Packet::create([
+            'role_id' => 3,
+            'name' => 'Ambisius',
+            'price_not_discount' => 300000,
+            'price_discount' => 200000,
+            'discount' => 33,
+            'description' => 'Paket Ambisius',
+            'benefits' => json_encode($benefit3),
+            'icon' => null,
+            'type' => 'mandiri'
+        ]);
+        
+        Packet::create([
+            'role_id' => 4,
+            'name' => 'Premium',
+            'price_not_discount' => 4000000,
+            'price_discount' => 3000000,
+            'discount' => 25,
+            'description' => 'Paket Premium',
+            'benefits' => json_encode($benefit4),
+            'icon' => null,
+            'type' => 'bimbel'
+        ]);
 
+        Packet::create([
+            'role_id' => 5,
+            'name' => 'Platinum',
+            'price_not_discount' => 7000000,
+            'price_discount' => 6000000,
+            'discount' => 14,
+            'description' => 'Paket Platinum',
+            'benefits' => json_encode($benefit5),
+            'icon' => null,
+            'type' => 'bimbel'
+        ]);
+        
         Packet::create([
             'role_id' => 6,
             'name' => 'Gold',
@@ -163,7 +192,7 @@ class PacketSeeder extends Seeder
             'price_discount' => 15000000,
             'discount' => 12,
             'description' => 'Paket Gold',
-            'benefits' => json_encode($benefitsGold),
+            'benefits' => json_encode($benefit6),
             'icon' => null,
             'type' => 'bimbel'
         ]);

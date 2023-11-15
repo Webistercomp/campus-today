@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Payment({ auth, title, nama_paket }) {
+export default function Payment({ auth, title, packet }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -12,11 +12,11 @@ export default function Payment({ auth, title, nama_paket }) {
                         <Link href={route("dashboard")}>Dashboard</Link>
                     </li>
                     <li>
-                        <Link href={route("belipaket")}>Beli Paket</Link>
+                        <Link href={route("paket.index")}>Beli Paket</Link>
                     </li>
                     <li>
-                        <Link href={route("belipaket.friendly")}>
-                            {nama_paket}
+                        <Link href={route("paket.show", packet.id)}>
+                            {packet.name}
                         </Link>
                     </li>
                     <li>Checkout</li>
@@ -46,17 +46,13 @@ export default function Payment({ auth, title, nama_paket }) {
                     </div>
                     <div className="flex justify-between mt-16">
                         <Link
-                            href={route(
-                                `belipaket.${nama_paket.toLowerCase()}.checkout`
-                            )}
+                            href={route('paket.checkout', packet.id)}
                             className="btn"
                         >
                             Kembali
                         </Link>
                         <Link
-                            href={route(
-                                `belipaket.${nama_paket.toLowerCase()}.checkout.verification`
-                            )}
+                            href={route('paket.verification', packet.id)}
                         >
                             <button className="btn btn-primary">
                                 Selanjutnya

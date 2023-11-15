@@ -88,7 +88,7 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                             Wujudkan Potensi Terbaik dengan Materi Premium
                         </h4>
                         <Link
-                            href={route("belipaket")}
+                            href={route("paket.index")}
                             className="btn bg-white border-none text-curious-blue-300 capitalize text-xl"
                         >
                             Beli Paket

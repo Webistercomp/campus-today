@@ -6,6 +6,7 @@ use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
+use App\Http\Controllers\PacketController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Packet;
 use App\Http\Controllers\TryoutController;
@@ -40,21 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/materi/{type}/video', [MaterialController::class, 'materialVideo'])->name('material.type.video');
     Route::get('/materi/{type}/video/{materialcode}/{id?}', [MaterialController::class, 'materialVideoSubtype'])->name('material.type.video.subtype');
 
-    Route::get('/beli-paket', function () {
-        return Inertia::render('BeliPaket/Index', ['title' => 'Beli Paket', 'packets' => Packet::all()]);
-    })->name('belipaket');
-    Route::get('/beli-paket/friendly', function () {
-        return Inertia::render('BeliPaket/Deskripsi', ['title' => 'Paket Friendly', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly');
-    Route::get('/beli-paket/friendly/checkout', function () {
-        return Inertia::render('BeliPaket/Checkout', ['title' => 'Checkout', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly.checkout');
-    Route::get('/beli-paket/friendly/checkout/payment', function () {
-        return Inertia::render('BeliPaket/Payment', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly.checkout.payment');
-    Route::get('/beli-paket/friendly/checkout/verification', function () {
-        return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly.checkout.verification');
+    Route::get('/paket', [PacketController::class, 'index'])->name('paket.index');
+    Route::get('/paket/{packet_id}', [PacketController::class, 'show'])->name('paket.show');
+    Route::get('/paket/{packet_id}/checkout', [PacketController::class, 'checkout'])->name('paket.checkout');
+    Route::get('/paket/{packet_id}/checkout/payment', [PacketController::class, 'payment'])->name('paket.payment');
+    Route::get('/paket/{packet_id}/checkout/verification', [PacketController::class, 'verification'])->name('paket.verification');
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
@@ -71,14 +62,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
-});
-
-Route::prefix('materiskd')->group(function () {
-    Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
-    Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');
-    Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
-    Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
-    Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
 });
 
 require __DIR__ . '/auth.php';
