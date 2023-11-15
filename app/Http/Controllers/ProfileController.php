@@ -36,6 +36,11 @@ class ProfileController extends Controller {
         $user->provinsi = $request->provinsi ?? $user->provinsi;
         $user->pendidikan_terakhir = $request->pendidikan ?? $user->pendidikan_terakhir;
         $user->institusi = $request->institusi ?? $user->institusi;
+
+        if($request->hasFile('avatar')) {
+            $filename = $user->id . '.' . $request->file('avatar')->extension();
+            $user->image = $request->file('avatar')->storeAs('avatar', $filename);
+        }
         $user->save();
 
         return redirect()->back();
