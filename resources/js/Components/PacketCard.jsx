@@ -71,17 +71,31 @@ export default function PacketCard({
                     </tbody>
                 </table>
             </div>
+            {id == 1 && price_not_discount == 0 ?
+            <Link href={route("dashboard")} className="self-center">
+                <button
+                    className={`btn btn-info capitalize px-10 ${
+                        isPopular
+                        ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
+                        : "text-white bg-black hover:bg-slate-700"
+                    }`}
+                    >
+                    Belajar Sekarang
+                </button>
+            </Link>
+            : 
             <Link href={route("paket.show", id)} className="self-center">
                 <button
                     className={`btn btn-info capitalize px-10 ${
                         isPopular
-                            ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
-                            : "text-white bg-black hover:bg-slate-700"
+                        ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
+                        : "text-white bg-black hover:bg-slate-700"
                     }`}
-                >
+                    >
                     Beli Sekarang
                 </button>
             </Link>
+            }
         </div>
     );
 }

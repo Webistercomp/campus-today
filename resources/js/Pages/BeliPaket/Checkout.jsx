@@ -6,6 +6,21 @@ export default function Checkout({ auth, title, packet }) {
         style: 'currency',
         currency: 'IDR',
     });
+    
+    const full_name = auth.user.name.split(' ')
+    const first_name = full_name[0]
+    const last_name = full_name.length != 1 ? full_name[full_name.length - 1] : ''
+    const data = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": auth.user.email,
+        "phone": auth.user.nohp,
+        "payment_method": "default",
+    }
+
+    function selanjutnya() {
+        console.log(data)
+    }
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -39,22 +54,26 @@ export default function Checkout({ auth, title, packet }) {
                                 type="text"
                                 placeholder="First Name"
                                 className="input input-bordered input-sm w-full"
+                                value={data.first_name}
                             />
                             <input
                                 type="text"
                                 placeholder="Last Name"
                                 className="input input-bordered input-sm w-full"
+                                value={data.last_name}
                             />
                             <input
                                 type="email"
                                 placeholder="Email"
                                 className="input input-bordered input-sm w-full"
+                                value={data.email}
                             />
                             <input
                                 type="text"
                                 pattern="[0-9]"
                                 placeholder="No. HP"
                                 className="input input-bordered input-sm w-full"
+                                value={data.phone}
                             />
                             <select className="select select-bordered select-sm w-full">
                                 <option disabled selected>
@@ -92,7 +111,8 @@ export default function Checkout({ auth, title, packet }) {
                             Kembali
                         </Link>
                         <Link
-                            href={route(`paket.payment`, packet.id)}
+                            to={{ pathname: route(`paket.payment`, packet.id), state: data }}
+                            onClick={selanjutnya}
                         >
                             <button className="btn btn-primary">
                                 Selanjutnya
