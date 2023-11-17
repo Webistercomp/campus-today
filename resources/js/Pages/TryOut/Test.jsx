@@ -13,20 +13,21 @@ export default function Test({
     tryout,
     tryoutHistory,
     timeLeft,
+    _token,
     axios_base_url
 }) {
     let no = 1;
     const [tryOutDataStorage, saveTryOutDataStorage] = useLocalStorage(
-        "TRY_OUT_DATA",
+        `TRY_OUT_DATA_${tryout.id}`,
         []
     );
-    
-    const [tryOutData, setTryOutData] = useState(
-        () =>
-            JSON.stringify(tryOutDataStorage) != '[]' ? tryOutDataStorage : null ||
-            tryout.questions.map((question, i) => {
-                return { ...question, no: i + 1, jawaban: null };
-            })
+
+    const [tryOutData, setTryOutData] = useState(() =>
+        JSON.stringify(tryOutDataStorage) != "[]"
+            ? tryOutDataStorage
+            : tryout.questions.map((question, i) => {
+                  return { ...question, no: i + 1, jawaban: null };
+              })
     );
 
 
@@ -85,6 +86,22 @@ export default function Test({
         })
         console.log(postData);
 
+        const finalData = {
+            tryout_id: tryout.id,
+            user_id: user.id,
+            tryout_data: finalTryOutData,
+        };
+
+        const postData = await axios.post(route("tryout.scoring"), {
+            ...finalData,
+        });
+        console.log(postData);
+
+        // localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
+
+        // setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
+
+        // return document.getElementById("close_confirm_ans_btn").click();
         return window.location.href = route("tryout.success", tryout.id);
     };
 
@@ -220,7 +237,10 @@ export default function Test({
                         </p>
                         <div className="modal-action">
                             <form method="dialog">
-                                <button className="btn capitalize">
+                                <button
+                                    className="btn capitalize"
+                                    id="close_confirm_ans_btn"
+                                >
                                     Batal
                                 </button>
                             </form>

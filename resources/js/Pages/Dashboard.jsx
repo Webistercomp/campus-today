@@ -55,7 +55,7 @@ export default function Dashboard({ auth, articles, materialTypes }) {
 
             <section className="bg-white mt-6">
                 <h1 className="font-bold text-2xl">Mulai Belajar</h1>
-                <div className="flex gap-8 justify-between mt-6">
+                <div className="grid grid-cols-4 gap-8 justify-between mt-6">
                     {materialTypes.map((materialType, i) => {
                         return (
                             <Link

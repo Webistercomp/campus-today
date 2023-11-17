@@ -61,6 +61,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
+Route::post('/tryout/scoring', [TryoutController::class, 'scoring'])->name('tryout.scoring');
+
+Route::prefix('materiskd')->group(function () {
+    Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
+    Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');
+    Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
+    Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
+    Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
 });

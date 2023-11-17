@@ -15,11 +15,11 @@ use Inertia\Inertia;
 use Illuminate\Database\Eloquent\Builder;
 
 
-class TryoutController extends Controller
-{
+class TryoutController extends Controller {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $materialTypes = MaterialType::where('code', '!=', 'videoseries')->get();
@@ -204,14 +204,14 @@ class TryoutController extends Controller
     }
 
     public function type($type) {
-        $tryouts = Tryout::whereHas('materialType', function($query) use ($type) {
+        $tryouts = Tryout::whereHas('materialType', function ($query) use ($type) {
             $query->where('code', $type);
         })
         ->where('is_event', 0)
         ->get();
         foreach($tryouts as $tryout) {
             $tryout->jumlah_soal = $tryout->questions()->count();
-        } 
+        }
         return Inertia::render('TryOut/Type', [
             'title' => 'TryOut',
             'tryouts' => $tryouts,
@@ -274,48 +274,42 @@ class TryoutController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Tryout $tryout)
-    {
+    public function show(Tryout $tryout) {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tryout $tryout)
-    {
+    public function edit(Tryout $tryout) {
         //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tryout $tryout)
-    {
+    public function update(Request $request, Tryout $tryout) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tryout $tryout)
-    {
+    public function destroy(Tryout $tryout) {
         //
     }
 }

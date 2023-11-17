@@ -2,8 +2,36 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DocumentIcon from "@/icons/DocumentIcon";
 import PlayIcon from "@/icons/PlayIcon";
 import { Head, Link } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
-export default function SkdVideo({ auth, title, type, materialType, materials, group_types }) {
+export default function SkdVideo({
+    auth,
+    title,
+    type,
+    materialType,
+    materials,
+}) {
+    const tabGroup = materials.map((dt) => dt.group);
+    const [tabIndexActive, setTabIndexActive] = useState(null);
+    const [currentMaterials, setCurrentMaterials] = useState(() =>
+        materials.filter((dt) => dt.group === tabGroup[tabIndexActive])
+    );
+    const [searchkeyword, setSearchKeyword] = useState("");
+
+    useEffect(() => {
+        setCurrentMaterials(
+            materials.filter((dt) => dt.group === tabGroup[tabIndexActive])
+        );
+    }, [tabIndexActive]);
+
+    useEffect(() => {
+        setCurrentMaterials(
+            materials.filter((dt) =>
+                dt.title.match(new RegExp(searchkeyword, "i"))
+            )
+        );
+    }, [searchkeyword]);
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -14,7 +42,9 @@ export default function SkdVideo({ auth, title, type, materialType, materials, g
                         <Link href={route("dashboard")}>Dashboard</Link>
                     </li>
                     <li>
-                        <Link href={route("material.type", type)}>{materialType.name}</Link>
+                        <Link href={route("material.type", type)}>
+                            {materialType.name}
+                        </Link>
                     </li>
                 </ul>
             </div>
@@ -23,26 +53,39 @@ export default function SkdVideo({ auth, title, type, materialType, materials, g
                 <h1 className="text-3xl text-curious-blue font-semibold">
                     {title} <span className="uppercase">{type}</span>
                 </h1>
-
-                <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
-                    <div className="flex gap-14 w-full">
-                        {group_types.map((group_type, i) => {
-                            return <a className="text-center relative cursor-pointer tab-active" key={i}>
-                                {group_type.name}
-                            </a>
-                        })}
+                {type == "videoseries" ? (
+                    ""
+                ) : (
+                    <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
+                        <div className="flex gap-14 w-full">
+                            {tabGroup.map((dt, i) => (
+                                <a
+                                    className={`text-center relative cursor-pointer uppercase transition-all duration-75 ${
+                                        i === tabIndexActive
+                                            ? "tab-active"
+                                            : "after:opacity-0"
+                                    }`}
+                                    onClick={() => setTabIndexActive(i)}
+                                >
+                                    {dt}
+                                </a>
+                            ))}
+                        </div>
+                        <div className="form-control">
+                            <input
+                                type="text"
+                                placeholder="Cari"
+                                className="input input-bordered w-24 md:w-auto"
+                                value={searchkeyword}
+                                onChange={(ev) =>
+                                    setSearchKeyword(ev.target.value)
+                                }
+                            />
+                        </div>
                     </div>
-                    <div className="form-control">
-                        <input
-                            type="text"
-                            placeholder="Cari"
-                            className="input input-bordered w-24 md:w-auto"
-                        />
-                    </div>
-                </div>
-
+                )}
                 <div className="flex gap-6 mt-6">
-                    {materials.map((material, i) => {
+                    {currentMaterials.map((material, i) => {
                         // Return the element. Also pass key
                         return (
                             <Link
