@@ -15,7 +15,7 @@ export default function Checkout({ auth, title, packet }) {
         "last_name": last_name,
         "email": auth.user.email,
         "phone": auth.user.nohp,
-        "payment_method": "default",
+        "payment_method": "",
     }
 
     function selanjutnya() {
@@ -111,7 +111,7 @@ export default function Checkout({ auth, title, packet }) {
                             Kembali
                         </Link>
                         <Link
-                            to={{ pathname: route(`paket.payment`, packet.id), state: data }}
+                            href={ route(`paket.payment`, packet.id) }
                             onClick={selanjutnya}
                         >
                             <button className="btn btn-primary">

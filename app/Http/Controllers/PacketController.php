@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Packet;
+use App\Models\PacketHistory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -21,6 +22,28 @@ class PacketController extends Controller
             'packetMandiri' => $mandiri,
             'packetBimbel' => $packetBimbel
         ]);
+    }
+
+    function store(Request $request) {
+        $request->validate([
+            'packet_id' => 'required',
+            'user_id' => 'required',
+            'file' => '',
+            'payment_method' => 'required',
+        ]);
+        $newPacketHistory = new PacketHistory();
+        if($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/bukti_pembayaran', $fileName);
+            $newPacketHistory->bukti_pembayaran = $fileName;
+        }
+        $newPacketHistory->packet_id = $request->packet_id;
+        $newPacketHistory->user_id = $request->user_id;
+        $newPacketHistory->payment_method = $request->payment_method;
+        $newPacketHistory->save();
+
+        return redirect()->route('paket.verification', $request->packet_id); 
     }
 
     function show($packet_id) {

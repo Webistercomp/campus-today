@@ -153,16 +153,26 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
                     }
 
                     <div className="flex gap-4">
-                        <Link
-                            href={route(
-                                "tryout.type",
-                                tryout.material_type.code
-                            )}
-                        >
-                            <button className="btn capitalize">
-                                &laquo; Kembali
-                            </button>
-                        </Link>
+                        {tryout.is_event ? (
+                            <Link
+                                href={ route("dashboard") }
+                            >
+                                <button className="btn capitalize">
+                                    &laquo; Kembali
+                                </button>
+                            </Link>
+                        ) : (
+                            <Link
+                                href={route(
+                                    "tryout.type",
+                                    tryout.material_type.code
+                                )}
+                            >
+                                <button className="btn capitalize">
+                                    &laquo; Kembali
+                                </button>
+                            </Link>
+                        )}
                         <button
                             className="btn btn-primary capitalize text-white"
                             onClick={() =>

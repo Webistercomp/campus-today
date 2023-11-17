@@ -30,4 +30,8 @@ class Packet extends Model
     function scheduleBimbels() {
         return $this->hasMany(ScheduleBimbel::class);
     }
+
+    function packetHistory() {
+        return $this->hasMany(PacketHistory::class);
+    }
 }
