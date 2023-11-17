@@ -1,26 +1,40 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function Checkout({ auth, title, packet }) {
-    let IDRupiah = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
+    let IDRupiah = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
     });
-    
-    const full_name = auth.user.name.split(' ')
-    const first_name = full_name[0]
-    const last_name = full_name.length != 1 ? full_name[full_name.length - 1] : ''
-    const data = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "email": auth.user.email,
-        "phone": auth.user.nohp,
-        "payment_method": "",
-    }
 
-    function selanjutnya() {
-        console.log(data)
-    }
+    const full_name = auth.user.name.split(" ");
+    const first_name = full_name[0];
+    const last_name =
+        full_name.length != 1 ? full_name[full_name.length - 1] : "";
+
+    const [checkoutData, setCheckoutData] = useState({
+        first_name: first_name,
+        last_name: last_name,
+        email: auth.user.email,
+        phone: auth.user.nohp,
+        payment_method: "",
+    });
+    const [isShowErrorAlert, setIsShowErrorAlert] = useState(false);
+
+    const onNextPaymentHandler = () => {
+        if (checkoutData.payment_method === "") {
+            setIsShowErrorAlert(true);
+
+            return setTimeout(() => {
+                setIsShowErrorAlert(false);
+            }, 3000);
+        }
+
+        return router.get(route("paket.payment", packet.id), {
+            payment_method: checkoutData.payment_method,
+        });
+    };
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -54,34 +68,48 @@ export default function Checkout({ auth, title, packet }) {
                                 type="text"
                                 placeholder="First Name"
                                 className="input input-bordered input-sm w-full"
-                                value={data.first_name}
+                                value={checkoutData.first_name}
+                                disabled
                             />
                             <input
                                 type="text"
                                 placeholder="Last Name"
                                 className="input input-bordered input-sm w-full"
-                                value={data.last_name}
+                                value={checkoutData.last_name}
+                                disabled
                             />
                             <input
                                 type="email"
                                 placeholder="Email"
                                 className="input input-bordered input-sm w-full"
-                                value={data.email}
+                                value={checkoutData.email}
+                                disabled
                             />
                             <input
                                 type="text"
                                 pattern="[0-9]"
                                 placeholder="No. HP"
                                 className="input input-bordered input-sm w-full"
-                                value={data.phone}
+                                value={checkoutData.phone}
+                                disabled
                             />
-                            <select className="select select-bordered select-sm w-full">
+                            <select
+                                className="select select-bordered select-sm w-full"
+                                onChange={(ev) =>
+                                    setCheckoutData((prev) => {
+                                        return {
+                                            ...prev,
+                                            payment_method: ev.target.value,
+                                        };
+                                    })
+                                }
+                            >
                                 <option disabled selected>
                                     Metode Pembayaran
                                 </option>
-                                <option>Transfer</option>
-                                <option>Gopay</option>
-                                <option>ShopeePay</option>
+                                <option value="transfer">Transfer</option>
+                                <option value="gopay">Gopay</option>
+                                <option value="shopeepay">ShopeePay</option>
                             </select>
                         </div>
                         <div className="divider divider-horizontal"></div>
@@ -95,8 +123,16 @@ export default function Checkout({ auth, title, packet }) {
                                 <tbody className="[&>tr>td]:text-start [&>tr>td]:px-4 [&>tr>td]:py-2">
                                     <tr>
                                         <td>Paket {packet.name}</td>
-                                        <td>{IDRupiah.format(packet.price_discount)}</td>
-                                        <td>{IDRupiah.format(packet.price_discount)}</td>
+                                        <td>
+                                            {IDRupiah.format(
+                                                packet.price_discount
+                                            )}
+                                        </td>
+                                        <td>
+                                            {IDRupiah.format(
+                                                packet.price_discount
+                                            )}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -105,22 +141,41 @@ export default function Checkout({ auth, title, packet }) {
                     <div className="divider divider-vertical"></div>
                     <div className="flex justify-between">
                         <Link
-                            href={route('paket.show', packet.id)}
+                            href={route("paket.show", packet.id)}
                             className="btn"
                         >
                             Kembali
                         </Link>
-                        <Link
-                            href={ route(`paket.payment`, packet.id) }
-                            onClick={selanjutnya}
+                        <button
+                            className="btn btn-primary"
+                            onClick={onNextPaymentHandler}
                         >
-                            <button className="btn btn-primary">
-                                Selanjutnya
-                            </button>
-                        </Link>
+                            Selanjutnya
+                        </button>
                     </div>
                 </div>
             </section>
+
+            <div
+                className={`alert alert-error w-fit fixed left-1/2 -translate-x-1/2 shadow-md transition-all duration-150 ${
+                    isShowErrorAlert ? "top-24 opacity-100" : "top-0 opacity-0"
+                }`}
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="stroke-current shrink-0 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                </svg>
+                <span>Pilih metode pembayaran!</span>
+            </div>
         </AuthenticatedLayout>
     );
 }

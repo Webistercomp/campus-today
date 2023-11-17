@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Packet;
 use App\Models\PacketHistory;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Symfony\Component\Routing\RequestContext;
 
-class PacketController extends Controller
-{
-    function index () {
+class PacketController extends Controller {
+    function index() {
         $packets = Packet::all();
         $mandiri = $packets->where('type', 'mandiri');
         $bimbel = $packets->where('type', 'bimbel');
         $packetBimbel = [];
-        foreach($bimbel as $b) {
+        foreach ($bimbel as $b) {
             array_push($packetBimbel, $b);
         }
         return Inertia::render('BeliPaket/Index', [
-            'title' => 'Beli Paket', 
+            'title' => 'Beli Paket',
             'packetMandiri' => $mandiri,
             'packetBimbel' => $packetBimbel
         ]);
@@ -32,7 +33,7 @@ class PacketController extends Controller
             'payment_method' => 'required',
         ]);
         $newPacketHistory = new PacketHistory();
-        if($request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/bukti_pembayaran', $fileName);
@@ -43,13 +44,13 @@ class PacketController extends Controller
         $newPacketHistory->payment_method = $request->payment_method;
         $newPacketHistory->save();
 
-        return redirect()->route('paket.verification', $request->packet_id); 
+        return redirect()->route('paket.verification', $request->packet_id);
     }
 
     function show($packet_id) {
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Deskripsi', [
-            'title' => 'Paket ' . $packet->nama, 
+            'title' => 'Paket ' . $packet->nama,
             'packet' => $packet,
         ]);
     }
@@ -57,16 +58,17 @@ class PacketController extends Controller
     function checkout($packet_id) {
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Checkout', [
-            'title' => 'Checkout Paket ' . $packet->name, 
+            'title' => 'Checkout Paket ' . $packet->name,
             'packet' => $packet,
         ]);
     }
 
-    function payment($packet_id) {
+    function payment($packet_id, Request $request) {
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Payment', [
             'title' => 'Pembayaran Paket ' . $packet->name,
             'packet' => $packet,
+            'user_data' => $request,
         ]);
     }
 
