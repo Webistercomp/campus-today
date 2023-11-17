@@ -67,6 +67,8 @@ Route::middleware('auth')->group(function () {
     })->name('article');
 });
 
+Route::post('/tryout/scoring', [TryoutController::class, 'scoring'])->name('tryout.scoring');
+
 Route::prefix('materiskd')->group(function () {
     Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
     Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');

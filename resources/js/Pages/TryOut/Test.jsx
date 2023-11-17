@@ -3,6 +3,8 @@ import Timer from "@/Components/Timer";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { data } from "autoprefixer";
+import axios from "axios";
+import { router } from "@inertiajs/react";
 
 export default function Test({
     auth,
@@ -11,19 +13,20 @@ export default function Test({
     tryout,
     tryoutHistory,
     timeLeft,
+    _token,
 }) {
     let no = 1;
     const [tryOutDataStorage, saveTryOutDataStorage] = useLocalStorage(
-        "TRY_OUT_DATA",
+        `TRY_OUT_DATA_${tryout.id}`,
         []
     );
 
-    const [tryOutData, setTryOutData] = useState(
-        () =>
-            tryOutDataStorage ||
-            tryout.questions.map((question, i) => {
-                return { ...question, no: i + 1, jawaban: null };
-            })
+    const [tryOutData, setTryOutData] = useState(() =>
+        JSON.stringify(tryOutDataStorage) != "[]"
+            ? tryOutDataStorage
+            : tryout.questions.map((question, i) => {
+                  return { ...question, no: i + 1, jawaban: null };
+              })
     );
 
     const [active, setActive] = useState(1);
@@ -67,12 +70,27 @@ export default function Test({
         return document.getElementById("confirm_send_ans_modal").showModal();
     };
 
-    const onClickSubmitAnswer = () => {
+    const onClickSubmitAnswer = async () => {
         const finalTryOutData = tryOutData.map((data) => {
             return { question_id: data.id, answer_id: data.jawaban };
         });
 
-        console.log(finalTryOutData);
+        const finalData = {
+            tryout_id: tryout.id,
+            user_id: user.id,
+            tryout_data: finalTryOutData,
+        };
+
+        const postData = await axios.post(route("tryout.scoring"), {
+            ...finalData,
+        });
+        console.log(postData);
+
+        // localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
+
+        // setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
+
+        // return document.getElementById("close_confirm_ans_btn").click();
     };
 
     return (
@@ -207,7 +225,10 @@ export default function Test({
                         </p>
                         <div className="modal-action">
                             <form method="dialog">
-                                <button className="btn capitalize">
+                                <button
+                                    className="btn capitalize"
+                                    id="close_confirm_ans_btn"
+                                >
                                     Batal
                                 </button>
                             </form>

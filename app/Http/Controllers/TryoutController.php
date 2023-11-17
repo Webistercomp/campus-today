@@ -11,13 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class TryoutController extends Controller
-{
+class TryoutController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         $materialTypes = MaterialType::all();
         return Inertia::render('TryOut/Index', [
             'title' => 'TryOut',
@@ -33,19 +31,20 @@ class TryoutController extends Controller
         $user = Auth::user();
         $tryout = Tryout::with('materialType', 'questions.answers')->find($id);
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
-                        ->where('tryout_id', $tryout->id)
-                        ->first();
-        if($tryoutHistory) {
+            ->where('tryout_id', $tryout->id)
+            ->first();
+        if ($tryoutHistory) {
             $finishTimestamp = Carbon::parse($tryoutHistory->finish_timestamp);
             $now = Carbon::now();
             $timeLeft = $finishTimestamp->diffInSeconds($now); // seconds
-            if($now <= $finishTimestamp) {
+            if ($now <= $finishTimestamp) {
                 return Inertia::render('TryOut/Test', [
                     'title' => 'Nama Tryout',
                     'user' => $user,
                     'tryout' => $tryout,
                     'tryoutHistory' => $tryoutHistory,
                     'timeLeft' => $timeLeft,
+                    '_token' => csrf_token(),
                 ]);
             }
         }
@@ -84,63 +83,78 @@ class TryoutController extends Controller
     }
 
     public function type($type) {
-        $tryouts = Tryout::whereHas('materialType', function($query) use ($type) {
+        $tryouts = Tryout::whereHas('materialType', function ($query) use ($type) {
             $query->where('code', $type);
         })->get();
-        foreach($tryouts as $tryout) {
+        foreach ($tryouts as $tryout) {
             $tryout->jumlah_soal = $tryout->questions()->count();
-        } 
+        }
         return Inertia::render('TryOut/Type', [
             'title' => 'TryOut SKD',
             'tryouts' => $tryouts
         ]);
     }
 
+    public function scoring(Request $request) {
+        $tryout = Tryout::with('questions.answers')->find($request->tryout_id);
+        $finishTimestamp = Carbon::now();
+        $tryoutHistory = TryoutHistory::where('user_id', $request->user_id)->where('tryout_id', $request->tryout_id)->latest();
+        $answers = $request->tryout_data;
+        // foreach ($answers as $answer) {
+        //     $question = $tryout->questions()->find($answer['question_id']);
+        //     $answer['correct'] = $question->answers()->where('is_correct', true)->first()->id;
+        //     $answer['correct'] = $answer['answer_id'] == $answer['correct'];
+        //     if ($answer['correct']) {
+        //         $tryoutHistory->increment('score');
+        //     }
+        // }
+        // $tryoutHistory->finish_timestamp = $finishTimestamp->toDateTimeLocalString();
+        // $tryoutHistory->save();
+        return response()->json([
+            'message' => 'success',
+            'data' => $tryoutHistory
+        ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Tryout $tryout)
-    {
+    public function show(Tryout $tryout) {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tryout $tryout)
-    {
+    public function edit(Tryout $tryout) {
         //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tryout $tryout)
-    {
+    public function update(Request $request, Tryout $tryout) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tryout $tryout)
-    {
+    public function destroy(Tryout $tryout) {
         //
     }
 }
