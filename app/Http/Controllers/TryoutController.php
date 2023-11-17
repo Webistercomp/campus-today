@@ -206,7 +206,9 @@ class TryoutController extends Controller
     public function type($type) {
         $tryouts = Tryout::whereHas('materialType', function($query) use ($type) {
             $query->where('code', $type);
-        })->get();
+        })
+        ->where('is_event', 0)
+        ->get();
         foreach($tryouts as $tryout) {
             $tryout->jumlah_soal = $tryout->questions()->count();
         } 
