@@ -2,8 +2,9 @@ import ArticleCard from "@/Components/ArticleCard";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Article({ title, auth, article }) {
-    const articleData = article;
+export default function Article({ auth, title, articles, latest_article }) {
+    const { user } = auth;
+    const articleData = articles;
 
     const formatDate = (date) => {
         const stringDate = new Date(date).toLocaleDateString("id-ID", {
@@ -25,22 +26,19 @@ export default function Article({ title, auth, article }) {
                 <div className="mt-8">
                     <div className="flex gap-6 items-center border-2 border-slate-200 max-w-6xl mx-auto">
                         <img
-                            src=""
+                            src={latest_article.image}
                             alt=""
                             className="bg-slate-700 max-w-[350px] aspect-[5/4] basis-1/3"
                         />
                         <div className="basis-2/3 px-8 text-slate-700">
                             <p className="text-xs text-slate-400">
-                                {formatDate("01-Oct-2023")}
+                                {formatDate(latest_article.updated_at)}
                             </p>
                             <h3 className="text-2xl font-semibold">
-                                Judul Artikel
+                                {latest_article.title}
                             </h3>
                             <p className="mt-4">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Voluptas dolorum, enim nam
-                                animi aliquam minima id minus illum laudantium
-                                incidunt!
+                                {latest_article.description}
                             </p>
                         </div>
                     </div>
@@ -62,8 +60,10 @@ export default function Article({ title, auth, article }) {
                 </div>
 
                 <div className="mt-12 grid grid-cols-3 gap-4">
-                    {articleData.map((artc, i) => (
-                        <ArticleCard {...artc} key={i} />
+                    {articles.map((article, i) => (
+                        <Link href={route('article.show', article.id)} key={i} >
+                            <ArticleCard {...article}/>
+                        </Link>
                     ))}
                 </div>
             </section>

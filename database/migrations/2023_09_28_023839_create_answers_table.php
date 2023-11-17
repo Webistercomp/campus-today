@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('question_id');
             $table->string('answer');
-            $table->boolean('is_correct');
+            $table->integer('bobot');
             $table->timestamps();
         });
     }

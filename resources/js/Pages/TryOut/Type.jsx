@@ -5,7 +5,7 @@ import PaperFillIcon from "@/icons/PaperFillIcon";
 import PaperIcon from "@/icons/PaperIcon";
 import { Head, Link } from "@inertiajs/react";
 
-export default function TryOutSKD({ auth, title, tryouts }) {
+export default function TryOutSKD({ auth, title, tryouts, type }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -18,37 +18,19 @@ export default function TryOutSKD({ auth, title, tryouts }) {
                     <li>
                         <Link href={route("tryout")}>TryOut</Link>
                     </li>
-                    <li>{title}</li>
+                    <li>{title} {type.toUpperCase()}</li>
                 </ul>
             </div>
 
             <section>
                 <h1 className="text-3xl text-curious-blue font-semibold">
-                    {title}
+                    {title} {type.toUpperCase()}
                 </h1>
-
-                <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
-                    <div className="flex gap-14 w-full">
-                        <a className="text-center relative cursor-pointer tab-active">
-                            Event TryOut
-                        </a>
-                        <a className="text-center relative cursor-pointer">
-                            TryOut Gratis
-                        </a>
-                    </div>
-                    <div className="form-control">
-                        <input
-                            type="text"
-                            placeholder="Cari"
-                            className="input input-bordered w-24 md:w-auto"
-                        />
-                    </div>
-                </div>
 
                 <div className="mt-6 grid grid-cols-3 gap-3">
                     {tryouts.map(function (tryout, i) {
                         return (
-                            <div className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-100 duration-150 transition-all">
+                            <div className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-100 duration-150 transition-all" key={i} >
                                 <div className="bg-curious-blue aspect-square flex items-center justify-center h-full rounded-lg p-4">
                                     <ExamIcon className="w-12" />
                                 </div>

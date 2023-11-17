@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('participants', function (Blueprint $table) {
+        Schema::create('packet_histories', function (Blueprint $table) {
             $table->id();
-            $table->integer('tryout_id');
+            $table->integer('packet_id');
             $table->integer('user_id');
-            $table->json('detail_score')->nullable();
-            $table->integer('final_score')->nullable();
-            $table->enum('status', ['lulus', 'tidak_lulus'])->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('bukti_pembayaran')->nullable();
+            $table->enum('status', ['pending', 'verification', 'success', 'failed'])->default('pending');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('participants');
+        Schema::dropIfExists('packet_histories');
     }
 };

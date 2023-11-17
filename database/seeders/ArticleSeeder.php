@@ -13,10 +13,13 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
-        Article::create([
-            'title' => 'Article 1',
-            'description' => 'Article 1',
-            'body' => 'The Body Content of Article 1, bla bla bla.',
-        ]);
+        for($i=0; $i<5; $i++) {
+            Article::create([
+                'title' => 'Article ' . ($i + 1),
+                'description' => 'Article ' . ($i + 1),
+                'body' => 'The Body Content of Article ' . ($i + 1) . ', bla bla bla.',
+                'image' => 'https://placehold.co/600x400',
+            ]);
+        }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EventTryOut;
+use App\Models\GroupType;
 use Illuminate\Http\Request;
 
-class EventTryOutController extends Controller
+class GroupTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class EventTryOutController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(EventTryOut $eventTryOut)
+    public function show(GroupType $groupType)
     {
         //
     }
@@ -42,7 +42,7 @@ class EventTryOutController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EventTryOut $eventTryOut)
+    public function edit(GroupType $groupType)
     {
         //
     }
@@ -50,7 +50,7 @@ class EventTryOutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EventTryOut $eventTryOut)
+    public function update(Request $request, GroupType $groupType)
     {
         //
     }
@@ -58,7 +58,7 @@ class EventTryOutController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EventTryOut $eventTryOut)
+    public function destroy(GroupType $groupType)
     {
         //
     }

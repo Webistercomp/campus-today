@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Participant extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     function eventTryOut() {
         return $this->belongsTo(EventTryOut::class);

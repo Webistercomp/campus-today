@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PacketType;
+use App\Models\PacketHistory;
 use Illuminate\Http\Request;
 
-class PacketTypeController extends Controller
+class PacketHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PacketTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PacketType $packetType)
+    public function show(PacketHistory $packetHistory)
     {
         //
     }
@@ -42,7 +42,7 @@ class PacketTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PacketType $packetType)
+    public function edit(PacketHistory $packetHistory)
     {
         //
     }
@@ -50,7 +50,7 @@ class PacketTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PacketType $packetType)
+    public function update(Request $request, PacketHistory $packetHistory)
     {
         //
     }
@@ -58,7 +58,7 @@ class PacketTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PacketType $packetType)
+    public function destroy(PacketHistory $packetHistory)
     {
         //
     }

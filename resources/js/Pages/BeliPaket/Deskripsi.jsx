@@ -4,28 +4,12 @@ import XIcon from "@/icons/XIcon";
 import { Head, Link } from "@inertiajs/react";
 import EWallet from "@/images/e-wallet-rafiki.png";
 
-export default function Deskripsi({ auth, title, nama_paket }) {
+export default function Deskripsi({ auth, title, packet }) {
     const deskripsiPaket = {
-        type: "Friendly",
-        price: 120000,
-        benefit: [
-            "Akses Tryout Gratis",
-            "Try Out Premium SKD Sistem CAT",
-            "Try Out Premium UTBK",
-            "Kunci dan Pembahasan Try Out Lengkap",
-            "Latihan Soal SKD / Mini Try Out (TWK, TIU dan TKP)",
-            "Latihan Soal UTBK",
-            "Materi SKD, UTBK, UM Terupdate",
-            "Ranking Try Out Nasional",
-        ],
-        nonBenefit: [
-            "Try Out Exclusive Platinum SKD Sistem CAT, UTBK, UM dengan Pembahasan Video",
-            "Analisis Waktu Pengerjaan Try Out (Manajemen Waktu)",
-            "Sebaran Data Nilai Try Out Pengguna Lain (Pesaing)",
-            "Video Materi SKD (TWK, TIU dan TKP), UTBK, dan UM.",
-            "Video Series SKD, UTBK, dan UM",
-        ],
-        isPopular: true,
+        type: packet.name,
+        price: packet.price_discount ?? packet.price_not_discount,
+        benefit: JSON.parse(packet.benefits).v,
+        nonBenefit: JSON.parse(packet.benefits).x,
     };
 
     return (
@@ -38,15 +22,15 @@ export default function Deskripsi({ auth, title, nama_paket }) {
                         <Link href={route("dashboard")}>Dashboard</Link>
                     </li>
                     <li>
-                        <Link href={route("belipaket")}>Beli Paket</Link>
+                        <Link href={route("paket.index")}>Beli Paket</Link>
                     </li>
-                    <li>{nama_paket}</li>
+                    <li>{packet.name}</li>
                 </ul>
             </div>
 
             <section>
                 <h1 className="text-3xl text-curious-blue font-semibold">
-                    {nama_paket}
+                    {packet.name}
                 </h1>
                 <div className="flex gap-8">
                     <div className="basis-3/5 mt-8">
@@ -55,8 +39,8 @@ export default function Deskripsi({ auth, title, nama_paket }) {
                         </h6>
                         <hr />
                         <table className="text-left mt-6 text-sm">
-                            {deskripsiPaket.benefit.map((str) => (
-                                <tr className="flex items-start gap-2 mb-[2px]">
+                            {deskripsiPaket.benefit.map((str, i) => (
+                                <tr className="flex items-start gap-2 mb-[2px]" key={i}>
                                     <td>
                                         <CheckIcon
                                             className={`fill-black self-start`}
@@ -69,8 +53,8 @@ export default function Deskripsi({ auth, title, nama_paket }) {
                                     </td>
                                 </tr>
                             ))}
-                            {deskripsiPaket.nonBenefit.map((str) => (
-                                <tr className="flex items-start gap-2 mb-[2px]">
+                            {deskripsiPaket.nonBenefit.map((str, i) => (
+                                <tr className="flex items-start gap-2 mb-[2px]" key={i}>
                                     <td>
                                         <XIcon className="fill-red-500 self-start" />
                                     </td>
@@ -102,9 +86,7 @@ export default function Deskripsi({ auth, title, nama_paket }) {
                             )}
                         </p>
                         <Link
-                            href={route(
-                                `belipaket.${nama_paket.toLowerCase()}.checkout`
-                            )}
+                            href={route('paket.checkout', packet.id)}
                         >
                             <button className="btn btn-primary">
                                 Beli Sekarang

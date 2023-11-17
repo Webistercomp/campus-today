@@ -53,7 +53,6 @@ export default function SkdVideo({
                 <h1 className="text-3xl text-curious-blue font-semibold">
                     {title} <span className="uppercase">{type}</span>
                 </h1>
-
                 {type == "videoseries" ? (
                     ""
                 ) : (
@@ -85,7 +84,6 @@ export default function SkdVideo({
                         </div>
                     </div>
                 )}
-
                 <div className="flex gap-6 mt-6">
                     {currentMaterials.map((material, i) => {
                         // Return the element. Also pass key

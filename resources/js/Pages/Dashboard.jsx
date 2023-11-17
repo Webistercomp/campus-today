@@ -88,7 +88,7 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                             Wujudkan Potensi Terbaik dengan Materi Premium
                         </h4>
                         <Link
-                            href={route("belipaket")}
+                            href={route("paket.index")}
                             className="btn bg-white border-none text-curious-blue-300 capitalize text-xl"
                         >
                             Beli Paket
@@ -121,9 +121,11 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         <h3 className="uppercase font-semibold text-xl">
                             Event TryOut
                         </h3>
-                        <button className="btn btn-primary capitalize text-white px-8">
-                            Mulai
-                        </button>
+                        <Link href={route("event-tryout.confirm")}>
+                            <button className="btn btn-primary capitalize text-white px-8">
+                                Mulai
+                            </button>
+                        </Link>
                     </div>
                     <div className="flex flex-col basis-1/2 bg-white shadow-xl py-10 gap-2 items-center rounded-xl">
                         <img
@@ -181,12 +183,13 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                                     title={article.title}
                                     desc={article.description}
                                     image={article.image}
+                                    key={i}
                                 />
                             );
                         })}
                 </div>
                 <Link
-                    href={route("article")}
+                    href={route("article.index")}
                     className="btn btn-primary text-curious-blue bg-white hover:bg-slate-100 mt-10 border-none shadow-lg"
                 >
                     Baca Selengkapnya

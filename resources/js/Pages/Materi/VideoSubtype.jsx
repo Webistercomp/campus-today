@@ -62,6 +62,7 @@ export default function SkdVideoTwk({
 
             <section className="mt-8 float-right w-4/5 relative pl-10 flex flex-col">
                 <div className="max-w-5xl">
+                    <h4 className="judul-materi">{chapter.judul}</h4>
                     <iframe
                         src={
                             chapter.link

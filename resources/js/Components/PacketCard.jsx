@@ -3,12 +3,15 @@ import XIcon from "@/icons/XIcon";
 import { Link } from "@inertiajs/react";
 
 export default function PacketCard({
+    id,
     name,
     benefits,
     price_not_discount,
     price_discount,
 }) {
     benefits = JSON.parse(benefits);
+    let v = benefits.v
+    let x = benefits.x
     const isPopular = name === "Friendly" || name === "Platinum";
 
     return (
@@ -36,7 +39,7 @@ export default function PacketCard({
                 <div className="divider"></div>
                 <table className="text-left mt-6 max-w-xs text-sm">
                     <tbody>
-                        {benefits.map((str, i) => (
+                        {v.map((str, i) => (
                             <tr
                                 className="flex items-start gap-2 mb-[2px]"
                                 key={i}
@@ -55,30 +58,44 @@ export default function PacketCard({
                                 </td>
                             </tr>
                         ))}
-                        {/* {nonBenefit.map((str) => (
-                        <tr className="flex items-start gap-2 mb-[2px]">
-                            <td>
-                                <XIcon className="fill-red-500 self-start" />
-                            </td>
-                            <td>
-                                <span className="basis-[85%]">{str}</span>
-                            </td>
-                        </tr>
-                    ))} */}
+                        {x.map((str, i) => (
+                            <tr className="flex items-start gap-2 mb-[2px]" key={i}>
+                                <td>
+                                    <XIcon className="fill-red-500 self-start" />
+                                </td>
+                                <td>
+                                    <span className="basis-[85%]">{str}</span>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
-            <Link href={route("belipaket.friendly")} className="self-center">
+            {id == 1 && price_not_discount == 0 ?
+            <Link href={route("dashboard")} className="self-center">
                 <button
                     className={`btn btn-info capitalize px-10 ${
                         isPopular
-                            ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
-                            : "text-white bg-black hover:bg-slate-700"
+                        ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
+                        : "text-white bg-black hover:bg-slate-700"
                     }`}
-                >
+                    >
+                    Belajar Sekarang
+                </button>
+            </Link>
+            : 
+            <Link href={route("paket.show", id)} className="self-center">
+                <button
+                    className={`btn btn-info capitalize px-10 ${
+                        isPopular
+                        ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
+                        : "text-white bg-black hover:bg-slate-700"
+                    }`}
+                    >
                     Beli Sekarang
                 </button>
             </Link>
+            }
         </div>
     );
 }

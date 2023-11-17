@@ -9,6 +9,8 @@ class Packet extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     function role() {
         return $this->belongsTo(Role::class);
     }
@@ -27,5 +29,9 @@ class Packet extends Model
     
     function scheduleBimbels() {
         return $this->hasMany(ScheduleBimbel::class);
+    }
+
+    function packetHistory() {
+        return $this->hasMany(PacketHistory::class);
     }
 }

@@ -16,13 +16,32 @@ class AnswerSeeder extends Seeder
     {
         $questions = Question::all();
         foreach($questions as $question) {
-            $correct_answer = rand(0, 4);
-            for($i=0; $i<4; $i++) {
-                Answer::create([
-                    'question_id' => $question->id,
-                    'answer' => 'Jawaban ' . $i,
-                    'is_correct' => ($correct_answer == $i ? true : false),
-                ]); 
+            if($question->groupType->code == 'twk') {
+                for($i=1; $i<=5; $i++) {
+                    Answer::create([
+                        'question_id' => $question->id,
+                        'answer' => 'Jawaban ' . $i,
+                        'bobot' => $i,
+                    ]);
+                } 
+            } else if($question->groupType->code == 'tkp' || $question->groupType->code == 'tiu') {
+                for($i=1; $i<=5; $i++) {
+                    $correct_answer = rand(1,5);
+                    Answer::create([
+                        'question_id' => $question->id,
+                        'answer' => 'Jawaban ' . $i,
+                        'bobot' => ($correct_answer == $i ? 5 : 0),
+                    ]);
+                }
+            } else {
+                $correct_answer = rand(0, 3);
+                for($i=0; $i<4; $i++) {
+                    Answer::create([
+                        'question_id' => $question->id,
+                        'answer' => 'Jawaban ' . $i,
+                        'bobot' => ($correct_answer == $i ? 1 : 0),
+                    ]); 
+                }
             }
         }
     }

@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
+use App\Http\Controllers\PacketController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Packet;
 use App\Http\Controllers\TryoutController;
@@ -38,34 +41,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/materi/{type}/video', [MaterialController::class, 'materialVideo'])->name('material.type.video');
     Route::get('/materi/{type}/video/{materialcode}/{id?}', [MaterialController::class, 'materialVideoSubtype'])->name('material.type.video.subtype');
 
-    Route::get('/beli-paket', function () {
-        return Inertia::render('BeliPaket/Index', ['title' => 'Beli Paket', 'packets' => Packet::all()]);
-    })->name('belipaket');
-    Route::get('/beli-paket/friendly', function () {
-        return Inertia::render('BeliPaket/Deskripsi', ['title' => 'Paket Friendly', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly');
-    Route::get('/beli-paket/friendly/checkout', function () {
-        return Inertia::render('BeliPaket/Checkout', ['title' => 'Checkout', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly.checkout');
-    Route::get('/beli-paket/friendly/checkout/payment', function () {
-        return Inertia::render('BeliPaket/Payment', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly.checkout.payment');
-    Route::get('/beli-paket/friendly/checkout/verification', function () {
-        return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
-    })->name('belipaket.friendly.checkout.verification');
+    Route::get('/paket', [PacketController::class, 'index'])->name('paket.index');
+    Route::get('/paket/{packet_id}', [PacketController::class, 'show'])->name('paket.show');
+    Route::get('/paket/{packet_id}/checkout', [PacketController::class, 'checkout'])->name('paket.checkout');
+    Route::get('/paket/{packet_id}/checkout/payment', [PacketController::class, 'payment'])->name('paket.payment');
+    Route::get('/paket/{packet_id}/checkout/verification', [PacketController::class, 'verification'])->name('paket.verification');
+    Route::post('/paket', [PacketController::class, 'store'])->name('paket.store');
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
-    Route::get('/tryout/success', [TryoutController::class, 'success'])->name('tryout.success');
-    Route::get('/tryout/failed', [TryoutController::class, 'failed'])->name('tryout.failed');
-    Route::get('/tryout/test/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
+    Route::get('/tryout/success/{id}', [TryoutController::class, 'success'])->name('tryout.success');
+    Route::get('/tryout/failed/{id}', [TryoutController::class, 'failed'])->name('tryout.failed');
+    Route::get('/tryout/confirm/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
+    Route::get('/tryout/test/{id}', [TryoutController::class, 'test'])->name('tryout.test');
     Route::get('/tryout/{type}', [TryoutController::class, 'type'])->name('tryout.type');
-    Route::post('/tryout/{user_id}/{tryout_id}', [TryoutController::class, 'start_tryout'])->name('tryout.start');
+    Route::post('/tryout/scoring', [TryoutController::class, 'scoring'])->name('tryout.scoring');
+    Route::post('/tryout', [TryoutController::class, 'start_tryout'])->name('tryout.start');
 
-    Route::get('/article', function () {
-        return Inertia::render('Article', ['title' => 'Artikel', 'article' => Article::all()]);
-    })->name('article');
-});
+    Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
+    Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
 Route::post('/tryout/scoring', [TryoutController::class, 'scoring'])->name('tryout.scoring');
 
@@ -75,6 +69,8 @@ Route::prefix('materiskd')->group(function () {
     Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
     Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
     Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
+    Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
 });
 
 require __DIR__ . '/auth.php';

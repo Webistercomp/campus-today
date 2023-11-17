@@ -16,4 +16,8 @@ class Material extends Model
     function chapters() {
         return $this->hasMany(Chapter::class);
     }
+
+    function groupType() {
+        return $this->belongsTo(GroupType::class, 'group_id');
+    }
 }

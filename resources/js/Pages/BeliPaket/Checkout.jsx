@@ -1,7 +1,27 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Checkout({ auth, title, nama_paket }) {
+export default function Checkout({ auth, title, packet }) {
+    let IDRupiah = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+    });
+    
+    const full_name = auth.user.name.split(' ')
+    const first_name = full_name[0]
+    const last_name = full_name.length != 1 ? full_name[full_name.length - 1] : ''
+    const data = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": auth.user.email,
+        "phone": auth.user.nohp,
+        "payment_method": "",
+    }
+
+    function selanjutnya() {
+        console.log(data)
+    }
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -12,11 +32,11 @@ export default function Checkout({ auth, title, nama_paket }) {
                         <Link href={route("dashboard")}>Dashboard</Link>
                     </li>
                     <li>
-                        <Link href={route("belipaket")}>Beli Paket</Link>
+                        <Link href={route("paket.index")}>Beli Paket</Link>
                     </li>
                     <li>
-                        <Link href={route("belipaket.friendly")}>
-                            {nama_paket}
+                        <Link href={route("paket.show", packet.id)}>
+                            {packet.name}
                         </Link>
                     </li>
                     <li>Checkout</li>
@@ -34,22 +54,26 @@ export default function Checkout({ auth, title, nama_paket }) {
                                 type="text"
                                 placeholder="First Name"
                                 className="input input-bordered input-sm w-full"
+                                value={data.first_name}
                             />
                             <input
                                 type="text"
                                 placeholder="Last Name"
                                 className="input input-bordered input-sm w-full"
+                                value={data.last_name}
                             />
                             <input
                                 type="email"
                                 placeholder="Email"
                                 className="input input-bordered input-sm w-full"
+                                value={data.email}
                             />
                             <input
                                 type="text"
                                 pattern="[0-9]"
                                 placeholder="No. HP"
                                 className="input input-bordered input-sm w-full"
+                                value={data.phone}
                             />
                             <select className="select select-bordered select-sm w-full">
                                 <option disabled selected>
@@ -70,9 +94,9 @@ export default function Checkout({ auth, title, nama_paket }) {
                                 </thead>
                                 <tbody className="[&>tr>td]:text-start [&>tr>td]:px-4 [&>tr>td]:py-2">
                                     <tr>
-                                        <td>Paket Friendly</td>
-                                        <td>200.000</td>
-                                        <td>200.000</td>
+                                        <td>Paket {packet.name}</td>
+                                        <td>{IDRupiah.format(packet.price_discount)}</td>
+                                        <td>{IDRupiah.format(packet.price_discount)}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -81,17 +105,14 @@ export default function Checkout({ auth, title, nama_paket }) {
                     <div className="divider divider-vertical"></div>
                     <div className="flex justify-between">
                         <Link
-                            href={route(
-                                `belipaket.${nama_paket.toLowerCase()}`
-                            )}
+                            href={route('paket.show', packet.id)}
                             className="btn"
                         >
                             Kembali
                         </Link>
                         <Link
-                            href={route(
-                                `belipaket.${nama_paket.toLowerCase()}.checkout.payment`
-                            )}
+                            href={ route(`paket.payment`, packet.id) }
+                            onClick={selanjutnya}
                         >
                             <button className="btn btn-primary">
                                 Selanjutnya
