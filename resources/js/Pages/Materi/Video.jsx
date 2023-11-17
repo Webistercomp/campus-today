@@ -10,17 +10,18 @@ export default function SkdVideo({
     type,
     materialType,
     materials,
+    group_types,
 }) {
-    const tabGroup = materials.map((dt) => dt.group);
+    const tabGroup = group_types;
     const [tabIndexActive, setTabIndexActive] = useState(null);
     const [currentMaterials, setCurrentMaterials] = useState(() =>
-        materials.filter((dt) => dt.group === tabGroup[tabIndexActive])
+        materials.filter((material) => material.group_id === tabIndexActive)
     );
     const [searchkeyword, setSearchKeyword] = useState("");
 
     useEffect(() => {
         setCurrentMaterials(
-            materials.filter((dt) => dt.group === tabGroup[tabIndexActive])
+            materials.filter((material) => material.group_id === tabIndexActive)
         );
     }, [tabIndexActive]);
 
@@ -58,16 +59,18 @@ export default function SkdVideo({
                 ) : (
                     <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
                         <div className="flex gap-14 w-full">
-                            {tabGroup.map((dt, i) => (
+                            {tabGroup.map((groupType, i) => (
                                 <a
                                     className={`text-center relative cursor-pointer uppercase transition-all duration-75 ${
-                                        i === tabIndexActive
+                                        groupType.id === tabIndexActive
                                             ? "tab-active"
                                             : "after:opacity-0"
                                     }`}
-                                    onClick={() => setTabIndexActive(i)}
+                                    onClick={() =>
+                                        setTabIndexActive(groupType.id)
+                                    }
                                 >
-                                    {dt}
+                                    {groupType.name}
                                 </a>
                             ))}
                         </div>
