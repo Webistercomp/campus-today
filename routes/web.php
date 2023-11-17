@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\EventTryoutController as AdminEventTryoutController;
+use App\Http\Controllers\Admin\MateriController;
+use App\Http\Controllers\Admin\PacketController as AdminPacketController;
+use App\Http\Controllers\Admin\TryoutController as AdminTryoutController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\EventTryOutController;
@@ -94,5 +99,13 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('checkAdmin')->group(function () {
         Route::get('', [AdminController::class, 'index'])->name('admin.home');
+
+        Route::get('users', [UserController::class, 'index'])->name('admin.user.index');
+
+        Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
+        Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');
+        Route::get('event-tryout', [AdminEventTryoutController::class, 'index'])->name('admin.event.index');
+        Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
+        Route::get('article', [AdminEventTryoutController::class, 'index'])->name('admin.article.index');
     });
 });
