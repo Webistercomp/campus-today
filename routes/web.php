@@ -60,8 +60,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
-
-Route::post('/tryout/scoring', [TryoutController::class, 'scoring'])->name('tryout.scoring');
+});
 
 Route::prefix('materiskd')->group(function () {
     Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
