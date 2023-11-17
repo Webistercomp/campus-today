@@ -1,8 +1,30 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DocumentIcon from "@/icons/DocumentIcon";
 import { Head, Link } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 export default function Teks({ auth, title, type, materials }) {
+    const tabGroup = materials.map((dt) => dt.group);
+    const [tabIndexActive, setTabIndexActive] = useState(null);
+    const [currentMaterials, setCurrentMaterials] = useState(() =>
+        materials.filter((dt) => dt.group === tabGroup[tabIndexActive])
+    );
+    const [searchkeyword, setSearchKeyword] = useState("");
+
+    useEffect(() => {
+        setCurrentMaterials(
+            materials.filter((dt) => dt.group === tabGroup[tabIndexActive])
+        );
+    }, [tabIndexActive]);
+
+    useEffect(() => {
+        setCurrentMaterials(
+            materials.filter((dt) =>
+                dt.title.match(new RegExp(searchkeyword, "i"))
+            )
+        );
+    }, [searchkeyword]);
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -34,27 +56,32 @@ export default function Teks({ auth, title, type, materials }) {
 
                 <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
                     <div className="flex gap-14 w-full">
-                        <a className="text-center relative cursor-pointer tab-active">
-                            Tes Wawasan Kebangsaan
-                        </a>
-                        <a className="text-center relative cursor-pointer">
-                            Tes Intelegensia Umum
-                        </a>
-                        <a className="text-center relative cursor-pointer">
-                            Tes Karakteristik Pribadi
-                        </a>
+                        {tabGroup.map((dt, i) => (
+                            <a
+                                className={`text-center relative cursor-pointer uppercase transition-all duration-75 ${
+                                    i === tabIndexActive
+                                        ? "tab-active"
+                                        : "after:opacity-0"
+                                }`}
+                                onClick={() => setTabIndexActive(i)}
+                            >
+                                {dt}
+                            </a>
+                        ))}
                     </div>
                     <div className="form-control">
                         <input
                             type="text"
                             placeholder="Cari"
                             className="input input-bordered w-24 md:w-auto"
+                            value={searchkeyword}
+                            onChange={(ev) => setSearchKeyword(ev.target.value)}
                         />
                     </div>
                 </div>
 
                 <div className="flex gap-6 mt-6">
-                    {materials.map((material, i) => {
+                    {currentMaterials.map((material, i) => {
                         // Return the element. Also pass key
                         return (
                             <Link
