@@ -39,32 +39,40 @@ export default function Deskripsi({ auth, title, packet }) {
                         </h6>
                         <hr />
                         <table className="text-left mt-6 text-sm">
-                            {deskripsiPaket.benefit.map((str, i) => (
-                                <tr className="flex items-start gap-2 mb-[2px]" key={i}>
-                                    <td>
-                                        <CheckIcon
-                                            className={`fill-black self-start`}
-                                        />
-                                    </td>
-                                    <td>
-                                        <span className="basis-[85%]">
-                                            {str}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))}
-                            {deskripsiPaket.nonBenefit.map((str, i) => (
-                                <tr className="flex items-start gap-2 mb-[2px]" key={i}>
-                                    <td>
-                                        <XIcon className="fill-red-500 self-start" />
-                                    </td>
-                                    <td>
-                                        <span className="basis-[85%]">
-                                            {str}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))}
+                            <tbody>
+                                {deskripsiPaket.benefit.map((str, i) => (
+                                    <tr
+                                        className="flex items-start gap-2 mb-[2px]"
+                                        key={i}
+                                    >
+                                        <td>
+                                            <CheckIcon
+                                                className={`fill-black self-start`}
+                                            />
+                                        </td>
+                                        <td>
+                                            <span className="basis-[85%]">
+                                                {str}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {deskripsiPaket.nonBenefit.map((str, i) => (
+                                    <tr
+                                        className="flex items-start gap-2 mb-[2px]"
+                                        key={i}
+                                    >
+                                        <td>
+                                            <XIcon className="fill-red-500 self-start" />
+                                        </td>
+                                        <td>
+                                            <span className="basis-[85%]">
+                                                {str}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
                     </div>
                     <div className="basis-2/5 flex flex-col justify-center border-curious-blue border-2 rounded-xl text-center py-6 px-20">
@@ -85,9 +93,7 @@ export default function Deskripsi({ auth, title, packet }) {
                                 deskripsiPaket.price
                             )}
                         </p>
-                        <Link
-                            href={route('paket.checkout', packet.id)}
-                        >
+                        <Link href={route("paket.checkout", packet.id)}>
                             <button className="btn btn-primary">
                                 Beli Sekarang
                             </button>

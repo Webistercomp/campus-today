@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@uidotdev/usehooks": "^2.4.1",
+        "prop-types": "^15.8.1",
         "tailwind-merge": "^1.14.0"
     }
 }

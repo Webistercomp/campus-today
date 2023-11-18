@@ -5,6 +5,7 @@ import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationFor
 import axios from "axios";
 import { Head, Link, router } from "@inertiajs/react";
 import { useState } from "react";
+import Alert from "@/Components/Alert";
 
 export default function Profile({ auth }) {
     const { user } = auth;
@@ -21,6 +22,11 @@ export default function Profile({ auth }) {
         institusi: user.institusi ?? null,
     });
     const [prevData, setPrevData] = useState(data);
+    const [alertData, setAlertData] = useState({
+        type: "",
+        isShow: false,
+        msg: "",
+    });
 
     const formatDateHTML = (dateString, join = "-", format = "dmy") => {
         var [date, month, year] = [
@@ -52,6 +58,18 @@ export default function Profile({ auth }) {
             tanggallahir: formatDateHTML(data.tanggallahir),
         });
         const response = putData;
+        setAlertData({
+            type: "success",
+            isShow: true,
+            msg: "Profil berhasil diubah",
+        });
+        setTimeout(
+            () =>
+                setAlertData((prev) => {
+                    return { ...prev, isShow: false };
+                }),
+            2000
+        );
         setIsEdit(false);
         setPrevData(data);
         return route("profile");
@@ -274,19 +292,45 @@ export default function Profile({ auth }) {
                             >
                                 Gender
                             </label>
-                            <select
-                                name="gender"
+                            <div
+                                className="flex gap-3 items-center"
                                 id="gender"
-                                onChange={(ev) =>
-                                    onChangeUserData(
-                                        ev.target.id,
-                                        ev.target.value
-                                    )
-                                }
                             >
-                                <option value="Pria">Pria</option>
-                                <option value="Wanita">Wanita</option>
-                            </select>
+                                <input
+                                    className="radio radio-primary radio-sm"
+                                    type="radio"
+                                    name="gender"
+                                    id="gender_pr"
+                                    value="Pria"
+                                    checked={
+                                        data.gender === "Pria" ? true : false
+                                    }
+                                    onChange={(ev) =>
+                                        onChangeUserData(
+                                            "gender",
+                                            ev.target.value
+                                        )
+                                    }
+                                />
+                                Pria
+                                <input
+                                    className="radio radio-primary radio-sm"
+                                    type="radio"
+                                    name="gender"
+                                    id="gender_wn"
+                                    value="Wanita"
+                                    checked={
+                                        data.gender === "Wanita" ? true : false
+                                    }
+                                    onChange={(ev) =>
+                                        onChangeUserData(
+                                            "gender",
+                                            ev.target.value
+                                        )
+                                    }
+                                />
+                                Wanita
+                            </div>
                         </div>
                         <div className="flex justify-start items-center">
                             <label
@@ -367,6 +411,8 @@ export default function Profile({ auth }) {
                     </form>
                 )}
             </section>
+
+            <Alert {...alertData} />
 
             {/* <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
