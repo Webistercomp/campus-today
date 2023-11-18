@@ -20,7 +20,9 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                                 <Link href={route("dashboard")}>Home</Link>
                             </li>
                             <li>
-                                <Link href={route("article.index")}>Artikel</Link>
+                                <Link href={route("article.index")}>
+                                    Artikel
+                                </Link>
                             </li>
                             <div className="divider divider-horizontal"></div>
                             <div className="dropdown dropdown-end">
@@ -105,9 +107,6 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                     </li>
                     <li>
                         <Link href="#paket">Paket</Link>
-                    </li>
-                    <li>
-                        <Link href={route('article.index')}>Blog</Link>
                     </li>
                 </ul>
             </div>
