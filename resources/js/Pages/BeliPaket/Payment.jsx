@@ -1,3 +1,4 @@
+import Alert from "@/Components/Alert";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import axios from "axios";
@@ -6,7 +7,11 @@ import { useState } from "react";
 export default function Payment({ auth, title, packet, user_data }) {
     const [paymentProof, setPaymentProof] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isShowErrorAlert, setIsShowErrorAlert] = useState(false);
+    const [alertData, setAlertData] = useState({
+        type: "",
+        isShow: false,
+        msg: "",
+    });
 
     const onChangePaymentProof = (ev) => {
         setPaymentProof(ev.target.files[0]);
@@ -14,11 +19,17 @@ export default function Payment({ auth, title, packet, user_data }) {
 
     const onSubmitPaymentProof = async () => {
         if (paymentProof === null) {
-            setIsShowErrorAlert(true);
+            setAlertData({
+                type: "error",
+                isShow: true,
+                msg: "Silahkan upload bukti pembayaran!",
+            });
 
             return setTimeout(() => {
-                setIsShowErrorAlert(false);
-            }, 3000);
+                setAlertData((prev) => {
+                    return { ...prev, isShow: false };
+                });
+            }, 2000);
         }
 
         setIsLoading(true);
@@ -108,26 +119,7 @@ export default function Payment({ auth, title, packet, user_data }) {
                 </div>
             </section>
 
-            <div
-                className={`alert alert-error w-fit fixed left-1/2 -translate-x-1/2 shadow-md transition-all duration-150 ${
-                    isShowErrorAlert ? "top-24 opacity-100" : "top-0 opacity-0"
-                }`}
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="stroke-current shrink-0 h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                </svg>
-                <span>Silahkan pilih bukti pembayaran!</span>
-            </div>
+            <Alert {...alertData} />
         </AuthenticatedLayout>
     );
 }

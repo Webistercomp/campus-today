@@ -1,3 +1,4 @@
+import Alert from "@/Components/Alert";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import { useState } from "react";
@@ -20,15 +21,25 @@ export default function Checkout({ auth, title, packet }) {
         phone: auth.user.nohp,
         payment_method: "",
     });
-    const [isShowErrorAlert, setIsShowErrorAlert] = useState(false);
+    const [alertData, setAlertData] = useState({
+        type: "",
+        isShow: false,
+        msg: "",
+    });
 
     const onNextPaymentHandler = () => {
         if (checkoutData.payment_method === "") {
-            setIsShowErrorAlert(true);
+            setAlertData({
+                type: "error",
+                isShow: true,
+                msg: "Pilih metode pembayaran",
+            });
 
             return setTimeout(() => {
-                setIsShowErrorAlert(false);
-            }, 3000);
+                setAlertData((prev) => {
+                    return { ...prev, isShow: false };
+                });
+            }, 2000);
         }
 
         return router.get(route("paket.payment", packet.id), {
@@ -156,26 +167,7 @@ export default function Checkout({ auth, title, packet }) {
                 </div>
             </section>
 
-            <div
-                className={`alert alert-error w-fit fixed left-1/2 -translate-x-1/2 shadow-md transition-all duration-150 ${
-                    isShowErrorAlert ? "top-24 opacity-100" : "top-0 opacity-0"
-                }`}
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="stroke-current shrink-0 h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                </svg>
-                <span>Pilih metode pembayaran!</span>
-            </div>
+            <Alert {...alertData} />
         </AuthenticatedLayout>
     );
 }
