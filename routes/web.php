@@ -60,6 +60,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
+
+    Route::get('/latihan', function () {
+        return Inertia::render('Latihan/Index', ['title' => 'Latihan Soal']);
+    })->name('latihan');
+    Route::get('/latihan/success', function () {
+        return Inertia::render('Latihan/LatihanSuccess', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
+    })->name('latihan.success');
+    Route::get('/latihan/failed', function () {
+        return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
+    })->name('latihan.failed');
 });
 
 Route::prefix('materiskd')->group(function () {
