@@ -50,6 +50,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
+    Route::get('/tryout/insight', [TryoutController::class, 'insight'])->name('tryout.insight');
+    Route::get('/tryout/ranking', [TryoutController::class, 'ranking'])->name('tryout.ranking');
     Route::get('/tryout/success/{id}', [TryoutController::class, 'success'])->name('tryout.success');
     Route::get('/tryout/failed/{id}', [TryoutController::class, 'failed'])->name('tryout.failed');
     Route::get('/tryout/confirm/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
@@ -60,6 +62,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
+
+    Route::get('/latihan', function () {
+        return Inertia::render('Latihan/Index', ['title' => 'Latihan Soal']);
+    })->name('latihan');
+    Route::get('/latihan/success', function () {
+        return Inertia::render('Latihan/LatihanSuccess', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
+    })->name('latihan.success');
+    Route::get('/latihan/failed', function () {
+        return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
+    })->name('latihan.failed');
 });
 
 Route::prefix('materiskd')->group(function () {

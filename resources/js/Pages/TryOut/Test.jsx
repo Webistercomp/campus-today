@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Timer from "@/Components/Timer";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { data } from "autoprefixer";
 import { Link } from "@inertiajs/react";
 import axios from "axios";
 
@@ -14,7 +13,7 @@ export default function Test({
     tryoutHistory,
     timeLeft,
     _token,
-    axios_base_url
+    axios_base_url,
 }) {
     let no = 1;
     const [tryOutDataStorage, saveTryOutDataStorage] = useLocalStorage(
@@ -29,7 +28,6 @@ export default function Test({
                   return { ...question, no: i + 1, jawaban: null };
               })
     );
-
 
     const [active, setActive] = useState(1);
     const [activeQuestion, setActiveQuestion] = useState(
@@ -76,33 +74,33 @@ export default function Test({
         const finalTryOutData = tryOutData.map((data) => {
             return { question_id: data.id, answer_id: data.jawaban };
         });
-        const finalData = {
-            tryout_id: tryout.id,
-            user_id: user.id,
-            tryout_data: finalTryOutData,
-        }
-        const postData = await axios.post(route("tryout.scoring"), {
-            ...finalData
-        })
-        console.log(postData);
+        // const finalData = {
+        //     tryout_id: tryout.id,
+        //     user_id: user.id,
+        //     tryout_data: finalTryOutData,
+        // }
+        // const postData = await axios.post(route("tryout.scoring"), {
+        //     ...finalData
+        // })
+        // console.log(postData);
 
-        const finalData = {
-            tryout_id: tryout.id,
-            user_id: user.id,
-            tryout_data: finalTryOutData,
-        };
+        // const finalData = {
+        //     tryout_id: tryout.id,
+        //     user_id: user.id,
+        //     tryout_data: finalTryOutData,
+        // };
 
-        const postData = await axios.post(route("tryout.scoring"), {
-            ...finalData,
-        });
-        console.log(postData);
+        // const postData = await axios.post(route("tryout.scoring"), {
+        //     ...finalData,
+        // });
+        // console.log(postData);
 
         // localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
 
         // setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
 
         // return document.getElementById("close_confirm_ans_btn").click();
-        return window.location.href = route("tryout.success", tryout.id);
+        return (window.location.href = route("tryout.success", tryout.id));
     };
 
     return (
@@ -205,55 +203,55 @@ export default function Test({
                         </div>
                     </div>
                 </div>
-
-                <dialog id="un_answer_modal" className="modal">
-                    <div className="modal-box">
-                        <h3 className="font-bold text-lg text-error uppercase">
-                            Peringatan !
-                        </h3>
-                        <p className="py-4">
-                            Beberapa soal masih belum terjawab, yakin untuk
-                            mengirim jawaban ?
-                        </p>
-                        <div className="modal-action flex justify-end">
-                            <button className="btn capitalize">Kirim</button>
-                            <form method="dialog">
-                                <button className="btn btn-error text-white capitalize">
-                                    Kembali
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </dialog>
-
-                <dialog id="confirm_send_ans_modal" className="modal">
-                    <div className="modal-box">
-                        <h3 className="font-bold text-lg uppercase text-warning">
-                            Konfirmasi !
-                        </h3>
-                        <p className="py-4">
-                            Apakah Anda yakin ingin mengirimkan jawaban anda
-                            saat ini ?
-                        </p>
-                        <div className="modal-action">
-                            <form method="dialog">
-                                <button
-                                    className="btn capitalize"
-                                    id="close_confirm_ans_btn"
-                                >
-                                    Batal
-                                </button>
-                            </form>
-                            <button
-                                onClick={onClickSubmitAnswer}
-                                className="btn btn-success capitalize mr-8 text-white"
-                            >
-                                Kirim
-                            </button>
-                        </div>
-                    </div>
-                </dialog>
             </section>
+
+            <dialog id="un_answer_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg text-error uppercase">
+                        Peringatan !
+                    </h3>
+                    <p className="py-4">
+                        Beberapa soal masih belum terjawab, yakin untuk mengirim
+                        jawaban ?
+                    </p>
+                    <div className="modal-action flex justify-end">
+                        <button className="btn capitalize">Kirim</button>
+                        <form method="dialog">
+                            <button className="btn btn-error text-white capitalize">
+                                Kembali
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+
+            <dialog id="confirm_send_ans_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg uppercase text-warning">
+                        Konfirmasi !
+                    </h3>
+                    <p className="py-4">
+                        Apakah Anda yakin ingin mengirimkan jawaban anda saat
+                        ini ?
+                    </p>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button
+                                className="btn capitalize"
+                                id="close_confirm_ans_btn"
+                            >
+                                Batal
+                            </button>
+                        </form>
+                        <button
+                            onClick={onClickSubmitAnswer}
+                            className="btn btn-success capitalize mr-8 text-white"
+                        >
+                            Kirim
+                        </button>
+                    </div>
+                </div>
+            </dialog>
         </AuthenticatedLayout>
     );
 }

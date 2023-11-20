@@ -129,9 +129,6 @@ export default function Profile({ auth }) {
                         <a className="text-center relative cursor-pointer tab-active">
                             Profil Saya
                         </a>
-                        <a className="text-center relative cursor-pointer">
-                            Riwayat Pembelian
-                        </a>
                     </div>
                 </div>
 
