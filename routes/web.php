@@ -72,6 +72,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/latihan/failed', function () {
         return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
     })->name('latihan.failed');
+
+    Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
 });
 
 Route::prefix('materiskd')->group(function () {
@@ -80,8 +83,6 @@ Route::prefix('materiskd')->group(function () {
     Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
     Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
     Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
-    Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
-    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
 });
 
 require __DIR__ . '/auth.php';
