@@ -50,6 +50,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
+    Route::get('/tryout/insight', [TryoutController::class, 'insight'])->name('tryout.insight');
+    Route::get('/tryout/ranking', [TryoutController::class, 'ranking'])->name('tryout.ranking');
     Route::get('/tryout/success/{id}', [TryoutController::class, 'success'])->name('tryout.success');
     Route::get('/tryout/failed/{id}', [TryoutController::class, 'failed'])->name('tryout.failed');
     Route::get('/tryout/confirm/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');

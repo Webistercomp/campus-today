@@ -42,73 +42,40 @@ export default function Hasil({ auth, title }) {
                 </div>
 
                 <div className="mt-6 grid grid-cols-3 gap-3">
-                    <div className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
-                        <div className="bg-curious-blue aspect-square flex items-center justify-center h-full rounded-lg p-4">
+                    <div className="bg-white shadow-lg rounded-xl p-4 flex gap-4 items-center min-h-fit">
+                        <div className="bg-curious-blue aspect-square flex items-center justify-center h-full max-h-24 rounded-lg p-4">
                             <ExamIcon className="w-12" />
                         </div>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 overflow-clip">
                             <h4 className="uppercase text-curious-blue font-semibold text-lg">
                                 Nama TryOut
                             </h4>
-                            <div className="flex gap-3">
+                            <div className="flex flex-wrap gap-3 items-center">
                                 <span className="text-slate-400 flex items-center gap-1">
                                     <PaperFillIcon className="fill-slate-400 w-5" />
-                                    <p className="text-sm">Jumlah Soal</p>
+                                    <p className="text-sm m-0">Jumlah Soal</p>
                                 </span>
                                 <span className="text-slate-400 flex items-center gap-1">
                                     <ClockFillIcon className="fill-slate-400 w-5" />
-                                    <p>-- Menit</p>
+                                    <p className="m-0">-- Menit</p>
                                 </span>
                             </div>
-                            <button className="btn btn-primary btn-sm capitalize">
-                                Insight
-                            </button>
-                        </div>
-                    </div>
-                    <div className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
-                        <div className="bg-curious-blue aspect-square flex items-center justify-center h-full rounded-lg p-4">
-                            <ExamIcon className="w-12" />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <h4 className="uppercase text-curious-blue font-semibold text-lg">
-                                Nama TryOut
-                            </h4>
-                            <div className="flex gap-3">
-                                <span className="text-slate-400 flex items-center gap-1">
-                                    <PaperFillIcon className="fill-slate-400 w-5" />
-                                    <p className="text-sm">Jumlah Soal</p>
-                                </span>
-                                <span className="text-slate-400 flex items-center gap-1">
-                                    <ClockFillIcon className="fill-slate-400 w-5" />
-                                    <p>-- Menit</p>
-                                </span>
+                            <div className="flex gap-2 flex-wrap">
+                                <Link
+                                    href={route("tryout.insight")}
+                                    as="button"
+                                    className="btn btn-primary btn-sm capitalize"
+                                >
+                                    Pembahasan
+                                </Link>
+                                <Link
+                                    href={route("tryout.ranking")}
+                                    as="button"
+                                    className="btn btn-sm capitalize"
+                                >
+                                    Ranking
+                                </Link>
                             </div>
-                            <button className="btn btn-primary btn-sm capitalize">
-                                Insight
-                            </button>
-                        </div>
-                    </div>
-                    <div className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
-                        <div className="bg-curious-blue aspect-square flex items-center justify-center h-full rounded-lg p-4">
-                            <ExamIcon className="w-12" />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <h4 className="uppercase text-curious-blue font-semibold text-lg">
-                                Nama TryOut
-                            </h4>
-                            <div className="flex gap-3">
-                                <span className="text-slate-400 flex items-center gap-1">
-                                    <PaperFillIcon className="fill-slate-400 w-5" />
-                                    <p className="text-sm">Jumlah Soal</p>
-                                </span>
-                                <span className="text-slate-400 flex items-center gap-1">
-                                    <ClockFillIcon className="fill-slate-400 w-5" />
-                                    <p>-- Menit</p>
-                                </span>
-                            </div>
-                            <button className="btn btn-primary btn-sm capitalize">
-                                Insight
-                            </button>
                         </div>
                     </div>
                 </div>
