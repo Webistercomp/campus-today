@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Teks({ auth, title, type, materials, group_types }) {
     const tabGroup = group_types;
-    const [tabIndexActive, setTabIndexActive] = useState(null);
+    const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
     const [currentMaterials, setCurrentMaterials] = useState(() =>
         materials.filter((material) => material.group_id === tabIndexActive)
     );
@@ -19,8 +19,10 @@ export default function Teks({ auth, title, type, materials, group_types }) {
 
     useEffect(() => {
         setCurrentMaterials(
-            materials.filter((dt) =>
-                dt.title.match(new RegExp(searchkeyword, "i"))
+            materials.filter(
+                (material) =>
+                    material.title.match(new RegExp(searchkeyword, "i")) &&
+                    material.group_id === tabIndexActive
             )
         );
     }, [searchkeyword]);
@@ -58,10 +60,10 @@ export default function Teks({ auth, title, type, materials, group_types }) {
                     <div className="flex gap-14 w-full">
                         {tabGroup.map((groupType, i) => (
                             <a
-                                className={`text-center relative cursor-pointer uppercase transition-all duration-75 ${
+                                className={`text-center relative cursor-pointer uppercase ${
                                     groupType.id === tabIndexActive
-                                        ? "tab-active"
-                                        : "after:opacity-0"
+                                        ? "tab-active after:opacity-100"
+                                        : "tab-active after:opacity-0 after:bottom-0"
                                 }`}
                                 onClick={() => setTabIndexActive(groupType.id)}
                             >
