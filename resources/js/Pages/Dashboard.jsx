@@ -121,10 +121,12 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         <h3 className="uppercase font-semibold text-xl">
                             Event TryOut
                         </h3>
-                        <Link href={route("event-tryout.confirm")}>
-                            <button className="btn btn-primary capitalize text-white px-8">
-                                Mulai
-                            </button>
+                        <Link
+                            href={route("event-tryout.confirm")}
+                            className="btn btn-primary capitalize text-white px-8"
+                            as="button"
+                        >
+                            Mulai
                         </Link>
                     </div>
                     <div className="flex flex-col basis-1/2 bg-white shadow-xl py-10 gap-2 items-center rounded-xl">
@@ -136,10 +138,12 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         <h3 className="uppercase font-semibold text-xl">
                             TryOut Gratis & Platinum
                         </h3>
-                        <Link href={route("tryout")}>
-                            <button className="btn btn-primary capitalize text-white px-8">
-                                Mulai
-                            </button>
+                        <Link
+                            as="button"
+                            href={route("tryout")}
+                            className="btn btn-primary capitalize text-white px-8"
+                        >
+                            Mulai
                         </Link>
                     </div>
                     <div className="flex flex-col basis-1/2 bg-white shadow-xl py-10 gap-2 items-center rounded-xl">
@@ -151,9 +155,13 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         <h3 className="uppercase font-semibold text-xl">
                             Tes Minat Bakat
                         </h3>
-                        <button className="btn btn-primary capitalize text-white px-8">
+                        <Link
+                            as="button"
+                            href={route("minatbakat")}
+                            className="btn btn-primary capitalize text-white px-8"
+                        >
                             Mulai
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </section>
