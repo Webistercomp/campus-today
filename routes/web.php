@@ -75,6 +75,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
+
+    Route::get('/minat-bakat', function () {
+        return Inertia::render('MinatBakat/Index', ['title' => 'Tes Minat Bakat']);
+    })->name('minatbakat');
+    Route::get('/minat-bakat/tes-koran', function () {
+        return Inertia::render('MinatBakat/TesKoran', ['title' => 'Tes Koran']);
+    })->name('minatbakat.teskoran');
+    Route::get('/minat-bakat/tes-wartegg', function () {
+        return Inertia::render('MinatBakat/TesWartegg', ['title' => 'Tes Wartegg']);
+    })->name('minatbakat.teswartegg');
 });
 
 Route::prefix('materiskd')->group(function () {

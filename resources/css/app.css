@@ -8,6 +8,10 @@ p {
     margin-bottom: 6pt;
 }
 
+#soal-scroll {
+    scroll-behavior: smooth;
+}
+
 @layer components {
     .tab-active {
         @apply after:h-1 after:min-w-[20px] after:w-full after:max-w-[20%] after:absolute after:bg-curious-blue after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:rounded-full after:transition-all after:duration-75;
