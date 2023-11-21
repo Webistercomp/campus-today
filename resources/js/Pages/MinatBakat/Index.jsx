@@ -1,5 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
+import TesKoranImg from "@/images/tes-koran.png";
+import TesWarteggImg from "@/images/tes-wartegg.png";
 
 export default function MinatBakat({ auth, title }) {
     const tesMinatBakat = [
@@ -7,11 +9,13 @@ export default function MinatBakat({ auth, title }) {
             name: "Tes Koran",
             desc: "Pengukuran Konsentrasi",
             route: route("minatbakat.teskoran"),
+            img: TesKoranImg,
         },
         {
             name: "Tes Wartegg",
             desc: "Penilaian Kepribadian",
             route: route("minatbakat.teswartegg"),
+            img: TesWarteggImg,
         },
     ];
 
@@ -35,11 +39,11 @@ export default function MinatBakat({ auth, title }) {
                 <div className="grid grid-cols-2 gap-4 mt-6">
                     {tesMinatBakat.map((tes, i) => (
                         <Link href={tes.route}>
-                            <div className="shadow-lg rounded-lg p-2 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all">
+                            <div className="shadow-lg rounded-lg p-2 flex gap-4 items-center cursor-pointer hover:bg-slate-100 duration-150 transition-all">
                                 <img
-                                    src=""
+                                    src={tes.img}
                                     alt=""
-                                    className="bg-slate-200 aspect-square rounded-md basis-1/3 max-w-[100px]"
+                                    className="aspect-square rounded-md basis-1/3 max-w-[100px]"
                                 />
                                 <div className="flex flex-col basis-2/3">
                                     <h2 className="text-slate-800 font-semibold text-2xl">
