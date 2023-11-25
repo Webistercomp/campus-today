@@ -3,7 +3,7 @@ export default function InputError({ message, className = "", ...props }) {
         <p
             {...props}
             className={`text-sm ${
-                message !== undefined ? "text-red-600" : "text-transparent"
+                message !== undefined ? "text-error" : "text-transparent"
             } ${className}`}
         >
             {message || "error"}
