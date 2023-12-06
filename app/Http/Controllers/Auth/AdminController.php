@@ -12,6 +12,7 @@ use App\Models\Tryout;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class AdminController extends Controller
 {
@@ -58,6 +59,8 @@ class AdminController extends Controller
         $jumlah_packet = Packet::get()->count();
 
         $jumlah_materi = Material::get()->count();
-        return view('admin.index', compact('user', 'jumlah_user', 'jumlah_tryout', 'jumlah_event_tryout', 'jumlah_article', 'jumlah_packet', 'jumlah_materi'));
+        $menu = Route::currentRouteName();
+        $menu = explode('.', $menu)[0];
+        return view('admin.index', compact('user', 'menu', 'jumlah_user', 'jumlah_tryout', 'jumlah_event_tryout', 'jumlah_article', 'jumlah_packet', 'jumlah_materi'));
     }
 }

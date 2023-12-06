@@ -136,7 +136,11 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href={{route('admin.home')}} class="nav-link active">
+            <a href={{route('admin.home')}} @if($menu == 'admin')
+              class="nav-link active"
+            @else
+              class="nav-link"
+            @endif>
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -144,7 +148,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href={{route('admin.user.index')}} class="nav-link">
+            <a href={{route('admin.user.index')}} @if($menu == 'user')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Users
@@ -152,7 +160,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href={{route('admin.packet.index')}} class="nav-link">
+            <a href={{route('admin.packet.index')}} @if($menu == 'packet')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Packets
@@ -160,7 +172,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href={{route('admin.tryout.index')}} class="nav-link">
+            <a href={{route('admin.tryout.index')}} @if($menu == 'tryout')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Tryouts
@@ -168,7 +184,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href={{route('admin.event.index')}} class="nav-link">
+            <a href={{route('admin.event.index')}} @if($menu == 'event')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
               <i class="nav-icon fas fa-tree"></i>
               <p>
                 Event Tryouts
@@ -176,7 +196,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href={{route('admin.article.index')}} class="nav-link">
+            <a href={{route('admin.article.index')}} @if($menu == 'article')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
                 Articles

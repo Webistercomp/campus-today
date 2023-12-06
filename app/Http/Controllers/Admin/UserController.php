@@ -6,26 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route; 
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     function index() {
         $users = User::all();
-        return view('admin.user.index', compact('users'));
+        $menu = Route::currentRouteName();
+        $menu = explode('.', $menu)[1];
+        return view('admin.user.index', compact('users', 'menu'));
     }
 
     function show($id) {
         $user = Auth::user();
         $selectedUser = User::find($id);
-        return view('admin.user.show', compact('user', 'selectedUser'));
+        $menu = Route::currentRouteName();
+        $menu = explode('.', $menu)[1];
+        return view('admin.user.show', compact('user', 'menu', 'selectedUser'));
     }
 
     function edit($id) {
         $user = Auth::user();
         $selectedUser = User::find($id);
         $roles = Role::all();
-        return view('admin.user.edit', compact('user', 'selectedUser', 'roles'));
+        $menu = Route::currentRouteName();
+        $menu = explode('.', $menu)[1];
+        return view('admin.user.edit', compact('user', 'menu', 'selectedUser', 'roles'));
     }
 
     function update(Request $request, $id) {
