@@ -11,6 +11,7 @@ use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
+use App\Http\Controllers\MinatBakatController;
 use App\Http\Controllers\PacketController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Packet;
@@ -77,6 +78,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/latihan/failed', function () {
         return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
     })->name('latihan.failed');
+
+    Route::get('/minatbakat', [MinatBakatController::class, 'index'])->name('minatbakat.index');
+    Route::get('/minatbakat/{id}', [MinatBakatController::class, 'show'])->name('minatbakat.index');
 });
 
 require __DIR__ . '/auth.php';
