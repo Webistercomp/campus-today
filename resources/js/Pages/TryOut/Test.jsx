@@ -93,7 +93,7 @@ export default function Test({
         // const postData = await axios.post(route("tryout.scoring"), {
         //     ...finalData,
         // });
-        // console.log(postData);
+        console.log(postData);
 
         // localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
 

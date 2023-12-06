@@ -4,7 +4,7 @@ import ExamIcon from "@/icons/ExamIcon";
 import ClockFillIcon from "@/icons/ClockFillIcon";
 import PaperFillIcon from "@/icons/PaperFillIcon";
 
-export default function Hasil({ auth, title }) {
+export default function Hasil({ auth, title, tryoutHistories }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -42,42 +42,45 @@ export default function Hasil({ auth, title }) {
                 </div>
 
                 <div className="mt-6 grid grid-cols-3 gap-3">
-                    <div className="bg-white shadow-lg rounded-xl p-4 flex gap-4 items-center min-h-fit">
-                        <div className="bg-curious-blue aspect-square flex items-center justify-center h-full max-h-24 rounded-lg p-4">
-                            <ExamIcon className="w-12" />
-                        </div>
-                        <div className="flex flex-col gap-2 overflow-clip">
-                            <h4 className="uppercase text-curious-blue font-semibold text-lg">
-                                Nama TryOut
-                            </h4>
-                            <div className="flex flex-wrap gap-3 items-center">
-                                <span className="text-slate-400 flex items-center gap-1">
-                                    <PaperFillIcon className="fill-slate-400 w-5" />
-                                    <p className="text-sm m-0">Jumlah Soal</p>
-                                </span>
-                                <span className="text-slate-400 flex items-center gap-1">
-                                    <ClockFillIcon className="fill-slate-400 w-5" />
-                                    <p className="m-0">-- Menit</p>
-                                </span>
+                    {tryoutHistories.length === 0 ? 'Tidak ada data' : ''}
+                    {tryoutHistories.map((tryoutHistory, i) => (
+                        <div className="bg-white shadow-lg rounded-xl p-4 flex gap-4 items-center min-h-fit" key={i}>
+                            <div className="bg-curious-blue aspect-square flex items-center justify-center h-full max-h-24 rounded-lg p-4">
+                                <ExamIcon className="w-12" />
                             </div>
-                            <div className="flex gap-2 flex-wrap">
-                                <Link
-                                    href={route("tryout.insight")}
-                                    as="button"
-                                    className="btn btn-primary btn-sm capitalize"
-                                >
-                                    Pembahasan
-                                </Link>
-                                <Link
-                                    href={route("tryout.ranking")}
-                                    as="button"
-                                    className="btn btn-sm capitalize"
-                                >
-                                    Ranking
-                                </Link>
+                            <div className="flex flex-col gap-2 overflow-clip">
+                                <h4 className="uppercase text-curious-blue font-semibold text-lg">
+                                    {tryoutHistory.tryout.name}
+                                </h4>
+                                <div className="flex flex-wrap gap-3 items-center">
+                                    <span className="text-slate-400 flex items-center gap-1">
+                                        <PaperFillIcon className="fill-slate-400 w-5" />
+                                        <p className="text-sm m-0">{tryoutHistory.tryout.jumlah_soal} Soal</p>
+                                    </span>
+                                    <span className="text-slate-400 flex items-center gap-1">
+                                        <ClockFillIcon className="fill-slate-400 w-5" />
+                                        <p className="m-0">{tryoutHistory.tryout.time} Menit</p>
+                                    </span>
+                                </div>
+                                <div className="flex gap-2 flex-wrap">
+                                    <Link
+                                        href={route("tryout.insight", tryoutHistory.tryout.id)}
+                                        as="button"
+                                        className="btn btn-primary btn-sm capitalize"
+                                    >
+                                        Pembahasan
+                                    </Link>
+                                    <Link
+                                        href={route("tryout.ranking", tryoutHistory.tryout.id)}
+                                        as="button"
+                                        className="btn btn-sm capitalize"
+                                    >
+                                        Ranking
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </section>
         </AuthenticatedLayout>

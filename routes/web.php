@@ -55,8 +55,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
-    Route::get('/tryout/insight', [TryoutController::class, 'insight'])->name('tryout.insight');
-    Route::get('/tryout/ranking', [TryoutController::class, 'ranking'])->name('tryout.ranking');
+    Route::get('/tryout/insight/{id_tryout}', [TryoutController::class, 'insight'])->name('tryout.insight');
+    Route::get('/tryout/ranking/{id_tryout}', [TryoutController::class, 'ranking'])->name('tryout.ranking');
     Route::get('/tryout/success/{id}', [TryoutController::class, 'success'])->name('tryout.success');
     Route::get('/tryout/failed/{id}', [TryoutController::class, 'failed'])->name('tryout.failed');
     Route::get('/tryout/confirm/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
@@ -79,18 +79,10 @@ Route::middleware('auth')->group(function () {
     })->name('latihan.failed');
 });
 
-Route::prefix('materiskd')->group(function () {
-    Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
-    Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');
-    Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
-    Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
-    Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
-    Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
-    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
-});
-
 require __DIR__ . '/auth.php';
 
+Route::get('/article', [ArticleController::class, 'index'])->name('article.index');
+Route::get('/article/{id}', [ArticleController::class, 'show'])->name('article.show');
 
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
@@ -101,6 +93,10 @@ Route::prefix('admin')->group(function () {
         Route::get('', [AdminController::class, 'index'])->name('admin.home');
 
         Route::get('users', [UserController::class, 'index'])->name('admin.user.index');
+        Route::get('users/{id}', [UserController::class, 'show'])->name('admin.user.show');
+        Route::get('users/edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
+        Route::put('users/{id}', [UserController::class, 'update'])->name('admin.user.update');
+        Route::delete('users/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
 
         Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
         Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');
