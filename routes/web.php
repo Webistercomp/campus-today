@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\EventTryoutController as AdminEventTryoutController;
 use App\Http\Controllers\Admin\MateriController;
 use App\Http\Controllers\Admin\PacketController as AdminPacketController;
@@ -103,9 +104,33 @@ Route::prefix('admin')->group(function () {
         Route::delete('users/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
 
         Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
+        Route::get('packets/{id}', [AdminPacketController::class, 'show'])->name('admin.packet.show');
+        Route::get('packets/edit/{id}', [AdminPacketController::class, 'edit'])->name('admin.packet.edit');
+        Route::put('packets/{id}', [AdminPacketController::class, 'update'])->name('admin.packet.update');
+        Route::delete('packets/{id}', [AdminPacketController::class, 'destroy'])->name('admin.packet.delete');
+
         Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');
+        Route::get('tryouts/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
+        Route::get('tryouts/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
+        Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
+        Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
+
         Route::get('event-tryout', [AdminEventTryoutController::class, 'index'])->name('admin.event.index');
+        Route::get('event-tryout/{id}', [AdminEventTryoutController::class, 'show'])->name('admin.event.show');
+        Route::get('event-tryout/edit/{id}', [AdminEventTryoutController::class, 'edit'])->name('admin.event.edit');
+        Route::put('event-tryout/{id}', [AdminEventTryoutController::class, 'update'])->name('admin.event.update');
+        Route::delete('event-tryout/{id}', [AdminEventTryoutController::class, 'destroy'])->name('admin.event.delete');
+        
         Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
-        Route::get('article', [AdminEventTryoutController::class, 'index'])->name('admin.article.index');
+        Route::get('materi/{id}', [MateriController::class, 'show'])->name('admin.materi.show');
+        Route::get('materi/edit/{id}', [MateriController::class, 'edit'])->name('admin.materi.edit');
+        Route::put('materi/{id}', [MateriController::class, 'update'])->name('admin.materi.update');
+        Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
+        
+        Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
+        Route::get('article/{id}', [AdminArticleController::class, 'show'])->name('admin.article.show');
+        Route::get('article/edit/{id}', [AdminArticleController::class, 'edit'])->name('admin.article.edit');
+        Route::put('article/{id}', [AdminArticleController::class, 'update'])->name('admin.article.update');
+        Route::delete('article/{id}', [AdminArticleController::class, 'destroy'])->name('admin.article.delete');
     });
 });
