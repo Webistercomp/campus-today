@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 class TryoutController extends Controller
 {
     function index() {
-        $tryouts = Tryout::all();
+        $tryouts = Tryout::where('is_event', 0)->get();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];

@@ -12,11 +12,11 @@
             <h5>Detail tryout</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.event.show', $tryout->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.tryout.show', $tryout->id)}}" class="btn btn-secondary">Back</a>
         </div>
     </div>
     <table class="table table-striped">
-        <form action="{{route('admin.event.update', $tryout->id)}}" method="post">
+        <form action="{{route('admin.tryout.update', $tryout->id)}}" method="post">
             @csrf
             @method('PUT')
             <table>
