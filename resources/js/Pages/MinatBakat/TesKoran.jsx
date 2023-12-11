@@ -381,8 +381,14 @@ export default function TesKoran({ auth, title }) {
                         dan pilih (klik) angka belakangnya saja.
                     </p>
                     <p>
-                        Contoh:9+5=? <br /> klik angka 4 3+5=? <br /> klik angka
-                        8
+                        Contoh: <br /> 9+5=?{" "}
+                        <span className="text-curious-blue font-semibold">
+                            klik angka 4
+                        </span>
+                        <br /> 3+5=?{" "}
+                        <span className="text-curious-blue font-semibold">
+                            klik angka 8
+                        </span>
                     </p>
                     <h4 className="mt-6 mb-2">Pilih durasi tes :</h4>
                     <div className="flex gap-4">
