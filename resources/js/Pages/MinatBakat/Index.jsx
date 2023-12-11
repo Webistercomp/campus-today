@@ -2,6 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import TesKoranImg from "@/images/tes-koran.png";
 import TesWarteggImg from "@/images/tes-wartegg.png";
+import TesAnalogi from "@/images/tes-analogi.png";
+import TesEPPS from "@/images/tes-epps.png";
+import TesMatematika from "@/images/tes-matematika.png";
 
 export default function MinatBakat({ auth, title }) {
     const tesMinatBakat = [
@@ -16,6 +19,24 @@ export default function MinatBakat({ auth, title }) {
             desc: "Penilaian Kepribadian",
             route: route("minatbakat.teswartegg"),
             img: TesWarteggImg,
+        },
+        {
+            name: "Tes Analogi Verbal",
+            desc: "Penilaian Kepribadian",
+            route: route("minatbakat.tesanalogiverbal"),
+            img: TesAnalogi,
+        },
+        {
+            name: "EPPS",
+            desc: "Penilaian Kepribadian",
+            route: route("minatbakat.epps"),
+            img: TesEPPS,
+        },
+        {
+            name: "Tes Matematika",
+            desc: "Penilaian Kepribadian",
+            route: route("minatbakat.tesmatematika"),
+            img: TesMatematika,
         },
     ];
 
@@ -38,7 +59,7 @@ export default function MinatBakat({ auth, title }) {
                 </h1>
                 <div className="grid grid-cols-2 gap-4 mt-6">
                     {tesMinatBakat.map((tes, i) => (
-                        <Link href={tes.route}>
+                        <Link href={tes.route} key={i}>
                             <div className="shadow-lg rounded-lg p-2 flex gap-4 items-center cursor-pointer hover:bg-slate-100 duration-150 transition-all">
                                 <img
                                     src={tes.img}
