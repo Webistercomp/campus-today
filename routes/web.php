@@ -85,6 +85,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/minat-bakat/tes-wartegg', function () {
         return Inertia::render('MinatBakat/TesWartegg', ['title' => 'Tes Wartegg']);
     })->name('minatbakat.teswartegg');
+    Route::get('/minat-bakat/tes-analogi-verbal', function () {
+        return Inertia::render('MinatBakat/TesAnalogiVerbal', ['title' => 'Tes Analogi Verbal']);
+    })->name('minatbakat.tesanalogiverbal');
+    Route::get('/minat-bakat/epps', function () {
+        return Inertia::render('MinatBakat/EPPS', ['title' => 'EPPS']);
+    })->name('minatbakat.epps');
+    Route::get('/minat-bakat/tes-matematika', function () {
+        return Inertia::render('MinatBakat/TesMatematika', ['title' => 'Tes Matematika']);
+    })->name('minatbakat.tesmatematika');
 });
 
 Route::prefix('materiskd')->group(function () {
