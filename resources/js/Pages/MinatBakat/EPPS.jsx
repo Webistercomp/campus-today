@@ -17,6 +17,7 @@ export default function EPPS({ auth, title }) {
                     <li>{title}</li>
                 </ul>
             </div>
+
             <StartEPPS title={title} />
         </AuthenticatedLayout>
     );
@@ -171,7 +172,7 @@ function StartEPPS({ title }) {
                 </div>
 
                 <div className="flex mt-8">
-                    <div className="min-w-fit grid grid-cols-3 gap-2 h-[calc(100vh_-_200px)] overflow-y-hidden hover:overflow-y-scroll gutter-stable p-2 content-start">
+                    <div className="min-w-fit grid grid-cols-3 gap-2 h-[calc(100vh_-_260px)] overflow-y-hidden hover:overflow-y-scroll gutter-stable p-2 content-start">
                         {testData.map((q, i) => (
                             <div
                                 className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
@@ -190,64 +191,69 @@ function StartEPPS({ title }) {
                             </div>
                         ))}
                     </div>
-                    <div className="pl-8">
-                        <p className="text-curious-blue font-bold text-3xl mb-4">
-                            Soal ke-{activeQuestion.no}
-                        </p>
-                        <ol className="list-upper-alpha list-inside grid grid-cols-2 gap-4 mt-8 ml-0">
-                            {activeQuestion.answers.map((choice, i) => (
-                                <label
-                                    htmlFor={`${activeQuestion.no}_choices_${choice.id}`}
-                                    key={choice.id}
-                                >
-                                    <input
-                                        type="radio"
-                                        name={`${activeQuestion.no}_choices`}
-                                        id={`${activeQuestion.no}_choices_${choice.id}`}
-                                        className="peer hidden"
-                                        value={choice.id}
-                                        onChange={(ev) => {
-                                            onAnswerQuestionHandler(
-                                                activeQuestion.no,
-                                                ev.target.value
-                                            );
-                                        }}
-                                        checked={
-                                            parseInt(activeQuestion.jawaban) ===
-                                            choice.id
-                                                ? true
-                                                : false
-                                        }
-                                        onClick={(ev) => {
-                                            if (ev.target.checked) {
+                    <div className="pl-8 w-full flex flex-col justify-between pb-8">
+                        <div>
+                            <p className="text-curious-blue font-bold text-3xl mb-4">
+                                Soal ke-{activeQuestion.no}
+                            </p>
+                            <ol className="list-upper-alpha list-inside grid grid-rows-2 gap-4 mt-8 ml-0">
+                                {activeQuestion.answers.map((choice, i) => (
+                                    <label
+                                        htmlFor={`${activeQuestion.no}_choices_${choice.id}`}
+                                        key={choice.id}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={`${activeQuestion.no}_choices`}
+                                            id={`${activeQuestion.no}_choices_${choice.id}`}
+                                            className="peer hidden"
+                                            value={choice.id}
+                                            onChange={(ev) => {
                                                 onAnswerQuestionHandler(
                                                     activeQuestion.no,
-                                                    null
+                                                    ev.target.value
                                                 );
+                                            }}
+                                            checked={
+                                                parseInt(
+                                                    activeQuestion.jawaban
+                                                ) === choice.id
+                                                    ? true
+                                                    : false
                                             }
-                                        }}
-                                    />
-                                    <li className="border-2 border-curious-blue px-8 py-3 rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue h-full">
-                                        {choice.answer}
-                                    </li>
-                                </label>
-                            ))}
-                        </ol>
-                        <div className="mt-28 flex justify-between gap-4">
+                                            onClick={(ev) => {
+                                                if (ev.target.checked) {
+                                                    onAnswerQuestionHandler(
+                                                        activeQuestion.no,
+                                                        null
+                                                    );
+                                                }
+                                            }}
+                                        />
+                                        <li className="border-2 border-curious-blue px-8 py-3 rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue h-full">
+                                            {choice.answer}
+                                        </li>
+                                    </label>
+                                ))}
+                            </ol>
+                        </div>
+                        <div className="flex justify-start gap-4">
                             <button
                                 className="btn capitalize"
                                 onClick={() => onChangeActiveQuestion(-1)}
                             >
                                 &laquo; Sebelumnya
                             </button>
-                            {active === testData.length && (
-                                <button
-                                    className="btn btn-success text-white"
-                                    onClick={() => onSubmitAnswer()}
-                                >
-                                    Selesai
-                                </button>
-                            )}
+                            <button
+                                className={`btn btn-success text-white ${
+                                    active === testData.length
+                                        ? "visible"
+                                        : "invisible"
+                                }`}
+                                onClick={() => onSubmitAnswer()}
+                            >
+                                Selesai
+                            </button>
                             <button
                                 className="btn btn-primary capitalize text-white"
                                 onClick={() => onChangeActiveQuestion(1)}
