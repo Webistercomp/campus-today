@@ -19,6 +19,7 @@ class ArticleSeeder extends Seeder
                 'description' => 'Article ' . ($i + 1),
                 'body' => 'The Body Content of Article ' . ($i + 1) . ', bla bla bla.',
                 'image' => 'https://placehold.co/600x400',
+                'active' => 1,
             ]);
         }
     }
