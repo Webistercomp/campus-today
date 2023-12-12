@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class MinatBakatController extends Controller
 {
     function index() {
-        return 'asdasdas';
+        return 'asdasda';
     }
 
     function show() {

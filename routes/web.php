@@ -10,6 +10,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LatihanController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\MinatBakatController;
@@ -70,18 +71,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
-    Route::get('/latihan', function () {
-        return Inertia::render('Latihan/Index', ['title' => 'Latihan Soal']);
-    })->name('latihan');
-    Route::get('/latihan/success', function () {
-        return Inertia::render('Latihan/LatihanSuccess', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
-    })->name('latihan.success');
-    Route::get('/latihan/failed', function () {
-        return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
-    })->name('latihan.failed');
+    Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
+    Route::get('/latihan/success', [LatihanController::class, 'success'])->name('latihan.success');
+    Route::get('/latihan/failed', [LatihanController::class, 'failed'])->name('latihan.failed');
 
     Route::get('/minatbakat', [MinatBakatController::class, 'index'])->name('minatbakat.index');
-    Route::get('/minatbakat/{id}', [MinatBakatController::class, 'show'])->name('minatbakat.index');
+    Route::get('/minatbakat/{id}', [MinatBakatController::class, 'show'])->name('minatbakat.show');
 });
 
 require __DIR__ . '/auth.php';

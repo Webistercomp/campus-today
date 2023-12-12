@@ -151,9 +151,11 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         <h3 className="uppercase font-semibold text-xl">
                             Tes Minat Bakat
                         </h3>
-                        <button className="btn btn-primary capitalize text-white px-8">
-                            Mulai
-                        </button>
+                        <Link href={route("minatbakat.index")}>
+                            <button className="btn btn-primary capitalize text-white px-8">
+                                Mulai
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </section>

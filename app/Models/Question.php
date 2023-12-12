@@ -13,6 +13,10 @@ class Question extends Model
         return $this->belongsTo(Tryout::class);
     }
 
+    function latihan() {
+        return $this->belongsTo(Latihan::class, 'tryout_id', 'id');
+    }
+
     function answers() {
         return $this->hasMany(Answer::class);
     }

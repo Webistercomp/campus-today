@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Latihan;
 use App\Models\Question;
 use App\Models\Tryout;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,6 +29,29 @@ class QuestionSeeder extends Seeder
                 for($i=0; $i<5; $i++) {
                     Question::create([
                         'tryout_id' => $tryout->id,
+                        'group_type_id' => rand(5,7),
+                        'question' => 'Question ' . $i,
+                    ]);
+                }
+            } else {
+
+            }
+        }
+
+        $latihans = Latihan::with('materialType')->get();
+        foreach($latihans as $latihan) {
+            if($latihan->materialType->code == "um" || $latihan->materialType->code == "utbk") {
+                for($i=0; $i<5; $i++) {
+                    Question::create([
+                        'tryout_id' => $latihan->id,
+                        'group_type_id' => rand(1,4),
+                        'question' => 'Question ' . $i,
+                    ]);
+                }
+            } else if($latihan->materialType->code == "skd" || $latihan->materialType->code == "skb"){
+                for($i=0; $i<5; $i++) {
+                    Question::create([
+                        'tryout_id' => $latihan->id,
                         'group_type_id' => rand(5,7),
                         'question' => 'Question ' . $i,
                     ]);
