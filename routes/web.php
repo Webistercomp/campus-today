@@ -144,11 +144,11 @@ Route::prefix('admin')->group(function () {
         Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
         Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
 
-        Route::get('latihans', [AdminLatihanController::class, 'index'])->name('admin.tryout.index');
-        Route::get('latihans/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
-        Route::get('latihans/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
-        Route::put('latihans/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
-        Route::delete('latihans/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
+        Route::get('latihans', [AdminLatihanController::class, 'index'])->name('admin.latihan.index');
+        Route::get('latihans/{id}', [AdminLatihanController::class, 'show'])->name('admin.latihan.show');
+        Route::get('latihans/edit/{id}', [AdminLatihanController::class, 'edit'])->name('admin.latihan.edit');
+        Route::put('latihans/{id}', [AdminLatihanController::class, 'update'])->name('admin.latihan.update');
+        Route::delete('latihans/{id}', [AdminLatihanController::class, 'destroy'])->name('admin.latihan.delete');
 
         Route::get('event-tryout', [AdminEventTryoutController::class, 'index'])->name('admin.event.index');
         Route::get('event-tryout/{id}', [AdminEventTryoutController::class, 'show'])->name('admin.event.show');

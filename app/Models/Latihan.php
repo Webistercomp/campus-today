@@ -14,4 +14,12 @@ class Latihan extends Model
     function questions() {
         return $this->hasMany(Question::class, 'tryout_id', 'id');
     }
+
+    function materialType() {
+        return $this->belongsTo(MaterialType::class, 'material_type_id', 'id');
+    }
+
+    function group() {
+        return $this->belongsTo(GroupType::class, 'group_id', 'id');
+    }
 }
