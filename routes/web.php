@@ -72,12 +72,45 @@ Route::middleware('auth')->group(function () {
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
-    Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
-    Route::get('/latihan/success', [LatihanController::class, 'success'])->name('latihan.success');
-    Route::get('/latihan/failed', [LatihanController::class, 'failed'])->name('latihan.failed');
+    Route::get('/latihan', function () {
+        return Inertia::render('Latihan/Index', ['title' => 'Latihan Soal']);
+    })->name('latihan');
+    Route::get('/latihan/success', function () {
+        return Inertia::render('Latihan/LatihanSuccess', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
+    })->name('latihan.success');
+    Route::get('/latihan/failed', function () {
+        return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
+    })->name('latihan.failed');
 
-    Route::get('/minatbakat', [MinatBakatController::class, 'index'])->name('minatbakat.index');
-    Route::get('/minatbakat/{id}', [MinatBakatController::class, 'show'])->name('minatbakat.show');
+    Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
+
+    Route::get('/minat-bakat', function () {
+        return Inertia::render('MinatBakat/Index', ['title' => 'Tes Minat Bakat']);
+    })->name('minatbakat');
+    Route::get('/minat-bakat/tes-koran', function () {
+        return Inertia::render('MinatBakat/TesKoran', ['title' => 'Tes Koran']);
+    })->name('minatbakat.teskoran');
+    Route::get('/minat-bakat/tes-wartegg', function () {
+        return Inertia::render('MinatBakat/TesWartegg', ['title' => 'Tes Wartegg']);
+    })->name('minatbakat.teswartegg');
+    Route::get('/minat-bakat/tes-analogi-verbal', function () {
+        return Inertia::render('MinatBakat/TesAnalogiVerbal', ['title' => 'Tes Analogi Verbal']);
+    })->name('minatbakat.tesanalogiverbal');
+    Route::get('/minat-bakat/epps', function () {
+        return Inertia::render('MinatBakat/EPPS', ['title' => 'EPPS']);
+    })->name('minatbakat.epps');
+    Route::get('/minat-bakat/tes-matematika', function () {
+        return Inertia::render('MinatBakat/TesMatematika', ['title' => 'Tes Matematika']);
+    })->name('minatbakat.tesmatematika');
+});
+
+Route::prefix('materiskd')->group(function () {
+    Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
+    Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');
+    Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
+    Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
+    Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
 });
 
 require __DIR__ . '/auth.php';
