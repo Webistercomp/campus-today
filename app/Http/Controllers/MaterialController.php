@@ -12,7 +12,7 @@ use Inertia\Inertia;
 
 class MaterialController extends Controller {
     function materialType($type) {
-        if($type == "videoseries") {
+        if ($type == "videoseries") {
             return redirect()->route('material.type.video', $type);
         }
         return Inertia::render('Materi/Type', [
@@ -31,7 +31,7 @@ class MaterialController extends Controller {
         $material_type = MaterialType::where('code', $type)->first();
         $groupTypes = GroupType::where('material_type_id', $material_type->id)->get();
         return Inertia::render('Materi/Teks', [
-            'title' => 'Judul',
+            'title' => "Materi Teks " . strtoupper($type),
             'type' => $type,
             'materials' => $materials,
             'group_types' => $groupTypes
@@ -80,7 +80,7 @@ class MaterialController extends Controller {
             ->get();
         $groupTypes = GroupType::where('material_type_id', $materialType->id)->get();
         return Inertia::render('Materi/Video', [
-            'title' => $materialType->name,
+            'title' => "Materi Video " . strtoupper($type),
             'type' => $type,
             'materialType' => $materialType,
             'materials' => $materials,

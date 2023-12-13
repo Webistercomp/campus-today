@@ -10,9 +10,8 @@ export default function SkdVideo({
     type,
     materialType,
     materials,
-    group_types,
 }) {
-    const tabGroup = group_types;
+    const tabGroup = materials.map((material) => material.group_type);
     const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
     const [currentMaterials, setCurrentMaterials] = useState(() =>
         materials.filter((material) => material.group_id === tabIndexActive)
@@ -49,12 +48,13 @@ export default function SkdVideo({
                             {materialType.name}
                         </Link>
                     </li>
+                    <li>{title}</li>
                 </ul>
             </div>
 
             <section>
                 <h1 className="text-3xl text-curious-blue font-semibold">
-                    {title} <span className="uppercase">{type}</span>
+                    {title}
                 </h1>
                 {type == "videoseries" ? (
                     ""

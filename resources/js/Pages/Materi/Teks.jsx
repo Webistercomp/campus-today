@@ -3,8 +3,8 @@ import DocumentIcon from "@/icons/DocumentIcon";
 import { Head, Link } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Teks({ auth, title, type, materials, group_types }) {
-    const tabGroup = group_types;
+export default function Teks({ auth, title, type, materials }) {
+    const tabGroup = materials.map((material) => material.group_type);
     const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
     const [currentMaterials, setCurrentMaterials] = useState(() =>
         materials.filter((material) => material.group_id === tabIndexActive)
@@ -45,15 +45,13 @@ export default function Teks({ auth, title, type, materials, group_types }) {
                             <span className="uppercase">{type}</span>
                         </Link>
                     </li>
-                    <li className="capitalize">
-                        {title}&nbsp;<span className="uppercase">{type}</span>
-                    </li>
+                    <li className="capitalize">{title}</li>
                 </ul>
             </div>
 
             <section>
                 <h1 className="text-3xl text-curious-blue font-semibold capitalize">
-                    {title} <span className="uppercase">{type}</span>
+                    {title}
                 </h1>
 
                 <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
