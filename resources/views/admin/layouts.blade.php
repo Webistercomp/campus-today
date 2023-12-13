@@ -184,6 +184,18 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href={{route('admin.latihan.index')}} @if($menu == 'latihan')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Latihans
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href={{route('admin.event.index')}} @if($menu == 'event')
             class="nav-link active"
           @else
@@ -204,6 +216,18 @@
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
                 Articles
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href={{route('admin.materi.index')}} @if($menu == 'materi')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Materials
               </p>
             </a>
           </li>
