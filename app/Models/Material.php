@@ -9,6 +9,8 @@ class Material extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     function materialType() {
         return $this->belongsTo(MaterialType::class);
     }

@@ -1,11 +1,20 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\EventTryoutController as AdminEventTryoutController;
+use App\Http\Controllers\Admin\LatihanController as AdminLatihanController;
+use App\Http\Controllers\Admin\MateriController;
+use App\Http\Controllers\Admin\PacketController as AdminPacketController;
+use App\Http\Controllers\Admin\TryoutController as AdminTryoutController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LatihanController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialSKDController;
+use App\Http\Controllers\MinatBakatController;
 use App\Http\Controllers\PacketController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Packet;
@@ -50,8 +59,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');
     Route::get('/tryout/hasil', [TryoutController::class, 'hasil'])->name('tryout.hasil');
-    Route::get('/tryout/insight', [TryoutController::class, 'insight'])->name('tryout.insight');
-    Route::get('/tryout/ranking', [TryoutController::class, 'ranking'])->name('tryout.ranking');
+    Route::get('/tryout/insight/{id_tryout}', [TryoutController::class, 'insight'])->name('tryout.insight');
+    Route::get('/tryout/ranking/{id_tryout}', [TryoutController::class, 'ranking'])->name('tryout.ranking');
     Route::get('/tryout/success/{id}', [TryoutController::class, 'success'])->name('tryout.success');
     Route::get('/tryout/failed/{id}', [TryoutController::class, 'failed'])->name('tryout.failed');
     Route::get('/tryout/confirm/{id}', [TryoutController::class, 'confirm'])->name('tryout.confirm');
@@ -106,6 +115,8 @@ Route::prefix('materiskd')->group(function () {
 
 require __DIR__ . '/auth.php';
 
+Route::get('/article', [ArticleController::class, 'index'])->name('article.index');
+Route::get('/article/{id}', [ArticleController::class, 'show'])->name('article.show');
 
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
@@ -114,5 +125,47 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('checkAdmin')->group(function () {
         Route::get('', [AdminController::class, 'index'])->name('admin.home');
+
+        Route::get('users', [UserController::class, 'index'])->name('admin.user.index');
+        Route::get('users/{id}', [UserController::class, 'show'])->name('admin.user.show');
+        Route::get('users/edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
+        Route::put('users/{id}', [UserController::class, 'update'])->name('admin.user.update');
+        Route::delete('users/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
+
+        Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
+        Route::get('packets/{id}', [AdminPacketController::class, 'show'])->name('admin.packet.show');
+        Route::get('packets/edit/{id}', [AdminPacketController::class, 'edit'])->name('admin.packet.edit');
+        Route::put('packets/{id}', [AdminPacketController::class, 'update'])->name('admin.packet.update');
+        Route::delete('packets/{id}', [AdminPacketController::class, 'destroy'])->name('admin.packet.delete');
+
+        Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');
+        Route::get('tryouts/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
+        Route::get('tryouts/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
+        Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
+        Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
+
+        Route::get('latihans', [AdminLatihanController::class, 'index'])->name('admin.tryout.index');
+        Route::get('latihans/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
+        Route::get('latihans/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
+        Route::put('latihans/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
+        Route::delete('latihans/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
+
+        Route::get('event-tryout', [AdminEventTryoutController::class, 'index'])->name('admin.event.index');
+        Route::get('event-tryout/{id}', [AdminEventTryoutController::class, 'show'])->name('admin.event.show');
+        Route::get('event-tryout/edit/{id}', [AdminEventTryoutController::class, 'edit'])->name('admin.event.edit');
+        Route::put('event-tryout/{id}', [AdminEventTryoutController::class, 'update'])->name('admin.event.update');
+        Route::delete('event-tryout/{id}', [AdminEventTryoutController::class, 'destroy'])->name('admin.event.delete');
+        
+        Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
+        Route::get('materi/{id}', [MateriController::class, 'show'])->name('admin.materi.show');
+        Route::get('materi/edit/{id}', [MateriController::class, 'edit'])->name('admin.materi.edit');
+        Route::put('materi/{id}', [MateriController::class, 'update'])->name('admin.materi.update');
+        Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
+        
+        Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
+        Route::get('article/{id}', [AdminArticleController::class, 'show'])->name('admin.article.show');
+        Route::get('article/edit/{id}', [AdminArticleController::class, 'edit'])->name('admin.article.edit');
+        Route::put('article/{id}', [AdminArticleController::class, 'update'])->name('admin.article.update');
+        Route::delete('article/{id}', [AdminArticleController::class, 'destroy'])->name('admin.article.delete');
     });
 });

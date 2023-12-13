@@ -29,7 +29,17 @@ class TryoutController extends Controller {
     }
 
     public function hasil() {
-        return Inertia::render('TryOut/Hasil', ['title' => 'Hasil TryOut']);
+        $user = Auth::user();
+        $tryoutHistories = TryoutHistory::where('user_id', $user->id)
+            ->with('tryout.materialType', 'tryout.questions')
+            ->get();
+        foreach($tryoutHistories as $tryoutHistory) {
+            $tryoutHistory->tryout->jumlah_soal = $tryoutHistory->tryout->questions->count();
+        }
+        return Inertia::render('TryOut/Hasil', [
+            'title' => 'Hasil TryOut',
+            'tryoutHistories' => $tryoutHistories
+        ]);
     }
 
     public function confirm($id) {
@@ -270,12 +280,27 @@ class TryoutController extends Controller {
         }
     }
 
-    public function insight() {
-        return Inertia::render('TryOut/Insight', ['title' => 'Pembahasan TryOut', 'tryoutName' => 'Nama Tryout']);
+    public function insight($id_tryout) {
+        $tryout = Tryout::with('questions.answers')->find($id_tryout);
+        $no = 1;
+        foreach($tryout->questions as $question) {
+            $question->no = $no++;
+            $question->jawaban = $question->answers->sortByDesc('bobot')->first()->id;
+        }   
+        return Inertia::render('TryOut/Insight', [
+            'title' => 'Pembahasan TryOut',
+            'tryoutName' => $tryout->name,
+            'tryout' => $tryout,
+        ]);
     }
 
-    public function ranking() {
-        return Inertia::render('TryOut/Ranking', ['title' => 'Ranking TryOut', 'tryoutName' => 'Nama Tryout']);
+    public function ranking($id_tryout) {
+        $tryout = Tryout::find($id_tryout);
+        return Inertia::render('TryOut/Ranking', [
+            'title' => 'Ranking TryOut',
+            'tryoutName' => $tryout->name,
+            'tryout' => $tryout,
+        ]);
     }
 
     /**

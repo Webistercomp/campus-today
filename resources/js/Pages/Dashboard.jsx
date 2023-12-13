@@ -187,12 +187,14 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         .map((article, i) => {
                             // Return the element. Also pass key
                             return (
-                                <ArticleCard
-                                    title={article.title}
-                                    desc={article.description}
-                                    image={article.image}
-                                    key={i}
-                                />
+                                <Link href={route("article.show", article.id)}>
+                                    <ArticleCard
+                                        title={article.title}
+                                        desc={article.description}
+                                        image={article.image}
+                                        key={i}
+                                    />
+                                </Link>
                             );
                         })}
                 </div>

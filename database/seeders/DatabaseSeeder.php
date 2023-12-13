@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             ParticipantSeeder::class,
             ArticleSeeder::class,
             InstagramFeedSeeder::class,
+            LatihanSeeder::class
         ]);
     }
 }
