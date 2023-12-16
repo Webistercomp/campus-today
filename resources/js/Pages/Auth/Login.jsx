@@ -31,18 +31,20 @@ export default function Login({ canResetPassword }) {
     return (
         <>
             <Head title="Sign In" />
-            <div className="font-poppins flex h-screen">
-                <div className="basis-3/5 px-48">
+            <div className="font-poppins lg:text-base block lg:flex h-screen overflow-y-clip">
+                <div className="md:w-fit md:mx-auto lg:basis-3/5 px-4 lg:pl-14 xl:pl-36">
                     <Link href="/">
                         <img
                             src={CTIcon}
                             alt="Ct-icon"
-                            className="aspect-auto w-36 mb-4"
+                            className="aspect-auto w-24 lg:w-36 xl:w-48 mb-4 mx-auto lg:ml-0"
                         />
                     </Link>
-                    <div className="max-w-md">
-                        <h1 className="font-semibold text-2xl">Sign In</h1>
-                        <p className="mt-6">
+                    <div className="max-w-md xl:max-w-xl xl:mt-8">
+                        <h1 className="font-semibold text-2xl text-center lg:text-left lg:text-3xl xl:text-4xl">
+                            Sign In
+                        </h1>
+                        <p className="mt-2 lg:mt-4 xl:mt-6 text-sm lg:text-base xl:text-xl">
                             if you don't have an account, you can{" "}
                             <Link
                                 href={route("register")}
@@ -53,7 +55,7 @@ export default function Login({ canResetPassword }) {
                         </p>
                         <form
                             onSubmit={submit}
-                            className="mt-8 flex flex-col gap-4"
+                            className="mt-6 lg:mt-4 flex flex-col gap-2 lg:gap-2 xl:gap-8"
                         >
                             <div className="flex flex-col">
                                 <label
@@ -156,7 +158,7 @@ export default function Login({ canResetPassword }) {
                         </form>
                     </div>
                 </div>
-                <div className="basis-2/5 p-6">
+                <div className="basis-2/5 p-6 invisible lg:visible">
                     <div className="bg-[#000842] w-full min-h-full rounded-2xl flex items-start justify-center">
                         <img src={IllusAuth} alt="illustration" />
                     </div>
