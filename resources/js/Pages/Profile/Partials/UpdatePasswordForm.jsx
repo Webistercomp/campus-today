@@ -52,7 +52,7 @@ export default function UpdatePasswordForm({ setAlertData }) {
     };
 
     return (
-        <section className="bg-white p-8 shadow-lg rounded-lg mt-4">
+        <section className="bg-white p-4 xl:p-8 shadow-lg rounded-lg mt-4">
             <header>
                 <h2 className="text-xl font-medium text-curious-blue">
                     Ganti Password
@@ -64,7 +64,10 @@ export default function UpdatePasswordForm({ setAlertData }) {
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="mt-6 w-1/2">
+            <form
+                onSubmit={updatePassword}
+                className="mt-6 w-full md:w-2/3 xl:w-1/2"
+            >
                 <div>
                     <InputLabel
                         htmlFor="current_password"
