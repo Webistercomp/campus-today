@@ -18,7 +18,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
             <div
                 className={`${
-                    route().current() !== "dashboard" &&
+                    !["dashboard", "paket.index"].includes(route().current()) &&
                     "px-4 md:px-14 lg:px-24 xl:px-32"
                 } pt-20 md:pt-24 bg-white`}
             >
