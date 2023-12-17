@@ -10,9 +10,9 @@ import { Link } from "@inertiajs/react";
 
 export default function Footer() {
     return (
-        <footer className="footer bg-ct-grey py-8 lg:py-16 text-white flex flex-col p-4 lg:px-24">
-            <div className="flex flex-col lg:flex-row justify-between w-full max-w-4xl mx-auto">
-                <aside className="w-full">
+        <footer className="footer bg-ct-grey py-8 lg:py-16 text-white flex flex-col p-4 md:px-14 lg:px-24 xl:px-32">
+            <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl mx-auto gap-8">
+                <aside className="w-full md:basis-1/2">
                     <img
                         src={CTLogo}
                         alt="ct-logo"
@@ -66,7 +66,7 @@ export default function Footer() {
                         </ul>
                     </div>
                 </aside>
-                <div className="flex gap-14 pt-8 lg:pt-24">
+                <div className="flex gap-8 pt-8 lg:pt-24 md:basis-1/2 md:justify-end lg:justify-center">
                     <nav className="flex flex-col gap-2">
                         <header className="footer-title">Layanan</header>
                         <a className="link link-hover">Bimbel UTBK</a>
