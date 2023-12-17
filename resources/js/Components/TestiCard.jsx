@@ -1,6 +1,6 @@
 export default function TestiCard({ name, as, photo, testi }) {
     return (
-        <div className="bg-white p-10 shadow-xl rounded-3xl flex flex-row-reverse max-w-4xl gap-14 items-center mx-auto">
+        <div className="bg-white p-6 lg:p-10 shadow-xl rounded-lg lg:rounded-3xl flex flex-row-reverse max-w-4xl gap-8 lg:gap-14 items-center mx-auto">
             <div className="flex flex-col items-center text-lg">
                 <img
                     src=""
@@ -10,7 +10,7 @@ export default function TestiCard({ name, as, photo, testi }) {
                 <h4 className="font-semibold">Nama</h4>
                 <p>Jabatan</p>
             </div>
-            <p className="text-justify">
+            <p className="text-justify text-sm lg:text-base">
                 &quot;Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Alias autem porro, voluptas ab cum qui nisi aperiam incidunt
                 rerum tenetur voluptatibus officiis quae aut asperiores, tempore

@@ -1,6 +1,7 @@
 import CheckIcon from "@/icons/CheckIcon";
 import XIcon from "@/icons/XIcon";
 import { Link } from "@inertiajs/react";
+import { useEffect } from "react";
 
 export default function PacketCard({
     id,
@@ -10,13 +11,13 @@ export default function PacketCard({
     price_discount,
 }) {
     benefits = JSON.parse(benefits);
-    let v = benefits.v
-    let x = benefits.x
+    let v = benefits.v;
+    let x = benefits.x;
     const isPopular = name === "Friendly" || name === "Platinum";
 
     return (
         <div
-            className={`text-left basis-1/3 p-8 flex flex-col items-start justify-between rounded-xl shadow-lg gap-6 border-2 border-pelorous-300 ${
+            className={`text-left snap-center basis-1/3 p-4 md:p-8 flex flex-col items-start justify-between rounded-xl shadow-lg gap-6 border-2 border-pelorous-300 ${
                 isPopular ? "bg-curious-blue" : "bg-white"
             }`}
         >
@@ -59,7 +60,10 @@ export default function PacketCard({
                             </tr>
                         ))}
                         {x.map((str, i) => (
-                            <tr className="flex items-start gap-2 mb-[2px]" key={i}>
+                            <tr
+                                className="flex items-start gap-2 mb-[2px]"
+                                key={i}
+                            >
                                 <td>
                                     <XIcon className="fill-red-500 self-start" />
                                 </td>
@@ -71,31 +75,31 @@ export default function PacketCard({
                     </tbody>
                 </table>
             </div>
-            {id == 1 && price_not_discount == 0 ?
-            <Link href={route("dashboard")} className="self-center">
-                <button
-                    className={`btn btn-info capitalize px-10 ${
-                        isPopular
-                        ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
-                        : "text-white bg-black hover:bg-slate-700"
-                    }`}
+            {id == 1 && price_not_discount == 0 ? (
+                <Link href={route("dashboard")} className="self-center">
+                    <button
+                        className={`btn btn-info capitalize px-10 ${
+                            isPopular
+                                ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
+                                : "text-white bg-black hover:bg-slate-700"
+                        }`}
                     >
-                    Belajar Sekarang
-                </button>
-            </Link>
-            : 
-            <Link href={route("paket.show", id)} className="self-center">
-                <button
-                    className={`btn btn-info capitalize px-10 ${
-                        isPopular
-                        ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
-                        : "text-white bg-black hover:bg-slate-700"
-                    }`}
+                        Belajar Sekarang
+                    </button>
+                </Link>
+            ) : (
+                <Link href={route("paket.show", id)} className="self-center">
+                    <button
+                        className={`btn btn-info capitalize px-10 ${
+                            isPopular
+                                ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
+                                : "text-white bg-black hover:bg-slate-700"
+                        }`}
                     >
-                    Beli Sekarang
-                </button>
-            </Link>
-            }
+                        Beli Sekarang
+                    </button>
+                </Link>
+            )}
         </div>
     );
 }

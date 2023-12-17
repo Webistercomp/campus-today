@@ -1,9 +1,12 @@
 import { Link } from "@inertiajs/react";
 import CTLogo from "@/images/ct_ 2.png";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import ProfileIcon from "@/icons/ProfileIcon";
+import HamburgerIcon from "@/icons/HamburgerIcon";
 
 export default forwardRef(function Navbar({ isAuthed, user }, ref) {
+    const [isOpen, setIsOpen] = useState(false);
+
     if (isAuthed) {
         return (
             <>
@@ -87,29 +90,83 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
     }
 
     return (
-        <nav
-            className="navbar fixed bg-white shadow-lg px-28 z-50 top-0"
-            ref={ref}
-        >
-            <div className="flex justify-between w-full">
-                <Link href="/" className="">
-                    <img src={CTLogo} alt="ct-logo" className="h-16" />
-                </Link>
-                <ul className="menu menu-horizontal px-1 gap-4">
-                    <li>
-                        <Link href="#about-us">Tentang</Link>
-                    </li>
-                    <li>
-                        <Link href="#benefit">Keunggulan</Link>
-                    </li>
-                    <li>
-                        <Link href="#testimoni">Testimoni</Link>
-                    </li>
-                    <li>
-                        <Link href="#paket">Paket</Link>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <>
+            {isOpen && (
+                <div
+                    className="fixed w-screen h-screen z-40"
+                    onClick={() => setIsOpen(false)}
+                ></div>
+            )}
+            <ul
+                className={`fixed bg-white shadow-lg w-full px-4 flex flex-col z-50 gap-2 pt-20 pb-4 ${
+                    isOpen === false ? "-translate-y-full" : "translate-y-0"
+                } transition-all duration-150`}
+            >
+                <a
+                    onClick={() => setIsOpen(false)}
+                    href="#about-us"
+                    className="py-2 px-2 bg-slate-200 rounded-md"
+                >
+                    Tentang
+                </a>
+                <a
+                    onClick={() => setIsOpen(false)}
+                    href="#benefit"
+                    className="py-2 px-2 bg-slate-200 rounded-md"
+                >
+                    Keunggulan
+                </a>
+                <a
+                    onClick={() => setIsOpen(false)}
+                    href="#testimoni"
+                    className="py-2 px-2 bg-slate-200 rounded-md"
+                >
+                    Testimoni
+                </a>
+                <a
+                    href="#paket"
+                    className="py-2 px-2 bg-slate-200 rounded-md"
+                    onClick={() => setIsOpen(false)}
+                >
+                    Paket
+                </a>
+            </ul>
+            <nav
+                className={`navbar fixed bg-white ${
+                    isOpen === false ? "shadow-lg" : ""
+                } px-4 md:px-14 lg:px-24 xl:px-32 z-50 top-0`}
+                ref={ref}
+            >
+                <div className="flex justify-between w-full relative">
+                    <a href="#" className="relative">
+                        <img
+                            src={CTLogo}
+                            alt="ct-logo"
+                            className="h-12 lg:h-16 xl:h-20"
+                        />
+                    </a>
+                    <ul className="menu menu-horizontal px-1 gap-4 hidden md:flex md:items-center relative">
+                        <li>
+                            <a href="#about-us">Tentang</a>
+                        </li>
+                        <li>
+                            <a href="#benefit">Keunggulan</a>
+                        </li>
+                        <li>
+                            <a href="#testimoni">Testimoni</a>
+                        </li>
+                        <li>
+                            <a href="#paket">Paket</a>
+                        </li>
+                    </ul>
+                    <button
+                        className="btn md:hidden"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <HamburgerIcon />
+                    </button>
+                </div>
+            </nav>
+        </>
     );
 });
