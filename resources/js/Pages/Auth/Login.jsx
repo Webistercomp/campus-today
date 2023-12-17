@@ -37,14 +37,14 @@ export default function Login({ canResetPassword }) {
                         <img
                             src={CTIcon}
                             alt="Ct-icon"
-                            className="aspect-auto w-24 lg:w-36 xl:w-48 mb-4 mx-auto lg:ml-0"
+                            className="aspect-auto w-24 lg:w-36 mb-4 mx-auto lg:ml-0"
                         />
                     </Link>
-                    <div className="max-w-md xl:max-w-xl xl:mt-8">
+                    <div className="max-w-md xl:max-w-xl xl:mt-4">
                         <h1 className="font-semibold text-2xl text-center lg:text-left lg:text-3xl xl:text-4xl">
                             Sign In
                         </h1>
-                        <p className="mt-2 lg:mt-4 xl:mt-6 text-sm lg:text-base xl:text-xl">
+                        <p className="mt-2 lg:mt-2 xl:mt-4 text-sm lg:text-base xl:text-xl">
                             if you don't have an account, you can{" "}
                             <Link
                                 href={route("register")}
@@ -55,7 +55,7 @@ export default function Login({ canResetPassword }) {
                         </p>
                         <form
                             onSubmit={submit}
-                            className="mt-6 lg:mt-4 flex flex-col gap-2 lg:gap-2 xl:gap-8"
+                            className="mt-6 lg:mt-4 flex flex-col gap-2 lg:gap-2 xl:gap-2"
                         >
                             <div className="flex flex-col">
                                 <label
