@@ -103,7 +103,7 @@ export default function Homepage({ title, packets }) {
                         </Link>
                     </div>
                 </div>
-                <div className="invisible md:visible basis-0 md:basis-[40%] w-full h-full flex items-center justify-start">
+                <div className="hidden md:flex basis-0 md:basis-[40%] w-full h-full items-center justify-start">
                     <img src={ThesisPhana} alt="illus" />
                 </div>
             </section>
