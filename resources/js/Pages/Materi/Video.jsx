@@ -53,17 +53,17 @@ export default function SkdVideo({
             </div>
 
             <section>
-                <h1 className="text-3xl text-curious-blue font-semibold">
+                <h1 className="text-2xl xl:text-3xl text-curious-blue font-semibold">
                     {title}
                 </h1>
                 {type == "videoseries" ? (
                     ""
                 ) : (
-                    <div className="flex justify-between gap-8 items-center mt-4 border-b-2 pb-3">
-                        <div className="flex gap-14 w-full">
+                    <div className="flex flex-col lg:flex-row justify-between gap-6 items-stretch mt-4 border-b-2 pb-3">
+                        <div className="flex gap-14 w-full items-center">
                             {tabGroup.map((groupType, i) => (
                                 <a
-                                    className={`text-center relative cursor-pointer uppercase ${
+                                    className={`text-center text-xs lg:text-base relative cursor-pointer uppercase ${
                                         groupType.id === tabIndexActive
                                             ? "tab-active after:opacity-100"
                                             : "tab-active after:opacity-0 after:bottom-0"
@@ -80,7 +80,7 @@ export default function SkdVideo({
                             <input
                                 type="text"
                                 placeholder="Cari"
-                                className="input input-bordered w-24 md:w-auto"
+                                className="input input-sm input-bordered w-full md:w-auto"
                                 value={searchkeyword}
                                 onChange={(ev) =>
                                     setSearchKeyword(ev.target.value)
@@ -89,7 +89,7 @@ export default function SkdVideo({
                         </div>
                     </div>
                 )}
-                <div className="flex gap-6 mt-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                     {currentMaterials.map((material, i) => {
                         // Return the element. Also pass key
                         return (

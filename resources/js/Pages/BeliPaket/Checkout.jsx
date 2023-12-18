@@ -7,6 +7,7 @@ export default function Checkout({ auth, title, packet }) {
     let IDRupiah = new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
+        maximumFractionDigits: 0,
     });
 
     const full_name = auth.user.name.split(" ");
@@ -22,7 +23,7 @@ export default function Checkout({ auth, title, packet }) {
         payment_method: "",
     });
     const [alertData, setAlertData] = useState({
-        type: "",
+        type: "success",
         isShow: false,
         msg: "",
     });
@@ -68,12 +69,12 @@ export default function Checkout({ auth, title, packet }) {
                 </ul>
             </div>
 
-            <section>
+            <section className="pb-8">
                 <h1 className="text-3xl text-curious-blue font-semibold">
                     {title}
                 </h1>
                 <div className="border-2 p-6 rounded-2xl mt-6">
-                    <div className="flex">
+                    <div className="flex flex-col lg:flex-row">
                         <div className="flex flex-col gap-4 basis-1/4">
                             <input
                                 type="text"
@@ -123,9 +124,9 @@ export default function Checkout({ auth, title, packet }) {
                                 <option value="shopeepay">ShopeePay</option>
                             </select>
                         </div>
-                        <div className="divider divider-horizontal"></div>
+                        <div className="divider divider-vertical lg:divider-horizontal"></div>
                         <div className="basis-3/4 text-slate-800">
-                            <table className="w-full">
+                            <table className="w-full text-xs md:text-base">
                                 <thead className="[&>th]:text-start [&>th]:px-4 [&>th]:py-3 border-b-2 border-t-2">
                                     <th>Items</th>
                                     <th className="w-40">Price</th>

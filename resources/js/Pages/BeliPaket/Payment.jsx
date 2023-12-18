@@ -8,7 +8,7 @@ export default function Payment({ auth, title, packet, user_data }) {
     const [paymentProof, setPaymentProof] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [alertData, setAlertData] = useState({
-        type: "",
+        type: "success",
         isShow: false,
         msg: "",
     });
@@ -75,11 +75,11 @@ export default function Payment({ auth, title, packet, user_data }) {
                 </ul>
             </div>
 
-            <section>
+            <section className="pb-8">
                 <h1 className="text-3xl text-curious-blue font-semibold">
                     {title}
                 </h1>
-                <div className="border-2 p-6 rounded-2xl mt-6 text-center text-slate-800">
+                <div className="border-2 p-6 rounded-2xl max-w-4xl mt-6 text-center text-slate-800 mx-auto">
                     <div>
                         <p>
                             Pembayaran dapat ditransfer melalui nomor rekening

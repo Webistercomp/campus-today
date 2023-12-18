@@ -5,7 +5,7 @@ export default function FAQCard({ question, answer }) {
             <div className="collapse-title text-xl font-medium peer-checked:bg-curious-blue peer-checked:text-white">
                 {question}
             </div>
-            <div className="collapse-content peer-checked:bg-curious-blue peer-checked:text-white">
+            <div className="collapse-content peer-checked:bg-curious-blue peer-checked:text-white transition-all duration-150">
                 <p>{answer}</p>
             </div>
         </div>

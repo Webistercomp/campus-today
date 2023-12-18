@@ -32,8 +32,8 @@ export default function Deskripsi({ auth, title, packet }) {
                 <h1 className="text-3xl text-curious-blue font-semibold">
                     {packet.name}
                 </h1>
-                <div className="flex gap-8">
-                    <div className="basis-3/5 mt-8">
+                <div className="flex flex-col md:flex-row gap-8 pb-8">
+                    <div className="basis-3/5 mt-8 md:mt-2">
                         <h6 className="text-slate-800 w-fit mb-4 custom-underline">
                             Deskripsi
                         </h6>

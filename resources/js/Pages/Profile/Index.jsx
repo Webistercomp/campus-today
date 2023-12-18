@@ -73,39 +73,41 @@ export default function Profile({ auth }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Profil" />
 
-            <section className="py-6">
+            <section className="py-6 px-4 md:px-14 lg:px-24 xl:px-32">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-8">
                         <img
                             src=""
                             alt=""
-                            className="aspect-square w-24 rounded-full bg-slate-300"
+                            className="aspect-square w-16 xl:w-24 rounded-full bg-slate-300"
                         />
                         <div>
-                            <h1 className="text-3xl font-bold text-curious-blue">
+                            <h1 className="text-lg xl:text-3xl font-bold text-curious-blue">
                                 {user.name}
                             </h1>
-                            <p className="text-slate-500">{user.email}</p>
+                            <p className="text-slate-500 text-sm xl:text-base">
+                                {user.email}
+                            </p>
                         </div>
                     </div>
                     {tabsIndex === 0 &&
                         (!isEdit ? (
                             <button
-                                className="btn btn-primary capitalize text-white"
+                                className="btn btn-sm md:btn-md btn-primary capitalize text-white"
                                 onClick={() => setIsEdit(!isEdit)}
                             >
                                 Edit Profil
                             </button>
                         ) : (
-                            <div className="flex gap-4">
+                            <div className="flex flex-col md:flex-row gap-4">
                                 <button
-                                    className="btn capitalize"
+                                    className="btn btn-sm md:btn-md capitalize"
                                     onClick={() => onCancelEdit()}
                                 >
                                     Batalkan
                                 </button>
                                 <button
-                                    className="btn btn-primary capitalize text-white"
+                                    className="btn btn-sm md:btn-md btn-primary capitalize text-white"
                                     onClick={() => onSaveProfile()}
                                 >
                                     Simpan Profil

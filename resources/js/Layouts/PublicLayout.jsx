@@ -6,10 +6,10 @@ export default function PublicLayout({ children }) {
     const ref = useRef(null);
 
     useEffect(() => {
-        const h = ref.current.clientHeight;
+        const h = ref.current?.clientHeight;
         const doc = document.querySelector("html");
         doc.style.scrollBehavior = "smooth";
-        doc.style.scrollPaddingTop = `${h - 30}px`;
+        doc.style.scrollPaddingTop = `${h - 36}px`;
     }, []);
 
     return (
