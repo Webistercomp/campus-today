@@ -108,6 +108,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('users/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
 
         Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
+        Route::get('packets/create', [AdminPacketController::class, 'create'])->name('admin.packet.create');
+        Route::post('packets', [AdminPacketController::class, 'store'])->name('admin.packet.store');
         Route::get('packets/{id}', [AdminPacketController::class, 'show'])->name('admin.packet.show');
         Route::get('packets/edit/{id}', [AdminPacketController::class, 'edit'])->name('admin.packet.edit');
         Route::put('packets/{id}', [AdminPacketController::class, 'update'])->name('admin.packet.update');
