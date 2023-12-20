@@ -12,11 +12,11 @@
             <h5>Detail tryout</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.event.show', $tryout->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.tryout.show', $tryout->id)}}" class="btn btn-secondary">Back</a>
         </div>
     </div>
     <table class="table table-striped">
-        <form action="{{route('admin.event.update', $tryout->id)}}" method="post">
+        <form action="{{route('admin.tryout.update', $tryout->id)}}" method="post">
             @csrf
             @method('PUT')
             <table>
@@ -52,15 +52,15 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Code</th>
-                        <td class="col-8">
-                            <input type="text" class="form-control" id="code" name="code" value="{{$tryout->code}}">
-                        </td>
-                    </tr>
-                    <tr class="row">
                         <th class="col-4">Name</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="name" name="name" value="{{$tryout->name}}">
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="col-4">Code</th>
+                        <td class="col-8">
+                            <input type="text" class="form-control" id="code" name="code" value="{{$tryout->code}}">
                         </td>
                     </tr>
                     <tr class="row">
