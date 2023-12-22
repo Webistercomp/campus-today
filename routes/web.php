@@ -91,9 +91,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/minat-bakat/tes-koran', function () {
         return Inertia::render('MinatBakat/TesKoran', ['title' => 'Tes Koran']);
     })->name('minatbakat.teskoran');
-    Route::get('/minat-bakat/tes-wartegg', function () {
-        return Inertia::render('MinatBakat/TesWartegg', ['title' => 'Tes Wartegg']);
-    })->name('minatbakat.teswartegg');
+    Route::get('/minat-bakat/tes-wartegg', [MinatBakatController::class, 'testWartegg'])->name('minatbakat.teswartegg');
+    Route::get('/minat-bakat/tes-wartegg/hasil', [MinatBakatController::class, 'hasilTestWartegg'])->name('minatbakat.teswartegg.hasil');
     Route::get('/minat-bakat/tes-analogi-verbal', function () {
         return Inertia::render('MinatBakat/TesAnalogiVerbal', ['title' => 'Tes Analogi Verbal']);
     })->name('minatbakat.tesanalogiverbal');
@@ -103,6 +102,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/minat-bakat/tes-matematika', function () {
         return Inertia::render('MinatBakat/TesMatematika', ['title' => 'Tes Matematika']);
     })->name('minatbakat.tesmatematika');
+
+    Route::post('/minat-bakat/tes-wartegg', [MinatBakatController::class, 'storeTestWartegg'])->name('minatbakat.teswartegg.store');
 });
 
 Route::prefix('materiskd')->group(function () {
@@ -155,13 +156,13 @@ Route::prefix('admin')->group(function () {
         Route::get('event-tryout/edit/{id}', [AdminEventTryoutController::class, 'edit'])->name('admin.event.edit');
         Route::put('event-tryout/{id}', [AdminEventTryoutController::class, 'update'])->name('admin.event.update');
         Route::delete('event-tryout/{id}', [AdminEventTryoutController::class, 'destroy'])->name('admin.event.delete');
-        
+
         Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
         Route::get('materi/{id}', [MateriController::class, 'show'])->name('admin.materi.show');
         Route::get('materi/edit/{id}', [MateriController::class, 'edit'])->name('admin.materi.edit');
         Route::put('materi/{id}', [MateriController::class, 'update'])->name('admin.materi.update');
         Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
-        
+
         Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
         Route::get('article/{id}', [AdminArticleController::class, 'show'])->name('admin.article.show');
         Route::get('article/edit/{id}', [AdminArticleController::class, 'edit'])->name('admin.article.edit');

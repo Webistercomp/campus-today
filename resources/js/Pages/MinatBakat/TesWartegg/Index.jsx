@@ -1,11 +1,12 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import WarteggTestQuestionSample from "@/images/wartegg-test-img.png";
 import ArrowUpTray from "@/icons/ArrowUpTray";
 import ArrowDownTray from "@/icons/ArrowDownTray";
 import Alert from "@/Components/Alert";
 import CheckIcon from "@/icons/CheckIcon";
+import axios from "axios";
 
 export default function TesWartegg({ auth, title }) {
     const [isStart, setIsStart] = useState(false);
@@ -26,7 +27,7 @@ export default function TesWartegg({ auth, title }) {
                     link.href = url;
                     link.setAttribute(
                         "download",
-                        "Soal Tes Wartegg_Campus Today.png"
+                        "Soal Tes Wartegg_Campus Today.jpeg"
                     );
                     document.body.appendChild(link);
                     link.click();
@@ -53,6 +54,34 @@ export default function TesWartegg({ auth, title }) {
                 });
             }, 3000);
         }
+
+        const newFileName = `Tes Wartegg_${auth.user.name}_${Date.now()}.jpeg`;
+
+        const formData = new FormData();
+        formData.append("image", userAnswer, newFileName);
+        axios
+            .post(route("minatbakat.teswartegg.store"), formData)
+            .then((response) => {
+                const data = response.data;
+                if (data.status === "success") {
+                    return router.get(route("minatbakat.teswartegg.hasil"));
+                }
+            })
+            .catch((err) => {
+                const data = err.response.data.errors;
+                setAlertData({
+                    isShow: true,
+                    msg:
+                        data.image[0] &&
+                        "Ukuran file gambar tidak boleh lebih dari 1 Mb",
+                    type: "error",
+                });
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    setAlertData({ ...alertData, isShow: false });
+                }, 3000);
+            });
     };
 
     return (
@@ -99,7 +128,10 @@ export default function TesWartegg({ auth, title }) {
                     </p>
                     <p>
                         Jika sudah mengerjakan bisa{" "}
-                        <Link className="link link-primary">
+                        <Link
+                            href={route("minatbakat.teswartegg.hasil")}
+                            className="link link-primary"
+                        >
                             Lihat Hasil Tes
                         </Link>
                     </p>
