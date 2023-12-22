@@ -72,15 +72,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
-    Route::get('/latihan', function () {
-        return Inertia::render('Latihan/Index', ['title' => 'Latihan Soal']);
-    })->name('latihan');
-    Route::get('/latihan/success', function () {
-        return Inertia::render('Latihan/LatihanSuccess', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
-    })->name('latihan.success');
-    Route::get('/latihan/failed', function () {
-        return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
-    })->name('latihan.failed');
+    Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
+    Route::get('/latihan/success', [LatihanController::class, 'success'])->name('latihan.success');
+    Route::get('/latihan/failed', [LatihanController::class, 'failed'])->name('latihan.failed');
+    Route::post('/latihan/scoring', [LatihanController::class, 'scoring'])->name('latihan.scoring');
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
@@ -134,12 +129,17 @@ Route::prefix('admin')->group(function () {
         Route::delete('users/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
 
         Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
+        Route::get('packets/create', [AdminPacketController::class, 'create'])->name('admin.packet.create');
+        Route::post('packets', [AdminPacketController::class, 'store'])->name('admin.packet.store');
         Route::get('packets/{id}', [AdminPacketController::class, 'show'])->name('admin.packet.show');
         Route::get('packets/edit/{id}', [AdminPacketController::class, 'edit'])->name('admin.packet.edit');
         Route::put('packets/{id}', [AdminPacketController::class, 'update'])->name('admin.packet.update');
         Route::delete('packets/{id}', [AdminPacketController::class, 'destroy'])->name('admin.packet.delete');
 
         Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');
+        Route::get('tryouts/create', [AdminTryoutController::class, 'create'])->name('admin.tryout.create');
+        Route::post('tryouts', [AdminTryoutController::class, 'store'])->name('admin.tryout.store');
+        Route::get('tryouts/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
         Route::get('tryouts/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
         Route::get('tryouts/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
         Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');

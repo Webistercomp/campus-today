@@ -23,6 +23,38 @@ class TryoutController extends Controller
         }
         return view('admin.tryout.index', compact('tryouts', 'user', 'menu'));
     }
+
+    function create() {
+        $materialTypes = MaterialType::all();
+        $groups = GroupType::all();
+        $user = Auth::user();
+        $menu = Route::getCurrentRoute()->getName();
+        $menu = explode('.', $menu)[1];
+        $roles = Role::all();
+        return view('admin.tryout.create', compact('user', 'menu', 'roles', 'materialTypes', 'groups'));
+    }
+
+    function store(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required',
+            'material_type_id' => 'required',
+        ]);
+        $newTryout = new Tryout();
+        $newTryout->material_type_id = $request->material_type_id;
+        $newTryout->group_id = $request->group_id;
+        $newTryout->roles = $request->roles;
+        $newTryout->name = $request->name;
+        $newTryout->code = $request->code;
+        $newTryout->time = $request->time;
+        $newTryout->description = $request->description;
+        $newTryout->is_event = 0;
+        if(!$request->has('active')) {
+            $newTryout->active = 0;
+        }
+        $newTryout->save();
+        return redirect()->route('admin.tryout.index');
+    }
     
     function show($id) {
         $tryout = Tryout::find($id);

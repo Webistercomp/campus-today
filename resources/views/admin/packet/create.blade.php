@@ -9,22 +9,21 @@
     <div class="card p-3">
     <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-            <h5>Detail Packet</h5>
+            <h5>Create New Packet</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.packet.show', $packet->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.packet.index')}}" class="btn btn-secondary">Back</a>
         </div>
     </div>
     <table class="table table-striped">
-        <form action="{{route('admin.packet.update', $packet->id)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('admin.packet.store')}}" method="post" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <table>
                 <tbody>
                     <tr class="row">
                         <th class="col-4">Name</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="name" name="name" value="{{$packet->name}}">
+                            <input type="text" class="form-control" id="name" name="name">
                         </td>
                     </tr>
                     <tr class="row">
@@ -32,7 +31,7 @@
                         <td class="col-8">
                             <select class="custom-select" name="role_id" id="role_id">
                                 @foreach ($roles as $role)
-                                    <option value="{{$role->id}}" @if ($role->id == $packet->role_id) selected @endif>{{$role->name}}</option>
+                                    <option value="{{$role->id}}">{{$role->name}}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -40,50 +39,49 @@
                     <tr class="row">
                         <th class="col-4">Price Not Discount</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="price_not_discount" name="price_not_discount" value="{{$packet->price_not_discount}}" min="0" step="1">
+                            <input type="number" class="form-control" id="price_not_discount" name="price_not_discount" step="1" min="0">
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Price Discount</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="price_discount" name="price_discount" value="{{$packet->price_discount}}" min="0" step="1">
+                            <input type="number" class="form-control" id="price_discount" name="price_discount" step="1" min="0">
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Discount</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="discount" name="discount" value="{{$packet->discount}}" min="0" max="100" step="1">
+                            <input type="number" class="form-control" id="discount" name="discount" min="0" max="100" step="1">
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Description</th>
                         <td class="col-8">
-                            <textarea name="description" id="description" cols="30" rows="3" class="form-control">{{$packet->description}}</textarea>
+                            <textarea name="description" id="description" cols="30" rows="3" class="form-control"></textarea>
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Benefits</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="benefits_x" name="benefits_x" placeholder="X" value="{{$packet->benefits_x}}">
+                            <input type="text" class="form-control" id="benefits_x" name="benefits_x" placeholder="X">
                             <label for="benefits_x" class="font-weight: 500!important">Input not benefit (X), Pisahkan dengan koma</label>
-                            <input type="text" class="form-control" id="benefits_v" name="benefits_y" placeholder="V" value="{{$packet->benefits_y}}">
+                            <input type="text" class="form-control" id="benefits_v" name="benefits_y" placeholder="V">
                             <label for="benefits_y" class="font-weight: 500!important">Input benefit (v), Pisahkan dengan koma</label>
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Icon</th>
                         <td class="col-8">
-                            @if($packet->icon)
-                                <img src="{{asset('storage/packet/icon/'.$packet->icon)}}" alt="" width="200px" class="mb-3">
-                            @endif
                             <input type="file" class="form-control" id="icon" name="icon">
-                            <label for="icon">Upload icon baru untuk mengganti icon sebelumnya</label>
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Type</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="type" name="type" value="{{$packet->type}}">
+                            <select class="custom-select" name="type" id="type">
+                                <option value="mandiri">Mandiri</option>
+                                <option value="bimbel">Bimbel</option>
+                            </select>
                         </td>
                     </tr>
                 </tbody>

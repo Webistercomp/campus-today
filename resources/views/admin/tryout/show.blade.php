@@ -12,8 +12,8 @@
             <h5>Detail Tryout</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.event.index')}}" class="btn btn-secondary">Back</a>
-            <a href="{{route('admin.event.edit', $tryout->id)}}" class="btn btn-warning">Edit</a>
+            <a href="{{route('admin.tryout.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.tryout.edit', $tryout->id)}}" class="btn btn-warning">Edit</a>
             <form class="d-inline-block" action="{{route('admin.event.delete', $tryout->id)}}" method="post">
                 @csrf
                 @method('DELETE')
@@ -53,12 +53,12 @@
                 <td>{{$tryout->roles}}</td>
             </tr>
             <tr>
-                <th>Code</th>
-                <td>{{$tryout->code}}</td>
-            </tr>
-            <tr>
                 <th>Name</th>
                 <td>{{$tryout->name}}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{$tryout->code}}</td>
             </tr>
             <tr>
                 <th>Time</th>
