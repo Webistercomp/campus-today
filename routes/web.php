@@ -72,15 +72,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
-    Route::get('/latihan', function () {
-        return Inertia::render('Latihan/Index', ['title' => 'Latihan Soal']);
-    })->name('latihan');
-    Route::get('/latihan/success', function () {
-        return Inertia::render('Latihan/LatihanSuccess', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
-    })->name('latihan.success');
-    Route::get('/latihan/failed', function () {
-        return Inertia::render('Latihan/LatihanFailed', ['title' => 'Latihan Selesai', 'name' => 'Farhan Hikmatullah D']);
-    })->name('latihan.failed');
+    Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
+    Route::get('/latihan/success', [LatihanController::class, 'success'])->name('latihan.success');
+    Route::get('/latihan/failed', [LatihanController::class, 'failed'])->name('latihan.failed');
+    Route::post('/latihan/scoring', [LatihanController::class, 'scoring'])->name('latihan.scoring');
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
@@ -91,9 +86,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/minat-bakat/tes-koran', function () {
         return Inertia::render('MinatBakat/TesKoran', ['title' => 'Tes Koran']);
     })->name('minatbakat.teskoran');
-    Route::get('/minat-bakat/tes-wartegg', function () {
-        return Inertia::render('MinatBakat/TesWartegg', ['title' => 'Tes Wartegg']);
-    })->name('minatbakat.teswartegg');
+    Route::get('/minat-bakat/tes-wartegg', [MinatBakatController::class, 'testWartegg'])->name('minatbakat.teswartegg');
+    Route::get('/minat-bakat/tes-wartegg/hasil', [MinatBakatController::class, 'hasilTestWartegg'])->name('minatbakat.teswartegg.hasil');
     Route::get('/minat-bakat/tes-analogi-verbal', function () {
         return Inertia::render('MinatBakat/TesAnalogiVerbal', ['title' => 'Tes Analogi Verbal']);
     })->name('minatbakat.tesanalogiverbal');
@@ -103,6 +97,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/minat-bakat/tes-matematika', function () {
         return Inertia::render('MinatBakat/TesMatematika', ['title' => 'Tes Matematika']);
     })->name('minatbakat.tesmatematika');
+
+    Route::post('/minat-bakat/tes-wartegg', [MinatBakatController::class, 'storeTestWartegg'])->name('minatbakat.teswartegg.store');
 });
 
 Route::prefix('materiskd')->group(function () {
@@ -133,12 +129,17 @@ Route::prefix('admin')->group(function () {
         Route::delete('users/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
 
         Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
+        Route::get('packets/create', [AdminPacketController::class, 'create'])->name('admin.packet.create');
+        Route::post('packets', [AdminPacketController::class, 'store'])->name('admin.packet.store');
         Route::get('packets/{id}', [AdminPacketController::class, 'show'])->name('admin.packet.show');
         Route::get('packets/edit/{id}', [AdminPacketController::class, 'edit'])->name('admin.packet.edit');
         Route::put('packets/{id}', [AdminPacketController::class, 'update'])->name('admin.packet.update');
         Route::delete('packets/{id}', [AdminPacketController::class, 'destroy'])->name('admin.packet.delete');
 
         Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');
+        Route::get('tryouts/create', [AdminTryoutController::class, 'create'])->name('admin.tryout.create');
+        Route::post('tryouts', [AdminTryoutController::class, 'store'])->name('admin.tryout.store');
+        Route::get('tryouts/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
         Route::get('tryouts/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
         Route::get('tryouts/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
         Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
@@ -155,13 +156,13 @@ Route::prefix('admin')->group(function () {
         Route::get('event-tryout/edit/{id}', [AdminEventTryoutController::class, 'edit'])->name('admin.event.edit');
         Route::put('event-tryout/{id}', [AdminEventTryoutController::class, 'update'])->name('admin.event.update');
         Route::delete('event-tryout/{id}', [AdminEventTryoutController::class, 'destroy'])->name('admin.event.delete');
-        
+
         Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
         Route::get('materi/{id}', [MateriController::class, 'show'])->name('admin.materi.show');
         Route::get('materi/edit/{id}', [MateriController::class, 'edit'])->name('admin.materi.edit');
         Route::put('materi/{id}', [MateriController::class, 'update'])->name('admin.materi.update');
         Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
-        
+
         Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
         Route::get('article/{id}', [AdminArticleController::class, 'show'])->name('admin.article.show');
         Route::get('article/edit/{id}', [AdminArticleController::class, 'edit'])->name('admin.article.edit');

@@ -65,12 +65,30 @@
                 <td>{{$packet->description}}</td>
             </tr>
             <tr>
-                <th>Benefits</th>
-                <td>{{$packet->benefits}}</td>
+                <th>Benefits X</th>
+                <td>
+                    <ul>
+                        @foreach ($packet->benefits_x as $benefit)
+                            <li>{{$benefit}}</li>
+                        @endforeach
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Benefits Y</th>
+                <td>
+                    <ul>
+                        @foreach ($packet->benefits_y as $benefit)
+                            <li>{{$benefit}}</li>
+                        @endforeach
+                    </ul>
+                </td>
             </tr>
             <tr>
                 <th>Icon</th>
-                <td>{{$packet->icon ?? '-'}}</td>
+                <td>
+                    <img src="{{asset('storage/packet/icon/'.$packet->icon)}}" alt="" width="200px" class="mb-3">
+                </td>
             </tr>
             <tr>
                 <th>Type</th>

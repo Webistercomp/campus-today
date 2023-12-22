@@ -6,6 +6,9 @@
 
 @section('content')
 <div class="container">
+    <div class="d-flex">
+        <a href={{route('admin.tryout.create')}} class="btn btn-warning mb-3">Create New</a>
+    </div>
     <table class="table table-striped">
     <thead>
         <th>Id</th>
@@ -27,9 +30,9 @@
             <td>{{$tryout->name}}</td>
             <td>{{$tryout->time}}</td>
             <td>{{$tryout->jumlah_soal}}</td>
-            <td>
-                <a href={{route('admin.tryout.show', $tryout->id)}}>
-                    <i class="fa fa-eye text-center" style="font-size:16px;color:blue"></i>
+            <td class="">
+                <a href={{route('admin.tryout.show', $tryout->id)}} class="badge bg-primary">
+                    <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>
         </tr>
