@@ -194,16 +194,15 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         {articles
                             .slice(Math.max(articles.length - 3, 0))
                             .map((article, i) => {
-                                // Return the element. Also pass key
                                 return (
                                     <Link
                                         href={route("article.show", article.id)}
+                                        key={i}
                                     >
                                         <ArticleCard
                                             title={article.title}
                                             desc={article.description}
                                             image={article.image}
-                                            key={i}
                                         />
                                     </Link>
                                 );

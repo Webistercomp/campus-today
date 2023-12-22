@@ -64,6 +64,7 @@ export default function Teks({ auth, title, type, materials }) {
                                         : "tab-active after:opacity-0 after:bottom-0"
                                 }`}
                                 onClick={() => setTabIndexActive(groupType.id)}
+                                key={i}
                             >
                                 {groupType.name}
                             </a>

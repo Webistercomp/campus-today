@@ -16,10 +16,10 @@ export default function Checkout({ auth, title, packet }) {
         full_name.length != 1 ? full_name[full_name.length - 1] : "";
 
     const [checkoutData, setCheckoutData] = useState({
-        first_name: first_name,
-        last_name: last_name,
-        email: auth.user.email,
-        phone: auth.user.nohp,
+        first_name: first_name || "",
+        last_name: last_name || "",
+        email: auth.user.email || "",
+        phone: auth.user.nohp || "",
         payment_method: "",
     });
     const [alertData, setAlertData] = useState({
@@ -115,8 +115,9 @@ export default function Checkout({ auth, title, packet }) {
                                         };
                                     })
                                 }
+                                defaultValue="default"
                             >
-                                <option disabled selected>
+                                <option value="default" disabled>
                                     Metode Pembayaran
                                 </option>
                                 <option value="transfer">Transfer</option>
@@ -128,9 +129,11 @@ export default function Checkout({ auth, title, packet }) {
                         <div className="basis-3/4 text-slate-800">
                             <table className="w-full text-xs md:text-base">
                                 <thead className="[&>th]:text-start [&>th]:px-4 [&>th]:py-3 border-b-2 border-t-2">
-                                    <th>Items</th>
-                                    <th className="w-40">Price</th>
-                                    <th className="w-28">Total</th>
+                                    <tr>
+                                        <th>Items</th>
+                                        <th className="w-40">Price</th>
+                                        <th className="w-28">Total</th>
+                                    </tr>
                                 </thead>
                                 <tbody className="[&>tr>td]:text-start [&>tr>td]:px-4 [&>tr>td]:py-2">
                                     <tr>

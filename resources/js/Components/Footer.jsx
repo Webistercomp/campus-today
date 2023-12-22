@@ -19,7 +19,7 @@ export default function Footer() {
                         className="w-48 mx-auto lg:ml-0"
                     />
                     <p className="flex flex-col gap-2 mt-4 lg:mt-14">
-                        <p className="text-xl">PT AYO KREASI BERSAMA</p>
+                        <span className="text-xl">PT AYO KREASI BERSAMA</span>
                         <Link
                             href="mailto:campustoday3100@gmail.com"
                             className="link link-hover underline flex gap-4 items-center"
