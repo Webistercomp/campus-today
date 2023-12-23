@@ -11,7 +11,7 @@ Dashboard Admin | Campus Today
     <div class="row">
       <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-primary">
           <div class="inner">
             <h3>{{$jumlah_user}}</h3>
 
@@ -21,6 +21,20 @@ Dashboard Admin | Campus Today
             <i class="ion ion-bag"></i>
           </div>
           <a href={{route('admin.user.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{$jumlah_materi}}</h3>
+
+            <p>Materials</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href={{route('admin.materi.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -38,10 +52,24 @@ Dashboard Admin | Campus Today
           <a href={{route('admin.tryout.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <!-- ./col -->
       <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>{{$jumlah_latihan}}</h3>
+
+            <p>Latihans</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href={{route('admin.latihan.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
           <div class="inner">
             <h3>{{$jumlah_event_tryout}}</h3>
 
@@ -54,40 +82,10 @@ Dashboard Admin | Campus Today
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3>{{$jumlah_materi}}</h3>
-
-            <p>Materi</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-person-add"></i>
-          </div>
-          <a href={{route('admin.materi.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
       <!-- ./col -->
       <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <h3>{{$jumlah_article}}</h3>
-
-            <p>Articles</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          <a href={{route('admin.article.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
+        <div class="small-box bg-light">
           <div class="inner">
             <h3>{{$jumlah_packet}}</h3>
 
@@ -103,7 +101,23 @@ Dashboard Admin | Campus Today
       <!-- ./col -->
       <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-danger">
+        <div class="small-box bg-secondary">
+          <div class="inner">
+            <h3>{{$jumlah_article}}</h3>
+
+            <p>Articles</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href={{route('admin.article.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-dark">
           <div class="inner">
             <h3>0</h3>
 

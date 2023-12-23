@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Article;
+use App\Models\Latihan;
 use App\Models\Material;
 use App\Models\Packet;
 use App\Models\Tryout;
@@ -49,6 +50,10 @@ class AdminController extends Controller
             ->get()
             ->count();
 
+        $jumlah_latihan = Latihan::where('active', 1)
+            ->get()
+            ->count();
+
         $jumlah_event_tryout = Tryout::where('active', 1)
             ->where('is_event', 1)
             ->get()
@@ -61,6 +66,6 @@ class AdminController extends Controller
         $jumlah_materi = Material::get()->count();
         $menu = Route::currentRouteName();
         $menu = explode('.', $menu)[0];
-        return view('admin.index', compact('user', 'menu', 'jumlah_user', 'jumlah_tryout', 'jumlah_event_tryout', 'jumlah_article', 'jumlah_packet', 'jumlah_materi'));
+        return view('admin.index', compact('user', 'menu', 'jumlah_user', 'jumlah_tryout', 'jumlah_event_tryout', 'jumlah_article', 'jumlah_packet', 'jumlah_materi', 'jumlah_latihan'));
     }
 }

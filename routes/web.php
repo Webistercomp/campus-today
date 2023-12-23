@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\EventTryoutController as AdminEventTryoutController;
 use App\Http\Controllers\Admin\LatihanController as AdminLatihanController;
 use App\Http\Controllers\Admin\MateriController;
+use App\Http\Controllers\Admin\MinatBakatController as AdminMinatBakatController;
 use App\Http\Controllers\Admin\PacketController as AdminPacketController;
 use App\Http\Controllers\Admin\TryoutController as AdminTryoutController;
 use App\Http\Controllers\Admin\UserController;
@@ -167,5 +168,11 @@ Route::prefix('admin')->group(function () {
         Route::get('article/edit/{id}', [AdminArticleController::class, 'edit'])->name('admin.article.edit');
         Route::put('article/{id}', [AdminArticleController::class, 'update'])->name('admin.article.update');
         Route::delete('article/{id}', [AdminArticleController::class, 'destroy'])->name('admin.article.delete');
+
+        Route::get('minatbakat', [AdminMinatBakatController::class, 'index'])->name('admin.minatbakat.index');
+        Route::get('minatbakat/{id}', [AdminMinatBakatController::class, 'show'])->name('admin.minatbakat.show');
+        Route::get('minatbakat/edit/{id}', [AdminMinatBakatController::class, 'edit'])->name('admin.minatbakat.edit');
+        Route::put('minatbakat/{id}', [AdminMinatBakatController::class, 'update'])->name('admin.minatbakat.update');
+        Route::delete('minatbakat/{id}', [AdminMinatBakatController::class, 'destroy'])->name('admin.minatbakat.delete');
     });
 });
