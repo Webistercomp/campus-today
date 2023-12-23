@@ -23,7 +23,7 @@ export default function MinatBakat({ auth, title }) {
         {
             name: "Tes Analogi Verbal",
             desc: "Penilaian Kepribadian",
-            route: route("minatbakat.tesanalogiverbal"),
+            route: route("minatbakat.tav"),
             img: TesAnalogi,
         },
         {
@@ -35,7 +35,7 @@ export default function MinatBakat({ auth, title }) {
         {
             name: "Tes Matematika",
             desc: "Penilaian Kepribadian",
-            route: route("minatbakat.tesmatematika"),
+            route: route("minatbakat.tesmtk"),
             img: TesMatematika,
         },
     ];

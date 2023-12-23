@@ -12,7 +12,7 @@ class Latihan extends Model
     protected $guarded = [];
 
     function questions() {
-        return $this->hasMany(Question::class, 'tryout_id', 'id');
+        return $this->hasMany(LatihanQuestion::class);
     }
 
     function materialType() {

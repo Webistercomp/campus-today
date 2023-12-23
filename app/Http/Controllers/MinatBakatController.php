@@ -11,11 +11,27 @@ use Inertia\Inertia;
 
 class MinatBakatController extends Controller {
     function index() {
-        return 'asdasda';
+        return Inertia::render('MinatBakat/Index', ['title' => 'Tes Minat Bakat']);
     }
 
-    function show() {
-        return 'teasd';
+    function teskoran() {
+        return Inertia::render('MinatBakat/TesKoran', ['title' => 'Tes Koran']);
+    }
+
+    function teswartegg() {
+        return Inertia::render('MinatBakat/TesWartegg', ['title' => 'Tes Wartegg']);
+    }
+
+    function tav() {
+        return Inertia::render('MinatBakat/TesAnalogiVerbal', ['title' => 'Tes Analogi Verbal']);
+    }
+
+    function epps() {
+        return Inertia::render('MinatBakat/EPPS', ['title' => 'EPPS']);
+    }
+
+    function tesmtk() {
+        return Inertia::render('MinatBakat/TesMatematika', ['title' => 'Tes Matematika']);
     }
 
     function testWartegg() {

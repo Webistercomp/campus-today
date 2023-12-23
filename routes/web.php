@@ -73,9 +73,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
 
     Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
-    Route::get('/latihan/success', [LatihanController::class, 'success'])->name('latihan.success');
-    Route::get('/latihan/failed', [LatihanController::class, 'failed'])->name('latihan.failed');
     Route::post('/latihan/scoring', [LatihanController::class, 'scoring'])->name('latihan.scoring');
+    Route::post('/latihan/result', [LatihanController::class, 'result'])->name('latihan.result');
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');

@@ -71,6 +71,7 @@ export default function SkdVideo({
                                     onClick={() =>
                                         setTabIndexActive(groupType.id)
                                     }
+                                    key={i}
                                 >
                                     {groupType.name}
                                 </a>
