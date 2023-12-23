@@ -44,7 +44,10 @@
                     <tr class="row">
                         <th class="col-4">Role</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="roles" name="roles" value="{{$material->roles}}">
+                            <input type="text" class="form-control" id="roles" name="roles" placeholder="Contoh: 1,2,3 atau 3,5,6" value={{$material->roles}}>
+                            <label for="roles" style="font-weight: 400!important; font-size: 12px!important;">Daftar role : @foreach ($roles as $role)
+                                {{$loop->iteration . ') ' . $role->name . ', '}}  
+                            @endforeach . Pisahkan dengan koma, contoh : 1,2,3 atau 3,5,6.</label>
                         </td>
                     </tr>
                     <tr class="row">

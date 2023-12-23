@@ -48,6 +48,7 @@ class MateriController extends Controller
         $newMaterial->code = $request->code;
         $newMaterial->description = $request->description;
         $newMaterial->type = $request->type;
+        $newMaterial->roles = json_encode(explode(',', $request->roles)); // roles = 1,2,3
         $newMaterial->save();
         return redirect()->route('admin.materi.index');
     }
@@ -64,6 +65,7 @@ class MateriController extends Controller
     function edit($id) {
         $materialTypes = MaterialType::all();
         $material = Material::find($id);
+        $material->roles = implode(',', json_decode($material->roles));
         $groups = GroupType::all();
         $roles = Role::all();
         $user = Auth::user();
