@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Latihan({ auth, title, latihan }) {
+export default function Latihan({ auth, title, user, latihan }) {
     const data = latihan.questions
     let no = 1;
     const [exerciseData, setExerciseData] = useState(() =>
@@ -50,9 +50,22 @@ export default function Latihan({ auth, title, latihan }) {
         return document.getElementById("confirm_send_ans_modal").showModal();
     };
 
-    const onClickSubmitAnswer = () => {
-        console.log(exerciseData);
-        return router.get(route("latihan.success"));
+    const onClickSubmitAnswer = async () => {
+        const finalLatihanData = exerciseData.map((d) => {
+            return { question_id: d.id, answer_id: d.jawaban };
+        });
+        const finalData = {
+            latihan_id: latihan.id,
+            user_id: user.id,
+            latihan_data: finalLatihanData,
+        }
+        const postData = await axios.post(route("latihan.scoring"), {
+            ...finalData
+        })
+        console.log(postData.data)
+        return router.post(route("latihan.result", latihan.id), {
+            data: postData.data
+        })
     };
 
     return (
@@ -168,7 +181,7 @@ export default function Latihan({ auth, title, latihan }) {
                     <div className="modal-action flex justify-end">
                         <button
                             className="btn capitalize"
-                            onClick={() => router.get(route("latihan.failed"))}
+                            onClick={onClickSubmitAnswer}
                         >
                             Kirim
                         </button>

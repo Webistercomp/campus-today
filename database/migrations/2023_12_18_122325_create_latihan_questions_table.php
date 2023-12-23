@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('latihans', function (Blueprint $table) {
+        Schema::create('latihan_questions', function (Blueprint $table) {
             $table->id();
-            $table->integer('chapter_id');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->boolean('active')->default(1);
+            $table->integer('latihan_id');
+            $table->integer('group_type_id')->nullable();
+            $table->string('question');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('latihans');
+        Schema::dropIfExists('latihan_questions');
     }
 };

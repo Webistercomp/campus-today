@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\PacketMandiri;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,7 +29,9 @@ class DatabaseSeeder extends Seeder
             ParticipantSeeder::class,
             ArticleSeeder::class,
             InstagramFeedSeeder::class,
-            LatihanSeeder::class
+            LatihanSeeder::class,
+            LatihanQuestionSeeder::class,
+            LatihanAnswerSeeder::class,
         ]);
     }
 }
