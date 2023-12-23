@@ -103,6 +103,12 @@ export default function SkdTeksTwk({
                             </h6>
                             <p className="isi-materi">{chapter.body}</p>
                         </div>
+                        <Link 
+                            href={route("latihan.test", chapter.id)}
+                            className="btn btn-grey text-dark capitalize mt-6 me-3 self-end px-6"
+                        >
+                            Latihan
+                        </Link>
                         {nextChapter ? (
                             <Link
                                 href={route("material.type.teks.subtype", [
