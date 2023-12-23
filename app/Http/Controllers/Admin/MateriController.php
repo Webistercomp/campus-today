@@ -20,6 +20,37 @@ class MateriController extends Controller
         $menu = explode('.', $menu)[1];
         return view('admin.materi.index', compact('materials', 'user', 'menu'));
     }
+
+    function create() {
+        $materialTypes = MaterialType::all();
+        $groups = GroupType::all();
+        $roles = Role::all();
+        $user = Auth::user();
+        $menu = Route::getCurrentRoute()->getName();
+        $menu = explode('.', $menu)[1];
+        return view('admin.materi.create', compact('materialTypes', 'groups', 'roles', 'user', 'menu'));
+    }
+
+    function store(Request $request) {
+        $request->validate([
+            'material_type_id' => 'required',
+            'group_id' => 'required',
+            'roles' => 'required',
+            'title' => 'required',
+            'code' => 'required',
+            'description' => 'required',
+            'type' => 'required',
+        ]);
+        $newMaterial = new Material();
+        $newMaterial->material_type_id = $request->material_type_id;
+        $newMaterial->group_id = $request->group_id;
+        $newMaterial->title = $request->title;
+        $newMaterial->code = $request->code;
+        $newMaterial->description = $request->description;
+        $newMaterial->type = $request->type;
+        $newMaterial->save();
+        return redirect()->route('admin.materi.index');
+    }
     
     function show($id) {
         $material = Material::find($id);
