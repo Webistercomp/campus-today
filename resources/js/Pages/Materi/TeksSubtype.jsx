@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import ChevronRightIcon from "@/icons/ChevronRightIcon";
 import { Head, Link } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SkdTeksTwk({
     auth,
@@ -13,6 +13,18 @@ export default function SkdTeksTwk({
     nextChapter,
 }) {
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem(
+            "ACTIVE_CHAPTER",
+            JSON.stringify({
+                type,
+                materialId: material.id,
+                materialCode: material.code,
+                nextChapterId: nextChapter?.id,
+            })
+        );
+    }, []);
 
     return (
         <AuthenticatedLayout user={auth.user}>

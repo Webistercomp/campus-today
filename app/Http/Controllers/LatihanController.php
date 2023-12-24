@@ -5,23 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Latihan;
 use App\Models\LatihanAnswer;
 use App\Models\LatihanQuestion;
+use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class LatihanController extends Controller
-{
+class LatihanController extends Controller {
     function test($id) {
         $latihan = Latihan::with('questions.answers')->find($id);
         $user = Auth::user();
-        for($i=0; $i<count($latihan->questions); $i++) {
+        for ($i = 0; $i < count($latihan->questions); $i++) {
             $latihan->questions[$i]->no = ($i + 1);
             $latihan->questions[$i]->jawaban = null;
         }
-
         return Inertia::render('Latihan/Index', [
-            'title' => 'Latihan Soal', 
-            'name' => 'Farhan Hikmatullah D',
+            'title' => 'Latihan Soal',
             'user' => $user,
             'latihan' => $latihan,
         ]);
@@ -29,13 +27,13 @@ class LatihanController extends Controller
 
     function result(Request $request) {
         $data = $request->data;
-        return Inertia::render('Latihan/Result', [ //belum ada frontendnya
-            'title' => 'Latihan Selesai', 
+        return Inertia::render('Latihan/Result', [
+            'title' => 'Latihan Selesai',
             'user' => Auth::user(),
             'latihan' => Latihan::with('questions.answers')->find($request->latihan_id),
-            'jumlah_benar' => $data->jumlah_benar,
-            'jumlah_salah' => $data->jumlah_salah,
-            'jumlah_tidak_diisi' => $data->jumlah_tidak_diisi,
+            'jumlah_benar' => $data['jumlah_benar'],
+            'jumlah_salah' => $data['jumlah_salah'],
+            'jumlah_tidak_diisi' => $data['jumlah_tidak_diisi'],
         ]);
     }
 
@@ -50,12 +48,12 @@ class LatihanController extends Controller
         $jumlah_benar = 0;
         $jumlah_salah = 0;
         $jumlah_tidak_diisi = 0;
-        foreach($request->latihan_data as $data) {
-            if($data['answer_id'] == null) {
+        foreach ($request->latihan_data as $data) {
+            if ($data['answer_id'] == null) {
                 $jumlah_tidak_diisi++;
             } else {
                 $answer = LatihanAnswer::find($data['answer_id']);
-                if($answer->bobot == 0) {
+                if ($answer->bobot == 0) {
                     $jumlah_salah++;
                 } else {
                     $jumlah_benar++;

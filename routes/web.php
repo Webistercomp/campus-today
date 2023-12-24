@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
     Route::post('/latihan/scoring', [LatihanController::class, 'scoring'])->name('latihan.scoring');
-    Route::post('/latihan/result', [LatihanController::class, 'result'])->name('latihan.result');
+    Route::post('/latihan/result/{latihan_id}', [LatihanController::class, 'result'])->name('latihan.result');
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('article.index');
     Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');

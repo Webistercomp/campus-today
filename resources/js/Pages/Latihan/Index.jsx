@@ -3,7 +3,7 @@ import { Head, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 export default function Latihan({ auth, title, user, latihan }) {
-    const data = latihan.questions
+    const data = latihan.questions;
     let no = 1;
     const [exerciseData, setExerciseData] = useState(() =>
         data.map((soal, i) => {
@@ -58,14 +58,14 @@ export default function Latihan({ auth, title, user, latihan }) {
             latihan_id: latihan.id,
             user_id: user.id,
             latihan_data: finalLatihanData,
-        }
+        };
         const postData = await axios.post(route("latihan.scoring"), {
-            ...finalData
-        })
-        console.log(postData.data)
+            ...finalData,
+        });
+
         return router.post(route("latihan.result", latihan.id), {
-            data: postData.data
-        })
+            data: postData.data,
+        });
     };
 
     return (
@@ -75,7 +75,7 @@ export default function Latihan({ auth, title, user, latihan }) {
             <section className="mt-6">
                 <div className="flex w-full items-center justify-between">
                     <h1 className="text-3xl text-curious-blue font-semibold">
-                        {title}
+                        {latihan.name}
                     </h1>
                 </div>
 
@@ -83,9 +83,9 @@ export default function Latihan({ auth, title, user, latihan }) {
                     <div className="min-w-fit grid grid-cols-3 gap-2 h-[calc(100vh_-_200px)] overflow-y-hidden hover:overflow-y-scroll gutter-stable p-2 content-start">
                         {exerciseData.map((q, i) => (
                             <div
-                                className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue-300 rounded-md hover:bg-curious-blue-300 hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
+                                className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
                                     q.jawaban !== null
-                                        ? "bg-curious-blue-300 text-white hover:text-black"
+                                        ? "bg-curious-blue text-white hover:text-black"
                                         : "bg-white"
                                 } ${
                                     active === i + 1
@@ -100,7 +100,7 @@ export default function Latihan({ auth, title, user, latihan }) {
                         ))}
                     </div>
                     <div className="pl-8">
-                        <p className="text-curious-blue-300 font-bold text-3xl mb-4">
+                        <p className="text-curious-blue font-bold text-3xl mb-4">
                             Soal ke-{activeQuestion.no}
                         </p>
                         <p className="text-lg">{activeQuestion.question}</p>
@@ -137,7 +137,7 @@ export default function Latihan({ auth, title, user, latihan }) {
                                             }
                                         }}
                                     />
-                                    <li className="border-2 border-curious-blue-300 px-8 py-3 rounded-md hover:bg-curious-blue-300 hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue-300">
+                                    <li className="border-2 border-curious-blue px-8 py-3 rounded-md hover:bg-curious-blue-300 hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue peer-checked:hover:bg-curious-blue-300">
                                         {choice.answer}
                                     </li>
                                 </label>
