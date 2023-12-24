@@ -15,11 +15,7 @@ class Latihan extends Model
         return $this->hasMany(LatihanQuestion::class);
     }
 
-    function materialType() {
-        return $this->belongsTo(MaterialType::class, 'material_type_id', 'id');
-    }
-
-    function group() {
-        return $this->belongsTo(GroupType::class, 'group_id', 'id');
+    function chapter() {
+        return $this->belongsTo(Chapter::class);
     }
 }

@@ -146,6 +146,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
 
         Route::get('latihans', [AdminLatihanController::class, 'index'])->name('admin.latihan.index');
+        Route::get('latihans/create', [AdminLatihanController::class, 'create'])->name('admin.latihan.create');
+        Route::post('latihans/store', [AdminLatihanController::class, 'store'])->name('admin.latihan.store');
         Route::get('latihans/{id}', [AdminLatihanController::class, 'show'])->name('admin.latihan.show');
         Route::get('latihans/edit/{id}', [AdminLatihanController::class, 'edit'])->name('admin.latihan.edit');
         Route::put('latihans/{id}', [AdminLatihanController::class, 'update'])->name('admin.latihan.update');

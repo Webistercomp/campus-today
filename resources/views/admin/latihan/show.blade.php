@@ -41,32 +41,32 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Material Type</th>
-                <td>{{$latihan->materialType->name}}</td>
+                <th>Tipe Materi</th>
+                <td>{{$latihan->chapter->material->materialType->name}}</td>
             </tr>
             <tr>
-                <th>Group</th>
-                <td>{{$latihan->group->name}}</td>
+                <th>Materi</th>
+                <td>{{$latihan->chapter->material->title}}</td>
             </tr>
             <tr>
-                <th>Roles</th>
-                <td>{{$latihan->roles}}</td>
+                <th>Bab</th>
+                <td>{{$latihan->chapter->judul}}</td>
             </tr>
             <tr>
-                <th>Code</th>
-                <td>{{$latihan->code}}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>Judul Latihan</th>
                 <td>{{$latihan->name}}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Deskripsi Latihan</th>
                 <td>{{$latihan->description}}</td>
             </tr>
             <tr>
+                <th>Jumlah Soal</th>
+                <td>{{$latihan->jumlah_soal}}</td>
+            </tr>
+            <tr>
                 <th>Active</th>
-                <td>{{$latihan->active ? 'Yes' : 'No'}}</td>
+                <td>{{$latihan->active ? 'Ya' : 'Tidak'}}</td>
             </tr>
             <tr>
                 <th>Created At</th>

@@ -12,4 +12,8 @@ class Chapter extends Model
     function material() {
         return $this->belongsTo(Material::class);
     }
+
+    function latihans() {
+        return $this->hasMany(Latihan::class);
+    }
 }
