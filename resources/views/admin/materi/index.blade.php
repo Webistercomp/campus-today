@@ -6,6 +6,9 @@
 
 @section('content')
 <div class="container">
+    <div>
+        <a href={{route('admin.materi.create')}} class="btn btn-warning mb-3">Create New</a>
+    </div>
     <table class="table table-striped">
     <thead>
         <th>Id</th>
@@ -26,8 +29,8 @@
             <td>{{$materi->title}}</td>
             <td>{{$materi->type}}</td>
             <td>
-                <a href={{route('admin.materi.show', $materi->id)}}>
-                    <i class="fa fa-eye text-center" style="font-size:16px;color:blue"></i>
+                <a href={{route('admin.materi.show', $materi->id)}} class="badge bg-primary">
+                    <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>
         </tr>

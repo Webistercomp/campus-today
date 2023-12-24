@@ -6,13 +6,15 @@
 
 @section('content')
 <div class="container">
+    <div>
+        <a href={{route('admin.latihan.create')}} class="btn btn-warning mb-3">Create New</a>
+    </div>
     <table class="table table-striped">
     <thead>
         <th>Id</th>
-        <th>Material Type</th>
-        <th>Group</th>
-        <th>Role</th>
-        <th>Name</th>
+        <th>Materi</th>
+        <th>Chapter</th>
+        <th>Judul Latihan</th>
         <th>Questions</th>
         <th>Detail</th>
     </thead>
@@ -20,9 +22,8 @@
         @foreach ($latihans as $latihan)
         <tr>
             <td>{{$latihan->id}}</td>
-            <td>{{$latihan->materialType->name}}</td>
-            <td>{{$latihan->group->name}}</td>
-            <td>{{$latihan->roles}}</td>
+            <td>{{$latihan->chapter->material->title}}</td>
+            <td>{{$latihan->chapter->judul}}</td>
             <td>{{$latihan->name}}</td>
             <td>{{$latihan->jumlah_soal}}</td>
             <td>

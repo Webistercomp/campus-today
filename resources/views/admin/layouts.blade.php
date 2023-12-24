@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title')</title>
+  @yield('head')
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -27,6 +28,7 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.css') }}">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>  {{-- jquery --}}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -160,14 +162,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href={{route('admin.packet.index')}} @if($menu == 'packet')
+            <a href={{route('admin.materi.index')}} @if($menu == 'materi')
             class="nav-link active"
           @else
             class="nav-link"
           @endif>
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-chart-pie"></i>
               <p>
-                Packets
+                Materials
               </p>
             </a>
           </li>
@@ -208,6 +210,18 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href={{route('admin.packet.index')}} @if($menu == 'packet')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Packets
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href={{route('admin.article.index')}} @if($menu == 'article')
             class="nav-link active"
           @else
@@ -220,14 +234,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href={{route('admin.materi.index')}} @if($menu == 'materi')
+            <a href={{route('admin.minatbakat.index')}} @if($menu == 'minatbakat')
             class="nav-link active"
           @else
             class="nav-link"
           @endif>
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
-                Materials
+                Tes Minat Bakat
               </p>
             </a>
           </li>

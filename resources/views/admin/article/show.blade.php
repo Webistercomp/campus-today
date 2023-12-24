@@ -1,7 +1,7 @@
 @extends('admin.layouts')
 
 @section('title')
-    Show Article | Campus Today
+    Artikel | Campus Today
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
     <div class="card p-3">
     <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-            <h5>Detail Article</h5>
+            <h5>Detail Artikel</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
             <a href="{{route('admin.article.index')}}" class="btn btn-secondary">Back</a>
@@ -41,24 +41,26 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Title</th>
+                <th>Judul</th>
                 <td>{{$article->title}}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Deskripsi</th>
                 <td>{{$article->description}}</td>
             </tr>
             <tr>
-                <th>Body</th>
-                <td>{{$article->body}}</td>
+                <th>Gambar (Cover)</th>
+                <td>
+                    <img src={{asset('storage/images/article/' . $article->image)}} alt="" width="200px" height="auto" class="rounded"> 
+                </td>
             </tr>
             <tr>
-                <th>Image</th>
-                <td>{{$article->image}}</td>
+                <th>Isi Artikel</th>
+                <td>{!!$article->body!!}</td>
             </tr>
             <tr>
-                <th>Active</th>
-                <td>{{$article->active}}</td>
+                <th>Aktif</th>
+                <td>{{$article->active ? 'Yes' : 'No'}}</td>
             </tr>
         </tbody>
     </table>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\EventTryoutController as AdminEventTryoutController;
 use App\Http\Controllers\Admin\LatihanController as AdminLatihanController;
 use App\Http\Controllers\Admin\MateriController;
+use App\Http\Controllers\Admin\MinatBakatController as AdminMinatBakatController;
 use App\Http\Controllers\Admin\PacketController as AdminPacketController;
 use App\Http\Controllers\Admin\TryoutController as AdminTryoutController;
 use App\Http\Controllers\Admin\UserController;
@@ -145,6 +146,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
 
         Route::get('latihans', [AdminLatihanController::class, 'index'])->name('admin.latihan.index');
+        Route::get('latihans/create', [AdminLatihanController::class, 'create'])->name('admin.latihan.create');
+        Route::post('latihans/store', [AdminLatihanController::class, 'store'])->name('admin.latihan.store');
         Route::get('latihans/{id}', [AdminLatihanController::class, 'show'])->name('admin.latihan.show');
         Route::get('latihans/edit/{id}', [AdminLatihanController::class, 'edit'])->name('admin.latihan.edit');
         Route::put('latihans/{id}', [AdminLatihanController::class, 'update'])->name('admin.latihan.update');
@@ -157,15 +160,25 @@ Route::prefix('admin')->group(function () {
         Route::delete('event-tryout/{id}', [AdminEventTryoutController::class, 'destroy'])->name('admin.event.delete');
 
         Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
+        Route::get('materi/create', [MateriController::class, 'create'])->name('admin.materi.create');
+        Route::post('materi/store', [MateriController::class, 'store'])->name('admin.materi.store');
         Route::get('materi/{id}', [MateriController::class, 'show'])->name('admin.materi.show');
         Route::get('materi/edit/{id}', [MateriController::class, 'edit'])->name('admin.materi.edit');
         Route::put('materi/{id}', [MateriController::class, 'update'])->name('admin.materi.update');
         Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
 
         Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
+        Route::get('article/create', [AdminArticleController::class, 'create'])->name('admin.article.create');
+        Route::post('article', [AdminArticleController::class, 'store'])->name('admin.article.store');
         Route::get('article/{id}', [AdminArticleController::class, 'show'])->name('admin.article.show');
         Route::get('article/edit/{id}', [AdminArticleController::class, 'edit'])->name('admin.article.edit');
         Route::put('article/{id}', [AdminArticleController::class, 'update'])->name('admin.article.update');
         Route::delete('article/{id}', [AdminArticleController::class, 'destroy'])->name('admin.article.delete');
+
+        Route::get('minatbakat', [AdminMinatBakatController::class, 'index'])->name('admin.minatbakat.index');
+        Route::get('minatbakat/{id}', [AdminMinatBakatController::class, 'show'])->name('admin.minatbakat.show');
+        Route::get('minatbakat/edit/{id}', [AdminMinatBakatController::class, 'edit'])->name('admin.minatbakat.edit');
+        Route::put('minatbakat/{id}', [AdminMinatBakatController::class, 'update'])->name('admin.minatbakat.update');
+        Route::delete('minatbakat/{id}', [AdminMinatBakatController::class, 'destroy'])->name('admin.minatbakat.delete');
     });
 });

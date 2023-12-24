@@ -6,12 +6,15 @@
 
 @section('content')
 <div class="container">
+    <div class="mb-3">
+        <a href={{route('admin.article.create')}} class="btn btn-warning">Buat Baru</a>
+    </div>
     <table class="table table-striped">
     <thead>
         <th>Id</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Active</th>
+        <th>Judul</th>
+        <th>Deskripsi</th>
+        <th>Aktif</th>
         <th>Detail</th>
     </thead>
     <tbody>

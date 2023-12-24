@@ -18,6 +18,37 @@ class ArticleController extends Controller
         $menu = explode('.', $menu)[1];
         return view('admin.article.index', compact('articles', 'user', 'menu'));
     }
+
+    function create() {
+        $user = Auth::user();
+        $menu = Route::getCurrentRoute()->getName();
+        $menu = explode('.', $menu)[1];
+        return view('admin.article.create', compact('user', 'menu'));
+    }
+
+    function store(Request $request) {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+        $newArticle = new Article();
+        $newArticle->title = $request->title;
+        $newArticle->body = $request->body;
+        $newArticle->description = $request->description;
+        if($request->hasFile('image')) {
+            $time = time();
+            $ext = $request->image->extension();
+            $request->file('image')->storeAs('public/images/article', $time.'.'.$ext);
+            $newArticle->image = $time.'.'.$ext;
+        }
+        if($request->has('active')) {
+            $newArticle->active = 1;
+        } else {
+            $newArticle->active = 0;
+        }
+        $newArticle->save();
+        return redirect()->route('admin.article.index');
+    }
     
     function show($id) {
         $article = Article::find($id);
@@ -36,19 +67,33 @@ class ArticleController extends Controller
     }
 
     function update(Request $request, $id) {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
         $article = Article::find($id);
-        
+        $article->title = $request->title;
+        $article->body = $request->body;
+        $article->description = $request->description;
         if($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/article');
-            Storage::delete('images/article/'.$article->image);
-            $article->image = $path;
+            $time = time();
+            $ext = $request->image->extension();
+            $request->file('image')->storeAs('public/images/article', $time.'.'.$ext);
+            Storage::delete('public/images/article/'.$article->image);
+            $article->image = $time.'.'.$ext;
+        }
+        if($request->has('active')) {
+            $article->active = 1;
+        } else {
+            $article->active = 0;
         }
         $article->save();
-        return redirect()->route('admin.article.index');
+        return redirect()->route('admin.article.show', $id);
     }
 
-    function delete($id) {
+    function destroy($id) {
         $article = Article::find($id);
+        Storage::delete('public/images/article/'.$article->image);
         $article->delete();
         return redirect()->route('admin.article.index');
     }

@@ -9,16 +9,15 @@
     <div class="card p-3">
     <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-            <h5>Detail Material</h5>
+            <h5>Create New Material</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.materi.show', $material->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.materi.index')}}" class="btn btn-secondary">Back</a>
         </div>
     </div>
     <table class="table table-striped">
-        <form action="{{route('admin.materi.update', $material->id)}}" method="post">
+        <form action="{{route('admin.materi.store')}}" method="post" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <table>
                 <tbody>
                     <tr class="row">
@@ -26,7 +25,7 @@
                         <td class="col-8">
                             <select class="custom-select" name="material_type_id" id="material_type_id">
                                 @foreach ($materialTypes as $materialType)
-                                    <option value="{{$materialType->id}}" @if ($materialType->id == $material->material_type_id) selected @endif>{{$materialType->name}}</option>
+                                    <option value="{{$materialType->id}}">{{$materialType->name}}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -36,7 +35,7 @@
                         <td class="col-8">
                             <select class="custom-select" name="group_id" id="group_id">
                                 @foreach ($groups as $group)
-                                    <option value="{{$group->id}}" @if ($group->id == $material->group_id) selected @endif>{{$group->name}}</option>
+                                    <option value="{{$group->id}}">{{$group->name}}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -44,36 +43,36 @@
                     <tr class="row">
                         <th class="col-4">Role</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="roles" name="roles" placeholder="Contoh: 1,2,3 atau 3,5,6" value={{$material->roles}}>
+                            <input type="text" class="form-control" id="roles" name="roles" placeholder="Contoh: 1,2,3 atau 3,5,6">
                             <label for="roles" style="font-weight: 400!important; font-size: 12px!important;">Daftar role : @foreach ($roles as $role)
                                 {{$loop->iteration . ') ' . $role->name . ', '}}  
                             @endforeach . Pisahkan dengan koma, contoh : 1,2,3 atau 3,5,6.</label>
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Code</th>
+                        <th class="col-4">Title</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="code" name="code" value="{{$material->code}}">
+                            <input type="text" class="form-control" id="title" name="title">
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Title</th>
+                        <th class="col-4">Code</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="title" name="title" value="{{$material->title}}">
+                            <input type="text" class="form-control" id="code" name="code">
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Description</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="description" name="description" value="{{$material->description}}">
+                            <textarea type="text" class="form-control" id="description" name="description"></textarea>
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Type</th>
                         <td class="col-8">
                             <select class="custom-select" name="type" id="type">
-                                <option value="teks" @if ($material->type == 'teks') selected @endif>Teks</option>
-                                <option value="video" @if ($material->type == 'video') selected @endif>Video</option>
+                                <option value="teks">Teks</option>
+                                <option value="video">Video</option>
                             </select>
                         </td>
                     </tr>
