@@ -168,6 +168,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
 
         Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
+        Route::get('article/create', [AdminArticleController::class, 'create'])->name('admin.article.create');
+        Route::post('article', [AdminArticleController::class, 'store'])->name('admin.article.store');
         Route::get('article/{id}', [AdminArticleController::class, 'show'])->name('admin.article.show');
         Route::get('article/edit/{id}', [AdminArticleController::class, 'edit'])->name('admin.article.edit');
         Route::put('article/{id}', [AdminArticleController::class, 'update'])->name('admin.article.update');

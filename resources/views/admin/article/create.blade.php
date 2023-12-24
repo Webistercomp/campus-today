@@ -1,7 +1,7 @@
 @extends('admin.layouts')
 
 @section('title')
-    Edit Article | Campus Today
+    Artikel | Campus Today
 @endsection
 
 @section('head')
@@ -13,43 +13,42 @@
     <div class="card p-3">
     <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-            <h5>Detail Article</h5>
+            <h5>Buat Baru Artikel</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.article.show', $article->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.article.index')}}" class="btn btn-secondary">Back</a>
         </div>
     </div>
     <table class="table table-striped">
-        <form action="{{route('admin.article.update', $article->id)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('admin.article.store')}}" method="post" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <table>
                 <tbody>
                     <tr class="row">
                         <th class="col-4">Judul</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="title" name="title" value="{{$article->title}}">
+                            <input type="text" class="form-control" id="title" name="title">
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Deskripsi</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="description" name="description" value="{{$article->description}}">
+                            <input type="text" class="form-control" id="description" name="description">
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Body</th>
+                        <th class="col-4">Isi Artikel</th>
                         <td class="col-8">
                             <div class="form-floating">
-                                <textarea class="form-control" name="body" id="body" placeholder="Badan Artikel">{{$article->body}}</textarea>
+                                <textarea class="form-control" name="body" id="body" placeholder="Badan Artikel"></textarea>
                             </div>
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Gambar (Cover)</th>
                         <td class="col-8">
-                            <div id="new-image" @if(!$article->image) style="display:none" @endif>
-                                <img src={{ $article->image ? asset('storage/images/article/' . $article->image ) : "#"}} class="rounded" style="width: 200px; height: auto;">
+                            <div id="new-image" style="display: none;">
+                                <img src="" alt="" class="rounded" style="width: 200px; height: auto;">
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="image" name="image">
@@ -61,10 +60,7 @@
                         <th class="col-4">Aktif</th>
                         <td class="col-8">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="active" name="active" @if($article->active == 1) checked @endif>
-                                <label class="form-check-label" for="active">
-                                  Aktif
-                                </label>
+                                <input class="form-check-input" type="checkbox" id="active" name="active">
                             </div>
                         </td>
                     </tr>
