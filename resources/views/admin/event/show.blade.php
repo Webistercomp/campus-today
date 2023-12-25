@@ -1,7 +1,7 @@
 @extends('admin.layouts')
 
 @section('title')
-    Tryouts | Campus Today
+    Event Tryouts | Campus Today
 @endsection
 
 @section('content')
@@ -9,12 +9,12 @@
     <div class="card p-3">
     <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-            <h5>Detail Tryout</h5>
+            <h5>Detail Event Tryout</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.tryout.index')}}" class="btn btn-secondary">Back</a>
-            <a href="{{route('admin.tryout.edit', $tryout->id)}}" class="btn btn-warning">Edit</a>
-            <form class="d-inline-block" action="{{route('admin.tryout.delete', $tryout->id)}}" method="post">
+            <a href="{{route('admin.event.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.event.edit', $tryout->id)}}" class="btn btn-warning">Edit</a>
+            <form class="d-inline-block" action="{{route('admin.event.delete', $tryout->id)}}" method="post">
                 @csrf
                 @method('DELETE')
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">Delete</button>
@@ -41,35 +41,43 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Material Type</th>
+                <th>Tipe Material</th>
                 <td>{{$tryout->materialType->name}}</td>
-            </tr>
-            <tr>
-                <th>Group</th>
-                <td>{{$tryout->group_id}}</td>
             </tr>
             <tr>
                 <th>Roles</th>
                 <td>{{$tryout->roles}}</td>
             </tr>
             <tr>
-                <th>Code</th>
+                <th>Kode</th>
                 <td>{{$tryout->code}}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nama Tryout</th>
                 <td>{{$tryout->name}}</td>
             </tr>
             <tr>
-                <th>Time</th>
+                <th>Waktu</th>
                 <td>{{$tryout->time}}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Deskripsi</th>
                 <td>{{$tryout->description}}</td>
             </tr>
             <tr>
-                <th>Active</th>
+                <th>Tanggal dan Waktu Mulai</th>
+                <td>{{$tryout->start_datetime}}</td>
+            </tr>
+            <tr>
+                <th>Tanggal dan Waktu Selesai</th>
+                <td>{{$tryout->end_datetime}}</td>
+            </tr>
+            <tr>
+                <th>Jumlah Pertanyaan</th>
+                <td>{{$tryout->jumlah_question}}</td>
+            </tr>
+            <tr>
+                <th>Aktif</th>
                 <td>{{$tryout->active ? 'Yes' : 'No'}}</td>
             </tr>
             <tr>

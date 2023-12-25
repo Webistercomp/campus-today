@@ -35,7 +35,10 @@ class TryoutSeeder extends Seeder
             'name' => 'Event Tryout ' . ($j + 1),
             'time' => 100,
             'description' => 'Event Tryout ' . ($j + 1),
+            'roles' => '[1]',
             'is_event' => true,
+            'start_datetime' => '2021-09-28 00:00:00',
+            'end_datetime' => '2021-09-28 23:59:59',
             'active' => 1,
         ]);
     }
