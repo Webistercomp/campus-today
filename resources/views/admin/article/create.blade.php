@@ -52,7 +52,7 @@
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="image" name="image">
-                                <label class="custom-file-label" for="customFile">Pilih gambar</label>
+                                <label class="custom-file-label" for="image">Pilih gambar</label>
                             </div>
                         </td>
                     </tr>
