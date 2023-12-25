@@ -15,6 +15,9 @@ class EventTryoutController extends Controller
 {
     function index() {
         $tryouts = Tryout::where('is_event', 1)->get();
+        foreach($tryouts as $tryout) {
+            $tryout->roles = implode(',', json_decode($tryout->roles));
+        }
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
@@ -23,9 +26,51 @@ class EventTryoutController extends Controller
         }
         return view('admin.event.index', compact('tryouts', 'user', 'menu'));
     }
+
+    function create() {
+        $materialTypes = MaterialType::all();
+        $groups = GroupType::all();
+        $user = Auth::user();
+        $menu = Route::getCurrentRoute()->getName();
+        $menu = explode('.', $menu)[1];
+        $roles = Role::all();
+        return view('admin.event.create', compact('user', 'menu', 'roles', 'materialTypes', 'groups'));
+    }
+
+    function store(Request $request) {
+        $request->validate([
+            'material_type_id' => 'required',
+            'roles' => 'required', 
+            'name' => 'required',
+            'code' => 'required',
+            'description' => 'required',
+            'start_datetime' => 'required',
+            'end_datetime' => 'required',
+            'time' => 'required',
+        ]);
+        $newTryout = new Tryout();
+        $newTryout->material_type_id = $request->material_type_id;
+        $newTryout->roles = json_encode(explode(',', $request->roles));
+        $newTryout->name = $request->name;
+        $newTryout->code = $request->code;
+        $newTryout->description = $request->description;
+        $newTryout->time = $request->time;
+        $newTryout->start_datetime = $request->start_datetime;
+        $newTryout->end_datetime = $request->end_datetime;
+        $newTryout->is_event = 1;
+        if($request->has('active')) {
+            $newTryout->active = 1;
+        } else {
+            $newTryout->active = 0;
+        }
+        $newTryout->save();
+        return redirect()->route('admin.event.index');
+    }
     
     function show($id) {
         $tryout = Tryout::find($id);
+        $tryout->roles = implode(',', json_decode($tryout->roles));
+        $tryout->jumlah_question = $tryout->questions()->count();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
@@ -34,6 +79,7 @@ class EventTryoutController extends Controller
     
     function edit($id) {
         $tryout = Tryout::find($id);
+        $tryout->roles = implode(',', json_decode($tryout->roles));
         $materialTypes = MaterialType::all();
         $groups = GroupType::all();
         $user = Auth::user();
@@ -44,9 +90,32 @@ class EventTryoutController extends Controller
     }
 
     function update(Request $request, $id) {
+        $request->validate([
+            'material_type_id' => 'required',
+            'roles' => 'required', 
+            'name' => 'required',
+            'code' => 'required',
+            'description' => 'required',
+            'start_datetime' => 'required',
+            'end_datetime' => 'required',
+            'time' => 'required',
+        ]);
         $tryout = Tryout::find($id);
-        
-        $tryout->update($request->all());
+        $tryout->material_type_id = $request->material_type_id;
+        $tryout->roles = json_encode(explode(',', $request->roles));
+        $tryout->name = $request->name;
+        $tryout->code = $request->code;
+        $tryout->description = $request->description;
+        $tryout->time = $request->time;
+        $tryout->start_datetime = $request->start_datetime;
+        $tryout->end_datetime = $request->end_datetime;
+        $tryout->is_event = 1;
+        if($request->has('active')) {
+            $tryout->active = 1;
+        } else {
+            $tryout->active = 0;
+        }
+        $tryout->save();
         return redirect()->route('admin.event.index');
     }
 
