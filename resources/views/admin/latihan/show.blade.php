@@ -1,7 +1,7 @@
 @extends('admin.layouts')
 
 @section('title')
-    Latihan Show | Campus Today
+    Latihan | Campus Today
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
             <h5>Detail Latihan</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.latihan.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.latihan.index')}}" class="btn btn-secondary">Kembali</a>
             <a href="{{route('admin.latihan.edit', $latihan->id)}}" class="btn btn-warning">Edit</a>
             <form class="d-inline-block" action="{{route('admin.latihan.delete', $latihan->id)}}" method="post">
                 @csrf
@@ -65,15 +65,15 @@
                 <td>{{$latihan->jumlah_soal}}</td>
             </tr>
             <tr>
-                <th>Active</th>
+                <th>Aktif</th>
                 <td>{{$latihan->active ? 'Ya' : 'Tidak'}}</td>
             </tr>
             <tr>
-                <th>Created At</th>
+                <th>Tanggal dibuat</th>
                 <td>{{$latihan->created_at}}</td>
             </tr>
             <tr>
-                <th>Updated At</th>
+                <th>Tanggal diupdate</th>
                 <td>{{$latihan->updated_at}}</td>
             </tr>
         </tbody>

@@ -1,7 +1,7 @@
 @extends('admin.layouts')
 
 @section('title')
-    Material Show | Campus Today
+    Materi | Campus Today
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
             <h5>Detail Materi</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.materi.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.materi.index')}}" class="btn btn-secondary">Kembali</a>
             <a href="{{route('admin.materi.edit', $material->id)}}" class="btn btn-warning">Edit</a>
             <form class="d-inline-block" action="{{route('admin.materi.delete', $material->id)}}" method="post">
                 @csrf
@@ -41,7 +41,7 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Material Type</th>
+                <th>Tipe Materi</th>
                 <td>{{$material->materialType->name}}</td>
             </tr>
             <tr>
@@ -53,31 +53,31 @@
                 <td>{{$material->roles}}</td>
             </tr>
             <tr>
-                <th>Code</th>
+                <th>Kode</th>
                 <td>{{$material->code}}</td>
             </tr>
             <tr>
-                <th>Title</th>
+                <th>Judul</th>
                 <td>{{$material->title}}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Deskripsi</th>
                 <td>{{$material->description}}</td>
             </tr>
             <tr>
-                <th>Type</th>
+                <th>Tipe</th>
                 <td>{{$material->type}}</td>
             </tr>
             <tr>
-                <th>Total Chapter</th>
+                <th>Total Bab</th>
                 <td>{{$material->totalChapter}}</td>
             </tr>
             <tr>
-                <th>Created At</th>
+                <th>Tanggal dibuat</th>
                 <td>{{$material->created_at}}</td>
             </tr>
             <tr>
-                <th>Updated At</th>
+                <th>Tanggal diupdate</th>
                 <td>{{$material->updated_at}}</td>
             </tr>
         </tbody>

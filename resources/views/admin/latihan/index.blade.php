@@ -1,21 +1,22 @@
 @extends('admin.layouts')
 
 @section('title')
-    Latihan Index | Campus Today
+    Latihan | Campus Today
 @endsection
 
 @section('content')
 <div class="container">
     <div>
-        <a href={{route('admin.latihan.create')}} class="btn btn-warning mb-3">Create New</a>
+        <a href={{route('admin.latihan.create')}} class="btn btn-warning mb-3">Buat baru</a>
     </div>
     <table class="table table-striped">
     <thead>
         <th>Id</th>
         <th>Materi</th>
-        <th>Chapter</th>
+        <th>Bab</th>
         <th>Judul Latihan</th>
-        <th>Questions</th>
+        <th>Jumlah Pertanyaan</th>
+        <th>Aktif</th>
         <th>Detail</th>
     </thead>
     <tbody>
@@ -27,8 +28,15 @@
             <td>{{$latihan->name}}</td>
             <td>{{$latihan->jumlah_soal}}</td>
             <td>
-                <a href={{route('admin.latihan.show', $latihan->id)}}>
-                    <i class="fa fa-eye text-center" style="font-size:16px;color:blue"></i>
+                @if ($latihan->active == 1)
+                    <span class="badge badge-success">V</span>
+                @else
+                    <span class="badge badge-danger">X</span>
+                @endif
+            </td>
+            <td>
+                <a href={{route('admin.latihan.show', $latihan->id)}} class="badge bg-primary">
+                    <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>
         </tr>

@@ -16,7 +16,7 @@
             <h5>Detail Article</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.article.show', $article->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.article.show', $article->id)}}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     <table class="table table-striped">
@@ -48,8 +48,8 @@
                     <tr class="row">
                         <th class="col-4">Gambar (Cover)</th>
                         <td class="col-8">
-                            <div id="new-image" @if(!$article->image) style="display:none" @endif>
-                                <img src={{ $article->image ? asset('storage/images/article/' . $article->image ) : "#"}} class="rounded" style="width: 200px; height: auto;">
+                            <div id="new-image">
+                                <img src={{ $article->image ? asset('storage/images/article/' . $article->image ) : asset('static/default-image-article.jpg')}} class="rounded" style="width: 200px; height: auto;">
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="image" name="image">

@@ -15,6 +15,13 @@ class TryoutController extends Controller
 {
     function index() {
         $tryouts = Tryout::where('is_event', 0)->get();
+        foreach($tryouts as $tryout) {
+            $roles = '';
+            foreach(json_decode($tryout->roles) as $role) {
+                $roles .= Role::find($role)->name . ', ';
+            }
+            $tryout->roles = substr($roles, 0, -2);
+        }
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
@@ -58,6 +65,11 @@ class TryoutController extends Controller
     
     function show($id) {
         $tryout = Tryout::find($id);
+        $roles = '';
+        foreach(json_decode($tryout->roles) as $role) {
+            $roles .= Role::find($role)->name . ', ';
+        }
+        $tryout->roles = substr($roles, 0, -2);
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
@@ -66,13 +78,13 @@ class TryoutController extends Controller
     
     function edit($id) {
         $tryout = Tryout::find($id);
+        $tryout->roles = implode(',', json_decode($tryout->roles));
         $materialTypes = MaterialType::all();
-        $groups = GroupType::all();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
         $roles = Role::all();
-        return view('admin.tryout.edit', compact('tryout', 'user', 'menu', 'roles', 'materialTypes', 'groups'));
+        return view('admin.tryout.edit', compact('tryout', 'user', 'menu', 'roles', 'materialTypes'));
     }
 
     function update(Request $request, $id) {

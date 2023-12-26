@@ -12,7 +12,7 @@
             <h5>Detail Packet</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.packet.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.packet.index')}}" class="btn btn-secondary">Kembali</a>
             <a href="{{route('admin.packet.edit', $packet->id)}}" class="btn btn-warning">Edit</a>
             <form class="d-inline-block" action="{{route('admin.packet.delete', $packet->id)}}" method="post">
                 @csrf
@@ -41,7 +41,7 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Name</th>
+                <th>Nama</th>
                 <td>{{$packet->name}}</td>
             </tr>
             <tr>
@@ -49,19 +49,19 @@
                 <td>{{$packet->role->name}}</td>
             </tr>
             <tr>
-                <th>Price Not Discount</th>
+                <th>Harga sebelum diskon</th>
                 <td>{{$packet->price_not_discount}}</td>
             </tr>
             <tr>
-                <th>Price Discount</th>
+                <th>Harga setelah diskon</th>
                 <td>{{$packet->price_discount ?? '-'}}</td>
             </tr>
             <tr>
-                <th>Discount</th>
+                <th>Diskon</th>
                 <td>{{$packet->discount ?? '-'}}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Deskripsi</th>
                 <td>{{$packet->description}}</td>
             </tr>
             <tr>
@@ -75,23 +75,17 @@
                 </td>
             </tr>
             <tr>
-                <th>Benefits Y</th>
+                <th>Benefits V</th>
                 <td>
                     <ul>
-                        @foreach ($packet->benefits_y as $benefit)
+                        @foreach ($packet->benefits_v as $benefit)
                             <li>{{$benefit}}</li>
                         @endforeach
                     </ul>
                 </td>
             </tr>
             <tr>
-                <th>Icon</th>
-                <td>
-                    <img src="{{asset('storage/packet/icon/'.$packet->icon)}}" alt="" width="200px" class="mb-3">
-                </td>
-            </tr>
-            <tr>
-                <th>Type</th>
+                <th>Tipe paket</th>
                 <td>{{$packet->type}}</td>
             </tr>
         </tbody>

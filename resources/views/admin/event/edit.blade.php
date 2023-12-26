@@ -12,7 +12,7 @@
             <h5>Detail event tryout</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.event.show', $tryout->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.event.show', $tryout->id)}}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     <table class="table table-striped">
@@ -22,7 +22,7 @@
             <table>
                 <tbody>
                     <tr class="row">
-                        <th class="col-4">Tipe Material</th>
+                        <th class="col-4">Tipe Materi</th>
                         <td class="col-8">
                             <select class="custom-select" name="material_type_id" id="material_type_id">
                                 <option value="" selected></option>

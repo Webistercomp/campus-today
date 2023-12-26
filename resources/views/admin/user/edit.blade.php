@@ -12,7 +12,7 @@
             <h5>Detail User</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.user.show', $selectedUser->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.user.show', $selectedUser->id)}}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     <table class="table table-striped">

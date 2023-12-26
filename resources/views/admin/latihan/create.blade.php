@@ -1,4 +1,4 @@
- @extends('admin.layouts')
+@extends('admin.layouts')
 
 @section('title')
     Latihan | Campus Today
@@ -9,10 +9,10 @@
     <div class="card p-3">
     <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-            <h5>Create New Latihan</h5>
+            <h5>Buat latihan baru</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.latihan.create')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.latihan.index')}}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     <table class="table table-striped">
@@ -21,7 +21,7 @@
             <table>
                 <tbody>
                     <tr class="row">
-                        <th class="col-4">Material Type</th>
+                        <th class="col-4">Tipe Materi</th>
                         <td class="col-8">
                             <select class="custom-select" name="material_type_id" id="material_type_id">
                                 @foreach ($materialTypes as $materialType)
@@ -31,7 +31,7 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Material</th>
+                        <th class="col-4">Materi</th>
                         <td class="col-8">
                             <select class="custom-select" name="material_id" id='material_id' disabled="disabled">
                                 <option value="" class="material-option-0"></option>
@@ -42,7 +42,7 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Chapter</th>
+                        <th class="col-4">Bab</th>
                         <td class="col-8">
                             <select class="custom-select" name="chapter_id" id="chapter_id" disabled="disabled">
                                 <option value="" class="chapter-option-0"></option>
@@ -56,19 +56,19 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Name</th>
+                        <th class="col-4">Nama</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="name" name="name">
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Description</th>
+                        <th class="col-4">Deskripsi</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="description" name="description">
+                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Deskripsi"></textarea>
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Active</th>
+                        <th class="col-4">Aktif</th>
                         <td class="col-8">
                             <input type="checkbox" name="active" checked>
                         </td>

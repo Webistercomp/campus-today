@@ -16,7 +16,7 @@
             <h5>Buat Baru Artikel</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.article.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.article.index')}}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     <table class="table table-striped">

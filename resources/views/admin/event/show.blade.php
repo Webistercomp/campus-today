@@ -12,7 +12,7 @@
             <h5>Detail Event Tryout</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.event.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.event.index')}}" class="btn btn-secondary">Kembali</a>
             <a href="{{route('admin.event.edit', $tryout->id)}}" class="btn btn-warning">Edit</a>
             <form class="d-inline-block" action="{{route('admin.event.delete', $tryout->id)}}" method="post">
                 @csrf
@@ -41,7 +41,7 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Tipe Material</th>
+                <th>Tipe Materi</th>
                 <td>{{$tryout->materialType->name}}</td>
             </tr>
             <tr>
@@ -78,14 +78,14 @@
             </tr>
             <tr>
                 <th>Aktif</th>
-                <td>{{$tryout->active ? 'Yes' : 'No'}}</td>
+                <td>{{$tryout->active ? 'Ya' : 'Tidak'}}</td>
             </tr>
             <tr>
-                <th>Created At</th>
+                <th>Tanggal dibuat</th>
                 <td>{{$tryout->created_at}}</td>
             </tr>
             <tr>
-                <th>Updated At</th>
+                <th>Tanggal diupdate</th>
                 <td>{{$tryout->updated_at}}</td>
             </tr>
         </tbody>

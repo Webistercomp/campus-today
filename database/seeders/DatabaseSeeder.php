@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
             AnswerSeeder::class,
             MaterialSeeder::class,
-            VideoSeeder::class,
             ChapterSeeder::class,
             ScheduleBimbelSeeder::class,
             ParticipantSeeder::class,

@@ -38,10 +38,10 @@ class PacketController extends Controller
         $packet->description = $request->description;
         $packet->type = $request->type;
 
-        if($request->has('benefits_x') && $request->has('benefits_y')) {
+        if($request->has('benefits_x') && $request->has('benefits_v')) {
             $benefits = ['x' => [], 'y' => []];
             $benefits['x'] = explode(',', $request->benefits_x);
-            $benefits['y'] = explode(',', $request->benefits_y);
+            $benefits['y'] = explode(',', $request->benefits_v);
             $packet->benefits = json_encode($benefits);
         }
 
@@ -59,7 +59,7 @@ class PacketController extends Controller
     function show($id) {
         $packet = Packet::find($id);
         $packet->benefits_x = json_decode($packet->benefits)->x;
-        $packet->benefits_y = json_decode($packet->benefits)->y;
+        $packet->benefits_v = json_decode($packet->benefits)->v;
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
@@ -69,7 +69,7 @@ class PacketController extends Controller
     function edit($id) {
         $packet = Packet::find($id);
         $packet->benefits_x = join(',', json_decode($packet->benefits)->x);
-        $packet->benefits_y = join(',', json_decode($packet->benefits)->y);
+        $packet->benefits_v = join(',', json_decode($packet->benefits)->v);
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
@@ -87,10 +87,10 @@ class PacketController extends Controller
         $packet->description = $request->description;
         $packet->type = $request->type;
 
-        if($request->has('benefits_x') && $request->has('benefits_y')) {
+        if($request->has('benefits_x') && $request->has('benefits_v')) {
             $benefits = ['x' => [], 'y' => []];
             $benefits['x'] = explode(',', $request->benefits_x);
-            $benefits['y'] = explode(',', $request->benefits_y);
+            $benefits['y'] = explode(',', $request->benefits_v);
             $packet->benefits = json_encode($benefits);
         }
 

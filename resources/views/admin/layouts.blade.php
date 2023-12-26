@@ -81,7 +81,7 @@
       <li class="nav-item dropdown">
         <form action="{{ route('admin.logout') }}" method="POST">
           @csrf
-          <button type="submit" class="nav-link" style="display:inline-block">
+          <button type="submit" class="nav-link rounded" style="display:inline-block; border: none;">
             Logout
           </button>
         </form>

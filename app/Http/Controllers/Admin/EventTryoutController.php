@@ -16,7 +16,11 @@ class EventTryoutController extends Controller
     function index() {
         $tryouts = Tryout::where('is_event', 1)->get();
         foreach($tryouts as $tryout) {
-            $tryout->roles = implode(',', json_decode($tryout->roles));
+            $roles = '';
+            foreach(json_decode($tryout->roles) as $role) {
+                $roles .= Role::find($role)->name . ', ';
+            }
+            $tryout->roles = substr($roles, 0, -2);
         }
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();

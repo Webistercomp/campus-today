@@ -135,7 +135,6 @@ class PacketSeeder extends Seeder
             'discount' => null,
             'description' => 'Paket Gratis',
             'benefits' => json_encode($benefit1),
-            'icon' => null,
             'type' => 'mandiri'
         ]);
         Packet::create([
@@ -146,7 +145,6 @@ class PacketSeeder extends Seeder
             'discount' => 33,
             'description' => 'Paket Friendly',
             'benefits' => json_encode($benefit2),
-            'icon' => null,
             'type' => 'mandiri'
         ]);
         Packet::create([
@@ -157,7 +155,6 @@ class PacketSeeder extends Seeder
             'discount' => 33,
             'description' => 'Paket Ambisius',
             'benefits' => json_encode($benefit3),
-            'icon' => null,
             'type' => 'mandiri'
         ]);
         
@@ -169,7 +166,6 @@ class PacketSeeder extends Seeder
             'discount' => 25,
             'description' => 'Paket Premium',
             'benefits' => json_encode($benefit4),
-            'icon' => null,
             'type' => 'bimbel'
         ]);
 
@@ -181,7 +177,6 @@ class PacketSeeder extends Seeder
             'discount' => 14,
             'description' => 'Paket Platinum',
             'benefits' => json_encode($benefit5),
-            'icon' => null,
             'type' => 'bimbel'
         ]);
         
@@ -193,7 +188,6 @@ class PacketSeeder extends Seeder
             'discount' => 12,
             'description' => 'Paket Gold',
             'benefits' => json_encode($benefit6),
-            'icon' => null,
             'type' => 'bimbel'
         ]);
     }

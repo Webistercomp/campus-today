@@ -12,7 +12,7 @@
             <h5>Detail User</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.user.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.user.index')}}" class="btn btn-secondary">Kembali</a>
             <a href="{{route('admin.user.edit', $selectedUser->id)}}" class="btn btn-warning">Edit</a>
             <form class="d-inline-block" action="{{route('admin.user.delete', $selectedUser->id)}}" method="post">
                 @csrf

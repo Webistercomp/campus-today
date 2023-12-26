@@ -1,7 +1,7 @@
 @extends('admin.layouts')
 
 @section('title')
-    Materials | Campus Today
+    Materi | Campus Today
 @endsection
 
 @section('content')
@@ -9,10 +9,10 @@
     <div class="card p-3">
     <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-            <h5>Detail Material</h5>
+            <h5>Detail Materi</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.materi.show', $material->id)}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.materi.show', $material->id)}}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     <table class="table table-striped">
@@ -22,7 +22,7 @@
             <table>
                 <tbody>
                     <tr class="row">
-                        <th class="col-4">Material Type</th>
+                        <th class="col-4">Tipe Materi</th>
                         <td class="col-8">
                             <select class="custom-select" name="material_type_id" id="material_type_id">
                                 @foreach ($materialTypes as $materialType)
@@ -51,25 +51,25 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Code</th>
+                        <th class="col-4">Kode</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="code" name="code" value="{{$material->code}}">
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Title</th>
+                        <th class="col-4">Judul</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="title" name="title" value="{{$material->title}}">
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Description</th>
+                        <th class="col-4">Deskripsi</th>
                         <td class="col-8">
-                            <input type="text" class="form-control" id="description" name="description" value="{{$material->description}}">
+                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Deskripsi">{{$material->description}}</textarea>
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Type</th>
+                        <th class="col-4">Tipe Pembelajaran</th>
                         <td class="col-8">
                             <select class="custom-select" name="type" id="type">
                                 <option value="teks" @if ($material->type == 'teks') selected @endif>Teks</option>

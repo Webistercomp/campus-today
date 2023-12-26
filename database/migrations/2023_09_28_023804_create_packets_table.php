@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('discount')->nullable();
             $table->string('description')->nullable();
             $table->json('benefits')->nullable();
-            $table->string('icon')->nullable();
             $table->enum('type', ['mandiri', 'bimbel'])->nullable();
             $table->timestamps();
         });

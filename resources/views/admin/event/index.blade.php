@@ -12,12 +12,10 @@
     <table class="table table-striped">
     <thead>
         <th>Id</th>
-        <th>Material Type</th>
+        <th>Tipe Materi</th>
         <th>Role</th>
-        <th>Name</th>
-        <th>Time</th>
-        <th>Questions</th>
-        <th>Active</th>
+        <th>Nama</th>
+        <th>Aktif</th>
         <th>Detail</th>
     </thead>
     <tbody>
@@ -27,12 +25,16 @@
             <td>{{$tryout->materialType->name}}</td>
             <td>{{$tryout->roles}}</td>
             <td>{{$tryout->name}}</td>
-            <td>{{$tryout->time}}</td>
-            <td>{{$tryout->jumlah_soal}}</td>
-            <td>{{$tryout->active ? 'Yes' : 'No'}}</td>
             <td>
-                <a href={{route('admin.event.show', $tryout->id)}}>
-                    <i class="fa fa-eye text-center" style="font-size:16px;color:blue"></i>
+                @if ($tryout->active == 1)
+                    <span class="badge badge-success">V</span>
+                @else
+                    <span class="badge badge-danger">X</span>
+                @endif
+            </td>
+            <td>
+                <a href={{route('admin.event.show', $tryout->id)}} class="badge bg-primary">
+                    <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>
         </tr>

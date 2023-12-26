@@ -12,7 +12,7 @@
             <h5>Buat Baru</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.packet.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.packet.index')}}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     <table class="table table-striped">
@@ -63,26 +63,14 @@
                     <tr class="row">
                         <th class="col-4">Benefit</th>
                         <td class="col-8">
-                            <textarea class="form-control" id="benefits_x" name="benefits_x" placeholder="Tryout UM & UTBK, Materi UM & UTBK"></textarea>
+                            <textarea class="form-control" id="benefits_x" name="benefits_x" placeholder="Contoh: Tryout UM & UTBK, Materi UM & UTBK"></textarea>
                             <label for="benefits_x" style="font-weight: 400; font-size:12px;">*Bukan benefit (X), Pisahkan dengan koma.</label>
-                            <textarea class="form-control" id="benefits_v" name="benefits_y" placeholder="Tryout SKD & SKB, Materi SKD & SKB"></textarea>
-                            <label for="benefits_y" style="font-weight: 400; font-size: 12px;">Benefit (V), Pisahkan dengan koma.</label>
+                            <textarea class="form-control" id="benefits_v" name="benefits_v" placeholder="Contoh: Tryout SKD & SKB, Materi SKD & SKB"></textarea>
+                            <label for="benefits_v" style="font-weight: 400; font-size: 12px;">Benefit (V), Pisahkan dengan koma.</label>
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Icon</th>
-                        <td class="col-8">
-                            <div id="new-image" style="display: none;">
-                                <img src="" alt="" class="rounded" style="width: 200px; height: auto;">
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="icon" name="icon">
-                                <label class="custom-file-label" for="icon">Pilih gambar</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-4">Tipe Belajar</th>
+                        <th class="col-4">Tipe paket</th>
                         <td class="col-8">
                             <select class="custom-select" name="type" id="type">
                                 <option value="mandiri">Mandiri</option>

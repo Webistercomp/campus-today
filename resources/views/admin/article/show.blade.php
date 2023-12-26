@@ -12,7 +12,7 @@
             <h5>Detail Artikel</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.article.index')}}" class="btn btn-secondary">Back</a>
+            <a href="{{route('admin.article.index')}}" class="btn btn-secondary">Kembali</a>
             <a href="{{route('admin.article.edit', $article->id)}}" class="btn btn-warning">Edit</a>
             <form class="d-inline-block" action="{{route('admin.article.delete', $article->id)}}" method="post">
                 @csrf
@@ -51,7 +51,11 @@
             <tr>
                 <th>Gambar (Cover)</th>
                 <td>
-                    <img src={{asset('storage/images/article/' . $article->image)}} alt="" width="200px" height="auto" class="rounded"> 
+                    @if($article->image)
+                    <img src={{asset('storage/images/article/' . $article->image)}} alt="" width="200px" height="auto" class="rounded">
+                    @else
+                    <img src={{asset('static/default-image-article.jpg')}} alt="" width="200px" height="auto" class="rounded">
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -60,7 +64,7 @@
             </tr>
             <tr>
                 <th>Aktif</th>
-                <td>{{$article->active ? 'Yes' : 'No'}}</td>
+                <td>{{$article->active ? 'Ya' : 'Tidak'}}</td>
             </tr>
         </tbody>
     </table>

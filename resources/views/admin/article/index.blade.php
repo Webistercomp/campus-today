@@ -25,8 +25,8 @@
             <td>{{$article->description}}</td>
             <td>{{$article->active}}</td>
             <td>
-                <a href={{route('admin.article.show', $article->id)}}>
-                    <i class="fa fa-eye text-center" style="font-size:16px;color:blue"></i>
+                <a href={{route('admin.article.show', $article->id)}} class="badge bg-primary">
+                    <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>
         </tr>

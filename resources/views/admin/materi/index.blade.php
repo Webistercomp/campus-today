@@ -1,22 +1,21 @@
 @extends('admin.layouts')
 
 @section('title')
-    Material | Campus Today
+    Materi | Campus Today
 @endsection
 
 @section('content')
 <div class="container">
     <div>
-        <a href={{route('admin.materi.create')}} class="btn btn-warning mb-3">Create New</a>
+        <a href={{route('admin.materi.create')}} class="btn btn-warning mb-3">Buat baru</a>
     </div>
     <table class="table table-striped">
     <thead>
         <th>Id</th>
-        <th>Material Type</th>
+        <th>Tipe Materi</th>
         <th>Group</th>
-        <th>Code</th>
-        <th>Title</th>
-        <th>Type</th>
+        <th>Judul</th>
+        <th>Tipe Pembelajaran</th>
         <th>Detail</th>
     </thead>
     <tbody>
@@ -24,8 +23,7 @@
         <tr>
             <td>{{$materi->id}}</td>
             <td>{{$materi->materialType->name}}</td>
-            <td>{{$materi->group_id}}</td>
-            <td>{{$materi->code}}</td>
+            <td>{{$materi->groupType->name}}</td>
             <td>{{$materi->title}}</td>
             <td>{{$materi->type}}</td>
             <td>

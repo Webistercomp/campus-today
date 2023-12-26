@@ -7,16 +7,16 @@
 @section('content')
 <div class="container">
     <div>
-        <a href={{route('admin.packet.create')}} class="btn btn-warning mb-3">Create New</a>
+        <a href={{route('admin.packet.create')}} class="btn btn-warning mb-3">Buat baru</a>
     </div>
     <table class="table table-striped">
     <thead>
         <th>Id</th>
         <th>Role</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Discount</th>
-        <th>Type</th>
+        <th>Nama</th>
+        <th>Harga</th>
+        <th>Diskon</th>
+        <th>Tipe</th>
         <th>Detail</th>
     </thead>
     <tbody>
@@ -29,8 +29,8 @@
             <td>{{$packet->discount ?? 0}}%</td>
             <td>{{$packet->type}}</td>
             <td>
-                <a href={{route('admin.packet.show', $packet->id)}}>
-                    <i class="fa fa-eye text-center" style="font-size:16px;color:blue"></i>
+                <a href={{route('admin.packet.show', $packet->id)}} class="badge bg-primary">
+                    <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>
         </tr>
