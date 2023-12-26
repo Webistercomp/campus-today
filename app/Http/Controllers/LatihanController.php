@@ -34,6 +34,7 @@ class LatihanController extends Controller {
             'jumlah_benar' => $data['jumlah_benar'],
             'jumlah_salah' => $data['jumlah_salah'],
             'jumlah_tidak_diisi' => $data['jumlah_tidak_diisi'],
+            'latihan_user_data' => $data['latihan_user_data']
         ]);
     }
 
@@ -66,6 +67,7 @@ class LatihanController extends Controller {
             'jumlah_benar' => $jumlah_benar,
             'jumlah_salah' => $jumlah_salah,
             'jumlah_tidak_diisi' => $jumlah_tidak_diisi,
+            'latihan_user_data' => $request->latihan_data,
         ]);
     }
 }
