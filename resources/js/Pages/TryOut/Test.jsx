@@ -2,19 +2,10 @@ import { useEffect, useState } from "react";
 import Timer from "@/Components/Timer";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import axios from "axios";
 
-export default function Test({
-    auth,
-    title,
-    user,
-    tryout,
-    tryoutHistory,
-    timeLeft,
-    _token,
-    axios_base_url,
-}) {
+export default function Test({ auth, user, tryout, timeLeft }) {
     let no = 1;
     const [tryOutDataStorage, saveTryOutDataStorage] = useLocalStorage(
         `TRY_OUT_DATA_${tryout.id}`,
@@ -74,41 +65,32 @@ export default function Test({
         const finalTryOutData = tryOutData.map((data) => {
             return { question_id: data.id, answer_id: data.jawaban };
         });
-        // const finalData = {
-        //     tryout_id: tryout.id,
-        //     user_id: user.id,
-        //     tryout_data: finalTryOutData,
-        // }
-        // const postData = await axios.post(route("tryout.scoring"), {
-        //     ...finalData
-        // })
-        // console.log(postData);
+        const finalData = {
+            tryout_id: tryout.id,
+            user_id: user.id,
+            tryout_data: finalTryOutData,
+        };
 
-        // const finalData = {
-        //     tryout_id: tryout.id,
-        //     user_id: user.id,
-        //     tryout_data: finalTryOutData,
-        // };
+        axios
+            .post(route("tryout.scoring"), finalData)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
 
-        // const postData = await axios.post(route("tryout.scoring"), {
-        //     ...finalData,
-        // });
-        console.log(finalTryOutData);
+        localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
 
-        // localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
+        setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
 
-        // setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
-
-        // return document.getElementById("close_confirm_ans_btn").click();
-        return (window.location.href = route("tryout.success", tryout.id));
+        return router.get(route("tryout.success", tryout.id));
     };
 
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title={tryout.name} />
+
             <section className="mt-6">
                 <div className="flex w-full items-center justify-between">
                     <h1 className="text-3xl text-curious-blue font-semibold">
-                        {title}
+                        {tryout.name}
                     </h1>
                     <div className="border-2 border-curious-blue-300 px-6 py-1 rounded-lg">
                         <Timer durationSeconds={timeLeft} />
@@ -119,9 +101,9 @@ export default function Test({
                     <div className="min-w-fit grid grid-cols-3 gap-2 h-[calc(100vh_-_200px)] overflow-y-hidden hover:overflow-y-scroll gutter-stable p-2 content-start">
                         {tryOutData.map((q, i) => (
                             <div
-                                className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue-300 rounded-md hover:bg-curious-blue-300 hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
+                                className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue rounded-md hover:bg-curious-blue-300 hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
                                     q.jawaban !== null
-                                        ? "bg-curious-blue-300 text-white hover:text-black"
+                                        ? "bg-curious-blue text-white hover:text-black"
                                         : "bg-white"
                                 } ${
                                     active === i + 1
@@ -136,7 +118,7 @@ export default function Test({
                         ))}
                     </div>
                     <div className="pl-8">
-                        <p className="text-curious-blue-300 font-bold text-3xl mb-4">
+                        <p className="text-curious-blue font-bold text-3xl mb-4">
                             Soal ke-{activeQuestion.no}
                         </p>
                         <p className="text-lg">{activeQuestion.question}</p>
@@ -173,7 +155,7 @@ export default function Test({
                                             }
                                         }}
                                     />
-                                    <li className="border-2 border-curious-blue-300 px-8 py-3 rounded-md hover:bg-curious-blue-300 hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue-300">
+                                    <li className="border-2 border-curious-blue px-8 py-3 rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue">
                                         {choice.answer}
                                     </li>
                                 </label>

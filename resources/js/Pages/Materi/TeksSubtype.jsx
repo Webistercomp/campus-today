@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import ChevronRightIcon from "@/icons/ChevronRightIcon";
 import { Head, Link } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SkdTeksTwk({
     auth,
@@ -12,8 +12,19 @@ export default function SkdTeksTwk({
     chapter,
     nextChapter,
 }) {
-    const chapter_test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem(
+            "ACTIVE_CHAPTER",
+            JSON.stringify({
+                type,
+                materialId: material.id,
+                materialCode: material.code,
+                nextChapterId: nextChapter?.id,
+            })
+        );
+    }, []);
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -85,7 +96,7 @@ export default function SkdTeksTwk({
                                     chap.id === chapter.id && "materi-active"
                                 } capitalize`}
                                 key={i}
-                                href={route("material.type.video.subtype", [
+                                href={route("material.type.teks.subtype", [
                                     type,
                                     material.code,
                                     chap.id,
@@ -103,7 +114,7 @@ export default function SkdTeksTwk({
                             </h6>
                             <p className="isi-materi">{chapter.body}</p>
                         </div>
-                        <Link 
+                        <Link
                             href={route("latihan.test", chapter.id)}
                             className="btn btn-grey text-dark capitalize mt-6 me-3 self-end px-6"
                         >
@@ -131,77 +142,6 @@ export default function SkdTeksTwk({
                     </div>
                 </div>
             </section>
-
-            {/* <section className="mt-4 w-1/5 float-left fixed top-28 pr-8 flex flex-col pb-8 h-[calc(100vh_-_200px)]">
-                <Link href={material.type == 'teks' ? route('material.type.teks', type) : route('material.type.video', type)} className="link-hover">
-                    &laquo; Kembali ke Materi
-                </Link>
-
-                <h1 className="text-3xl text-curious-blue font-semibold mt-4">
-                    {title}
-                </h1>
-
-                <div className="flex flex-col gap-2 mt-6 overflow-y-scroll scrollbar-hide flex-auto">
-                    {chapters.map(
-                        function (chap, i) {
-                            if (chap.id == chapter.id) {
-                                return (
-                                    <a
-                                        className="btn materi materi-active capitalize"
-                                        key={i}
-                                        href={route(
-                                            "material.type.teks.subtype",
-                                            [type, material.code, chap.id]
-                                        )}
-                                    >
-                                        {chap.judul}
-                                    </a>
-                                );
-                            } else {
-                                return (
-                                    <a
-                                        className="btn materi capitalize"
-                                        key={i}
-                                        href={route(
-                                            "material.type.teks.subtype",
-                                            [type, material.code, chap.id]
-                                        )}
-                                    >
-                                        {chap.judul}
-                                    </a>
-                                );
-                            }
-                        }.bind()
-                    )}
-                </div>
-            </section>
-
-            <section className="mt-8 float-right w-4/5 relative pl-10 py-16 flex flex-col">
-                <div>
-                    <h4 className="judul-materi">{chapter.judul}</h4>
-                    <h6 className="subjudul-materi">{chapter.subjudul}</h6>
-                    <p className="isi-materi">{chapter.body}</p>
-                </div>
-                {nextChapter ? (
-                    <Link
-                        href={route("material.type.teks.subtype", [
-                            type,
-                            material.code,
-                            nextChapter.id,
-                        ])}
-                        className="btn btn-primary text-white capitalize mt-6 self-end px-6"
-                    >
-                        Lanjut &raquo;
-                    </Link>
-                ) : (
-                    <Link
-                        href={route("material.complete", material.id)}
-                        className="btn btn-primary text-white capitalize mt-6 self-end px-6"
-                    >
-                        Lanjut &raquo;
-                    </Link>
-                )}
-            </section> */}
         </AuthenticatedLayout>
     );
 }
