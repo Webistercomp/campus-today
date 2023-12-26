@@ -1,6 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import DoneRafiki from "@/images/done-rafiki.png";
+import { useEffect } from "react";
 
 export default function LatihanResult({
     auth,
@@ -9,10 +10,23 @@ export default function LatihanResult({
     jumlah_benar,
     jumlah_salah,
     jumlah_tidak_diisi,
+    latihan_user_data,
 }) {
     const { type, materialId, materialCode, nextChapterId } = JSON.parse(
         localStorage.getItem("ACTIVE_CHAPTER")
     );
+
+    const latihanData = latihan_user_data.map((userSoal) => {
+        const fitleredData = latihan.questions.find(
+            (q) => userSoal.question_id === q.id
+        );
+        return { ...fitleredData, jawaban: userSoal.answer_id };
+    });
+
+    useEffect(() => {
+        const doc = document.querySelector("html");
+        doc.style.scrollPaddingTop = "56px";
+    }, []);
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -46,12 +60,12 @@ export default function LatihanResult({
                     </span>
                 </p>
                 <div className="flex flex-col w-1/4 gap-2 mx-auto">
-                    <Link
-                        href={route("tryout")}
+                    <a
+                        href="#pembahasan"
                         className="btn btn-primary shadow-lg capitalize"
                     >
                         Pembahasan
-                    </Link>
+                    </a>
                     {nextChapterId ? (
                         <Link
                             href={route("material.type.teks.subtype", [
@@ -72,6 +86,63 @@ export default function LatihanResult({
                         </Link>
                     )}
                 </div>
+            </section>
+
+            <section className="pt-14" id="pembahasan">
+                <h1 className="text-curious-blue font-bold text-xl">
+                    Pembahasan
+                </h1>
+                <ol className="list-decimal ml-4 mt-4">
+                    {latihanData.map((soal, i) => (
+                        <li className="mb-8" key={i}>
+                            <p>{soal.question}</p>
+                            <p>
+                                Jawaban anda :{" "}
+                                {
+                                    soal.answers.find(
+                                        (a) => parseInt(soal.jawaban) === a.id
+                                    ).answer
+                                }
+                            </p>
+                            <ol className="list-upper-alpha list-inside grid grid-cols-3 gap-2 my-2 ml-0">
+                                {soal.answers.map((choice) => (
+                                    <label
+                                        htmlFor={`${soal.id}_choices_${choice.id}`}
+                                        key={choice.id}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={`${soal.id}_choices`}
+                                            id={`${soal.id}_choices_${choice.id}`}
+                                            className="peer hidden"
+                                            value={choice.id}
+                                            checked={
+                                                choice.bobot === 1
+                                                    ? true
+                                                    : false
+                                            }
+                                            readOnly
+                                        />
+                                        <li
+                                            className={`border-2 border-curious-blue px-8 py-3 rounded-md transition-all duration-75 peer-checked:text-white peer-checked:bg-emerald-500 peer-checked:border-emerald-500 ${
+                                                parseInt(soal.jawaban) ===
+                                                choice.id
+                                                    ? choice.bobot === 0
+                                                        ? "bg-error border-error text-white"
+                                                        : "bg-white"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {choice.answer}
+                                        </li>
+                                    </label>
+                                ))}
+                            </ol>
+                            <p className="mt-4">Pembahasan : </p>
+                            <p>"INI ADALAH PEMBAHASAN SOAL"</p>
+                        </li>
+                    ))}
+                </ol>
             </section>
         </AuthenticatedLayout>
     );
