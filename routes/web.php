@@ -86,19 +86,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/minat-bakat/tes-koran', function () {
         return Inertia::render('MinatBakat/TesKoran', ['title' => 'Tes Koran']);
     })->name('minatbakat.teskoran');
-    Route::get('/minat-bakat/tes-wartegg', [MinatBakatController::class, 'testWartegg'])->name('minatbakat.teswartegg');
-    Route::get('/minat-bakat/tes-wartegg/hasil', [MinatBakatController::class, 'hasilTestWartegg'])->name('minatbakat.teswartegg.hasil');
-    Route::get('/minat-bakat/tes-analogi-verbal', function () {
-        return Inertia::render('MinatBakat/TesAnalogiVerbal', ['title' => 'Tes Analogi Verbal']);
-    })->name('minatbakat.tesanalogiverbal');
-    Route::get('/minat-bakat/epps', function () {
-        return Inertia::render('MinatBakat/EPPS', ['title' => 'EPPS']);
-    })->name('minatbakat.epps');
-    Route::get('/minat-bakat/tes-matematika', function () {
-        return Inertia::render('MinatBakat/TesMatematika', ['title' => 'Tes Matematika']);
-    })->name('minatbakat.tesmatematika');
 
+    Route::get('/minat-bakat/tes-wartegg', [MinatBakatController::class, 'testWartegg'])->name('minatbakat.teswartegg');
     Route::post('/minat-bakat/tes-wartegg', [MinatBakatController::class, 'storeTestWartegg'])->name('minatbakat.teswartegg.store');
+    Route::get('/minat-bakat/tes-wartegg/hasil', [MinatBakatController::class, 'hasilTestWartegg'])->name('minatbakat.teswartegg.hasil');
+
+    Route::get('/minat-bakat/tes-analogi-verbal', [MinatBakatController::class, 'tav'])->name('minatbakat.tav');
+    Route::post('/minat-bakat/tes-analogi-verbal/scoring', [MinatBakatController::class, 'tavScoring'])->name('minatbakat.tav.scoring');
+    Route::post('/minat-bakat/tes-analogi-verbal/result', [MinatBakatController::class, 'tavResult'])->name('minatbakat.tav.result');
+
+    Route::get('/minat-bakat/epps', [MinatBakatController::class, 'epps'])->name('minatbakat.epps');
+    Route::post('/minat-bakat/epps/scoring', [MinatBakatController::class, 'eppsScoring'])->name('minatbakat.epps.scoring');
+    Route::post('/minat-bakat/epps/result', [MinatBakatController::class, 'eppsResult'])->name('minatbakat.epps.result');
+
+    Route::get('/minat-bakat/tes-matematika', [MinatBakatController::class, 'tesmtk'])->name('minatbakat.tesmtk');
+    Route::post('/minat-bakat/tes-matematika/scoring', [MinatBakatController::class, 'tesmtkScoring'])->name('minatbakat.tesmtk.scoring');
+    Route::post('/minat-bakat/tes-matematika/result', [MinatBakatController::class, 'tesmtkResult'])->name('minatbakat.tesmtk.result');
 });
 
 Route::prefix('materiskd')->group(function () {

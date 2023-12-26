@@ -1,8 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function EPPS({ auth, title }) {
+export default function EPPS({ auth, title, data }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -18,90 +19,18 @@ export default function EPPS({ auth, title }) {
                 </ul>
             </div>
 
-            <StartEPPS title={title} />
+            <StartEPPS title={title} data={data} user={auth.user} />
         </AuthenticatedLayout>
     );
 }
 
-function StartEPPS({ title }) {
+function StartEPPS({ title, data, user }) {
     let no = 1;
-    const [testData, setTestData] = useState([
-        {
-            id: 1,
-            no: 1,
-            jawaban: null,
-            answers: [
-                {
-                    id: 1,
-                    answer: "Saya suka menolong teman-teman saya, bila mereka berada dalam kesulitan.",
-                },
-                {
-                    id: 2,
-                    answer: "Saya ingin melakukan pekerjaan apa saja sebaik mungkin",
-                },
-            ],
-        },
-        {
-            id: 2,
-            no: 2,
-            jawaban: null,
-            answers: [
-                {
-                    id: 3,
-                    answer: "Saya ingin mengetahui bagaimana pandangan orang-orang besar mengenai berbagai masalah yang menarik perhatian saya.",
-                },
-                {
-                    id: 4,
-                    answer: "Saya ingin menjadi seorang ahli yang diakui dalam salah satu pekerjaan atau sedang khusus.",
-                },
-            ],
-        },
-        {
-            id: 3,
-            no: 3,
-            jawaban: null,
-            answers: [
-                {
-                    id: 5,
-                    answer: "Saya ingin agar setiap pekerjaan tulisan saya teliti, rapi, dan tersusun dengan baik.",
-                },
-                {
-                    id: 6,
-                    answer: "Saya ingin menjadi seorang ahli yang diakui dalam salah satu pekerjaan, jabatan atau bidang khusus.",
-                },
-            ],
-        },
-        {
-            id: 4,
-            no: 4,
-            jawaban: null,
-            answers: [
-                {
-                    id: 7,
-                    answer: "Saya suka menceritakan cerita-cerita lucu dan lelucon-lelucon waktu pesta.",
-                },
-                {
-                    id: 8,
-                    answer: "Saya ingin menulis roman atau sandiwara hebat.",
-                },
-            ],
-        },
-        {
-            id: 5,
-            no: 5,
-            jawaban: null,
-            answers: [
-                {
-                    id: 7,
-                    answer: "Saya ingin dapat berbuat sekehendak hati saya.",
-                },
-                {
-                    id: 8,
-                    answer: "Saya ingin bisa mengatakan bahwa saya telah melakukan dengan baik suatu",
-                },
-            ],
-        },
-    ]);
+    const [testData, setTestData] = useState(
+        data.minat_bakat_questions.map((question, i) => {
+            return { ...question, no: i + 1, jawaban: null };
+        })
+    );
     const [active, setActive] = useState(1);
     const [activeQuestion, setActiveQuestion] = useState(
         testData.filter((q) => q.no === active)[0]
@@ -141,25 +70,27 @@ function StartEPPS({ title }) {
     };
 
     const onClickSubmitAnswer = async () => {
-        const finalTryOutData = tryOutData.map((data) => {
+        const finalTestData = testData.map((data) => {
             return { question_id: data.id, answer_id: data.jawaban };
         });
         const finalData = {
-            tryout_id: tryout.id,
+            minatbakat_id: data.id,
             user_id: user.id,
-            tryout_data: finalTryOutData,
+            epps_data: finalTestData,
         };
-        const postData = await axios.post(route("tryout.scoring"), {
-            ...finalData,
+        const postData = await axios.post(route("minatbakat.epps.scoring"), {
+            data: finalData,
         });
-        console.log(postData);
 
-        localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
+        setTestData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
 
-        setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
-
-        // return document.getElementById("close_confirm_ans_btn").click();
-        return router.get(route("tryout.success", tryout.id));
+        return router.post(route("minatbakat.epps.result"), {
+            data: {
+                result: { ...postData.data },
+                user_id: user.id,
+                minatbakat_id: data.id,
+            },
+        });
     };
 
     return (
@@ -197,44 +128,46 @@ function StartEPPS({ title }) {
                                 Soal ke-{activeQuestion.no}
                             </p>
                             <ol className="list-upper-alpha list-inside grid grid-rows-2 gap-4 mt-8 ml-0">
-                                {activeQuestion.answers.map((choice, i) => (
-                                    <label
-                                        htmlFor={`${activeQuestion.no}_choices_${choice.id}`}
-                                        key={choice.id}
-                                    >
-                                        <input
-                                            type="radio"
-                                            name={`${activeQuestion.no}_choices`}
-                                            id={`${activeQuestion.no}_choices_${choice.id}`}
-                                            className="peer hidden"
-                                            value={choice.id}
-                                            onChange={(ev) => {
-                                                onAnswerQuestionHandler(
-                                                    activeQuestion.no,
-                                                    ev.target.value
-                                                );
-                                            }}
-                                            checked={
-                                                parseInt(
-                                                    activeQuestion.jawaban
-                                                ) === choice.id
-                                                    ? true
-                                                    : false
-                                            }
-                                            onClick={(ev) => {
-                                                if (ev.target.checked) {
+                                {activeQuestion.minat_bakat_answer.map(
+                                    (choice, i) => (
+                                        <label
+                                            htmlFor={`${activeQuestion.no}_choices_${choice.id}`}
+                                            key={choice.id}
+                                        >
+                                            <input
+                                                type="radio"
+                                                name={`${activeQuestion.no}_choices`}
+                                                id={`${activeQuestion.no}_choices_${choice.id}`}
+                                                className="peer hidden"
+                                                value={choice.id}
+                                                onChange={(ev) => {
                                                     onAnswerQuestionHandler(
                                                         activeQuestion.no,
-                                                        null
+                                                        ev.target.value
                                                     );
+                                                }}
+                                                checked={
+                                                    parseInt(
+                                                        activeQuestion.jawaban
+                                                    ) === choice.id
+                                                        ? true
+                                                        : false
                                                 }
-                                            }}
-                                        />
-                                        <li className="border-2 border-curious-blue px-8 py-3 rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue h-full">
-                                            {choice.answer}
-                                        </li>
-                                    </label>
-                                ))}
+                                                onClick={(ev) => {
+                                                    if (ev.target.checked) {
+                                                        onAnswerQuestionHandler(
+                                                            activeQuestion.no,
+                                                            null
+                                                        );
+                                                    }
+                                                }}
+                                            />
+                                            <li className="border-2 border-curious-blue px-8 py-3 rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer peer-checked:text-white peer-checked:bg-curious-blue h-full">
+                                                {choice.answer}
+                                            </li>
+                                        </label>
+                                    )
+                                )}
                             </ol>
                         </div>
                         <div className="flex justify-start gap-4">
