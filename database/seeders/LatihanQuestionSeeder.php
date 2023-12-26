@@ -20,7 +20,8 @@ class LatihanQuestionSeeder extends Seeder
                 LatihanQuestion::create([
                     'latihan_id' => $latihan->id,
                     'group_type_id' => null,
-                    'question' => 'Soal ke-'.($i+1)
+                    'question' => 'Soal ke-'.($i+1),
+                    'pembahasan' => 'Pembahasan soal ke-'.($i+1).'.',
                 ]);
             }
         }

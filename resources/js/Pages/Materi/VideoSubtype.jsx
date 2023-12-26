@@ -108,6 +108,12 @@ export default function SkdVideoTwk({
                                 className="aspect-video w-full md:w-2/3 xl:w-4/5"
                             ></iframe>
                         </div>
+                        <Link 
+                            href={route("latihan.test", chapter.id)}
+                            className="btn btn-grey text-dark capitalize mt-6 me-3 self-end px-6"
+                        >
+                            Latihan
+                        </Link>
                         {nextChapter ? (
                             <Link
                                 href={route("material.type.teks.subtype", [

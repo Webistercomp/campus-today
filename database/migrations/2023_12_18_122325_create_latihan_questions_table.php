@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('latihan_id');
             $table->integer('group_type_id')->nullable();
             $table->string('question');
+            $table->text('pembahasan')->nullable();
             $table->timestamps();
         });
     }
