@@ -59,33 +59,6 @@ export default function LatihanResult({
                         {jumlah_tidak_diisi} soal tidak diisi
                     </span>
                 </p>
-                <div className="flex flex-col w-1/4 gap-2 mx-auto">
-                    <a
-                        href="#pembahasan"
-                        className="btn btn-primary shadow-lg capitalize"
-                    >
-                        Pembahasan
-                    </a>
-                    {nextChapterId ? (
-                        <Link
-                            href={route("material.type.teks.subtype", [
-                                type,
-                                materialCode,
-                                nextChapterId,
-                            ])}
-                        >
-                            <button className="btn bg-white shadow-lg capitalize">
-                                Materi selanjutnya
-                            </button>
-                        </Link>
-                    ) : (
-                        <Link href={route("material.complete", materialId)}>
-                            <button className="btn bg-white shadow-lg capitalize">
-                                Materi Selesai
-                            </button>
-                        </Link>
-                    )}
-                </div>
             </section>
 
             <section className="pt-14" id="pembahasan">
@@ -99,9 +72,11 @@ export default function LatihanResult({
                             <p>
                                 Jawaban anda :{" "}
                                 {
+                                    soal.jawaban ?
                                     soal.answers.find(
                                         (a) => parseInt(soal.jawaban) === a.id
-                                    ).answer
+                                    ).answer :
+                                    "Tidak diisi"
                                 }
                             </p>
                             <ol className="list-upper-alpha list-inside grid grid-cols-3 gap-2 my-2 ml-0">
@@ -139,11 +114,33 @@ export default function LatihanResult({
                                 ))}
                             </ol>
                             <p className="mt-4">Pembahasan : </p>
-                            <p>"INI ADALAH PEMBAHASAN SOAL"</p>
+                            <p>{soal.pembahasan}</p>
                         </li>
                     ))}
                 </ol>
             </section>
+
+            <div className="flex flex-col w-1/4 gap-2 mx-auto mb-10">
+                {nextChapterId ? (
+                    <Link
+                        href={route("material.type.teks.subtype", [
+                            type,
+                            materialCode,
+                            nextChapterId,
+                        ])}
+                    >
+                        <button className="btn bg-white shadow-lg capitalize">
+                            Materi selanjutnya
+                        </button>
+                    </Link>
+                ) : (
+                    <Link href={route("material.complete", materialId)}>
+                        <button className="btn bg-white shadow-lg capitalize">
+                            Materi Selesai
+                        </button>
+                    </Link>
+                )}
+            </div>
         </AuthenticatedLayout>
     );
 }

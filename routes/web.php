@@ -14,7 +14,6 @@ use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LatihanController;
 use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\MaterialSKDController;
 use App\Http\Controllers\MinatBakatController;
 use App\Http\Controllers\PacketController;
 use App\Http\Controllers\ProfileController;
@@ -102,14 +101,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/minat-bakat/tes-matematika', [MinatBakatController::class, 'tesmtk'])->name('minatbakat.tesmtk');
     Route::post('/minat-bakat/tes-matematika/scoring', [MinatBakatController::class, 'tesmtkScoring'])->name('minatbakat.tesmtk.scoring');
     Route::post('/minat-bakat/tes-matematika/result', [MinatBakatController::class, 'tesmtkResult'])->name('minatbakat.tesmtk.result');
-});
-
-Route::prefix('materiskd')->group(function () {
-    Route::get('/', [MaterialSKDController::class, 'index'])->name('materiskd.index');
-    Route::get('/teks', [MaterialSKDController::class, 'teks'])->name('materiskd.teks');
-    Route::get('/teks/{id}', [MaterialSKDController::class, 'teks_show'])->name('materiskd.teks_show');
-    Route::get('/video', [MaterialSKDController::class, 'video'])->name('materiskd.video');
-    Route::get('/video/{id}', [MaterialSKDController::class, 'video_show'])->name('materiskd.video_show');
 });
 
 require __DIR__ . '/auth.php';
