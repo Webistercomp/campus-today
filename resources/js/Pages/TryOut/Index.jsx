@@ -2,8 +2,20 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import DocRaf from "@/images/document-rafiki.png";
 import WebRaf from "@/images/webinar-rafiki.png";
+import IconTryoutSKD from "@/svg/icon-tryoutskd.svg";
+import IconTryoutSKB from "@/svg/icon-tryoutskb.svg";
+import IconTryoutUM from "@/svg/icon-tryoutum.svg";
+import IconTryoutUTBK from "@/svg/icon-tryoututbk.svg";
+import IconHasilTryout from "@/svg/icon-hasiltryout.svg";
 
 export default function Index({ auth, title, materialTypes }) {
+    const icons = [
+        IconTryoutSKD,
+        IconTryoutSKB,
+        IconTryoutUM,
+        IconTryoutUTBK,
+        IconHasilTryout,
+    ]
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -30,11 +42,11 @@ export default function Index({ auth, title, materialTypes }) {
                             >
                                 <div className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center md:items-start lg:items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all h-full">
                                     <img
-                                        src={DocRaf}
+                                        src={icons[i]}
                                         alt=""
-                                        className="basis-1/5 aspect-auto w-40 sm:block md:hidden lg:block"
+                                        className="basis-1/5 aspect-auto w-40 hidden sm:block md:hidden lg:block"
                                     />
-                                    <div className="flex flex-col basis-4/5 gap-2 w-full md:p-4">
+                                    <div className="flex flex-col basis-4/5 gap-2 w-full p-4 sm:p-0 md:p-4">
                                         <h4 className="uppercase text-black font-semibold text-2xl">
                                             {materialType.name}
                                         </h4>
@@ -49,16 +61,16 @@ export default function Index({ auth, title, materialTypes }) {
                     <Link href={route("tryout.hasil")} className="mb-10">
                         <div className="bg-white shadow-lg basis-1/2 rounded-xl p-1 flex gap-4 items-center cursor-pointer hover:bg-slate-200 duration-150 transition-all h-full">
                             <img
-                                src={DocRaf}
+                                src={icons[4]}
                                 alt=""
-                                className="basis-1/5 aspect-auto w-40 md:hidden lg:block"
+                                className="basis-1/5 aspect-auto w-40 hidden sm:block md:hidden lg:block"
                             />
-                            <div className="flex flex-col basis-4/5 gap-2 pr-20 md:p-4">
+                            <div className="flex flex-col basis-4/5 gap-2 w-full p-4 sm:p-0 md:p-4">
                                 <h4 className="uppercase text-black font-semibold text-2xl">
                                     Hasil TryOut
                                 </h4>
                                 <p className="text-curious-blue">
-                                    Lihat hasil TryOut kamu!
+                                    Hasil tryout memberikan gambaran prestasi dan kelemahan peserta dalam menghadapi ujian sesungguhnya, membantu perbaikan dan persiapan lebih lanjut.
                                 </p>
                             </div>
                         </div>
