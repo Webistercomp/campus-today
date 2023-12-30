@@ -76,28 +76,53 @@
                 <button type="submit" class="btn btn-primary ml-auto">Simpan</button>
             </div>
         </form>
-        <div class="col-md-6 d-flex align-items-center mt-4">
+        <div class="col-md-6 d-flex align-items-center mt-4" id="daftar-soal">
             <h5>Daftar Soal</h5>
         </div>
-        <form id="question-form" method="POST">
-            <ol id="question-list" type="1">
-                @foreach ($tryout->questions as $question)
-                <li class="mb-4">
-                    <input type="text" name="question_{{$question->id}}" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
-                    <p class="m-0">Pilihan jawaban: </p>
-                    <ol type="A" class="row row-cols-3">
+        <ol id="question-list" type="1">
+            @foreach ($tryout->questions as $question)
+            <li class="mb-4">
+                <div id={{"div_question_" . $question->id}}>
+                    <span class="question">{{$question->question}}</span>
+                </div>
+                <p class="m-0">Pilihan jawaban: </p>
+                <ol type="A" class="row row-cols-3" id={{"div_answers_" . $question->id}}>
+                    @foreach ($question->answers as $answer)
+                    <li @class(['pr-4']) id={{'div_answer_' . $answer->id}}>
+                        <span class="answer">{{$answer->answer}}</span>
+                    </li>
+                    @endforeach
+                </ol>
+                <form action={{route('admin.question.update')}} method="post" style="display: inline-block">
+                    @csrf
+                    <div id={{"input_question_" . $question->id}} style="display:none">
+                        <input type="hidden" name="question_id" value={{$question->id}}>
+                        <input type="text" name="question" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
+                    </div>
+                    <ol type="A" class="row row-cols-3" id={{"edit_answers_" . $question->id}} style="display:none">
                         @foreach ($question->answers as $answer)
-                        <li class="pr-4"><input type="text" name="question_{{$question->id}}_answer_{{$answer->id}}" id="question_{{$question->id}}_answer_{{$answer->id}}" class="answer form-control" value="{{$answer->answer}}"></li>
+                        <li @class(['pr-4']) id={{'input_answer_' . $answer->id}}>
+                            <input type="text" name="answers[]" id="question_{{$question->id}}_answer_{{$answer->id}}" class="answer form-control" value="{{$answer->answer}}">
+                        </li>
                         @endforeach
                     </ol>
-                </li>
-                @endforeach
-            </ol>
-            <div class="d-flex mt-3 m-0 justify-content-end">
-                <button id="add-question" type="button" class="btn btn-warning">Tambah Soal</button>
-                <button id="save-questions" type="submit" class="btn btn-primary ml-2">Simpan Soal</button>
-            </div>
-        </form>
+                    
+                    <button type="button" class="badge bg-warning border-0" onclick="startEditQuestion({{$question->id}})" id={{"editBtn_" . $question->id}}>edit</button>
+                    <button type="button" class="badge bg-secondary border-0" onclick="cancelEditQuestion({{$question->id}})" id={{"cancelBtn_" . $question->id}} style="display:none">batal</button>
+                    <button type="submit" class="badge bg-primary border-0" onclick="cancelEditQuestion({{$question->id}}, {{$tryout->id}})" id={{"simpanBtn_" . $question->id}} style="display:none">simpan</button>
+                </form>
+                <form action={{route('admin.question.delete', $question->id)}} method="POST" style="display:inline-block">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="badge bg-danger border-0" id={{"hapusBtn_" . $question->id}}>hapus</button>
+                </form>
+            </li>
+            @endforeach
+        </ol>
+        <input type="hidden" name="data" value="" id="data">
+        <div class="d-flex mt-3 m-0 justify-content-end">
+            <button id="add-question" type="button" class="btn btn-warning">Tambah Soal</button>
+        </div>
     </div>
 </div>
 <script>
@@ -146,36 +171,40 @@ $(document).ready(function () {
         questionWrapper.appendChild(question)
         question_counter++
     })
-
-    $('#question-form').on('submit', (e) => {
-        e.preventDefault()
-
-        const questionForm = document.querySelector('#question-form')
-        const formData = new FormData(questionForm)
-        const questionData = []
-        const answerData = []
-        for (const [name, value] of formData){
-            if(name.includes("answer")) {
-                answerData.push({name, value})
-            } else {
-                questionData.push({name, value})
-            }
-        }
-        const data = questionData.map(q => {
-            return {id: parseInt(q.name.replace("question_", "")), question: q.value, answers: answerData.filter(ans => ans.name.includes(q.name)).map(ans => {return {id: parseInt(ans.name.replace(`${q.name}_answer_`, "")), name: ans.name, answer: ans.value, question_id: parseInt(q.name.replace("question_", ""))}})}
-        })
-        console.log(data);
-        // This code below is for send data to update question route
-        // const route = "{!! route("admin.home") !!}"
-        // $.ajax({
-        //     type: "POST",
-        //     url: route,
-        //     data: data,
-        //     dataType: "application/json",
-        //     success: function (response) {
-        //     }
-        // });
-    })
 });
+
+function startEditQuestion(idQuestion) {
+    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
+    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
+    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
+    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
+    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
+    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
+    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    questionInput.style.display = "block"
+    questionDiv.style.display = "none"
+    cancelBtn.style.display = "inline-block"
+    simpanBtn.style.display = "inline-block"
+    editBtn.style.display = "none"
+    editAnswers.style.display = "flex"
+    divAnswers.style.display = "none"
+}
+
+function cancelEditQuestion(idQuestion) {
+    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
+    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
+    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
+    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
+    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
+    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
+    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    questionInput.style.display = "none"
+    questionDiv.style.display = "block"
+    cancelBtn.style.display = "none"
+    simpanBtn.style.display = "none"
+    editBtn.style.display = "inline-block"
+    editAnswers.style.display = "none"
+    divAnswers.style.display = "flex"
+}
 </script>
 @endsection
