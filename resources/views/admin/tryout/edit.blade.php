@@ -106,7 +106,6 @@
                         </li>
                         @endforeach
                     </ol>
-                    
                     <button type="button" class="badge bg-warning border-0" onclick="startEditQuestion({{$question->id}})" id={{"editBtn_" . $question->id}}>edit</button>
                     <button type="button" class="badge bg-secondary border-0" onclick="cancelEditQuestion({{$question->id}})" id={{"cancelBtn_" . $question->id}} style="display:none">batal</button>
                     <button type="submit" class="badge bg-primary border-0" onclick="cancelEditQuestion({{$question->id}}, {{$tryout->id}})" id={{"simpanBtn_" . $question->id}} style="display:none">simpan</button>
@@ -128,48 +127,140 @@
 <script>
 $(document).ready(function () {
     let questions = {!!json_encode($tryout->questions->toArray())!!}
-    let question_counter = questions.at(-1).id + 1
-    let answer_counter = questions.at(-1).answers.at(-1).id + 1
+    const baseDeleteURL = `{!!route('admin.question.delete', "question_ID")!!}`;
+    const baseEditURL = `{!!route('admin.question.update')!!}`;
 
     $('#add-question').on('click', () => {
-        const questionWrapper = document.querySelector('#question-list');
-        const question = document.createElement("li")
-        const qInput = document.createElement("input")
-        const qText = document.createElement("p")
-        const answerWrapper = document.createElement("ol")
-
-        qInput.type = "text"
-        qInput.name = `question_${question_counter}`
-        qInput.setAttribute("placeholder", `Soal ke-${question_counter}`)
-        qInput.setAttribute("value", ``)
-        qInput.id = `question_${question_counter}`
-        qInput.classList.add("question", "form-control")
-        question.appendChild(qInput)
-
-        qText.innerText = "Pilihan jawaban: "
-        qText.classList.add("m-0")
-        question.appendChild(qText)
-
-        answerWrapper.type = "A"
-        answerWrapper.classList.add("row", "row-cols-3")
+        const questionUID = `new_${Date.now()}`
+        const answerUID = [];
         for (let i = 1; i <= 5; i++) {
-            const answer = document.createElement("li")
-            const answerInput = document.createElement("input")
-            answerInput.type = "text"
-            answerInput.name = `question_${question_counter}_answer_${answer_counter}`
-            answerInput.classList.add(`answer`, 'form-control')
-            answerInput.setAttribute("id", `question_${question_counter}_answer_${answer_counter}`)
-            answerInput.setAttribute("placeholder", `Jawaban ${i}`)
-            answerInput.setAttribute("value", ``)
-            answer.classList.add("pr-4")
-            answer.appendChild(answerInput)
-            answerWrapper.appendChild(answer)
-            answer_counter++
+            answerUID.push(`new_${Date.now()}`)
         }
-        question.classList.add("mb-4")
-        question.appendChild(answerWrapper)
-        questionWrapper.appendChild(question)
-        question_counter++
+        const questionsList_Ol = document.querySelector('#question-list');
+        
+        const question_Li = document.createElement("li");
+        question_Li.classList.add("mb-4");
+
+        const question_Div = document.createElement("div");
+        question_Div.setAttribute("id", `div_question_${questionUID}`);
+
+        const question_Span = document.createElement("span");
+        question_Span.classList.add("question");
+        question_Span.innerText = `Pertanyaan`;
+
+        question_Div.appendChild(question_Span);
+
+        const answersChoice_P = document.createElement("p");
+        answersChoice_P.innerText = "Pilihan jawaban: ";
+        answersChoice_P.classList.add("m-0")
+
+        const answers_Ol = document.createElement("ol");
+        for (let i = 1; i <= 5; i++) {
+            const answer_Li = document.createElement("li");
+
+            const answer_Span = document.createElement("span");
+            answer_Span.innerText = `Jawaban ${i}`;
+            answer_Span.classList.add("answer");
+
+            answer_Li.setAttribute("id", `div_answer_${answerUID[i]}`);
+            answer_Li.classList.add("pr-4");
+            answer_Li.appendChild(answer_Span);
+            
+            answers_Ol.append(answer_Li);
+        }
+        answers_Ol.setAttribute("type", "A");
+        answers_Ol.classList.add("row", "row-cols-3");
+        answers_Ol.setAttribute("id", `div_answers_${questionUID}`);
+        question_Li.append(question_Div, answersChoice_P, answers_Ol);
+        
+        const questionAnswerEdit_Form = document.createElement("form");
+        questionAnswerEdit_Form.innerHTML = `@csrf`;
+        questionAnswerEdit_Form.setAttribute("method", "POST");
+        questionAnswerEdit_Form.setAttribute("action", baseEditURL);
+        questionAnswerEdit_Form.style.display = "inline-block";
+        const questionEdit_Div = document.createElement("div");
+        const questionEditId_Input = document.createElement("input");
+        questionEditId_Input.setAttribute("type", "hidden");
+        questionEditId_Input.setAttribute("name", "question_id");
+        questionEditId_Input.setAttribute("value", questionUID);
+
+        const questionEdit_Input = document.createElement("input");
+        questionEdit_Input.setAttribute("type", "text");
+        questionEdit_Input.setAttribute("name", "question");
+        questionEdit_Input.setAttribute("id", `question_${questionUID}`);
+        questionEdit_Input.setAttribute("value", `Soal ke-${questionUID}`);
+        questionEdit_Input.classList.add("question", "form-control");
+        questionEdit_Div.append(questionEditId_Input, questionEdit_Input);
+        questionEdit_Div.setAttribute("id", `input_question_${questionUID}`);
+        questionEdit_Div.style.display = "none";
+        questionAnswerEdit_Form.append(questionEdit_Div);
+
+        const answersEdit_Ol = document.createElement("ol");
+        answersEdit_Ol.setAttribute("type", "A");
+        answersEdit_Ol.setAttribute("id", `edit_answers_${questionUID}`);
+        answersEdit_Ol.classList.add("row", "row-cols-3");
+        answersEdit_Ol.style.display = "none";
+        for (let i = 1; i <= 5; i++) {
+            const answer_Li = document.createElement("li");
+
+            const answer_Input = document.createElement("input");
+            answer_Input.setAttribute("type", "text");
+            answer_Input.setAttribute("name", "answers[]");
+            answer_Input.setAttribute("id", `question_${questionUID}_answer_${i}`);
+            answer_Input.setAttribute("value", `Jawaban ${i}`);
+            answer_Input.classList.add("answer", "form-control");
+
+            answer_Li.setAttribute("id", `input_answer_${answerUID[i]}`);
+            answer_Li.classList.add("pr-4");
+            answer_Li.appendChild(answer_Input);
+            
+            answersEdit_Ol.append(answer_Li);
+        }
+        questionAnswerEdit_Form.append(answersEdit_Ol);
+        
+        const questionAnswerEdit_Button = document.createElement("button");
+        questionAnswerEdit_Button.innerText = "edit";
+        questionAnswerEdit_Button.setAttribute("type", "button");
+        questionAnswerEdit_Button.setAttribute("onclick", `startEditQuestion("${questionUID}")`);
+        questionAnswerEdit_Button.setAttribute("id", `editBtn_${questionUID}`);
+        questionAnswerEdit_Button.classList.add("badge", "bg-warning", "border-0", "mr-1");
+        questionAnswerEdit_Form.append(questionAnswerEdit_Button);
+        
+        const questionAnswerCancelEdit_Button = document.createElement("button");
+        questionAnswerCancelEdit_Button.innerText = "batal";
+        questionAnswerCancelEdit_Button.setAttribute("type", "button");
+        questionAnswerCancelEdit_Button.setAttribute("onclick", `cancelEditQuestion("${questionUID}")`);
+        questionAnswerCancelEdit_Button.setAttribute("id", `cancelBtn_${questionUID}`);
+        questionAnswerCancelEdit_Button.classList.add("badge", "bg-secondary", "border-0", "mr-1");
+        questionAnswerCancelEdit_Button.style.display = "none";
+        questionAnswerEdit_Form.append(questionAnswerCancelEdit_Button);
+
+        const questionAnswerSaveEdit_Button = document.createElement("button");
+        questionAnswerSaveEdit_Button.innerText = "simpan";
+        questionAnswerSaveEdit_Button.setAttribute("type", "submit");
+        questionAnswerSaveEdit_Button.setAttribute("onclick", `cancelEditQuestion("${questionUID}")`);
+        questionAnswerSaveEdit_Button.setAttribute("id", `simpanBtn_${questionUID}`);
+        questionAnswerSaveEdit_Button.classList.add("badge", "bg-primary", "border-0");
+        questionAnswerSaveEdit_Button.style.display = "none";
+        questionAnswerEdit_Form.append(questionAnswerSaveEdit_Button);
+
+        question_Li.append(questionAnswerEdit_Form);
+        
+        const questionAnswerDelete_Form = document.createElement("form");
+        const deleteQuestionBtn_Button = document.createElement("button");
+        deleteQuestionBtn_Button.innerText = "hapus";
+        deleteQuestionBtn_Button.setAttribute("id", `hapusBtn_${questionUID}`);
+        deleteQuestionBtn_Button.setAttribute("type", 'button');
+        deleteQuestionBtn_Button.setAttribute("onclick", `deleteNewQuestion("${questionUID}")`);
+        deleteQuestionBtn_Button.classList.add("badge", "bg-danger", "border-0");
+        questionAnswerDelete_Form.innerHTML = `@csrf` + `@method('DELETE')`;
+        questionAnswerDelete_Form.append(deleteQuestionBtn_Button);
+        questionAnswerDelete_Form.setAttribute("method", "POST");
+        questionAnswerDelete_Form.setAttribute("action", baseDeleteURL.replace("question_ID", questionUID));
+        questionAnswerDelete_Form.style.display = "inline-block";
+        question_Li.append(questionAnswerDelete_Form);
+
+        questionsList_Ol.append(question_Li);
     })
 });
 
@@ -205,6 +296,12 @@ function cancelEditQuestion(idQuestion) {
     editBtn.style.display = "inline-block"
     editAnswers.style.display = "none"
     divAnswers.style.display = "flex"
+}
+
+function deleteNewQuestion(idQuestion){
+    const newQuestion_Li = document.querySelector(`#div_question_${idQuestion}`);
+    const parent = newQuestion_Li.parentNode;
+    parent.remove();
 }
 </script>
 @endsection
