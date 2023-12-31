@@ -129,6 +129,7 @@ $(document).ready(function () {
     let questions = {!!json_encode($tryout->questions->toArray())!!}
     const baseDeleteURL = `{!!route('admin.question.delete', "question_ID")!!}`;
     const baseEditURL = `{!!route('admin.question.update')!!}`;
+    const tryout_id = `{!!$tryout->id!!}`;
 
     $('#add-question').on('click', () => {
         const questionUID = `new_${Date.now()}`
@@ -184,13 +185,19 @@ $(document).ready(function () {
         questionEditId_Input.setAttribute("name", "question_id");
         questionEditId_Input.setAttribute("value", questionUID);
 
+        const questionTryoutId_Input = document.createElement("input");
+        questionTryoutId_Input.setAttribute("type", "hidden");
+        questionTryoutId_Input.setAttribute("name", "tryout_id");
+        questionTryoutId_Input.setAttribute("value", tryout_id);
+
         const questionEdit_Input = document.createElement("input");
         questionEdit_Input.setAttribute("type", "text");
         questionEdit_Input.setAttribute("name", "question");
         questionEdit_Input.setAttribute("id", `question_${questionUID}`);
         questionEdit_Input.setAttribute("value", `Soal ke-${questionUID}`);
         questionEdit_Input.classList.add("question", "form-control");
-        questionEdit_Div.append(questionEditId_Input, questionEdit_Input);
+
+        questionEdit_Div.append(questionEditId_Input, questionTryoutId_Input, questionEdit_Input);
         questionEdit_Div.setAttribute("id", `input_question_${questionUID}`);
         questionEdit_Div.style.display = "none";
         questionAnswerEdit_Form.append(questionEdit_Div);
