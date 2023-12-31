@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\GroupType;
 use App\Models\MaterialType;
+use App\Models\Question;
 use App\Models\Role;
 use App\Models\Tryout;
 use Illuminate\Http\Request;
@@ -109,5 +111,57 @@ class TryoutController extends Controller
         $tryout = Tryout::find($id);
         $tryout->delete();
         return redirect()->route('admin.tryout.index');
+    }
+
+    function updateQuestion(Request $request)
+    {
+        $request->validate([
+            'question_id' => 'required',
+            'question' => 'required',
+            'answers' => 'required',
+        ]);
+        $question = Question::find($request->question_id);
+        $question->question = $request->question;
+        $question->save();
+        if($question->answers->count() < count($request->answers)){
+            for($i=0; $i<$question->answers->count(); $i++) {
+                $answer = $question->answers[$i];
+                $answer->answer = $request->answers[$i];
+                $answer->save();
+            }
+            for($i=$question->answers->count(); $i<count($request->answers); $i++) {
+                $answer = new Answer();
+                $answer->question_id = $question->id;
+                $answer->answer = $request->answers[$i];
+                $answer->bobot = 1;
+                $answer->save();
+            }
+        } else if($question->answers->count() > count($request->answers)){
+            for($i=0; $i<count($request->answers); $i++) {
+                $answer = $question->answers[$i];
+                $answer->answer = $request->answers[$i];
+                $answer->save();
+            }
+            for($i=count($request->answers); $i<$question->answers->count(); $i++) {
+                $answer = $question->answers[$i];
+                $answer->delete();
+            }
+        } else {
+            for($i=0; $i<count($request->answers); $i++) {
+                $answer = $question->answers[$i];
+                $answer->answer = $request->answers[$i];
+                $answer->save();
+            }
+        }
+        return redirect()->route('admin.tryout.edit', $question->tryout_id);
+    }
+
+    function deleteQuestion($question_id) {
+        $question = Question::find($question_id);
+        foreach($question->answers as $answer) {
+            $answer->delete();
+        }
+        $question->delete();
+        return redirect()->route('admin.tryout.edit', $question->tryout_id);
     }
 }

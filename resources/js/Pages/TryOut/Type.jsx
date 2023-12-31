@@ -27,7 +27,7 @@ export default function TryOutSKD({ auth, title, tryouts, type }) {
                     {title} {type.toUpperCase()}
                 </h1>
 
-                <div className="mt-6 grid grid-cols-3 gap-3">
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                     {tryouts.map(function (tryout, i) {
                         return (
                             <div className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-100 duration-150 transition-all" key={i} >

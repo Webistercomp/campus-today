@@ -11,6 +11,11 @@ import ExamBro from "@/images/exams-bro.png";
 import LearningBro from "@/images/learning-bro.png";
 import FAQCard from "@/Components/FAQCard";
 import ArticleCard from "@/Components/ArticleCard";
+import IconMateriSKD from "@/svg/icon-materiskd.svg";
+import IconMateriSKB from "@/svg/icon-materiskb.svg";
+import IconMateriUM from "@/svg/icon-materium.svg";
+import IconMateriUTBK from "@/svg/icon-materiutbk.svg";
+import IconVideoSeries from "@/svg/icon-videoseries.svg";
 
 export default function Dashboard({ auth, articles, materialTypes }) {
     const FAQ = [
@@ -42,6 +47,14 @@ export default function Dashboard({ auth, articles, materialTypes }) {
         },
     ];
 
+    const icons = [
+        IconVideoSeries,
+        IconMateriSKD,
+        IconMateriSKB,
+        IconMateriUM,
+        IconMateriUTBK,
+    ]
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -55,16 +68,20 @@ export default function Dashboard({ auth, articles, materialTypes }) {
 
             <section className="bg-white mt-6 px-4 md:px-14 lg:px-24 xl:px-32">
                 <h1 className="font-bold text-3xl">Mulai Belajar</h1>
-                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 xl:gap-8 justify-between mt-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-6 justify-between mt-6">
                     {materialTypes.map((materialType, i) => {
                         return (
                             <Link
                                 href={route("material.type", materialType.code)}
-                                className="p-3 md:p-6 bg-white shadow-lg rounded-lg flex gap-2 cursor-pointer hover:bg-slate-100 transition-all duration-150"
+                                className="p-3 md:px-6 bg-white shadow-lg rounded-lg flex gap-2 cursor-pointer hover:bg-slate-100 transition-all duration-150 items-center"
                                 key={i}
                             >
-                                <PoliceIcon className="basis-1/4 fill-curious-blue" />
-                                <div className="basis-3/4 flex flex-col justify-center gap-4">
+                                <img
+                                    src={icons[i]}
+                                    alt=""
+                                    className="basis-1/5 fill-curious-blue h-14"
+                                />
+                                <div className="basis-4/5 flex flex-col justify-center gap-2 pl-4">
                                     <h4 className="text-base md:text-lg lg:text-xl font-semibold">
                                         {materialType.name}
                                     </h4>
