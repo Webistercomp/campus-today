@@ -138,12 +138,13 @@ class TryoutController extends Controller
     }
 
     function updateQuestion(Request $request)
-    {
+    { // bobot is still not yet developed
         $request->validate([
             'question_id' => 'required',
             'question' => 'required',
             'answers' => 'required',
         ]);
+        $tryout = Tryout::find($request->tryout_id);
         if (str_contains($request->question_id, "new")) {
             $newQuestion = new Question();
             $newQuestion->tryout_id = $request->tryout_id;
@@ -158,7 +159,11 @@ class TryoutController extends Controller
                 $newAnswer->bobot = 1;
                 $newAnswer->save();
             }
-            return redirect()->route('admin.tryout.edit', $request->tryout_id);
+            if($tryout->is_event == 0) {
+                return redirect()->route('admin.tryout.edit', $request->tryout_id);
+            } else {
+                return redirect()->route('admin.event.edit', $request->tryout_id);
+            }
         } else {
             $question = Question::find($request->question_id);
             $question->question = $request->question;
@@ -193,7 +198,11 @@ class TryoutController extends Controller
                     $answer->save();
                 }
             }
-            return redirect()->route('admin.tryout.edit', $question->tryout_id);
+            if($tryout->is_event == 0) {
+                return redirect()->route('admin.tryout.edit', $request->tryout_id);
+            } else {
+                return redirect()->route('admin.event.edit', $request->tryout_id);
+            }
         }
     }
 
@@ -204,7 +213,12 @@ class TryoutController extends Controller
             $answer->delete();
         }
         $question->delete();
-        return redirect()->route('admin.tryout.edit', $question->tryout_id);
+        $tryout = Tryout::find($question->tryout_id);
+        if($tryout->is_event == 0) {
+            return redirect()->route('admin.tryout.edit', $question->tryout_id);
+        } else {
+            return redirect()->route('admin.event.edit', $question->tryout_id);
+        }
     }
 
     function historyIndex() {
