@@ -186,6 +186,18 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href={{route('admin.tryouthistory.index')}} @if($menu == 'tryouthistory')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Tryouts Histories
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href={{route('admin.latihan.index')}} @if($menu == 'latihan')
             class="nav-link active"
           @else

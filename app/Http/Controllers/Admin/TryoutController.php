@@ -9,6 +9,8 @@ use App\Models\MaterialType;
 use App\Models\Question;
 use App\Models\Role;
 use App\Models\Tryout;
+use App\Models\TryoutHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -203,5 +205,29 @@ class TryoutController extends Controller
         }
         $question->delete();
         return redirect()->route('admin.tryout.edit', $question->tryout_id);
+    }
+
+    function historyIndex() {
+        $user = Auth::user();
+        $menu = 'tryouthistory';
+        $tryoutHistories = TryoutHistory::whereHas('tryout', function($query) {
+            $query->where('is_event', 0);
+        })->get();
+        foreach($tryoutHistories as $tryoutHistory) {
+            $start_tryout = Carbon::parse($tryoutHistory->start_timestamp);
+            $end_tryout = Carbon::parse($tryoutHistory->end_timestamp);
+            $tryoutHistory->duration = $start_tryout->diff($end_tryout)->format('%H:%I:%S');
+        }
+        return view('admin.tryouthistory.index', compact('user', 'menu', 'tryoutHistories'));
+    }
+
+    function historyShow($id) {
+        $user = Auth::user();
+        $menu = 'tryouthistory';
+        $tryoutHistory = TryoutHistory::find($id);
+        $start_tryout = Carbon::parse($tryoutHistory->start_timestamp);
+        $end_tryout = Carbon::parse($tryoutHistory->end_timestamp);
+        $tryoutHistory->duration = $start_tryout->diff($end_tryout)->format('%H:%I:%S');
+        return view('admin.tryouthistory.show', compact('user', 'menu', 'tryoutHistory'));
     }
 }

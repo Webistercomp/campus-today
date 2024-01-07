@@ -140,6 +140,9 @@ Route::prefix('admin')->group(function () {
         Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
         Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
 
+        Route::get('tryout_histories', [AdminTryoutController::class, 'historyIndex'])->name('admin.tryouthistory.index');
+        Route::get('tryout_histories/{id}', [AdminTryoutController::class, 'historyShow'])->name('admin.tryouthistory.show');
+
         Route::post('question', [AdminTryoutController::class, 'updateQuestion'])->name('admin.question.update');
         Route::delete('question/{question_id}', [AdminTryoutController::class, 'deleteQuestion'])->name('admin.question.delete');
 
