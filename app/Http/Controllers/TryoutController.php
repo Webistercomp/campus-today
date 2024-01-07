@@ -15,12 +15,14 @@ use Inertia\Inertia;
 use Illuminate\Database\Eloquent\Builder;
 
 
-class TryoutController extends Controller {
+class TryoutController extends Controller
+{
     /**
      * Display a listing of the resource.
      */
 
-    public function index() {
+    public function index()
+    {
         $materialTypes = MaterialType::where('code', '!=', 'videoseries')->get();
         return Inertia::render('TryOut/Index', [
             'title' => 'TryOut',
@@ -28,12 +30,13 @@ class TryoutController extends Controller {
         ]);
     }
 
-    public function hasil() {
+    public function hasil()
+    {
         $user = Auth::user();
         $tryoutHistories = TryoutHistory::where('user_id', $user->id)
             ->with('tryout.materialType', 'tryout.questions')
             ->get();
-        foreach($tryoutHistories as $tryoutHistory) {
+        foreach ($tryoutHistories as $tryoutHistory) {
             $tryoutHistory->tryout->jumlah_soal = $tryoutHistory->tryout->questions->count();
         }
         return Inertia::render('TryOut/Hasil', [
@@ -42,7 +45,8 @@ class TryoutController extends Controller {
         ]);
     }
 
-    public function confirm($id) {
+    public function confirm($id)
+    {
         $user = Auth::user();
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
@@ -82,7 +86,8 @@ class TryoutController extends Controller {
         ]);
     }
 
-    public function eventTryoutConfirm() {
+    public function eventTryoutConfirm()
+    {
         $user = Auth::user();
         $tryout = Tryout::with('materialType', 'questions.answers')
             ->where('is_event', true)
@@ -124,7 +129,8 @@ class TryoutController extends Controller {
         ]);
     }
 
-    public function test($id) {
+    public function test($id)
+    {
         $user = Auth::user();
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
@@ -153,7 +159,8 @@ class TryoutController extends Controller {
         }
     }
 
-    public function eventTryoutTest($id) {
+    public function eventTryoutTest($id)
+    {
         $user = Auth::user();
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
@@ -182,7 +189,8 @@ class TryoutController extends Controller {
         }
     }
 
-    public function start_tryout(Request $request) {
+    public function start_tryout(Request $request)
+    {
         $tryout = Tryout::find($request->tryout_id);
         $tryout_time = $tryout->time;
         $start = Carbon::now();
@@ -200,19 +208,27 @@ class TryoutController extends Controller {
         }
     }
 
-    public function success($id) {
-        $tryout = Tryout::find($id);
+    public function success($id)
+    {
+        $user = Auth::user();
+        $tryoutHistory = TryoutHistory::where('user_id', $user->id)
+            ->where('tryout_id', $id)
+            ->latest()
+            ->first();
         return Inertia::render('TryOut/TryOutSuccess', [
             'title' => 'Nama TryOut',
-            'name' => 'Farhan Hikmatullah D'
+            'user' => $user,
+            'tryout_history' => $tryoutHistory
         ]);
     }
 
-    public function failed() {
+    public function failed()
+    {
         return Inertia::render('TryOut/TryOutFailed', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
     }
 
-    public function type($type) {
+    public function type($type)
+    {
         $tryouts = Tryout::whereHas('materialType', function ($query) use ($type) {
             $query->where('code', $type);
         })
@@ -228,7 +244,8 @@ class TryoutController extends Controller {
         ]);
     }
 
-    public function scoring(Request $request) {
+    public function scoring(Request $request)
+    {
         $tryout = Tryout::find($request->tryout_id);
         if (!$tryout->is_event) {
             $finishTimestamp = Carbon::now();
@@ -237,8 +254,12 @@ class TryoutController extends Controller {
                 ->latest()
                 ->first();
             foreach ($request->tryout_data as $data) {
-                $answer = Answer::find($data['answer_id']);
-                $tryoutHistory->score += $answer->bobot;
+                if ($data['answer_id'] != null) {
+                    $answer = Answer::find($data['answer_id']);
+                    $tryoutHistory->score += $answer->bobot;
+                } else {
+                    $tryoutHistory->score += 0;
+                }
             }
             $tryoutHistory->finish_timestamp = $finishTimestamp;
             $tryoutHistory->save();
@@ -280,13 +301,14 @@ class TryoutController extends Controller {
         }
     }
 
-    public function insight($id_tryout) {
+    public function insight($id_tryout)
+    {
         $tryout = Tryout::with('questions.answers')->find($id_tryout);
         $no = 1;
-        foreach($tryout->questions as $question) {
+        foreach ($tryout->questions as $question) {
             $question->no = $no++;
             $question->jawaban = $question->answers->sortByDesc('bobot')->first()->id;
-        }   
+        }
         return Inertia::render('TryOut/Insight', [
             'title' => 'Pembahasan TryOut',
             'tryoutName' => $tryout->name,
@@ -294,7 +316,8 @@ class TryoutController extends Controller {
         ]);
     }
 
-    public function ranking($id_tryout) {
+    public function ranking($id_tryout)
+    {
         $tryout = Tryout::find($id_tryout);
         return Inertia::render('TryOut/Ranking', [
             'title' => 'Ranking TryOut',
@@ -306,42 +329,48 @@ class TryoutController extends Controller {
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Tryout $tryout) {
+    public function show(Tryout $tryout)
+    {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tryout $tryout) {
+    public function edit(Tryout $tryout)
+    {
         //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tryout $tryout) {
+    public function update(Request $request, Tryout $tryout)
+    {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tryout $tryout) {
+    public function destroy(Tryout $tryout)
+    {
         //
     }
 }
