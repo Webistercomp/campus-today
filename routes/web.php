@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
+    Route::get('/event-tryout/over', [TryoutController::class, 'eventIsOver'])->name('event-tryout.over');
 
     Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
     Route::post('/latihan/scoring', [LatihanController::class, 'scoring'])->name('latihan.scoring');
@@ -138,6 +139,9 @@ Route::prefix('admin')->group(function () {
         Route::get('tryouts/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
         Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
         Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
+
+        Route::get('tryout_histories', [AdminTryoutController::class, 'historyIndex'])->name('admin.tryouthistory.index');
+        Route::get('tryout_histories/{id}', [AdminTryoutController::class, 'historyShow'])->name('admin.tryouthistory.show');
 
         Route::post('question', [AdminTryoutController::class, 'updateQuestion'])->name('admin.question.update');
         Route::delete('question/{question_id}', [AdminTryoutController::class, 'deleteQuestion'])->name('admin.question.delete');

@@ -98,10 +98,15 @@ class TryoutController extends Controller
             ->where('tryout_id', $tryout->id)
             ->latest()
             ->first();
-        $now = Carbon::now();
+        $now = Carbon::now()->addHours(7);
+        $start_tryout = Carbon::parse($tryout->start_datetime);
+        $end_tryout = Carbon::parse($tryout->end_datetime);
         // check whether its event of tryout
         // check if user has tryout history
-        if ($tryoutHistory && $now <= $tryoutHistory->finish_timestamp) {
+
+        if ($now < $start_tryout || $now > $end_tryout) {
+            return redirect()->route('event-tryout.over');
+        } else if ($tryoutHistory && $now <= $tryoutHistory->finish_timestamp) {
             return redirect()->route('event-tryout.test', $tryout->id);
         }
 
@@ -326,51 +331,30 @@ class TryoutController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function eventIsOver()
     {
-        //
-    }
+        $user = Auth::user();
+        $tryout = Tryout::with('materialType', 'questions.answers')
+            ->where('is_event', true)
+            ->where('active', true)
+            ->latest()
+            ->first();
+        $tryoutHistory = TryoutHistory::where('user_id', $user->id)
+            ->where('tryout_id', $tryout->id)
+            ->latest()
+            ->first();
+        $now = Carbon::now();
+        $start_tryout = Carbon::parse($tryout->start_datetime);
+        $end_tryout = Carbon::parse($tryout->end_datetime);
+        // check whether its event of tryout
+        // check if user has tryout history
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if ($now > $start_tryout && $now < $end_tryout) {
+            return redirect()->route('event-tryout.confirm');
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tryout $tryout)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tryout $tryout)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tryout $tryout)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tryout $tryout)
-    {
-        //
+        return Inertia::render('TryOut/EventIsOver', [
+            'title' => 'Event TryOut',
+        ]);
     }
 }

@@ -9,6 +9,8 @@ use App\Models\MaterialType;
 use App\Models\Question;
 use App\Models\Role;
 use App\Models\Tryout;
+use App\Models\TryoutHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -54,8 +56,11 @@ class TryoutController extends Controller
         ]);
         $newTryout = new Tryout();
         $newTryout->material_type_id = $request->material_type_id;
-        $newTryout->group_id = $request->group_id;
-        $newTryout->roles = $request->roles;
+        $roles = explode(',', $request->roles);
+        for($i = 0; $i < count($roles); $i++) {
+            $roles[$i] = intval($roles[$i]);
+        }
+        $newTryout->roles = json_encode($roles);
         $newTryout->name = $request->name;
         $newTryout->code = $request->code;
         $newTryout->time = $request->time;
@@ -101,10 +106,29 @@ class TryoutController extends Controller
 
     function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required',
+            'material_type_id' => 'required',
+        ]);
         $tryout = Tryout::find($id);
-
-        $tryout->update($request->all());
-        return redirect()->route('admin.tryout.index');
+        $tryout->material_type_id = $request->material_type_id;
+        $roles = explode(',', $request->roles);
+        for($i = 0; $i < count($roles); $i++) {
+            $roles[$i] = intval($roles[$i]);
+        }
+        $tryout->roles = json_encode($roles);
+        $tryout->name = $request->name;
+        $tryout->code = $request->code;
+        $tryout->time = $request->time;
+        $tryout->description = $request->description;
+        if (!$request->has('active')) {
+            $tryout->active = 0;
+        } else {
+            $tryout->active = 1;
+        }
+        $tryout->save();
+        return redirect()->route('admin.tryout.show', $id);
     }
 
     function delete($id)
@@ -115,12 +139,13 @@ class TryoutController extends Controller
     }
 
     function updateQuestion(Request $request)
-    {
+    { // bobot is still not yet developed
         $request->validate([
             'question_id' => 'required',
             'question' => 'required',
             'answers' => 'required',
         ]);
+        $tryout = Tryout::find($request->tryout_id);
         if (str_contains($request->question_id, "new")) {
             $newQuestion = new Question();
             $newQuestion->tryout_id = $request->tryout_id;
@@ -137,7 +162,11 @@ class TryoutController extends Controller
                 $newAnswer->save();
                 $index++;
             }
-            return redirect()->route('admin.tryout.edit', $request->tryout_id);
+            if($tryout->is_event == 0) {
+                return redirect()->route('admin.tryout.edit', $request->tryout_id);
+            } else {
+                return redirect()->route('admin.event.edit', $request->tryout_id);
+            }
         } else {
             $question = Question::find($request->question_id);
             $question->question = $request->question;
@@ -174,7 +203,11 @@ class TryoutController extends Controller
                     $answer->save();
                 }
             }
-            return redirect()->route('admin.tryout.edit', $question->tryout_id);
+            if($tryout->is_event == 0) {
+                return redirect()->route('admin.tryout.edit', $request->tryout_id);
+            } else {
+                return redirect()->route('admin.event.edit', $request->tryout_id);
+            }
         }
     }
 
@@ -185,6 +218,35 @@ class TryoutController extends Controller
             $answer->delete();
         }
         $question->delete();
-        return redirect()->route('admin.tryout.edit', $question->tryout_id);
+        $tryout = Tryout::find($question->tryout_id);
+        if($tryout->is_event == 0) {
+            return redirect()->route('admin.tryout.edit', $question->tryout_id);
+        } else {
+            return redirect()->route('admin.event.edit', $question->tryout_id);
+        }
+    }
+
+    function historyIndex() {
+        $user = Auth::user();
+        $menu = 'tryouthistory';
+        $tryoutHistories = TryoutHistory::whereHas('tryout', function($query) {
+            $query->where('is_event', 0);
+        })->get();
+        foreach($tryoutHistories as $tryoutHistory) {
+            $start_tryout = Carbon::parse($tryoutHistory->start_timestamp);
+            $end_tryout = Carbon::parse($tryoutHistory->end_timestamp);
+            $tryoutHistory->duration = $start_tryout->diff($end_tryout)->format('%H:%I:%S');
+        }
+        return view('admin.tryouthistory.index', compact('user', 'menu', 'tryoutHistories'));
+    }
+
+    function historyShow($id) {
+        $user = Auth::user();
+        $menu = 'tryouthistory';
+        $tryoutHistory = TryoutHistory::find($id);
+        $start_tryout = Carbon::parse($tryoutHistory->start_timestamp);
+        $end_tryout = Carbon::parse($tryoutHistory->end_timestamp);
+        $tryoutHistory->duration = $start_tryout->diff($end_tryout)->format('%H:%I:%S');
+        return view('admin.tryouthistory.show', compact('user', 'menu', 'tryoutHistory'));
     }
 }
