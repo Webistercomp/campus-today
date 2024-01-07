@@ -82,10 +82,11 @@
         <ol id="question-list" type="1">
             @foreach ($tryout->questions as $question)
             <li class="mb-4">
-                <div id={{"div_question_" . $question->id}}>
+                <div id={{"div_question_" . $question->id}} class="flex-column">
                     <span class="question">{{$question->question}}</span>
+                    <p class="m-0">Tipe soal : <span class="material_type">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->code}}@endif @endforeach</span></p>
                 </div>
-                <p class="m-0">Pilihan jawaban: </p>
+                <p class="m-0" id={{"p_divider_".$question->id}}>Pilihan jawaban: </p>
                 <ol type="A" class="row row-cols-3" id={{"div_answers_" . $question->id}}>
                     @foreach ($question->answers as $answer)
                     <li @class(['pr-4']) id={{'div_answer_' . $answer->id}}>
@@ -98,11 +99,25 @@
                     <div id={{"input_question_" . $question->id}} style="display:none">
                         <input type="hidden" name="question_id" value={{$question->id}}>
                         <input type="text" name="question" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
+                        <div class="row">
+                            <label for={{"group_type_".$question->id}} class="col-2 m-0" >
+                                Tipe soal :
+                            </label>
+                            <select name="group_type" id={{"group_type_".$question->id}} class="form-control form-control-sm form-select col-2" aria-label="Default select example">
+                                @foreach ($groupTypes as $groupType)
+                                <option value={{$groupType->id}} {{($groupType->id == $question->group_type_id ? "selected" : "")}}>{{$groupType->code}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <ol type="A" class="row row-cols-3" id={{"edit_answers_" . $question->id}} style="display:none">
                         @foreach ($question->answers as $answer)
                         <li @class(['pr-4']) id={{'input_answer_' . $answer->id}}>
                             <input type="text" name="answers[]" id="question_{{$question->id}}_answer_{{$answer->id}}" class="answer form-control" value="{{$answer->answer}}">
+                            <label for="answer_{{$answer->id}}_bobot" class="row">
+                                <p class="col-4">bobot :</p>
+                                <input type="number" name="bobot[]" id="answer_{{$answer->id}}_bobot" class="form-control form-control-sm col-4" value="{{$answer->bobot}}" min="0" max="5">
+                            </label>
                         </li>
                         @endforeach
                     </ol>
@@ -130,7 +145,7 @@ $(document).ready(function () {
     const baseDeleteURL = `{!!route('admin.question.delete', "question_ID")!!}`;
     const baseEditURL = `{!!route('admin.question.update')!!}`;
     const tryout_id = `{!!$tryout->id!!}`;
-    
+    const groupTypes = {!!json_encode($groupTypes->toArray())!!};
     
     $('#name').on('keyup', function() {
         var title = $('#name').val();
@@ -155,10 +170,11 @@ $(document).ready(function () {
         const question_Span = document.createElement("span");
         question_Span.classList.add("question");
         question_Span.innerText = `Pertanyaan`;
-
-        question_Div.appendChild(question_Span);
+        
+        question_Div.append(question_Span);
 
         const answersChoice_P = document.createElement("p");
+        answersChoice_P.setAttribute("id", `p_divider_${questionUID}`);
         answersChoice_P.innerText = "Pilihan jawaban: ";
         answersChoice_P.classList.add("m-0")
 
@@ -201,10 +217,29 @@ $(document).ready(function () {
         questionEdit_Input.setAttribute("type", "text");
         questionEdit_Input.setAttribute("name", "question");
         questionEdit_Input.setAttribute("id", `question_${questionUID}`);
-        questionEdit_Input.setAttribute("value", `Soal ke-${questionUID}`);
+        questionEdit_Input.setAttribute("value", "");
+        questionEdit_Input.setAttribute("placeholder", "Pertanyaan");
         questionEdit_Input.classList.add("question", "form-control");
 
-        questionEdit_Div.append(questionEditId_Input, questionTryoutId_Input, questionEdit_Input);
+        const groupTypeEdit_Div = document.createElement("div");
+        const groupTypeEdit_Label = document.createElement("label");
+        const groupTypeEdit_Select = document.createElement("select");
+        groupTypeEdit_Div.classList.add("row");
+        groupTypeEdit_Label.setAttribute("for", `group_type_${questionUID}`);
+        groupTypeEdit_Label.classList.add("col-2", "m-0");
+        groupTypeEdit_Label.innerText = "Tipe soal : ";
+        groupTypeEdit_Select.setAttribute("name", "group_type");
+        groupTypeEdit_Select.setAttribute("id", `group_type_${questionUID}`);
+        groupTypeEdit_Select.classList.add("form-select", "form-control", "form-control-sm", "col-2");
+        groupTypes.forEach(groupType => {
+            const groupTypeEdit_Option = document.createElement("option");
+            groupTypeEdit_Option.setAttribute("value", groupType.id);
+            groupTypeEdit_Option.innerText = groupType.code;
+            groupTypeEdit_Select.append(groupTypeEdit_Option);
+        });
+        groupTypeEdit_Div.append(groupTypeEdit_Label, groupTypeEdit_Select);
+
+        questionEdit_Div.append(questionEditId_Input, questionTryoutId_Input, questionEdit_Input, groupTypeEdit_Div);
         questionEdit_Div.setAttribute("id", `input_question_${questionUID}`);
         questionEdit_Div.style.display = "none";
         questionAnswerEdit_Form.append(questionEdit_Div);
@@ -227,6 +262,24 @@ $(document).ready(function () {
             answer_Li.setAttribute("id", `input_answer_${answerUID[i]}`);
             answer_Li.classList.add("pr-4");
             answer_Li.appendChild(answer_Input);
+
+            const answerBobot_Label = document.createElement("label");
+            answerBobot_Label.setAttribute("for",  `answer_${answerUID[i]}_bobot`);
+            answerBobot_Label.classList.add("row");
+            const answerBobot_P = document.createElement("p");
+            answerBobot_P.classList.add("col-4");
+            answerBobot_P.innerText = "bobot : ";
+            const answerBobot_Input = document.createElement("input");
+            answerBobot_Input.setAttribute("type", "number");
+            answerBobot_Input.setAttribute("name", "bobot[]");
+            answerBobot_Input.setAttribute("id", `answer_${answerUID[i]}_bobot`);
+            answerBobot_Input.setAttribute("value", 0);
+            answerBobot_Input.setAttribute("min", 0);
+            answerBobot_Input.setAttribute("max", 5);
+            answerBobot_Input.classList.add("form-control", "form-control-sm", "col-4");
+
+            answerBobot_Label.append(answerBobot_P, answerBobot_Input);
+            answer_Li.appendChild(answerBobot_Label);
             
             answersEdit_Ol.append(answer_Li);
         }
@@ -286,6 +339,7 @@ function startEditQuestion(idQuestion) {
     let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
     let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
     let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
     questionInput.style.display = "block"
     questionDiv.style.display = "none"
     cancelBtn.style.display = "inline-block"
@@ -293,6 +347,7 @@ function startEditQuestion(idQuestion) {
     editBtn.style.display = "none"
     editAnswers.style.display = "flex"
     divAnswers.style.display = "none"
+    pDivider.innerText = "Pertanyaan"
 }
 
 function cancelEditQuestion(idQuestion) {
@@ -303,13 +358,15 @@ function cancelEditQuestion(idQuestion) {
     let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
     let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
     let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
     questionInput.style.display = "none"
-    questionDiv.style.display = "block"
+    questionDiv.style.display = "flex"
     cancelBtn.style.display = "none"
     simpanBtn.style.display = "none"
     editBtn.style.display = "inline-block"
     editAnswers.style.display = "none"
     divAnswers.style.display = "flex"
+    pDivider.innerText = "Pilihan jawaban :"
 }
 
 function deleteNewQuestion(idQuestion){
