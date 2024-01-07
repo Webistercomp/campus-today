@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/event-tryout', [TryoutController::class, 'eventTryoutConfirm'])->name('event-tryout.confirm');
     Route::get('/event-tryout/test/{id}', [TryoutController::class, 'eventTryoutTest'])->name('event-tryout.test');
+    Route::get('/event-tryout/over', [TryoutController::class, 'eventIsOver'])->name('event-tryout.over');
 
     Route::get('/latihan/test/{id}', [LatihanController::class, 'test'])->name('latihan.test');
     Route::post('/latihan/scoring', [LatihanController::class, 'scoring'])->name('latihan.scoring');
