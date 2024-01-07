@@ -81,6 +81,11 @@ Tryouts | Campus Today
         <div class="col-md-6 d-flex align-items-center mt-4">
             <h5>Daftar Soal</h5>
         </div>
+        @if($tryout->questions->count() == 0)
+        <div class="p-2">
+            Tidak ada soal, klik tombol edit untuk menambah soal.
+        </div>
+        @endif
         <ol type="1">
             @foreach ($tryout->questions as $question)
             <li class="mb-4">

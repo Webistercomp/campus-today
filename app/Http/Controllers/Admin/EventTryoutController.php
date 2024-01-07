@@ -54,7 +54,11 @@ class EventTryoutController extends Controller
         ]);
         $newTryout = new Tryout();
         $newTryout->material_type_id = $request->material_type_id;
-        $newTryout->roles = json_encode(explode(',', $request->roles));
+        $roles = explode(',', $request->roles);
+        for($i = 0; $i < count($roles); $i++) {
+            $roles[$i] = intval($roles[$i]);
+        }
+        $newTryout->roles = json_encode($roles);
         $newTryout->name = $request->name;
         $newTryout->code = $request->code;
         $newTryout->description = $request->description;

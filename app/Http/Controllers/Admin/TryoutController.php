@@ -54,8 +54,11 @@ class TryoutController extends Controller
         ]);
         $newTryout = new Tryout();
         $newTryout->material_type_id = $request->material_type_id;
-        $newTryout->group_id = $request->group_id;
-        $newTryout->roles = $request->roles;
+        $roles = explode(',', $request->roles);
+        for($i = 0; $i < count($roles); $i++) {
+            $roles[$i] = intval($roles[$i]);
+        }
+        $newTryout->roles = json_encode($roles);
         $newTryout->name = $request->name;
         $newTryout->code = $request->code;
         $newTryout->time = $request->time;
@@ -100,10 +103,29 @@ class TryoutController extends Controller
 
     function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required',
+            'material_type_id' => 'required',
+        ]);
         $tryout = Tryout::find($id);
-
-        $tryout->update($request->all());
-        return redirect()->route('admin.tryout.index');
+        $tryout->material_type_id = $request->material_type_id;
+        $roles = explode(',', $request->roles);
+        for($i = 0; $i < count($roles); $i++) {
+            $roles[$i] = intval($roles[$i]);
+        }
+        $tryout->roles = json_encode($roles);
+        $tryout->name = $request->name;
+        $tryout->code = $request->code;
+        $tryout->time = $request->time;
+        $tryout->description = $request->description;
+        if (!$request->has('active')) {
+            $tryout->active = 0;
+        } else {
+            $tryout->active = 1;
+        }
+        $tryout->save();
+        return redirect()->route('admin.tryout.show', $id);
     }
 
     function delete($id)

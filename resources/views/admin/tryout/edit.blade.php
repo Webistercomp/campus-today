@@ -79,6 +79,11 @@
         <div class="col-md-6 d-flex align-items-center mt-4" id="daftar-soal">
             <h5>Daftar Soal</h5>
         </div>
+        @if($tryout->questions->count() == 0)
+        <div class="p-2">
+            Tidak ada soal, klik tombol "tambah soal" untuk menambah soal.
+        </div>
+        @endif
         <ol id="question-list" type="1">
             @foreach ($tryout->questions as $question)
             <li class="mb-4">
