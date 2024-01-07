@@ -50,15 +50,15 @@
             </tr>
             <tr>
                 <th>Harga sebelum diskon</th>
-                <td>{{$packet->price_not_discount}}</td>
+                <td id="price_not_discount">{{$packet->price_not_discount}}</td>
             </tr>
             <tr>
                 <th>Harga setelah diskon</th>
-                <td>{{$packet->price_discount ?? '-'}}</td>
+                <td id="price_discount">{{$packet->price_discount ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Diskon</th>
-                <td>{{$packet->discount ?? '-'}}</td>
+                <td id="discount">{{$packet->discount ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Deskripsi</th>
@@ -92,4 +92,26 @@
     </table>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        let price_not_discount = $('#price_not_discount').text();
+        price_not_discount = new Intl.NumberFormat().format(price_not_discount)
+        price_not_discount = 'Rp ' + price_not_discount;
+        $('#price_not_discount').text(price_not_discount);
+        
+        let price_discount = $('#price_discount').text();
+        if(price_discount != '-') {
+            price_discount = new Intl.NumberFormat().format(price_discount)
+            price_discount = 'Rp ' + price_discount;
+            $('#price_discount').text(price_discount);
+        }
+
+        let discount = $('#discount').text();
+        if(discount != '-') {
+            discount = discount + '%';
+            $('#discount').text(discount);
+        }
+    });
+</script>
 @endsection

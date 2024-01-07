@@ -130,6 +130,13 @@ $(document).ready(function () {
     const baseDeleteURL = `{!!route('admin.question.delete', "question_ID")!!}`;
     const baseEditURL = `{!!route('admin.question.update')!!}`;
     const tryout_id = `{!!$tryout->id!!}`;
+    
+    
+    $('#name').on('keyup', function() {
+        var title = $('#name').val();
+        var code = title.replace(/\s+/g, '_').toLowerCase();
+        $('#code').val(code);
+    })
 
     $('#add-question').on('click', () => {
         const questionUID = `new_${Date.now()}`

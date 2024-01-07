@@ -84,4 +84,14 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#title').on('keyup', function() {
+            var title = $('#title').val();
+            var code = title.replace(/\s+/g, '_').toLowerCase();
+            $('#code').val(code);
+        })
+    });
+</script>
 @endsection
