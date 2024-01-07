@@ -41,15 +41,15 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Kode</th>
-                        <td class="col-8">
-                            <input type="text" class="form-control" id="code" name="code">
-                        </td>
-                    </tr>
-                    <tr class="row">
                         <th class="col-4">Nama</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="name" name="name">
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="col-4">Kode</th>
+                        <td class="col-8">
+                            <input type="text" class="form-control" id="code" name="code">
                         </td>
                     </tr>
                     <tr class="row">
@@ -97,4 +97,13 @@
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#name').on('keyup', function() {
+            var title = $('#name').val();
+            var code = title.replace(/\s+/g, '_').toLowerCase();
+            $('#code').val(code);
+        })
+    });
+</script>
 @endsection

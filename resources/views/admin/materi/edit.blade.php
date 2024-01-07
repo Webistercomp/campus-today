@@ -51,15 +51,15 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Kode</th>
-                        <td class="col-8">
-                            <input type="text" class="form-control" id="code" name="code" value="{{$material->code}}">
-                        </td>
-                    </tr>
-                    <tr class="row">
                         <th class="col-4">Judul</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="title" name="title" value="{{$material->title}}">
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <th class="col-4">Kode</th>
+                        <td class="col-8">
+                            <input type="text" class="form-control" id="code" name="code" value="{{$material->code}}">
                         </td>
                     </tr>
                     <tr class="row">
@@ -85,4 +85,14 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#title').on('keyup', function() {
+            var title = $('#title').val();
+            var code = title.replace(/\s+/g, '_').toLowerCase();
+            $('#code').val(code);
+        })
+    });
+</script>
 @endsection
