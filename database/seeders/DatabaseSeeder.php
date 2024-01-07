@@ -31,6 +31,9 @@ class DatabaseSeeder extends Seeder
             LatihanSeeder::class,
             LatihanQuestionSeeder::class,
             LatihanAnswerSeeder::class,
+            MinatBakatSeeder::class,
+            MinatBakatQuestionSeeder::class,
+            MinatBakatAnswerSeeder::class
         ]);
     }
 }

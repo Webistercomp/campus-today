@@ -1,7 +1,6 @@
 import CheckIcon from "@/icons/CheckIcon";
 import XIcon from "@/icons/XIcon";
 import { Link } from "@inertiajs/react";
-import { useEffect } from "react";
 
 export default function PacketCard({
     id,
@@ -14,26 +13,39 @@ export default function PacketCard({
     let v = benefits.v;
     let x = benefits.x;
     const isPopular = name === "Friendly" || name === "Platinum";
+    const isRed = name === "Ambisius" || name === "Gold";
 
     return (
         <div
             className={`text-left snap-center basis-1/3 p-4 md:p-8 flex flex-col items-start justify-between rounded-xl shadow-lg gap-6 border-2 border-pelorous-300 ${
-                isPopular ? "bg-curious-blue" : "bg-white"
+                isPopular
+                    ? "bg-curious-blue"
+                    : isRed
+                    ? "bg-[#CF514E] text-white"
+                    : "bg-white"
             }`}
         >
-            <div className={`${isPopular ? "text-white" : ""}`}>
+            <div
+                className={`${isPopular && "text-white"} ${
+                    isRed && "text-white"
+                }`}
+            >
                 {isPopular && (
                     <p className="mb-2 bg-pelorous-300 w-fit py-2 px-3 rounded-lg text-sm text-black">
                         Popular
                     </p>
                 )}
-                <h3 className="bg-slate-300 py-2 px-3 w-fit rounded-lg font-semibold text-sm text-black">
+                <h3
+                    className={`${
+                        isRed ? "bg-selective-yellow-300" : "bg-slate-300"
+                    } py-2 px-3 w-fit rounded-lg font-semibold text-sm text-black`}
+                >
                     {name}
                 </h3>
                 <p
                     className={`text-4xl font-bold mt-6 ${
                         isPopular ? "text-white" : "text-blue-500"
-                    }`}
+                    } ${isRed && "text-white"}`}
                 >
                     Rp. {new Intl.NumberFormat("id-ID").format(price_discount)}
                 </p>
@@ -48,7 +60,7 @@ export default function PacketCard({
                                 <td>
                                     <CheckIcon
                                         className={`${
-                                            isPopular
+                                            isPopular || isRed
                                                 ? "fill-white"
                                                 : "fill-black"
                                         } self-start`}
@@ -91,7 +103,7 @@ export default function PacketCard({
                 <Link href={route("paket.show", id)} className="self-center">
                     <button
                         className={`btn btn-info capitalize px-10 ${
-                            isPopular
+                            isPopular || isRed
                                 ? "bg-selective-yellow-300 border-selective-yellow-300 text-black hover:bg-selective-yellow-500 hover:border-selective-yellow-500"
                                 : "text-white bg-black hover:bg-slate-700"
                         }`}
