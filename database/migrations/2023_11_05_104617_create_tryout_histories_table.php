@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('start_timestamp')->nullable();
             $table->timestamp('finish_timestamp')->nullable();
             $table->integer('score')->default(0);
+            $table->json('answers')->nullable();
             $table->timestamps();
         });
     }

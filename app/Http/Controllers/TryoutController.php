@@ -21,8 +21,7 @@ class TryoutController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
-    {
+    public function index() { // material type lists
         $materialTypes = MaterialType::where('code', '!=', 'videoseries')->get();
         return Inertia::render('TryOut/Index', [
             'title' => 'TryOut',
@@ -30,8 +29,7 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function hasil()
-    {
+    public function hasil() { // hasil tryout, list tryout yang sudah pernah diikuti
         $user = Auth::user();
         $tryoutHistories = TryoutHistory::where('user_id', $user->id)
             ->with('tryout.materialType', 'tryout.questions')
@@ -45,8 +43,7 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function confirm($id)
-    {
+    public function confirm($id) { // sebelum mengerjakan tryout
         $user = Auth::user();
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
@@ -86,8 +83,7 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function eventTryoutConfirm()
-    {
+    public function eventTryoutConfirm() { // sebelum mengerjakan event tryout
         $user = Auth::user();
         $tryout = Tryout::with('materialType', 'questions.answers')
             ->where('is_event', true)
@@ -134,8 +130,7 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function test($id)
-    {
+    public function test($id) { // mengerjakan tryout
         $user = Auth::user();
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
@@ -164,8 +159,7 @@ class TryoutController extends Controller
         }
     }
 
-    public function eventTryoutTest($id)
-    {
+    public function eventTryoutTest($id) { // mengerjakan event tryout
         $user = Auth::user();
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
@@ -194,8 +188,7 @@ class TryoutController extends Controller
         }
     }
 
-    public function start_tryout(Request $request)
-    {
+    public function start_tryout(Request $request) { // start tryout, store tryout history
         $tryout = Tryout::find($request->tryout_id);
         $tryout_time = $tryout->time;
         $start = Carbon::now();
@@ -213,8 +206,7 @@ class TryoutController extends Controller
         }
     }
 
-    public function success($id)
-    {
+    public function success($id) { // setelah mengerjakan tryout
         $user = Auth::user();
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
@@ -227,13 +219,11 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function failed()
-    {
+    public function failed() { // setelah mengerjakan tryout
         return Inertia::render('TryOut/TryOutFailed', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
     }
 
-    public function type($type)
-    {
+    public function type($type) { // list tryout by type
         $tryouts = Tryout::whereHas('materialType', function ($query) use ($type) {
             $query->where('code', $type);
         })
@@ -249,24 +239,26 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function scoring(Request $request)
-    {
+    public function scoring(Request $request) { // scoring tryout
         $tryout = Tryout::find($request->tryout_id);
-        if (!$tryout->is_event) {
-            $finishTimestamp = Carbon::now();
+        if (!$tryout->is_event) { // cek apakah tryout biasa atau event tryout
             $tryoutHistory = TryoutHistory::where('user_id', $request->user_id)
                 ->where('tryout_id', $request->tryout_id)
                 ->latest()
                 ->first();
-            foreach ($request->tryout_data as $data) {
-                if ($data['answer_id'] != null) {
-                    $answer = Answer::find($data['answer_id']);
-                    $tryoutHistory->score += $answer->bobot;
-                } else {
-                    $tryoutHistory->score += 0;
-                }
-            }
+            $finishTimestamp = Carbon::now(); // set finish timestamp to now
             $tryoutHistory->finish_timestamp = $finishTimestamp;
+            $dataAnswers = []; // array of answers
+            foreach ($request->tryout_data as $data) { 
+                $answer = Answer::find($data['answer_id']);
+                $tryoutHistory->score += $answer->bobot; // penghitungan score
+                $dataAnswer = [
+                    'question_id' => $data['question_id'],
+                    'answer_id' => $data['answer_id'],
+                ];
+                array_push($dataAnswers, $dataAnswer);
+            }
+            $tryoutHistory->answers = json_encode($dataAnswers); // set answers
             $tryoutHistory->save();
 
             return response()->json([
@@ -280,6 +272,7 @@ class TryoutController extends Controller
                 ->latest()
                 ->first();
             $detailScore = [];
+            $dataAnswers = [];
             foreach ($request->tryout_data as $data) {
                 $answer = Answer::find($data['answer_id']);
                 $tryoutHistory->score += $answer->bobot;
@@ -288,7 +281,13 @@ class TryoutController extends Controller
                     $detailScore[$question->groupType->code] = 0;
                 }
                 $detailScore[$question->groupType->code] += $answer->bobot;
+                $dataAnswer = [
+                    'question_id' => $data['question_id'],
+                    'answer_id' => $data['answer_id'],
+                ];
+                array_push($dataAnswers, $dataAnswer);
             }
+            $tryoutHistory->answers = json_encode($dataAnswers);
             $tryoutHistory->finish_timestamp = $finishTimestamp;
             $tryoutHistory->save();
 
@@ -306,8 +305,7 @@ class TryoutController extends Controller
         }
     }
 
-    public function insight($id_tryout)
-    {
+    public function insight($id_tryout) { // pembahasan tryout
         $tryout = Tryout::with('questions.answers')->find($id_tryout);
         $no = 1;
         foreach ($tryout->questions as $question) {
@@ -321,8 +319,7 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function ranking($id_tryout)
-    {
+    public function ranking($id_tryout) { // ranking event tryout
         $tryout = Tryout::find($id_tryout);
         return Inertia::render('TryOut/Ranking', [
             'title' => 'Ranking TryOut',
@@ -331,8 +328,7 @@ class TryoutController extends Controller
         ]);
     }
 
-    public function eventIsOver()
-    {
+    public function eventIsOver() { // event tryout is over
         $user = Auth::user();
         $tryout = Tryout::with('materialType', 'questions.answers')
             ->where('is_event', true)
