@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
             LatihanAnswerSeeder::class,
             MinatBakatSeeder::class,
             MinatBakatQuestionSeeder::class,
-            MinatBakatAnswerSeeder::class
+            MinatBakatAnswerSeeder::class,
+            SolutionSeeder::class,
         ]);
     }
 }

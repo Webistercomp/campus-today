@@ -305,17 +305,29 @@ class TryoutController extends Controller
         }
     }
 
-    public function insight($id_tryout) { // pembahasan tryout
-        $tryout = Tryout::with('questions.answers')->find($id_tryout);
+    public function insight($id_tryout_history) { // pembahasan tryout
+        $tryoutHistory = TryoutHistory::with('tryout.questions.answers', 'tryout.questions.solution')->where('user_id', Auth::user()->id)
+            ->find($id_tryout_history);
         $no = 1;
-        foreach ($tryout->questions as $question) {
+        $answers = json_decode($tryoutHistory->answers);
+        foreach ($tryoutHistory->tryout->questions as $question) {
             $question->no = $no++;
             $question->jawaban = $question->answers->sortByDesc('bobot')->first()->id;
+            foreach($answers as $answer) {
+                if ($answer->question_id == $question->id) {
+                    $answerFromDB = Answer::find($answer->answer_id);
+                    $question->jawaban_user_id = $answerFromDB->id;
+                    $question->jawaban_user_bobot = $answerFromDB->bobot;
+                    $question->jawaban_user = $answerFromDB->answer;
+                    break;
+                }
+            }
         }
         return Inertia::render('TryOut/Insight', [
             'title' => 'Pembahasan TryOut',
-            'tryoutName' => $tryout->name,
-            'tryout' => $tryout,
+            'tryoutName' => $tryoutHistory->tryout->name,
+            'tryout' => $tryoutHistory->tryout,
+            'tryoutHistory' => $tryoutHistory,
         ]);
     }
 
