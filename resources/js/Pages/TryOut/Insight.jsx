@@ -29,7 +29,7 @@ export default function Insight({ auth, title, tryoutName, tryout }) {
                     {tryout.questions.map((soal, i) => (
                         <li className="mb-8" key={i}>
                             <p>{soal.question}</p>
-                            <p><span className="font-bold">Jawaban Anda</span> : {soal.jawaban_user} (Nilai {soal.jawaban_user_bobot})</p>
+                            <p><span className="font-bold">Jawaban Anda</span> : {soal.jawaban_user ? soal.jawaban_user : "Tidak dijawab"} (Nilai {soal.jawaban_user_bobot})</p>
                             <ol className="list-upper-alpha list-inside grid grid-cols-3 gap-4 my-2 ml-0">
                                 {soal.answers.map((choice, i) => (
                                     <label

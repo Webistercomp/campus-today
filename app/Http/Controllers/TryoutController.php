@@ -251,12 +251,20 @@ class TryoutController extends Controller
             $dataAnswers = []; // array of answers
             foreach ($request->tryout_data as $data) { 
                 $answer = Answer::find($data['answer_id']);
-                $tryoutHistory->score += $answer->bobot; // penghitungan score
-                $dataAnswer = [
-                    'question_id' => $data['question_id'],
-                    'answer_id' => $data['answer_id'],
-                ];
-                array_push($dataAnswers, $dataAnswer);
+                if($answer == null) { // kalau jawaban kosong
+                    $dataAnswer = [
+                        'question_id' => $data['question_id'],
+                        'answer_id' => null,
+                    ];
+                    array_push($dataAnswers, $dataAnswer);
+                } else {
+                    $tryoutHistory->score += $answer->bobot; // penghitungan score
+                    $dataAnswer = [
+                        'question_id' => $data['question_id'],
+                        'answer_id' => $data['answer_id'],
+                    ];
+                    array_push($dataAnswers, $dataAnswer);
+                }
             }
             $tryoutHistory->answers = json_encode($dataAnswers); // set answers
             $tryoutHistory->save();
@@ -275,17 +283,25 @@ class TryoutController extends Controller
             $dataAnswers = [];
             foreach ($request->tryout_data as $data) {
                 $answer = Answer::find($data['answer_id']);
-                $tryoutHistory->score += $answer->bobot;
+                if($answer == null) { // kalau jawaban kosong
+                    $dataAnswer = [
+                        'question_id' => $data['question_id'],
+                        'answer_id' => null,
+                    ];
+                    array_push($dataAnswers, $dataAnswer);
+                } else {
+                    $tryoutHistory->score += $answer->bobot; // penghitungan score
+                    $dataAnswer = [
+                        'question_id' => $data['question_id'],
+                        'answer_id' => $data['answer_id'],
+                    ];
+                    array_push($dataAnswers, $dataAnswer);
+                }
                 $question = Question::with('groupType')->find($data['question_id']);
                 if (!array_key_exists($question->groupType->code, $detailScore)) {
                     $detailScore[$question->groupType->code] = 0;
                 }
                 $detailScore[$question->groupType->code] += $answer->bobot;
-                $dataAnswer = [
-                    'question_id' => $data['question_id'],
-                    'answer_id' => $data['answer_id'],
-                ];
-                array_push($dataAnswers, $dataAnswer);
             }
             $tryoutHistory->answers = json_encode($dataAnswers);
             $tryoutHistory->finish_timestamp = $finishTimestamp;
@@ -316,10 +332,17 @@ class TryoutController extends Controller
             foreach($answers as $answer) {
                 if ($answer->question_id == $question->id) {
                     $answerFromDB = Answer::find($answer->answer_id);
-                    $question->jawaban_user_id = $answerFromDB->id;
-                    $question->jawaban_user_bobot = $answerFromDB->bobot;
-                    $question->jawaban_user = $answerFromDB->answer;
-                    break;
+                    if($answerFromDB == null) {
+                        $question->jawaban_user_id = null;
+                        $question->jawaban_user_bobot = 0;
+                        $question->jawaban_user = null;
+                        break;
+                    } else {
+                        $question->jawaban_user_id = $answerFromDB->id;
+                        $question->jawaban_user_bobot = $answerFromDB->bobot;
+                        $question->jawaban_user = $answerFromDB->answer;
+                        break;
+                    }
                 }
             }
         }

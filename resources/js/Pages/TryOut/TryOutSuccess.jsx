@@ -28,7 +28,7 @@ export default function TryOutSuccess({ auth, title, user, tryout_history }) {
                 </p>
                 <div className="flex gap-2 mx-auto justify-center">
                     <Link
-                        href={route("tryout")}
+                        href={route("tryout.insight", tryout_history.id)}
                         className="btn btn-primary shadow-lg capitalize"
                     >
                         Pembahasan

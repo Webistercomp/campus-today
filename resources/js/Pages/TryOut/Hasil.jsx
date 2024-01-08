@@ -64,14 +64,14 @@ export default function Hasil({ auth, title, tryoutHistories }) {
                                 </div>
                                 <div className="flex gap-2 flex-wrap">
                                     <Link
-                                        href={route("tryout.insight", tryoutHistory.tryout.id)}
+                                        href={route("tryout.insight", tryoutHistory.id)}
                                         as="button"
                                         className="btn btn-primary btn-sm capitalize"
                                     >
                                         Pembahasan
                                     </Link>
                                     <Link
-                                        href={route("tryout.ranking", tryoutHistory.tryout.id)}
+                                        href={route("tryout.ranking", tryoutHistory.id)}
                                         as="button"
                                         className="btn btn-sm capitalize"
                                     >
