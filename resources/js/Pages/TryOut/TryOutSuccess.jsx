@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import DoneRafiki from "@/images/done-rafiki.png";
 
-export default function TryOutSuccess({ auth, title, name }) {
+export default function TryOutSuccess({ auth, title, user, tryout_history }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -17,12 +17,16 @@ export default function TryOutSuccess({ auth, title, name }) {
                     className="mx-auto aspect-auto w-4/5"
                 />
                 <p className="text-slate-700 font-semibold my-4">
-                    Selamat <span className="underline">{name}</span>, Anda
+                    Selamat <span className="underline">{user.name}</span>, Anda
                 </p>
-                <h2 className="text-curious-blue font-bold text-2xl mb-4">
-                    LULUS
-                </h2>
-                <div className="flex flex-col w-1/4 gap-2 mx-auto">
+                <h2 className="text-curious-blue font-bold text-2xl">LULUS</h2>
+                <p>
+                    dengan score{" "}
+                    <span className="text-curious-blue font-semibold">
+                        {tryout_history.score}
+                    </span>
+                </p>
+                <div className="flex gap-2 mx-auto justify-center">
                     <Link
                         href={route("tryout")}
                         className="btn btn-primary shadow-lg capitalize"

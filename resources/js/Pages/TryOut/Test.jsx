@@ -1,9 +1,36 @@
-import { useEffect, useState } from "react";
-import Timer from "@/Components/Timer";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, router } from "@inertiajs/react";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { Head, Link, router } from "@inertiajs/react";
 import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
+import Countdown from "react-countdown";
+
+function TryoutTimer({ date, key, handleExpired }) {
+    const renderer = ({ hours, minutes, seconds, completed }) => {
+        if (completed) {
+            handleExpired();
+            return (
+                <span>
+                    {String(hours).length < 2 ? `0${hours}` : `${hours}`} :{" "}
+                    {String(minutes).length < 2 ? `0${minutes}` : `${minutes}`}{" "}
+                    :{" "}
+                    {String(seconds).length < 2 ? `0${seconds}` : `${seconds}`}
+                </span>
+            );
+        } else {
+            return (
+                <span>
+                    {String(hours).length < 2 ? `0${hours}` : `${hours}`} :{" "}
+                    {String(minutes).length < 2 ? `0${minutes}` : `${minutes}`}{" "}
+                    :{" "}
+                    {String(seconds).length < 2 ? `0${seconds}` : `${seconds}`}
+                </span>
+            );
+        }
+    };
+
+    return <Countdown date={date} renderer={renderer} key={key} />;
+}
 
 export default function Test({ auth, user, tryout, timeLeft }) {
     let no = 1;
@@ -24,6 +51,10 @@ export default function Test({ auth, user, tryout, timeLeft }) {
     const [activeQuestion, setActiveQuestion] = useState(
         tryOutData.filter((q) => q.no === active)[0]
     );
+    const reset = 0;
+    const date = useMemo(() => {
+        return Date.now() + timeLeft * 1000;
+    }, [reset]);
 
     useEffect(() => {
         setActiveQuestion(tryOutData.filter((q) => q.no === active)[0]);
@@ -83,6 +114,10 @@ export default function Test({ auth, user, tryout, timeLeft }) {
         return router.get(route("tryout.success", tryout.id));
     };
 
+    const onTimesUpTryout = () => {
+        return document.getElementById("times_up_dialog").showModal();
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={tryout.name} />
@@ -93,7 +128,11 @@ export default function Test({ auth, user, tryout, timeLeft }) {
                         {tryout.name}
                     </h1>
                     <div className="border-2 border-curious-blue-300 px-6 py-1 rounded-lg">
-                        <Timer durationSeconds={timeLeft} />
+                        <TryoutTimer
+                            date={date}
+                            key={reset}
+                            handleExpired={onTimesUpTryout}
+                        />
                     </div>
                 </div>
 
@@ -161,21 +200,23 @@ export default function Test({ auth, user, tryout, timeLeft }) {
                                 </label>
                             ))}
                         </ol>
-                        <div className="mt-28 flex justify-between">
+                        <div className="mt-28 flex justify-between w-full gap-2">
                             <button
                                 className="btn capitalize"
                                 onClick={() => onChangeActiveQuestion(-1)}
                             >
                                 &laquo; Sebelumnya
                             </button>
-                            {active === tryOutData.length && (
-                                <button
-                                    className="btn btn-success text-white"
-                                    onClick={() => onSubmitAnswer()}
-                                >
-                                    Selesai
-                                </button>
-                            )}
+                            <button
+                                className={`btn btn-success text-white ${
+                                    active === tryOutData.length
+                                        ? "block"
+                                        : "hidden"
+                                }`}
+                                onClick={() => onSubmitAnswer()}
+                            >
+                                Selesai
+                            </button>
                             <button
                                 className="btn btn-primary capitalize text-white"
                                 onClick={() => onChangeActiveQuestion(1)}
@@ -197,7 +238,12 @@ export default function Test({ auth, user, tryout, timeLeft }) {
                         jawaban ?
                     </p>
                     <div className="modal-action flex justify-end">
-                        <button className="btn capitalize">Kirim</button>
+                        <button
+                            className="btn capitalize"
+                            onClick={onClickSubmitAnswer}
+                        >
+                            Kirim
+                        </button>
                         <form method="dialog">
                             <button className="btn btn-error text-white capitalize">
                                 Kembali
@@ -220,6 +266,34 @@ export default function Test({ auth, user, tryout, timeLeft }) {
                         <form method="dialog">
                             <button
                                 className="btn capitalize"
+                                id="close_confirm_ans_btn"
+                            >
+                                Batal
+                            </button>
+                        </form>
+                        <button
+                            onClick={onClickSubmitAnswer}
+                            className="btn btn-success capitalize mr-8 text-white"
+                        >
+                            Kirim
+                        </button>
+                    </div>
+                </div>
+            </dialog>
+
+            <dialog id="times_up_dialog" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg uppercase text-warning">
+                        Waktu habis!!
+                    </h3>
+                    <p className="py-4">
+                        Waktu mengerjakan Anda telah habis, silahkan klik tombol
+                        kirim untuk mengirim jawaban Anda
+                    </p>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button
+                                className="btn capitalize hidden"
                                 id="close_confirm_ans_btn"
                             >
                                 Batal

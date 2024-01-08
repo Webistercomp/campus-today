@@ -96,11 +96,12 @@ class TryoutController extends Controller
         $materialTypes = MaterialType::all();
         $questions = Tryout::with('questions.answers')->find($id)->questions;
         $tryout->questions = $questions;
+        $groupTypes = GroupType::all();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
         $roles = Role::all();
-        return view('admin.tryout.edit', compact('tryout', 'user', 'menu', 'roles', 'materialTypes'));
+        return view('admin.tryout.edit', compact('tryout', 'user', 'menu', 'roles', 'materialTypes', 'groupTypes'));
     }
 
     function update(Request $request, $id)
@@ -148,16 +149,18 @@ class TryoutController extends Controller
         if (str_contains($request->question_id, "new")) {
             $newQuestion = new Question();
             $newQuestion->tryout_id = $request->tryout_id;
-            $newQuestion->group_type_id = 5;
+            $newQuestion->group_type_id = $request->group_type;
             $newQuestion->question = $request->question;
             $newQuestion->save();
             $lastQuestionId = $newQuestion->id;
+            $index = 0;
             foreach ($request->answers as $answer) {
                 $newAnswer = new Answer();
                 $newAnswer->question_id = $lastQuestionId;
                 $newAnswer->answer = $answer;
-                $newAnswer->bobot = 1;
+                $newAnswer->bobot = (int) $request->bobot[$index];
                 $newAnswer->save();
+                $index++;
             }
             if($tryout->is_event == 0) {
                 return redirect()->route('admin.tryout.edit', $request->tryout_id);
@@ -167,6 +170,7 @@ class TryoutController extends Controller
         } else {
             $question = Question::find($request->question_id);
             $question->question = $request->question;
+            $question->group_type_id = $request->group_type;
             $question->save();
             if ($question->answers->count() < count($request->answers)) {
                 for ($i = 0; $i < $question->answers->count(); $i++) {
@@ -195,6 +199,7 @@ class TryoutController extends Controller
                 for ($i = 0; $i < count($request->answers); $i++) {
                     $answer = $question->answers[$i];
                     $answer->answer = $request->answers[$i];
+                    $answer->bobot = (int) $request->bobot[$i];
                     $answer->save();
                 }
             }

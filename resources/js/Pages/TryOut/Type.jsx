@@ -18,7 +18,9 @@ export default function TryOutSKD({ auth, title, tryouts, type }) {
                     <li>
                         <Link href={route("tryout")}>TryOut</Link>
                     </li>
-                    <li>{title} {type.toUpperCase()}</li>
+                    <li>
+                        {title} {type.toUpperCase()}
+                    </li>
                 </ul>
             </div>
 
@@ -30,7 +32,10 @@ export default function TryOutSKD({ auth, title, tryouts, type }) {
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                     {tryouts.map(function (tryout, i) {
                         return (
-                            <div className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-100 duration-150 transition-all" key={i} >
+                            <div
+                                className="bg-white shadow-lg basis-1/3 rounded-xl p-4 flex gap-4 items-center cursor-pointer hover:bg-slate-100 duration-150 transition-all"
+                                key={i}
+                            >
                                 <div className="bg-curious-blue aspect-square flex items-center justify-center h-full rounded-lg p-4">
                                     <ExamIcon className="w-12" />
                                 </div>
@@ -41,13 +46,15 @@ export default function TryOutSKD({ auth, title, tryouts, type }) {
                                     <div className="flex gap-3">
                                         <span className="text-slate-400 flex items-center gap-1">
                                             <PaperFillIcon className="fill-slate-400 w-5" />
-                                            <p className="text-sm">
+                                            <p className="text-sm m-0">
                                                 {tryout.jumlah_soal} Soal
                                             </p>
                                         </span>
                                         <span className="text-slate-400 flex items-center gap-1">
                                             <ClockFillIcon className="fill-slate-400 w-5" />
-                                            <p>{tryout.time} Menit</p>
+                                            <p className="m-0">
+                                                {tryout.time} Menit
+                                            </p>
                                         </span>
                                     </div>
                                     <Link
