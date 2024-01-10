@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\GroupType;
 use App\Models\MaterialType;
 use App\Models\Participant;
 use App\Models\Question;
@@ -36,6 +37,7 @@ class TryoutController extends Controller
             ->get();
         foreach ($tryoutHistories as $tryoutHistory) {
             $tryoutHistory->tryout->jumlah_soal = $tryoutHistory->tryout->questions->count();
+            $tryoutHistory->tanggal = Carbon::parse($tryoutHistory->finish_timestamp)->format('d M Y - H:i:s');
         }
         return Inertia::render('TryOut/Hasil', [
             'title' => 'Hasil TryOut',
@@ -241,84 +243,68 @@ class TryoutController extends Controller
 
     public function scoring(Request $request) { // scoring tryout
         $tryout = Tryout::find($request->tryout_id);
-        if (!$tryout->is_event) { // cek apakah tryout biasa atau event tryout
-            $tryoutHistory = TryoutHistory::where('user_id', $request->user_id)
-                ->where('tryout_id', $request->tryout_id)
-                ->latest()
-                ->first();
-            $finishTimestamp = Carbon::now(); // set finish timestamp to now
-            $tryoutHistory->finish_timestamp = $finishTimestamp;
-            $dataAnswers = []; // array of answers
-            foreach ($request->tryout_data as $data) { 
-                $answer = Answer::find($data['answer_id']);
-                if($answer == null) { // kalau jawaban kosong
-                    $dataAnswer = [
-                        'question_id' => $data['question_id'],
-                        'answer_id' => null,
-                    ];
-                    array_push($dataAnswers, $dataAnswer);
-                } else {
-                    $tryoutHistory->score += $answer->bobot; // penghitungan score
-                    $dataAnswer = [
-                        'question_id' => $data['question_id'],
-                        'answer_id' => $data['answer_id'],
-                    ];
-                    array_push($dataAnswers, $dataAnswer);
-                }
+        // sama untuk event tryout dan tryout biasa
+        $tryoutHistory = TryoutHistory::where('user_id', $request->user_id)
+            ->where('tryout_id', $request->tryout_id)
+            ->latest()
+            ->first();
+        $finishTimestamp = Carbon::now(); // set finish timestamp to now
+        $tryoutHistory->finish_timestamp = $finishTimestamp;
+        $detailScore = [];
+        $dataAnswers = []; // array of answers
+        foreach ($request->tryout_data as $data) { 
+            $answer = Answer::find($data['answer_id']);
+            if($answer == null) { // kalau jawaban kosong
+                $dataAnswer = [
+                    'question_id' => $data['question_id'],
+                    'answer_id' => null,
+                ];
+                array_push($dataAnswers, $dataAnswer);
+            } else {
+                $tryoutHistory->score += $answer->bobot; // penghitungan score
+                $dataAnswer = [
+                    'question_id' => $data['question_id'],
+                    'answer_id' => $data['answer_id'],
+                ];
+                array_push($dataAnswers, $dataAnswer);
             }
-            $tryoutHistory->answers = json_encode($dataAnswers); // set answers
-            $tryoutHistory->save();
-
-            return response()->json([
-                'message' => 'success',
-                'data' => $tryoutHistory
-            ], 200);
-        } else {
-            $finishTimestamp = Carbon::now();
-            $tryoutHistory = TryoutHistory::where('user_id', $request->user_id)
-                ->where('tryout_id', $request->tryout_id)
-                ->latest()
-                ->first();
-            $detailScore = [];
-            $dataAnswers = [];
-            foreach ($request->tryout_data as $data) {
-                $answer = Answer::find($data['answer_id']);
-                if($answer == null) { // kalau jawaban kosong
-                    $dataAnswer = [
-                        'question_id' => $data['question_id'],
-                        'answer_id' => null,
-                    ];
-                    array_push($dataAnswers, $dataAnswer);
-                } else {
-                    $tryoutHistory->score += $answer->bobot; // penghitungan score
-                    $dataAnswer = [
-                        'question_id' => $data['question_id'],
-                        'answer_id' => $data['answer_id'],
-                    ];
-                    array_push($dataAnswers, $dataAnswer);
-                }
-                $question = Question::with('groupType')->find($data['question_id']);
-                if (!array_key_exists($question->groupType->code, $detailScore)) {
-                    $detailScore[$question->groupType->code] = 0;
-                }
-                $detailScore[$question->groupType->code] += $answer->bobot;
+            $question = Question::with('groupType')->find($data['question_id']);
+            if (!array_key_exists($question->groupType->code, $detailScore)) {
+                $detailScore[$question->groupType->code] = 0;
             }
-            $tryoutHistory->answers = json_encode($dataAnswers);
-            $tryoutHistory->finish_timestamp = $finishTimestamp;
-            $tryoutHistory->save();
-
-            Participant::create([
-                'user_id' => $request->user_id,
-                'tryout_id' => $request->tryout_id,
-                'final_score' => $tryoutHistory->score,
-                'detail_score' => json_encode($detailScore),
-            ]);
-
-            return response()->json([
-                'message' => 'success',
-                'data' => $tryoutHistory
-            ], 200);
+            $detailScore[$question->groupType->code] += $answer ? $answer->bobot : 0;
         }
+        $tryoutHistory->detail_score = json_encode($detailScore); // set detail score
+        $tryoutHistory->answers = json_encode($dataAnswers); // set answers
+
+        if($tryout->materialType->id == 2 || $tryout->materialType->id == 3) { // kalau soal tryout skd atau skb hitung ambang batas, tentukan user lulus atau tidak
+            $ambangBatasTWK = GroupType::where('code', 'twk')->first()->ambang_batas;
+            $ambangBatasTIU = GroupType::where('code', 'tiu')->first()->ambang_batas;
+            $ambangBatasTKP = GroupType::where('code', 'tkp')->first()->ambang_batas;
+            if(!array_key_exists('twk', $detailScore)) {
+                $detailScore['twk'] = 0;
+            }
+            if(!array_key_exists('tiu', $detailScore)) {
+                $detailScore['tiu'] = 0;
+            }
+            if(!array_key_exists('tkp', $detailScore)) {
+                $detailScore['tkp'] = 0;
+            }
+            if($detailScore['twk'] >= intval($ambangBatasTWK) && $detailScore['tiu'] >= intval($ambangBatasTIU) && $detailScore['tkp'] >= intval($ambangBatasTKP)) {
+                $tryoutHistory->is_lulus = 1;
+            } else {
+                $tryoutHistory->is_lulus = 0;
+            }
+        } else {
+            $tryoutHistory->is_lulus = 1;
+        }
+        $tryoutHistory->save();
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $tryoutHistory,
+            'is_lulus' => $tryoutHistory->is_lulus, // di db, default is_lulus = 1 
+        ], 200);
     }
 
     public function insight($id_tryout_history) { // pembahasan tryout
@@ -356,10 +342,25 @@ class TryoutController extends Controller
 
     public function ranking($id_tryout) { // ranking event tryout
         $tryout = Tryout::find($id_tryout);
+        $tryoutHistories = TryoutHistory::with('user')->where('tryout_id', $id_tryout)
+            ->where('is_lulus', 1)
+            ->orderBy('score', 'desc')
+            ->get();
+        $rankDatas = [];
+        foreach($tryoutHistories as $tryoutHistory) {
+            $rankData = [
+                'userId' => $tryoutHistory->user_id,
+                'name' => $tryoutHistory->user->name,
+                'score' => $tryoutHistory->score,
+                'date' => $tryoutHistory->finish_timestamp,
+            ];
+            array_push($rankDatas, $rankData);
+        }
         return Inertia::render('TryOut/Ranking', [
             'title' => 'Ranking TryOut',
             'tryoutName' => $tryout->name,
             'tryout' => $tryout,
+            'rankData' => $rankDatas,
         ]);
     }
 

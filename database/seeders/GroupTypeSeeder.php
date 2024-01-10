@@ -37,16 +37,19 @@ class GroupTypeSeeder extends Seeder
             'material_type_id' => 2,
             'name' => 'Tes Wawasan Kebangsaan',
             'code' => 'twk',
+            'ambang_batas' => 65,
         ]);
         GroupType::create([
             'material_type_id' => 2,
             'name' => 'Tes Intelegensi Umum',
             'code' => 'tiu',
+            'ambang_batas' => 80,
         ]);
         GroupType::create([
             'material_type_id' => 2,
             'name' => 'Tes Karakteristik Pribadi',
             'code' => 'tkp',
+            'ambang_batas' => 156,
         ]);
     }
 }

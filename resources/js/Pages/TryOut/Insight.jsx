@@ -68,6 +68,15 @@ export default function Insight({ auth, title, tryoutName, tryout }) {
                         </li>
                     ))}
                 </ol>
+                {/* back button */}
+                <div className="mt-6 mb-10">
+                    <Link
+                        href={route("tryout.hasil")}
+                        className="btn btn-primary capitalize"
+                    >
+                        Kembali
+                    </Link>
+                </div>
             </section>
         </AuthenticatedLayout>
     );

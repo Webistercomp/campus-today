@@ -62,6 +62,11 @@ export default function Hasil({ auth, title, tryoutHistories }) {
                                         <p className="m-0">{tryoutHistory.tryout.time} Menit</p>
                                     </span>
                                 </div>
+                                <div>
+                                    <span className="text-slate-400 flex items-center gap-1">
+                                        <p className="text-sm m-0">{tryoutHistory.tanggal}</p>
+                                    </span>
+                                </div>
                                 <div className="flex gap-2 flex-wrap">
                                     <Link
                                         href={route("tryout.insight", tryoutHistory.id)}
@@ -71,7 +76,7 @@ export default function Hasil({ auth, title, tryoutHistories }) {
                                         Pembahasan
                                     </Link>
                                     <Link
-                                        href={route("tryout.ranking", tryoutHistory.id)}
+                                        href={route("tryout.ranking", tryoutHistory.tryout_id)}
                                         as="button"
                                         className="btn btn-sm capitalize"
                                     >

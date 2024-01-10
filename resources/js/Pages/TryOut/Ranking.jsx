@@ -2,99 +2,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
 export default function Ranking({ auth, title, tryoutName, rankData }) {
-    const RankData = [
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-        {
-            userId: 1,
-            username: "Farhan",
-            score: 97,
-            date: "2023-11-20",
-        },
-    ];
-
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -106,6 +13,9 @@ export default function Ranking({ auth, title, tryoutName, rankData }) {
                     </li>
                     <li>
                         <Link href={route("tryout")}>TryOut</Link>
+                    </li>
+                    <li>
+                        <Link href={route("tryout.hasil")}>Hasil TryOut</Link>
                     </li>
                     <li>{title}</li>
                 </ul>
@@ -127,13 +37,13 @@ export default function Ranking({ auth, title, tryoutName, rankData }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {RankData.map((data, i) => (
+                            {rankData.map((data, i) => (
                                 <tr
                                     className="hover:bg-curious-blue hover:bg-opacity-10 even:bg-slate-100"
                                     key={i}
                                 >
                                     <td className="text-center">{i + 1}</td>
-                                    <td>{data.username}</td>
+                                    <td>{data.name}</td>
                                     <td>{data.score}</td>
                                     <td>
                                         {new Date(data.date).toLocaleDateString(

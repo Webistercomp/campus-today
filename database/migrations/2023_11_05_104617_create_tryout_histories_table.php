@@ -19,6 +19,8 @@ return new class extends Migration
             $table->timestamp('finish_timestamp')->nullable();
             $table->integer('score')->default(0);
             $table->json('answers')->nullable();
+            $table->json('detail_score')->nullable();
+            $table->boolean('is_lulus')->nullable();
             $table->timestamps();
         });
     }

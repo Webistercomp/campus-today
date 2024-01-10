@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('material_type_id');
             $table->string('name');
             $table->string('code');
+            $table->integer('ambang_batas')->default(0)->nullable();
             $table->timestamps();
         });
     }
