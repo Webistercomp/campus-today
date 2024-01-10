@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import CTLogo from "@/images/ct_ 2.png";
 import { forwardRef, useState } from "react";
 import ProfileIcon from "@/icons/ProfileIcon";
@@ -6,6 +6,12 @@ import HamburgerIcon from "@/icons/HamburgerIcon";
 
 export default forwardRef(function Navbar({ isAuthed, user }, ref) {
     const [isOpen, setIsOpen] = useState(false);
+
+    const handleOnLogout = () => {
+        localStorage.clear();
+
+        return router.post(route("logout"));
+    };
 
     if (isAuthed) {
         return (
@@ -141,14 +147,12 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                                     Batal
                                 </button>
                             </form>
-                            <Link
-                                href={route("logout")}
-                                method="post"
+                            <button
                                 className="btn btn-error capitalize text-white"
-                                as="button"
+                                onClick={handleOnLogout}
                             >
                                 Logout
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </dialog>

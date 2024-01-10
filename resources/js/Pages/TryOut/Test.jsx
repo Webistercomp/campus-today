@@ -35,7 +35,7 @@ function TryoutTimer({ date, key, handleExpired }) {
 export default function Test({ auth, user, tryout, timeLeft }) {
     let no = 1;
     const [tryOutDataStorage, saveTryOutDataStorage] = useLocalStorage(
-        `TRY_OUT_DATA_${tryout.id}`,
+        `TRY_OUT_DATA_${tryout.id}_${user.name}`,
         []
     );
 
@@ -107,7 +107,7 @@ export default function Test({ auth, user, tryout, timeLeft }) {
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
 
-        localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}`);
+        localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}_${user.name}`);
 
         setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
 
