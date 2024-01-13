@@ -20,30 +20,24 @@ export default function Footer() {
                     />
                     <p className="flex flex-col gap-2 mt-4 lg:mt-14">
                         <span className="text-xl">PT AYO KREASI BERSAMA</span>
-                        <Link
-                            href="mailto:campustoday3100@gmail.com"
-                            className="link link-hover underline flex gap-4 items-center"
-                        >
+                        <a href="mailto:campustoday3100@gmail.com" className="link link-hover underline flex gap-4 items-center">
                             <EnvelopeIcon />
                             <span>campustoday3100@gmail.com</span>
-                        </Link>
-                        <Link
-                            href="mailto:campustoday3100@gmail.com"
-                            className="link link-hover underline flex gap-4 items-center"
-                        >
+                        </a>
+                        <a href="https://wa.me/6285172147217" className="link link-hover underline flex gap-4 items-center">
                             <WAIcon />
                             <span>+62 851-7214-7217</span>
-                        </Link>
+                        </a>
                     </p>
                     <div className="mt-6">
                         Temukan Kami <br />
                         <ul className="flex gap-4 items-center py-2">
                             <li>
-                                <Link href="">
+                                <a href="https://www.instagram.com/campus.today" target="_blank">
                                     <IgIcon />
-                                </Link>
+                                </a>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link href="">
                                     <FbIcon />
                                 </Link>
@@ -62,23 +56,24 @@ export default function Footer() {
                                 <Link href="">
                                     <YtIcon />
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </aside>
                 <div className="flex gap-8 pt-8 lg:pt-24 md:basis-1/2 md:justify-end lg:justify-center">
                     <nav className="flex flex-col gap-2">
                         <header className="footer-title">Layanan</header>
-                        <a className="link link-hover">Bimbel UTBK</a>
-                        <a className="link link-hover">Bimbel UM</a>
-                        <a className="link link-hover">Bimbel SKD</a>
+                        <a className="link link-hover" href={route('material.type', 'skd')}>Belajar SKD</a>
+                        <a className="link link-hover" href={route('material.type', 'skb')}>Bimbel SKB</a>
+                        <a className="link link-hover" href={route('material.type', 'utbk')}>Bimbel UTBK</a>
+                        <a className="link link-hover" href={route('material.type', 'um')}>Bimbel UM</a>
                     </nav>
                     <nav className="flex flex-col gap-2">
                         <header className="footer-title">Halaman</header>
-                        <a className="link link-hover">Tentang Kami</a>
-                        <a className="link link-hover">Pricing</a>
-                        <a className="link link-hover">FAQ</a>
-                        <a className="link link-hover">Testimoni</a>
+                        <a className="link link-hover" href="#about-us">Tentang Kami</a>
+                        <a className="link link-hover" href="#paket">Paket</a>
+                        <a className="link link-hover" href="#testimoni">Testimoni</a>
+                        <a className="link link-hover" href="#faq">FAQ</a>
                     </nav>
                 </div>
             </div>

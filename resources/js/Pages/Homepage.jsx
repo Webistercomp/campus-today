@@ -475,7 +475,7 @@ export default function Homepage({ title, packets }) {
                 </div>
             </section>
 
-            <section className="px-4 lg:px-24 xl:px-32 py-14 bg-white">
+            <section className="px-4 lg:px-24 xl:px-32 py-14 bg-white" id="faq">
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Kamu Nanya, Kami Jawab
                 </h1>
