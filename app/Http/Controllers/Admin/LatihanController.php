@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Chapter;
 use App\Models\GroupType;
 use App\Models\Latihan;
+use App\Models\LatihanAnswer;
+use App\Models\LatihanQuestion;
 use App\Models\Material;
 use App\Models\MaterialType;
 use App\Models\Role;
@@ -74,9 +76,10 @@ class LatihanController extends Controller
         $materials = Material::all();
         $chapters = Chapter::all();
         $user = Auth::user();
+        $groupTypes = GroupType::all();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
-        return view('admin.latihan.edit', compact('latihan', 'user', 'menu', 'materialTypes', 'materials', 'chapters', 'materialTypeID', 'materialID', 'chapterID'));
+        return view('admin.latihan.edit', compact('latihan', 'user', 'menu', 'materialTypes', 'materials', 'chapters', 'materialTypeID', 'materialID', 'chapterID', 'groupTypes'));
     }
 
     function update(Request $request, $id) {
@@ -102,5 +105,82 @@ class LatihanController extends Controller
         $latihan = Latihan::find($id);
         $latihan->delete();
         return redirect()->route('admin.latihan.index');
+    }
+
+    function updateQuestion(Request $request)
+    { // bobot is still not yet developed
+        $request->validate([
+            'question_id' => 'required',
+            'question' => 'required',
+            'answers' => 'required',
+        ]);
+        $latihan = Latihan::find($request->latihan_id);
+        // dd($latihan, $request->latihan_id);
+        if (str_contains($request->question_id, "new")) {
+            $newQuestion = new LatihanQuestion();
+            $newQuestion->latihan_id = $request->latihan_id;
+            $newQuestion->group_type_id = $request->group_type;
+            $newQuestion->question = $request->question;
+            $newQuestion->save();
+            $lastQuestionId = $newQuestion->id;
+            $index = 0;
+            foreach ($request->answers as $answer) {
+                $newAnswer = new LatihanAnswer();
+                $newAnswer->latihan_question_id = $lastQuestionId;
+                $newAnswer->answer = $answer;
+                $newAnswer->bobot = (int) $request->bobot[$index];
+                $newAnswer->save();
+                $index++;
+            }
+            return redirect()->route('admin.latihan.edit', $request->latihan_id);
+        } else {
+            $question = LatihanQuestion::find($request->question_id);
+            $question->question = $request->question;
+            $question->group_type_id = $request->group_type;
+            $question->save();
+            if ($question->answers->count() < count($request->answers)) {
+                for ($i = 0; $i < $question->answers->count(); $i++) {
+                    $answer = $question->answers[$i];
+                    $answer->answer = $request->answers[$i];
+                    $answer->save();
+                }
+                for ($i = $question->answers->count(); $i < count($request->answers); $i++) {
+                    $answer = new LatihanAnswer();
+                    $answer->latihan_question_id = $question->id;
+                    $answer->answer = $request->answers[$i];
+                    $answer->bobot = 1;
+                    $answer->save();
+                }
+            } else if ($question->answers->count() > count($request->answers)) {
+                for ($i = 0; $i < count($request->answers); $i++) {
+                    $answer = $question->answers[$i];
+                    $answer->answer = $request->answers[$i];
+                    $answer->save();
+                }
+                for ($i = count($request->answers); $i < $question->answers->count(); $i++) {
+                    $answer = $question->answers[$i];
+                    $answer->delete();
+                }
+            } else {
+                for ($i = 0; $i < count($request->answers); $i++) {
+                    $answer = $question->answers[$i];
+                    $answer->answer = $request->answers[$i];
+                    $answer->bobot = (int) $request->bobot[$i];
+                    $answer->save();
+                }
+            }
+            return redirect()->route('admin.latihan.edit', $request->latihan_id);
+        }
+    }
+
+    function deleteQuestion($question_id)
+    {
+        $question = LatihanQuestion::find($question_id);
+        foreach ($question->answers as $answer) {
+            $answer->delete();
+        }
+        $question->delete();
+        $latihan = Latihan::find($question->latihan_id);
+        return redirect()->route('admin.latihan.edit', $question->latihan_id);
     }
 }

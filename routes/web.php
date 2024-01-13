@@ -115,14 +115,17 @@ Route::prefix('admin')->group(function () {
     Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     Route::middleware('checkAdmin')->group(function () {
+        // dashboard
         Route::get('', [AdminController::class, 'index'])->name('admin.home');
 
+        // users
         Route::get('users', [UserController::class, 'index'])->name('admin.user.index');
         Route::get('users/{id}', [UserController::class, 'show'])->name('admin.user.show');
         Route::get('users/edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
         Route::put('users/{id}', [UserController::class, 'update'])->name('admin.user.update');
         Route::delete('users/{id}', [UserController::class, 'destroy'])->name('admin.user.delete');
 
+        // packets
         Route::get('packets', [AdminPacketController::class, 'index'])->name('admin.packet.index');
         Route::get('packets/create', [AdminPacketController::class, 'create'])->name('admin.packet.create');
         Route::post('packets', [AdminPacketController::class, 'store'])->name('admin.packet.store');
@@ -131,6 +134,7 @@ Route::prefix('admin')->group(function () {
         Route::put('packets/{id}', [AdminPacketController::class, 'update'])->name('admin.packet.update');
         Route::delete('packets/{id}', [AdminPacketController::class, 'destroy'])->name('admin.packet.delete');
 
+        // tryout
         Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');
         Route::get('tryouts/create', [AdminTryoutController::class, 'create'])->name('admin.tryout.create');
         Route::post('tryouts', [AdminTryoutController::class, 'store'])->name('admin.tryout.store');
@@ -140,20 +144,7 @@ Route::prefix('admin')->group(function () {
         Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
         Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
 
-        Route::get('tryout_histories', [AdminTryoutController::class, 'historyIndex'])->name('admin.tryouthistory.index');
-        Route::get('tryout_histories/{id}', [AdminTryoutController::class, 'historyShow'])->name('admin.tryouthistory.show');
-
-        Route::post('question', [AdminTryoutController::class, 'updateQuestion'])->name('admin.question.update');
-        Route::delete('question/{question_id}', [AdminTryoutController::class, 'deleteQuestion'])->name('admin.question.delete');
-
-        Route::get('latihans', [AdminLatihanController::class, 'index'])->name('admin.latihan.index');
-        Route::get('latihans/create', [AdminLatihanController::class, 'create'])->name('admin.latihan.create');
-        Route::post('latihans/store', [AdminLatihanController::class, 'store'])->name('admin.latihan.store');
-        Route::get('latihans/{id}', [AdminLatihanController::class, 'show'])->name('admin.latihan.show');
-        Route::get('latihans/edit/{id}', [AdminLatihanController::class, 'edit'])->name('admin.latihan.edit');
-        Route::put('latihans/{id}', [AdminLatihanController::class, 'update'])->name('admin.latihan.update');
-        Route::delete('latihans/{id}', [AdminLatihanController::class, 'destroy'])->name('admin.latihan.delete');
-
+        // event tryout
         Route::get('event-tryout', [AdminEventTryoutController::class, 'index'])->name('admin.event.index');
         Route::get('event-tryout/create', [AdminEventTryoutController::class, 'create'])->name('admin.event.create');
         Route::post('event-tryout', [AdminEventTryoutController::class, 'store'])->name('admin.event.store');
@@ -162,6 +153,28 @@ Route::prefix('admin')->group(function () {
         Route::put('event-tryout/{id}', [AdminEventTryoutController::class, 'update'])->name('admin.event.update');
         Route::delete('event-tryout/{id}', [AdminEventTryoutController::class, 'destroy'])->name('admin.event.delete');
 
+        // tryout history
+        Route::get('tryout_histories', [AdminTryoutController::class, 'historyIndex'])->name('admin.tryouthistory.index');
+        Route::get('tryout_histories/{id}', [AdminTryoutController::class, 'historyShow'])->name('admin.tryouthistory.show');
+
+        // tryout question
+        Route::post('question', [AdminTryoutController::class, 'updateQuestion'])->name('admin.question.update');
+        Route::delete('question/{question_id}', [AdminTryoutController::class, 'deleteQuestion'])->name('admin.question.delete');
+
+        // latihan
+        Route::get('latihans', [AdminLatihanController::class, 'index'])->name('admin.latihan.index');
+        Route::get('latihans/create', [AdminLatihanController::class, 'create'])->name('admin.latihan.create');
+        Route::post('latihans/store', [AdminLatihanController::class, 'store'])->name('admin.latihan.store');
+        Route::get('latihans/{id}', [AdminLatihanController::class, 'show'])->name('admin.latihan.show');
+        Route::get('latihans/edit/{id}', [AdminLatihanController::class, 'edit'])->name('admin.latihan.edit');
+        Route::put('latihans/{id}', [AdminLatihanController::class, 'update'])->name('admin.latihan.update');
+        Route::delete('latihans/{id}', [AdminLatihanController::class, 'destroy'])->name('admin.latihan.delete');
+
+        // latihan question
+        Route::post('questionLatihan', [AdminLatihanController::class, 'updateQuestion'])->name('admin.questionLatihan.update');
+        Route::delete('questionLatihan/{question_id}', [AdminLatihanController::class, 'deleteQuestion'])->name('admin.questionLatihan.delete');
+
+        // materi
         Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
         Route::get('materi/create', [MateriController::class, 'create'])->name('admin.materi.create');
         Route::post('materi/store', [MateriController::class, 'store'])->name('admin.materi.store');
@@ -170,6 +183,7 @@ Route::prefix('admin')->group(function () {
         Route::put('materi/{id}', [MateriController::class, 'update'])->name('admin.materi.update');
         Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
 
+        // article
         Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
         Route::get('article/create', [AdminArticleController::class, 'create'])->name('admin.article.create');
         Route::post('article', [AdminArticleController::class, 'store'])->name('admin.article.store');
@@ -178,6 +192,7 @@ Route::prefix('admin')->group(function () {
         Route::put('article/{id}', [AdminArticleController::class, 'update'])->name('admin.article.update');
         Route::delete('article/{id}', [AdminArticleController::class, 'destroy'])->name('admin.article.delete');
 
+        // minat bakat
         Route::get('minatbakat', [AdminMinatBakatController::class, 'index'])->name('admin.minatbakat.index');
         Route::get('minatbakat/{id}', [AdminMinatBakatController::class, 'show'])->name('admin.minatbakat.show');
         Route::get('minatbakat/edit/{id}', [AdminMinatBakatController::class, 'edit'])->name('admin.minatbakat.edit');
