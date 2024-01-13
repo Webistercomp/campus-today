@@ -70,10 +70,10 @@ export default function Footer() {
                     </nav>
                     <nav className="flex flex-col gap-2">
                         <header className="footer-title">Halaman</header>
-                        <a className="link link-hover" href="#about-us">Tentang Kami</a>
-                        <a className="link link-hover" href="#paket">Paket</a>
-                        <a className="link link-hover" href="#testimoni">Testimoni</a>
-                        <a className="link link-hover" href="#faq">FAQ</a>
+                        <a className="link link-hover" href={route('home') + '#about-us'}>Tentang Kami</a>
+                        <a className="link link-hover" href={route('home') + '#paket'}>Paket</a>
+                        <a className="link link-hover" href={route('home') + '#testimoni'}>Testimoni</a>
+                        <a className="link link-hover" href={route('home') + '#faq'}>FAQ</a>
                     </nav>
                 </div>
             </div>
