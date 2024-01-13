@@ -25,11 +25,13 @@ export default function Article({ auth, title, articles, latest_article }) {
 
                 <div className="mt-8">
                     <div className="flex gap-6 items-center border-2 border-slate-200 max-w-6xl mx-auto">
-                        <img
-                            src={latest_article.image}
-                            alt=""
-                            className="bg-slate-700 max-w-[350px] aspect-[5/4] basis-1/3"
-                        />
+                        <figure>
+                            <img
+                                src={latest_article.image}
+                                alt={title}
+                                className="bg-slate-500 w-full aspect-video basis-1/3 object-cover"
+                            />
+                        </figure>
                         <div className="basis-2/3 px-8 text-slate-700">
                             <p className="text-xs text-slate-400">
                                 {formatDate(latest_article.updated_at)}

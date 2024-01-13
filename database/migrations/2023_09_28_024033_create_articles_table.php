@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->binary('body')->nullable();
-            $table->string('image')->nullable();
+            $table->string('image')->default('default.jpg');
             $table->boolean('active')->default(1);
             $table->timestamps();
         });

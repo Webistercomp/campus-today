@@ -15,12 +15,20 @@ export default function showArticle({ auth, article }) {
                         dateStyle: "long",
                     })}
                 </p>
-                <img
-                    src={article.image}
-                    alt=""
-                    className="bg-slate-300 aspect-video w-full my-6"
-                />
-                <div className="w-4/5 mx-auto text-justify">{article.body}</div>
+                <figure className="flex mb-8">    
+                    <img
+                        src={article.image}
+                        alt=""
+                        className="bg-slate-500 w-3/4 aspect-video object-cover block mx-auto"
+                    />
+                </figure>
+                <div className="w-4/5 text-justify">{article.body}</div>
+                {/* tombol kembali */}
+                <div className="mt-8 flex pb-14">
+                    <a href={route("article.index")} className="btn btn-primary btn-outline">
+                        Kembali ke List Artikel
+                    </a>
+                </div>
             </section>
         </AuthenticatedLayout>
     );

@@ -18,7 +18,6 @@ class ArticleSeeder extends Seeder
                 'title' => 'Article ' . ($i + 1),
                 'description' => 'Article ' . ($i + 1),
                 'body' => 'The Body Content of Article ' . ($i + 1) . ', bla bla bla.',
-                'image' => null,
                 'active' => 1,
             ]);
         }
