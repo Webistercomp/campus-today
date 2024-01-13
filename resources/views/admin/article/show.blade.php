@@ -52,9 +52,9 @@
                 <th>Gambar (Cover)</th>
                 <td>
                     @if($article->image)
-                    <img src={{asset('storage/images/article/' . $article->image)}} alt="" width="200px" height="auto" class="rounded">
+                    <img src={{$article->image}} alt="" width="200px" height="auto" class="rounded">
                     @else
-                    <img src={{asset('static/default-image-article.jpg')}} alt="" width="200px" height="auto" class="rounded">
+                    <img src={{asset('storage/article/images/default.jpg')}} alt="" width="200px" height="auto" class="rounded">
                     @endif
                 </td>
             </tr>

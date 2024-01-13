@@ -38,7 +38,7 @@ class ArticleController extends Controller
         if($request->hasFile('image')) {
             $time = time();
             $ext = $request->image->extension();
-            $request->file('image')->storeAs('public/images/article', $time.'.'.$ext);
+            $request->file('image')->storeAs('public/article/images/', $time.'.'.$ext);
             $newArticle->image = $time.'.'.$ext;
         }
         if($request->has('active')) {
@@ -78,8 +78,8 @@ class ArticleController extends Controller
         if($request->hasFile('image')) {
             $time = time();
             $ext = $request->image->extension();
-            $request->file('image')->storeAs('public/images/article', $time.'.'.$ext);
-            Storage::delete('public/images/article/'.$article->image);
+            $request->file('image')->storeAs('public/article/images/', $time.'.'.$ext);
+            Storage::delete('public/article/images/'.$article->image);
             $article->image = $time.'.'.$ext;
         }
         if($request->has('active')) {
@@ -93,7 +93,7 @@ class ArticleController extends Controller
 
     function destroy($id) {
         $article = Article::find($id);
-        Storage::delete('public/images/article/'.$article->image);
+        Storage::delete('public/article/images/'.$article->image);
         $article->delete();
         return redirect()->route('admin.article.index');
     }

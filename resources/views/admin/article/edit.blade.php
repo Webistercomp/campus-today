@@ -49,7 +49,7 @@
                         <th class="col-4">Gambar (Cover)</th>
                         <td class="col-8">
                             <div id="new-image">
-                                <img src={{ $article->image ? asset('storage/images/article/' . $article->image ) : asset('static/default-image-article.jpg')}} class="rounded" style="width: 200px; height: auto;">
+                                <img src={{$article->image}} class="rounded" style="width: 200px; height: auto;">
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="image" name="image">
