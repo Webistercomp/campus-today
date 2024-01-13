@@ -31,16 +31,6 @@
                         </td>
                     </tr>
                     <tr class="row">
-                        <th class="col-4">Group</th>
-                        <td class="col-8">
-                            <select class="custom-select" name="group_id" id="group_id">
-                                @foreach ($groups as $group)
-                                    <option value="{{$group->id}}">{{$group->name}}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                    </tr>
-                    <tr class="row">
                         <th class="col-4">Role</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="roles" name="roles" placeholder="Contoh: 1,2,3 atau 3,5,6">

@@ -103,6 +103,7 @@
                     @csrf
                     <div id={{"input_question_" . $question->id}} style="display:none">
                         <input type="hidden" name="question_id" value={{$question->id}}>
+                        <input type="hidden" name="tryout_id" value={{$question->tryout_id}}>
                         <input type="text" name="question" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
                         <div class="row">
                             <label for={{"group_type_".$question->id}} class="col-2 m-0" >
