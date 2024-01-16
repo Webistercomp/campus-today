@@ -102,16 +102,21 @@ export default function Test({ auth, user, tryout, timeLeft }) {
             tryout_data: finalTryOutData,
         };
 
-        axios
+
+        let tryoutHistory = await axios
             .post(route("tryout.scoring"), finalData)
-            .then((res) => console.log(res))
+            .then((res) => {
+                console.log(res.data.data.id)
+                return res.data.data
+            })
             .catch((err) => console.log(err));
 
         localStorage.removeItem(`TRY_OUT_DATA_${tryout.id}_${user.name}`);
 
         setTryOutData((prev) => prev.map((dt) => ({ ...dt, jawaban: null })));
+        console.log(tryoutHistory)
 
-        return router.get(route("tryout.success", tryout.id));
+        return router.get(route("tryout.selesai", tryoutHistory.id));
     };
 
     const onTimesUpTryout = () => {

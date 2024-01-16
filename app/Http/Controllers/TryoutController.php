@@ -208,21 +208,16 @@ class TryoutController extends Controller
         }
     }
 
-    public function success($id) { // setelah mengerjakan tryout
+    public function selesai($id_tryout_history) { // setelah mengerjakan tryout
         $user = Auth::user();
-        $tryoutHistory = TryoutHistory::where('user_id', $user->id)
-            ->where('tryout_id', $id)
-            ->latest()
-            ->first();
-        return Inertia::render('TryOut/TryOutSuccess', [
+        $tryoutHistory = TryoutHistory::find($id_tryout_history);
+        $tryout = $tryoutHistory->tryout;
+        return Inertia::render('TryOut/TryOutSelesai', [
             'title' => 'Nama TryOut',
             'user' => $user,
-            'tryout_history' => $tryoutHistory
+            'tryout_history' => $tryoutHistory,
+            'tryout' => $tryout
         ]);
-    }
-
-    public function failed() { // setelah mengerjakan tryout
-        return Inertia::render('TryOut/TryOutFailed', ['title' => 'Nama TryOut', 'name' => 'Farhan Hikmatullah D']);
     }
 
     public function type($type) { // list tryout by type
