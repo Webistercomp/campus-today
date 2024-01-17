@@ -151,6 +151,7 @@ class TryoutController extends Controller
             $newQuestion->tryout_id = $request->tryout_id;
             $newQuestion->group_type_id = $request->group_type;
             $newQuestion->question = $request->question;
+            $newQuestion->pembahasan = $request->pembahasan;
             $newQuestion->save();
             $lastQuestionId = $newQuestion->id;
             $index = 0;
@@ -171,6 +172,7 @@ class TryoutController extends Controller
             $question = Question::find($request->question_id);
             $question->question = $request->question;
             $question->group_type_id = $request->group_type;
+            $question->pembahasan = $request->pembahasan;
             $question->save();
             if ($question->answers->count() < count($request->answers)) {
                 for ($i = 0; $i < $question->answers->count(); $i++) {
