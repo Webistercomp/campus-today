@@ -193,9 +193,12 @@ Route::prefix('admin')->group(function () {
 
         // minat bakat
         Route::get('minatbakat', [AdminMinatBakatController::class, 'index'])->name('admin.minatbakat.index');
-        Route::get('minatbakat/{id}', [AdminMinatBakatController::class, 'show'])->name('admin.minatbakat.show');
+        Route::get('minatbakat/{type}', [AdminMinatBakatController::class, 'show'])->name('admin.minatbakat.show');
         Route::get('minatbakat/edit/{id}', [AdminMinatBakatController::class, 'edit'])->name('admin.minatbakat.edit');
         Route::put('minatbakat/{id}', [AdminMinatBakatController::class, 'update'])->name('admin.minatbakat.update');
         Route::delete('minatbakat/{id}', [AdminMinatBakatController::class, 'destroy'])->name('admin.minatbakat.delete');
+        Route::post('minatbakat/question', [AdminMinatBakatController::class, 'questionCreate'])->name('admin.minatbakat.question.create');
+        Route::put('minatbakat/question/{id}', [AdminMinatBakatController::class, 'questionUpdate'])->name('admin.minatbakat.question.update');
+        Route::delete('minatbakat/question/{id}', [AdminMinatBakatController::class, 'questionDestroy'])->name('admin.minatbakat.question.delete');
     });
 });
