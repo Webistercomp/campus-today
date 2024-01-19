@@ -35,7 +35,7 @@ class AnswerSeeder extends Seeder
                 }
             } else {
                 $correct_answer = rand(0, 3);
-                for($i=0; $i<4; $i++) {
+                for($i=0; $i<5; $i++) {
                     Answer::create([
                         'question_id' => $question->id,
                         'answer' => 'Jawaban ' . $i,

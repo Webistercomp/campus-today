@@ -4,7 +4,7 @@ import { useState } from "react";
 import TryOutContent from "./Test";
 import axios from 'axios';
 
-export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soal, code }) {
+export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soal, code, ambang_batas }) {
     const [isReady, setIsReady] = useState(false);
 
     const start_tryout = async () => {
@@ -83,10 +83,10 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
                                 <li>
                                     Perhatikan Ambang Batas dari setiap sub tes:
                                     <ol className="list-inside list-lower-alpha">
-                                        <li>Tes Wawasan Kebangsaan (TWK) : 65</li>
-                                        <li>Tes Intelegensia Umum (TIU) : 80</li>
+                                        <li>Tes Wawasan Kebangsaan (TWK) : {ambang_batas.twk}</li>
+                                        <li>Tes Intelegensia Umum (TIU) : {ambang_batas.tiu}</li>
                                         <li>
-                                            Tes Karakteristik Pribadi (TKP) : 156
+                                            Tes Karakteristik Pribadi (TKP) : {ambang_batas.tkp}
                                         </li>
                                     </ol>
                                 </li>

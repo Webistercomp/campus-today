@@ -75,6 +75,13 @@ class TryoutController extends Controller
             $jumlah_soal['tkp'] = $tryout->questions->where('group_type_id', 7)->count();
         }
 
+        // ambang batas (kkm)
+        $groupTypes = GroupType::all();
+        $ambangBatas = [];
+        foreach ($groupTypes as $groupType) {
+            $ambangBatas[$groupType->code] = $groupType->ambang_batas;
+        }
+
         // return view
         return Inertia::render('TryOut/Confirm', [
             'title' => 'Nama TryOut',
@@ -82,6 +89,7 @@ class TryoutController extends Controller
             'tryout' => $tryout,
             'jumlah_soal' => $jumlah_soal,
             'code' => $tryout->materialType->code,
+            'ambang_batas' => $ambangBatas,
         ]);
     }
 
@@ -122,6 +130,13 @@ class TryoutController extends Controller
             $jumlah_soal['tkp'] = $tryout->questions->where('group_type_id', 7)->count();
         }
 
+        // ambang batas (kkm)
+        $groupTypes = GroupType::all();
+        $ambangBatas = [];
+        foreach ($groupTypes as $groupType) {
+            $ambangBatas[$groupType->code] = $groupType->ambang_batas;
+        }
+
         // return view
         return Inertia::render('TryOut/Confirm', [
             'title' => 'Nama TryOut',
@@ -129,6 +144,7 @@ class TryoutController extends Controller
             'tryout' => $tryout,
             'jumlah_soal' => $jumlah_soal,
             'code' => $tryout->materialType->code,
+            'ambang_batas' => $ambangBatas,
         ]);
     }
 
