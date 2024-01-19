@@ -34,7 +34,6 @@ class DatabaseSeeder extends Seeder
             MinatBakatSeeder::class,
             MinatBakatQuestionSeeder::class,
             MinatBakatAnswerSeeder::class,
-            SolutionSeeder::class,
         ]);
     }
 }

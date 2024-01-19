@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('group_type_id');
             $table->string('question');
             $table->text('pembahasan')->nullable();
+            $table->string('file_pembahasan')->nullable();
             $table->timestamps();
         });
     }

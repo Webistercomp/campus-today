@@ -64,7 +64,7 @@ export default function Insight({ auth, title, tryoutName, tryout }) {
                                 ))}
                             </ol>
                             <p><span className="font-bold">Pembahasan</span> :</p>
-                            <p>{soal.solution.solution}</p>
+                            <p>{soal.pembahasan}</p>
                         </li>
                     ))}
                 </ol>

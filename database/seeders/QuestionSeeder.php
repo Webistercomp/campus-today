@@ -24,6 +24,7 @@ class QuestionSeeder extends Seeder
                         'group_type_id' => rand(1,4),
                         'question' => 'Question ' . $i,
                         'pembahasan' => 'Pembahasan ' . $i,
+                        'file_pembahasan' => null,
                     ]);
                 }
             } else if($tryout->materialType->code == "skd" || $tryout->materialType->code == "skb"){
@@ -33,6 +34,7 @@ class QuestionSeeder extends Seeder
                         'group_type_id' => rand(5,7),
                         'question' => 'Question ' . $i,
                         'pembahasan' => 'Pembahasan ' . $i,
+                        'file_pembahasan' => null,
                     ]);
                 }
             } else {
@@ -49,6 +51,7 @@ class QuestionSeeder extends Seeder
                         'group_type_id' => rand(1,4),
                         'question' => 'Question ' . $i,
                         'pembahasan' => 'Pembahasan ' . $i,
+                        'file_pembahasan' => null,
                     ]);
                 }
             } else if($latihan->materialType->code == "skd" || $latihan->materialType->code == "skb"){
@@ -58,6 +61,7 @@ class QuestionSeeder extends Seeder
                         'group_type_id' => rand(5,7),
                         'question' => 'Question ' . $i,
                         'pembahasan' => 'Pembahasan ' . $i,
+                        'file_pembahasan' => null,
                     ]);
                 }
             } else {

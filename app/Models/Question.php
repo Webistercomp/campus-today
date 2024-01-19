@@ -24,8 +24,4 @@ class Question extends Model
     function groupType() {
         return $this->belongsTo(GroupType::class);
     }
-
-    function solution() {
-        return $this->hasOne(Solution::class);
-    }
 }

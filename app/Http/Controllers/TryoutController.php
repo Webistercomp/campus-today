@@ -303,8 +303,7 @@ class TryoutController extends Controller
     }
 
     public function insight($id_tryout_history) { // pembahasan tryout
-        $tryoutHistory = TryoutHistory::with('tryout.questions.answers', 'tryout.questions.solution')->where('user_id', Auth::user()->id)
-            ->find($id_tryout_history);
+        $tryoutHistory = TryoutHistory::with('tryout.questions.answers')->find($id_tryout_history);
         $no = 1;
         $answers = json_decode($tryoutHistory->answers);
         foreach ($tryoutHistory->tryout->questions as $question) {
