@@ -200,5 +200,10 @@ Route::prefix('admin')->group(function () {
         Route::post('minatbakat/question', [AdminMinatBakatController::class, 'questionCreate'])->name('admin.minatbakat.question.create');
         Route::put('minatbakat/question/{id}', [AdminMinatBakatController::class, 'questionUpdate'])->name('admin.minatbakat.question.update');
         Route::delete('minatbakat/question/{id}', [AdminMinatBakatController::class, 'questionDestroy'])->name('admin.minatbakat.question.delete');
+
+        // Wartegg
+        Route::get('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggShow'])->name('admin.minatbakat.wartegg.show');
+        Route::put('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggUpdate'])->name('admin.minatbakat.wartegg.update');
+        Route::delete('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggDestroy'])->name('admin.minatbakat.wartegg.delete');
     });
 });

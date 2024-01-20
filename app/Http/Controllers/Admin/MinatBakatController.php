@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\MinatBakat;
 use App\Models\MinatBakatAnswer;
 use App\Models\MinatBakatQuestion;
+use App\Models\Wartegg;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use stdClass;
 
 class MinatBakatController extends Controller
 {
@@ -17,7 +20,16 @@ class MinatBakatController extends Controller
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
-        return view('admin.minatbakat.index', compact('user', 'menu'));
+
+        $wartegg = new stdClass();
+        $wartegg->pending = Wartegg::where('status', '=', 'pending')->get()->count();
+        $wartegg->completed = Wartegg::where('status', '=', 'completed')->get()->count();
+
+        $tav = MinatBakat::with('minatBakatQuestions')->where('type', '=', 'tav')->get()[0]->minatBakatQuestions->count();
+        $epps = MinatBakat::with('minatBakatQuestions')->where('type', '=', 'epps')->get()[0]->minatBakatQuestions->count();
+        $mtk = MinatBakat::with('minatBakatQuestions')->where('type', '=', 'mtk')->get()[0]->minatBakatQuestions->count();
+
+        return view('admin.minatbakat.index', compact('user', 'menu', 'wartegg', 'tav', 'epps', 'mtk'));
     }
 
     function Show($type)
@@ -25,6 +37,12 @@ class MinatBakatController extends Controller
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
+
+        if ($type == 'wartegg') {
+            $warteggs = Wartegg::select('warteggs.id', 'user_id', 'users.name', 'filename', 'img_url', 'status', 'analysis')->join('users', 'warteggs.user_id', '=', 'users.id')->get();
+
+            return view('admin.minatbakat.wartegg_index', compact('user', 'menu', 'warteggs'));
+        }
 
         $minatbakat =  MinatBakat::with('minatBakatQuestions.minatBakatAnswer')->where('type', $type)->get()[0];
 
@@ -106,5 +124,37 @@ class MinatBakatController extends Controller
         $mbQuestion->delete();
 
         return redirect()->route('admin.minatbakat.edit', $request->minatbakat_id);
+    }
+
+    function warteggShow($id)
+    {
+        $user = Auth::user();
+        $menu = Route::getCurrentRoute()->getName();
+        $menu = explode('.', $menu)[1];
+
+        $wartegg = Wartegg::find($id);
+
+        return view('admin.minatbakat.wartegg_show', compact('user', 'menu', 'wartegg'));
+    }
+
+    function warteggUpdate(Request $request, $id)
+    {
+        $wartegg = Wartegg::find($id);
+        $wartegg->analysis = $request->analisis;
+        $wartegg->status = $request->status;
+        $wartegg->save();
+
+        return redirect()->route('admin.minatbakat.wartegg.show', $id);
+    }
+
+    function warteggDestroy($id)
+    {
+        $wartegg = Wartegg::find($id);
+        if (Storage::exists('public/images/' . $wartegg->filename)) {
+            Storage::delete('public/images/' . $wartegg->filename);
+        }
+        $wartegg->delete();
+
+        return redirect()->route('admin.minatbakat.show', 'wartegg');
     }
 }
