@@ -11,25 +11,31 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class MinatBakatController extends Controller {
-    function index() {
+class MinatBakatController extends Controller
+{
+    function index()
+    {
         return Inertia::render('MinatBakat/Index', ['title' => 'Tes Minat Bakat']);
     }
 
-    function teskoran() {
+    function teskoran()
+    {
         return Inertia::render('MinatBakat/TesKoran', ['title' => 'Tes Koran']);
     }
 
-    function teswartegg() {
+    function teswartegg()
+    {
         return Inertia::render('MinatBakat/TesWartegg', ['title' => 'Tes Wartegg']);
     }
 
-    function tav() {
+    function tav()
+    {
         $tav = MinatBakat::with('minatBakatQuestions.minatBakatAnswer')->where('type', 'tav')->get()[0];
         return Inertia::render('MinatBakat/TesAnalogiVerbal', ['title' => 'Tes Analogi Verbal', 'data' => $tav]);
     }
 
-    function tavScoring(Request $request) {
+    function tavScoring(Request $request)
+    {
         $tav = $request->data;
         $score = 0;
         $jumlah_benar = 0;
@@ -56,19 +62,22 @@ class MinatBakatController extends Controller {
         ]);
     }
 
-    function tavResult(Request $request) {
+    function tavResult(Request $request)
+    {
         $tav_result_data = $request->data['result'];
         $minatbakat = MinatBakat::find($request->data['minatbakat_id']);
 
         return Inertia::render('MinatBakat/ResultPage', ['title' => 'Hasil Tes Analogi Verbal', 'result' => $tav_result_data, 'minatbakat' => $minatbakat]);
     }
 
-    function epps() {
+    function epps()
+    {
         $epps = MinatBakat::with('minatBakatQuestions.minatBakatAnswer')->where('type', 'epps')->get()[0];
         return Inertia::render('MinatBakat/EPPS', ['title' => 'EPPS', 'data' => $epps]);
     }
 
-    function eppsScoring(Request $request) {
+    function eppsScoring(Request $request)
+    {
         $epps = $request->data;
         $score = 0;
         $jumlah_benar = 0;
@@ -95,19 +104,22 @@ class MinatBakatController extends Controller {
         ]);
     }
 
-    function eppsResult(Request $request) {
+    function eppsResult(Request $request)
+    {
         $epps_result_data = $request->data['result'];
         $minatbakat = MinatBakat::find($request->data['minatbakat_id']);
 
         return Inertia::render('MinatBakat/ResultPage', ['title' => 'Hasil Tes Analogi Verbal', 'result' => $epps_result_data, 'minatbakat' => $minatbakat]);
     }
 
-    function tesmtk() {
+    function tesmtk()
+    {
         $mtk = MinatBakat::with('minatBakatQuestions.minatBakatAnswer')->where('type', 'mtk')->get()[0];
         return Inertia::render('MinatBakat/TesMatematika', ['title' => 'Tes Matematika', 'data' => $mtk]);
     }
 
-    function tesmtkScoring(Request $request) {
+    function tesmtkScoring(Request $request)
+    {
         $tesmtk = $request->data;
         $score = 0;
         $jumlah_benar = 0;
@@ -134,22 +146,27 @@ class MinatBakatController extends Controller {
         ]);
     }
 
-    function tesmtkResult(Request $request) {
+    function tesmtkResult(Request $request)
+    {
         $tesmtk_result = $request->data['result'];
         $minatbakat = MinatBakat::find($request->data['minatbakat_id']);
 
         return Inertia::render('MinatBakat/ResultPage', ['title' => 'Hasil Tes Analogi Verbal', 'result' => $tesmtk_result, 'minatbakat' => $minatbakat]);
     }
 
-    function testWartegg() {
-        $hasil_wartegg = Wartegg::where('user_id', Auth::id())->orderby('created_at', 'DESC')->first();
+    function testWartegg()
+    {
+        $hasil_wartegg = Wartegg::where('user_id', Auth::id())->orderby('created_at', 'DESC')->get();
 
-        if ($hasil_wartegg) return redirect(route('minatbakat.teswartegg.hasil'));
+        if ($hasil_wartegg->count() >= 5) {
+            return redirect()->route('minatbakat.teswartegg.hasil');
+        }
 
         return Inertia::render('MinatBakat/TesWartegg/Index', ['title' => 'Tes Wartegg']);
     }
 
-    function storeTestWartegg(Request $request) {
+    function storeTestWartegg(Request $request)
+    {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg|max:1024',
         ]);
@@ -173,8 +190,9 @@ class MinatBakatController extends Controller {
         return response()->json(['status' => 'success', 'msg' => 'Sukses menyimpan jawaban', 'img_url' => $img_url]);
     }
 
-    function hasilTestWartegg() {
-        $hasil_wartegg = Wartegg::where('user_id', Auth::id())->orderby('created_at', 'DESC')->first();
+    function hasilTestWartegg()
+    {
+        $hasil_wartegg = Wartegg::where('user_id', Auth::id())->orderby('created_at', 'DESC')->get();
 
         return Inertia::render('MinatBakat/TesWartegg/Hasil', ['title' => 'Hasil Tes Wartegg', 'hasil_wartegg' => $hasil_wartegg]);
     }
