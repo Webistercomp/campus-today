@@ -89,12 +89,12 @@ class EventTryoutController extends Controller
         $tryout = Tryout::find($id);
         $tryout->roles = implode(',', json_decode($tryout->roles));
         $materialTypes = MaterialType::all();
-        $groups = GroupType::all();
+        $groupTypes = GroupType::all();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
         $roles = Role::all();
-        return view('admin.event.edit', compact('tryout', 'user', 'menu', 'roles', 'materialTypes', 'groups'));
+        return view('admin.event.edit', compact('tryout', 'user', 'menu', 'roles', 'materialTypes', 'groupTypes'));
     }
 
     function update(Request $request, $id) {
