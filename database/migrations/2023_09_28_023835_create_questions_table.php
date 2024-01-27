@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('tryout_id');
             $table->integer('group_type_id');
-            $table->string('question');
+            $table->text('question');
             $table->text('pembahasan')->nullable();
             $table->string('file_pembahasan')->nullable();
             $table->timestamps();

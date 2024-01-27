@@ -391,6 +391,7 @@ function startEditQuestion(idQuestion) {
     let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
     let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
     let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
     questionInput.style.display = "block"
     questionDiv.style.display = "none"
     cancelBtn.style.display = "inline-block"
@@ -400,6 +401,7 @@ function startEditQuestion(idQuestion) {
     divAnswers.style.display = "none"
     pDivider.innerText = "Pertanyaan"
     pembahasanInput.style.display = "block"
+    pembahasanDiv.style.display = "none"
 }
 
 function cancelEditQuestion(idQuestion) {
@@ -412,6 +414,7 @@ function cancelEditQuestion(idQuestion) {
     let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
     let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
     let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
     questionInput.style.display = "none"
     questionDiv.style.display = "flex"
     cancelBtn.style.display = "none"
@@ -421,6 +424,7 @@ function cancelEditQuestion(idQuestion) {
     divAnswers.style.display = "flex"
     pDivider.innerText = "Pilihan jawaban :"
     pembahasanInput.style.display = "none"
+    pembahasanDiv.style.display = "block"
 }
 
 function deleteNewQuestion(idQuestion){

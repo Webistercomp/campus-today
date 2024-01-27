@@ -14,18 +14,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DatabaseSeeder::call([
-            RoleSeeder::class,
-            UserSeeder::class,
-            PacketSeeder::class,
-            GroupTypeSeeder::class,
+            RoleSeeder::class, // permanent
+            UserSeeder::class, 
+            PacketSeeder::class, // permanent
+            GroupTypeSeeder::class, // permanent
             TryoutSeeder::class,
             MaterialTypeSeeder::class,
             QuestionSeeder::class,
             AnswerSeeder::class,
             MaterialSeeder::class,
             ChapterSeeder::class,
-            ScheduleBimbelSeeder::class,
-            ParticipantSeeder::class,
             ArticleSeeder::class,
             InstagramFeedSeeder::class,
             LatihanSeeder::class,

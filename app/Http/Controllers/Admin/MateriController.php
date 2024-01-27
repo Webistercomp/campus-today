@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chapter;
 use App\Models\GroupType;
 use App\Models\Material;
 use App\Models\MaterialType;
@@ -89,5 +90,65 @@ class MateriController extends Controller
         $material = Material::find($id);
         $material->delete();
         return redirect()->route('admin.materi.index');
+    }
+
+    function getYoutubeEmbedUrl($url) {
+        $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+        $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+        if (preg_match($longUrlRegex, $url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+
+        if (preg_match($shortUrlRegex, $url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+        return 'https://www.youtube.com/embed/' . $youtube_id ;
+    }
+
+    function updateChapter(Request $request, $id) {
+        // dd($request);
+        $chapter = Chapter::find($request->chapter_id);
+        $chapter->judul = $request->judul;
+        $chapter->subjudul = $request->subjudul;
+        if($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('storage/materi/file'), $fileName);
+
+            // remove old file
+            $oldFile = $chapter->file;
+            if($oldFile != null) {
+                $oldFile = public_path('storage/materi/file') . '/' . $oldFile;
+                if(file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+
+            $chapter->file = $fileName;
+        }
+        if($request->link) {
+            $url = $request->link;
+            $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+            $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+            if (preg_match($longUrlRegex, $url, $matches)) {
+                $youtube_id = $matches[count($matches) - 1];
+            }
+    
+            if (preg_match($shortUrlRegex, $url, $matches)) {
+                $youtube_id = $matches[count($matches) - 1];
+            }
+            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id ;
+        }
+        $chapter->save();
+
+        return redirect()->route('admin.materi.show', $id);
+    }
+
+    function deleteChapter($id) {
+        $chapter = Chapter::find($id);
+        $chapter->delete();
+        return redirect()->route('admin.materi.show', $chapter->material_id);
     }
 }
