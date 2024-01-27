@@ -30,8 +30,8 @@ export default function Register() {
     return (
         <>
             <Head title="Sign Up" />
-            <div className="font-poppins lg:text-base block lg:flex h-screen overflow-clip">
-                <div className="md:w-fit md:mx-auto lg:basis-3/5 px-4 lg:pl-14 xl:pl-36">
+            <div className="font-poppins lg:text-base block lg:flex min-h-screen overflow-y-auto">
+                <div className="md:w-fit md:mx-auto lg:basis-3/5 px-4 lg:pl-14 xl:pl-36 self-start">
                     <Link href="/">
                         <img
                             src={CTIcon}
@@ -54,7 +54,7 @@ export default function Register() {
                         </p>
                         <form
                             onSubmit={submit}
-                            className="mt-6 lg:mt-4 flex flex-col gap-0 lg:gap-0 xl:gap-4"
+                            className="mt-6 lg:mt-4 flex flex-col gap-0"
                         >
                             <div className="flex flex-col mb-4">
                                 <label
@@ -97,7 +97,7 @@ export default function Register() {
 
                                 <InputError
                                     message={errors.email}
-                                    className="mt-2"
+                                    className="mt-2 mb-0"
                                 />
                             </div>
 
@@ -121,7 +121,7 @@ export default function Register() {
 
                                 <InputError
                                     message={errors.password}
-                                    className="mt-2"
+                                    className="mt-2 mb-0"
                                 />
                             </div>
 
@@ -157,8 +157,8 @@ export default function Register() {
                         </form>
                     </div>
                 </div>
-                <div className="basis-2/5 p-6 invisible lg:visible">
-                    <div className="bg-[#000842] w-full min-h-full rounded-2xl flex items-start justify-center">
+                <div className="basis-2/5 p-6 hidden lg:flex">
+                    <div className="bg-[#000842] w-full min-h-full rounded-2xl flex items-start justify-center overflow-hidden">
                         <img src={IllusAuth} alt="illustration" />
                     </div>
                 </div>

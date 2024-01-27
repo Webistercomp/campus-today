@@ -18,7 +18,22 @@ import holding from "@/images/holding.png";
 import notes from "@/images/notes.png";
 import prof from "@/images/prof.png";
 import CampusToday from "@/images/campus-today.png";
-import { useEffect } from "react";
+import Fatur from "@/images/fatur.jpg";
+import Tasya from "@/images/tasya.jpg";
+import Shifa from "@/images/shifa.jpg";
+import Rasya from "@/images/rasya.jpg";
+import Dimas from "@/images/dimas.jpg";
+import Testi1 from "@/images/testi-buku/testi-1.jpg";
+import Testi2 from "@/images/testi-buku/testi-2.jpg";
+import Testi3 from "@/images/testi-buku/testi-3.jpg";
+import Testi4 from "@/images/testi-buku/testi-4.jpg";
+import Testi5 from "@/images/testi-buku/testi-5.jpg";
+import Testi6 from "@/images/testi-buku/testi-6.jpg";
+import Testi7 from "@/images/testi-buku/testi-7.jpg";
+import Testi8 from "@/images/testi-buku/testi-8.jpg";
+import Testi9 from "@/images/testi-buku/testi-9.jpg";
+import Testi10 from "@/images/testi-buku/testi-10.jpg";
+import { useEffect, useState } from "react";
 
 export default function Homepage({ title, packets }) {
     const FAQ = [
@@ -50,8 +65,135 @@ export default function Homepage({ title, packets }) {
         },
     ];
 
+    const testiData = [
+        {
+            name: "Fawas Fatchur Rois Riadi",
+            as: "Alumni SMAN 1 AJIBARANG",
+            agency: "Universitas Jenderal Soedirman",
+            testi: "Bimbel SPASI ini sangat bagus. Cara pembelajarannya tidak terlalu terburu buru dan mulai dari awal jadi tidak takut untuk ketinggalan materi.",
+            image: Fatur,
+        },
+        {
+            name: "Anatasia Permata Sari Manurung",
+            as: "Alumni SMAN 10 TANGERANG",
+            agency: "Universitas Pertamina",
+            testi: "Kakaknya ngajarnya seru, jadi kita nggak bosen saat belajar. Selain itu, cara ngajarnya juga pelan-pelan jadi lebih mudah dimengerti materi pembelajarannya.",
+            image: Tasya,
+        },
+        {
+            name: "Shifa Dwi Pramudita",
+            as: "Alumni SMAN 1 JALAKSANA",
+            agency: "Universitas Jenderal Achmad Yani",
+            testi: "Kesan saya selama bimbel disini saya merasa nyaman, santai, dan pastinya juga seru. Dari penyampaian materinya pun berurut sehingga ketika memasuki materi lain yang bergubungan dapat dimengerti. Dalam belajar kita saling support dan mendukung satu sama lain apabila ada yang belum dimengerti, dengan senang hati pasti akan dijelaskan kembali.",
+            image: Shifa,
+        },
+        {
+            name: "Rasya Kharomah Putri",
+            as: "Alumni SMA N 7 Bengkulu",
+            agency: "Universitas Islam Indonesia",
+            testi: "Bimbel di SPASI sangat membantu, banyak diberi latihan soal, aplikasi Try Out gratis dan kuis di akhir pertemuan. pengajar juga ramah dan bagus dalam menjelaskan materi pelajaran. Pake sistem daring (online) jadi lebih konsentrasi dan nggak banyak orang. plus lagi, kita dapet buku latihan super lengkap.",
+            image: Rasya,
+        },
+        {
+            name: "Dimas Ghifar Farisi",
+            as: "Alumni SMA N 2 Cibinong",
+            agency: "Universitas Brawijaya",
+            testi: 'Bimbel sama Kak Nizar tuh pastinya trusted. Sistem belajarnya step by step. Pembelajaran juga menarik, detail, nggak ngebosenin dan mudah dipahami. Tentu saja benefitnya kita dapat mengerjakan soal HOTS dari yang termudah hingga tersulit sehingga membuat kita lebih terbiasa untuk mengerjakan tipe tipe soal lainnya. 1 kata bimbel bersama kak nizar yaitu “AWESOME".',
+            image: Dimas,
+        },
+    ];
+
+    const testiBuku = [
+        {
+            img: Testi1,
+        },
+        {
+            img: Testi2,
+        },
+        {
+            img: Testi3,
+        },
+        {
+            img: Testi4,
+        },
+        {
+            img: Testi5,
+        },
+        {
+            img: Testi6,
+        },
+        {
+            img: Testi7,
+        },
+        {
+            img: Testi8,
+        },
+        {
+            img: Testi9,
+        },
+        {
+            img: Testi10,
+        },
+    ];
+
     const mandiriPacket = packets.filter((dt) => dt.type === "mandiri");
     const bimbelPacket = packets.filter((dt) => dt.type === "bimbel");
+
+    const [activeTesti, setActiveTesti] = useState(1);
+    const [testiScroll, setTestiScroll] = useState(0);
+    const [activeBuku, setActiveBuku] = useState(1);
+    const [bukuScroll, setBukuScroll] = useState(0);
+
+    useEffect(() => {
+        const testiCardWidth =
+            document.getElementById("testi-card").clientWidth;
+
+        const testiInterval = setInterval(() => {
+            setActiveTesti((prev) => {
+                if (prev + 1 <= testiData.length) {
+                    setTestiScroll((prev) => {
+                        return prev + (testiCardWidth + 32);
+                    });
+                    return prev + 1;
+                } else {
+                    setTestiScroll(0);
+                    return 1;
+                }
+            });
+        }, 5000);
+
+        return () => clearInterval(testiInterval);
+    }, []);
+
+    useEffect(() => {
+        const testiCardWrapper = document.getElementById("testi-wrapper");
+        testiCardWrapper.scrollTo({ left: testiScroll, top: 0 });
+    }, [testiScroll]);
+
+    useEffect(() => {
+        const bukuCardWidth = document.getElementById("buku-card").clientWidth;
+
+        const bukuInterval = setInterval(() => {
+            setActiveBuku((prev) => {
+                if (prev + 1 <= testiBuku.length) {
+                    setBukuScroll((prev) => {
+                        return prev + (bukuCardWidth + 16);
+                    });
+                    return prev + 1;
+                } else {
+                    setBukuScroll(0);
+                    return 1;
+                }
+            });
+        }, 5000);
+
+        return () => clearInterval(bukuInterval);
+    }, []);
+
+    useEffect(() => {
+        const bukuWrapper = document.getElementById("buku-wrapper");
+        bukuWrapper.scrollTo({ left: bukuScroll, top: 0 });
+    }, [bukuScroll]);
 
     useEffect(() => {
         const scrollElement = document.getElementById("scroll-element");
@@ -312,7 +454,7 @@ export default function Homepage({ title, packets }) {
                     <iframe
                         src="https://www.youtube.com/embed/0nfOlN9DoNw?si=iFu_9peG8XmvI1e1"
                         title="YouTube video player"
-                        frameborder="0"
+                        frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
                         className="mx-auto aspect-video w-full md:max-w-lg xl:max-w-3xl"
@@ -325,12 +467,12 @@ export default function Homepage({ title, packets }) {
                     <div className="w-full lg:aspect-[4/4] xl:aspect-[4/3] text-6xl font-bold flex items-center">
                         Fasilitas Belajar
                     </div>
-                    <div className="w-full h-fit md:h-auto lg:h-fit lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#5A73BD] to-[#D971CE] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden">
+                    <div className="w-full h-fit md:h-auto lg:h-fit lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#5A73BD] to-[#D971CE] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden group">
                         <div className="w-2/3 h-full absolute left-0 bg-gradient-to-r from-black to-transparent opacity-30"></div>
                         <img
                             src={diary}
                             alt=""
-                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10"
+                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10 group-hover:scale-110 scale-100 transition-all duration-300"
                         />
                         <h3 className="font-semibold xl:text-2xl relative">
                             Try Out & Latihan Soal
@@ -340,12 +482,12 @@ export default function Homepage({ title, packets }) {
                             soal, kamu bakal #MakinJago
                         </p>
                     </div>
-                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#0D4A9B] to-[#1A8BBF] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden">
+                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#0D4A9B] to-[#1A8BBF] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden group">
                         <div className="w-2/3 h-full absolute left-0 bg-gradient-to-r from-black to-transparent opacity-30"></div>
                         <img
                             src={web}
                             alt=""
-                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10"
+                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10 group-hover:scale-110 scale-100 transition-all duration-300"
                         />
                         <h3 className="font-semibold xl:text-2xl relative">
                             Materi Teks
@@ -355,12 +497,12 @@ export default function Homepage({ title, packets }) {
                             menerima cara-cara baru dalam mengerjakan tipe soal.
                         </p>
                     </div>
-                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#6C45E1] to-[#B998F8] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden">
+                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#6C45E1] to-[#B998F8] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden group">
                         <div className="w-2/3 h-full absolute left-0 bg-gradient-to-r from-black to-transparent opacity-30"></div>
                         <img
                             src={holding}
                             alt=""
-                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10"
+                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10 group-hover:scale-110 scale-100 transition-all duration-300"
                         />
                         <h3 className="font-semibold xl:text-2xl relative">
                             Pojok Video
@@ -370,12 +512,12 @@ export default function Homepage({ title, packets }) {
                             jitu ala Campus Today.
                         </p>
                     </div>
-                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#076FA1] to-[#00B4DE] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden">
+                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#076FA1] to-[#00B4DE] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden group">
                         <div className="w-2/3 h-full absolute left-0 bg-gradient-to-r from-black to-transparent opacity-30"></div>
                         <img
                             src={notes}
                             alt=""
-                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10"
+                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10 group-hover:scale-110 scale-100 transition-all duration-300"
                         />
                         <h3 className="font-semibold xl:text-2xl relative">
                             Event Try Out Nasional
@@ -385,12 +527,12 @@ export default function Homepage({ title, packets }) {
                             bersaing dengan skala yang lebih luas.
                         </p>
                     </div>
-                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#5F3733] to-[#895E59] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden">
+                    <div className="w-full h-fit md:h-auto lg:aspect-[4/4] xl:aspect-[4/3] bg-gradient-to-b from-[#5F3733] to-[#895E59] rounded-xl lg:rounded-3xl text-white p-6 lg:p-8 flex flex-col justify-center text-xl gap-2 relative overflow-hidden group">
                         <div className="w-2/3 h-full absolute left-0 bg-gradient-to-r from-black to-transparent opacity-30"></div>
                         <img
                             src={prof}
                             alt=""
-                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10"
+                            className="w-48 lg:w-48 xl:w-64 absolute right-0 lg:-right-10 group-hover:scale-110 scale-100 transition-all duration-300"
                         />
                         <h3 className="font-semibold xl:text-2xl relative">
                             Kelas Bimbel
@@ -411,8 +553,20 @@ export default function Homepage({ title, packets }) {
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     #ApaKata<span className="text-[#DA5957]">Mereka</span>
                 </h1>
-                <div className="">
-                    <TestiCard />
+                <div
+                    className="overflow-x-scroll snap-x snap-mandatory py-8 scrollbar-hide"
+                    id="testi-wrapper"
+                    style={{ scrollBehavior: "smooth" }}
+                >
+                    <div className="flex w-[3000px] md:w-[5000px] xl:w-[20000px] px-[100px] md:px-[300px] xl:px-[500px] gap-8 justify-start">
+                        {testiData.map((testi, i) => (
+                            <TestiCard
+                                key={i}
+                                isActive={activeTesti - 1 === i}
+                                {...testi}
+                            />
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -421,11 +575,11 @@ export default function Homepage({ title, packets }) {
                     Paket Try Out
                 </h1>
                 <div
-                    className="overflow-x-scroll w-full snap-x snap-mandatory"
+                    className="overflow-x-scroll w-full snap-x snap-mandatory scrollbar-hide"
                     id="scroll-container-tryout"
                 >
                     <div
-                        className="flex px-24 lg:px-14 gap-4 w-[1200px] md:w-[1500px] lg:max-w-5xl xl:max-w-7xl justify-center items-stretch xl:mx-auto"
+                        className="flex px-24 lg:px-14 gap-4 w-[1200px] md:w-[1500px] lg:max-w-5xl xl:max-w-7xl justify-center items-stretch xl:mx-auto mx-auto"
                         id="scroll-element"
                     >
                         {mandiriPacket.map((dt) => (
@@ -448,7 +602,7 @@ export default function Homepage({ title, packets }) {
                     </p>
                 </div>
                 <div
-                    className="overflow-x-scroll w-full snap-x snap-mandatory"
+                    className="overflow-x-scroll w-full snap-x snap-mandatory scrollbar-hide"
                     id="scroll-container-bimbel"
                 >
                     <div className="flex px-24 lg:px-14 gap-4 w-[1200px] md:w-[1500px] lg:max-w-5xl xl:max-w-7xl justify-center items-stretch mx-auto">
@@ -466,11 +620,28 @@ export default function Homepage({ title, packets }) {
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     Testimoni Buku Kedinasan
                 </h1>
-                <div>
+                <div className="w-full aspect-auto mx-auto relative px-4 py-3">
+                    <div
+                        className="w-72 overflow-x-scroll snap-x snap-mandatory scrollbar-hide mx-auto"
+                        id="buku-wrapper"
+                        style={{ scrollBehavior: "smooth" }}
+                    >
+                        <div className="flex gap-4 w-[8000px] px-[500px]">
+                            {testiBuku.map((ts, i) => (
+                                <img
+                                    key={i}
+                                    src={ts.img}
+                                    alt=""
+                                    id="buku-card"
+                                    className={`w-72 aspect-auto relative snap-center px-4`}
+                                />
+                            ))}
+                        </div>
+                    </div>
                     <img
                         src={MockUpHp}
                         alt="mockup-hp"
-                        className="w-72 aspect-auto mx-auto"
+                        className="w-72 h-full aspect-auto mx-auto absolute top-0 left-1/2 -translate-x-1/2"
                     />
                 </div>
             </section>
