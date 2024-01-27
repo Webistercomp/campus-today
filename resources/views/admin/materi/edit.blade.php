@@ -119,7 +119,7 @@
                 <div id={{"video_chapter_" . $chapter->id}}>
                     <span style="font-weight: 600">Video : </span>
                     @if($chapter->link != null)
-                    <a href={{"/" .$chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                    <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
                     <div class="video-container">
                         <iframe 
                             width="500px"
@@ -178,7 +178,7 @@
                         <div>
                             <span style="font-weight: 600; display: block">Video : </span>
                             @if($chapter->link != null)
-                            <a href={{"/" .$chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                            <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
                             <div class="video-container">
                                 <iframe 
                                     width="500px"
@@ -216,7 +216,7 @@
             var code = title.replace(/\s+/g, '_').toLowerCase();
             $('#code').val(code);
         })
-        $('#add-question').on('click', () => {
+        $('#add-chapter').on('click', () => {
             const questionUID = `new_${Date.now()}`
             const answerUID = [];
             for (let i = 1; i <= 5; i++) {

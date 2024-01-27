@@ -107,7 +107,6 @@ class MateriController extends Controller
     }
 
     function updateChapter(Request $request, $id) {
-        // dd($request);
         $chapter = Chapter::find($request->chapter_id);
         $chapter->judul = $request->judul;
         $chapter->subjudul = $request->subjudul;
@@ -143,12 +142,12 @@ class MateriController extends Controller
         }
         $chapter->save();
 
-        return redirect()->route('admin.materi.show', $id);
+        return redirect()->route('admin.materi.edit', $request->material_id);
     }
 
     function deleteChapter($id) {
         $chapter = Chapter::find($id);
         $chapter->delete();
-        return redirect()->route('admin.materi.show', $chapter->material_id);
+        return redirect()->route('admin.materi.edit', $chapter->material_id);
     }
 }
