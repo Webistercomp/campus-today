@@ -121,6 +121,7 @@ class LatihanController extends Controller
             $newQuestion->latihan_id = $request->latihan_id;
             $newQuestion->group_type_id = $request->group_type;
             $newQuestion->question = $request->question;
+            $newQuestion->pembahasan = $request->pembahasan;
             $newQuestion->save();
             $lastQuestionId = $newQuestion->id;
             $index = 0;

@@ -93,9 +93,9 @@
             <li class="mb-4">
                 <div id={{"div_question_" . $question->id}} class="flex-column">
                     <span class="question">{{$question->question}}</span>
-                    <p class="m-0">Tipe soal : <span class="material_type">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->code}}@endif @endforeach</span></p>
+                    <p class="m-0"  style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->code}}@endif @endforeach</span></p>
                 </div>
-                <p class="m-0" id={{"p_divider_".$question->id}}>Pilihan jawaban: </p>
+                <p class="m-0" style="font-weight: 600" id={{"p_divider_".$question->id}}>Pilihan jawaban: </p>
                 <ol type="A" class="row row-cols-3" id={{"div_answers_" . $question->id}}>
                     @foreach ($question->answers as $answer)
                     <li @class(['pr-4']) id={{'div_answer_' . $answer->id}}>
@@ -103,13 +103,17 @@
                     </li>
                     @endforeach
                 </ol>
+                <div id={{"div_pembahasan_" . $question->id}} class="flex-column">
+                    <span style="font-weight: 600">Pembahasan : </span>
+                    <span class="pembahasan">{{$question->pembahasan}}</span>
+                </div>
                 <form action={{route('admin.questionLatihan.update')}} method="post" style="display: inline-block">
                     @csrf
                     <div id={{"input_question_" . $question->id}} style="display:none">
                         <input type="hidden" name="question_id" value={{$question->id}}>
                         <input type="hidden" name="latihan_id" value={{$question->latihan_id}}>
                         <input type="text" name="question" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
-                        <div class="row">
+                        <div class="mb-2 mt-2">
                             <label for={{"group_type_".$question->id}} class="col-2 m-0" >
                                 Tipe soal :
                             </label>
@@ -121,16 +125,27 @@
                         </div>
                     </div>
                     <ol type="A" class="row row-cols-3" id={{"edit_answers_" . $question->id}} style="display:none">
+                        <div style="font-weight: 600" class="col-12">
+                            Pilihan Jawaban :
+                        </div>
                         @foreach ($question->answers as $answer)
                         <li @class(['pr-4']) id={{'input_answer_' . $answer->id}}>
                             <input type="text" name="answers[]" id="question_{{$question->id}}_answer_{{$answer->id}}" class="answer form-control" value="{{$answer->answer}}">
-                            <label for="answer_{{$answer->id}}_bobot" class="row">
-                                <p class="col-4">bobot :</p>
+                            <label for="answer_{{$answer->id}}_bobot" class="d-flex align-items-center my-1">
+                                <p class="col-4 mb-0">bobot :</p>
                                 <input type="number" name="bobot[]" id="answer_{{$answer->id}}_bobot" class="form-control form-control-sm col-4" value="{{$answer->bobot}}" min="0" max="5">
                             </label>
                         </li>
                         @endforeach
                     </ol>
+                    <div id={{"input_pembahasan_" . $question->id}} style="display:none" class="mt-2">
+                        <div style="font-weight: 600">
+                            Pembahasan
+                        </div>
+                        <div>
+                            <textarea type="text" name="pembahasan" id="pembahasan_{{$question->id}}" class="question form-control" rows="4">{{$question->pembahasan}}</textarea>
+                        </div>
+                    </div>
                     <button type="button" class="badge bg-warning border-0" onclick="startEditQuestion({{$question->id}})" id={{"editBtn_" . $question->id}}>edit</button>
                     <button type="button" class="badge bg-secondary border-0" onclick="cancelEditQuestion({{$question->id}})" id={{"cancelBtn_" . $question->id}} style="display:none">batal</button>
                     <button type="submit" class="badge bg-primary border-0" onclick="cancelEditQuestion({{$question->id}}, {{$latihan->id}})" id={{"simpanBtn_" . $question->id}} style="display:none">simpan</button>
@@ -245,6 +260,14 @@
             answers_Ol.setAttribute("id", `div_answers_${questionUID}`);
             question_Li.append(question_Div, answersChoice_P, answers_Ol);
             
+            const pembahasan_Div = document.createElement("div");
+            pembahasan_Div.setAttribute("id", `div_pembahasan_${questionUID}`);
+            const pembahasan_Span = document.createElement("span");
+            pembahasan_Span.classList.add("pembahasan");
+            pembahasan_Span.innerText = `Pembahasan`;
+            pembahasan_Div.append(pembahasan_Span);
+            question_Li.append(pembahasan_Div)
+            
             const questionAnswerEdit_Form = document.createElement("form");
             questionAnswerEdit_Form.innerHTML = `@csrf`;
             questionAnswerEdit_Form.setAttribute("method", "POST");
@@ -333,6 +356,27 @@
             }
             questionAnswerEdit_Form.append(answersEdit_Ol);
             
+            const pembahasanEdit_Div = document.createElement("div");
+            pembahasanEdit_Div.setAttribute("id", `input_pembahasan_${questionUID}`);
+            pembahasanEdit_Div.style.display = "none";
+            pembahasanEdit_Div.style.marginTop = "1rem";
+            const pembahasanExplainer_Div = document.createElement("div");
+            pembahasanExplainer_Div.style.fontWeight = "600";
+            pembahasanExplainer_Div.innerText = "Pembahasan";
+
+            const pembahasanEdit_Input_Div = document.createElement("div");
+            const pembahasanEdit_Input = document.createElement("textarea");
+            pembahasanEdit_Input.setAttribute("type", "text");
+            pembahasanEdit_Input.setAttribute("name", "pembahasan");
+            pembahasanEdit_Input.setAttribute("id", `pembahasan_${questionUID}`);
+            pembahasanEdit_Input.setAttribute("rows", "4");
+            pembahasanEdit_Input.classList.add("pembahasan", "form-control");
+            pembahasanEdit_Input_Div.append(pembahasanEdit_Input);
+            
+            pembahasanEdit_Div.append(pembahasanExplainer_Div, pembahasanEdit_Input_Div);
+
+            questionAnswerEdit_Form.append(pembahasanEdit_Div);
+            
             const questionAnswerEdit_Button = document.createElement("button");
             questionAnswerEdit_Button.innerText = "edit";
             questionAnswerEdit_Button.setAttribute("type", "button");
@@ -388,6 +432,7 @@
         let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
         let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
         let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
+        let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
         questionInput.style.display = "block"
         questionDiv.style.display = "none"
         cancelBtn.style.display = "inline-block"
@@ -396,8 +441,9 @@
         editAnswers.style.display = "flex"
         divAnswers.style.display = "none"
         pDivider.innerText = "Pertanyaan"
+        pembahasanInput.style.display = "block"
     }
-    
+
     function cancelEditQuestion(idQuestion) {
         let questionInput = document.querySelector(`#input_question_${idQuestion}`)
         let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
@@ -407,6 +453,7 @@
         let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
         let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
         let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
+        let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
         questionInput.style.display = "none"
         questionDiv.style.display = "flex"
         cancelBtn.style.display = "none"
@@ -415,8 +462,9 @@
         editAnswers.style.display = "none"
         divAnswers.style.display = "flex"
         pDivider.innerText = "Pilihan jawaban :"
+        pembahasanInput.style.display = "none"
     }
-    
+
     function deleteNewQuestion(idQuestion){
         const newQuestion_Li = document.querySelector(`#div_question_${idQuestion}`);
         const parent = newQuestion_Li.parentNode;

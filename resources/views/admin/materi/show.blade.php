@@ -82,6 +82,50 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="col-md-6 d-flex align-items-center mt-4">
+        <h5>Daftar Bab</h5>
+    </div>
+    @if($material->chapters->count() == 0)
+    <div class="p-2">
+        Tidak ada bab, klik tombol edit untuk menambah bab.
+    </div>
+    @endif
+    <ol type="1">
+        @foreach ($material->chapters as $chapter)
+        <li class="mb-4">
+            <div><span style="font-weight: 600">Judul :</span> {{$chapter->judul}}</div>
+            <div><span style="font-weight: 600">Subjudul :</span> {{$chapter->subjudul}}</div>
+            <div>
+                <span style="font-weight: 600">File :</span>
+                @if($chapter->file != null)
+                <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                <iframe
+                    src={{asset("storage/materi/file/" . $chapter->file)}}
+                    height="200px"
+                    loading="lazy"
+                    title="PDF-file"
+                ></iframe>
+                @else
+                Tidak ada file
+                @endif
+            </div>
+            <div>
+                <span style="font-weight: 600">Link Video :</span>
+                @if($chapter->link != null)
+                <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                <iframe 
+                    width="420" 
+                    height="315"
+                    src={{$chapter->link}}>
+                </iframe>
+                @else
+                Tidak ada video
+                @endif
+            </div>
+        </li>
+        @endforeach
+    </ol>
     </div>
 </div>
 @endsection
