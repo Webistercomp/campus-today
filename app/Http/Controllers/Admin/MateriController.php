@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 class MateriController extends Controller
 {
-    function index() {
+    function index()
+    {
         $materials = Material::all();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
@@ -22,7 +23,8 @@ class MateriController extends Controller
         return view('admin.materi.index', compact('materials', 'user', 'menu'));
     }
 
-    function create() {
+    function create()
+    {
         $materialTypes = MaterialType::all();
         $groups = GroupType::all();
         $roles = Role::all();
@@ -32,7 +34,8 @@ class MateriController extends Controller
         return view('admin.materi.create', compact('materialTypes', 'groups', 'roles', 'user', 'menu'));
     }
 
-    function store(Request $request) {
+    function store(Request $request)
+    {
         $request->validate([
             'material_type_id' => 'required',
             'group_id' => 'required',
@@ -53,12 +56,13 @@ class MateriController extends Controller
         $newMaterial->save();
         return redirect()->route('admin.materi.index');
     }
-    
-    function show($id) {
+
+    function show($id)
+    {
         $material = Material::find($id);
         $material->totalChapter = $material->chapters->count();
         $roles = '';
-        foreach(json_decode($material->roles) as $role) {
+        foreach (json_decode($material->roles) as $role) {
             $roles .= Role::find($role)->name . ', ';
         }
         $material->roles = substr($roles, 0, -2);
@@ -68,7 +72,8 @@ class MateriController extends Controller
         return view('admin.materi.show', compact('material', 'user', 'menu'));
     }
 
-    function edit($id) {
+    function edit($id)
+    {
         $materialTypes = MaterialType::all();
         $material = Material::find($id);
         $material->roles = implode(',', json_decode($material->roles));
@@ -80,19 +85,22 @@ class MateriController extends Controller
         return view('admin.materi.edit', compact('materialTypes', 'material', 'groups', 'roles', 'user', 'menu'));
     }
 
-    function update(Request $request, $id) {
+    function update(Request $request, $id)
+    {
         $material = Material::find($id);
         $material->update($request->all());
         return redirect()->route('admin.materi.index');
     }
 
-    function destroy($id) {
+    function destroy($id)
+    {
         $material = Material::find($id);
         $material->delete();
         return redirect()->route('admin.materi.index');
     }
 
-    function getYoutubeEmbedUrl($url) {
+    function getYoutubeEmbedUrl($url)
+    {
         $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
         $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
 
@@ -103,30 +111,22 @@ class MateriController extends Controller
         if (preg_match($shortUrlRegex, $url, $matches)) {
             $youtube_id = $matches[count($matches) - 1];
         }
-        return 'https://www.youtube.com/embed/' . $youtube_id ;
+        return 'https://www.youtube.com/embed/' . $youtube_id;
     }
 
-    function updateChapter(Request $request, $id) {
-        $chapter = Chapter::find($request->chapter_id);
+    function createChapter(Request $request)
+    {
+        $chapter = new Chapter();
+        $chapter->material_id = $request->material_id;
         $chapter->judul = $request->judul;
         $chapter->subjudul = $request->subjudul;
-        if($request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('storage/materi/file'), $fileName);
-
-            // remove old file
-            $oldFile = $chapter->file;
-            if($oldFile != null) {
-                $oldFile = public_path('storage/materi/file') . '/' . $oldFile;
-                if(file_exists($oldFile)) {
-                    unlink($oldFile);
-                }
-            }
-
-            $chapter->file = $fileName;
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('storage/materi/file'), $filename);
+            $chapter->file = $filename;
         }
-        if($request->link) {
+        if ($request->link) {
             $url = $request->link;
             $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
             $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
@@ -134,18 +134,59 @@ class MateriController extends Controller
             if (preg_match($longUrlRegex, $url, $matches)) {
                 $youtube_id = $matches[count($matches) - 1];
             }
-    
+
             if (preg_match($shortUrlRegex, $url, $matches)) {
                 $youtube_id = $matches[count($matches) - 1];
             }
-            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id ;
+            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id;
         }
         $chapter->save();
 
         return redirect()->route('admin.materi.edit', $request->material_id);
     }
 
-    function deleteChapter($id) {
+    function updateChapter(Request $request, $id)
+    {
+        $chapter = Chapter::find($request->chapter_id);
+        $chapter->judul = $request->judul;
+        $chapter->subjudul = $request->subjudul;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('storage/materi/file'), $fileName);
+
+            // remove old file
+            $oldFile = $chapter->file;
+            if ($oldFile != null) {
+                $oldFile = public_path('storage/materi/file') . '/' . $oldFile;
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+
+            $chapter->file = $fileName;
+        }
+        if ($request->link) {
+            $url = $request->link;
+            $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+            $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+            if (preg_match($longUrlRegex, $url, $matches)) {
+                $youtube_id = $matches[count($matches) - 1];
+            }
+
+            if (preg_match($shortUrlRegex, $url, $matches)) {
+                $youtube_id = $matches[count($matches) - 1];
+            }
+            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id;
+        }
+        $chapter->save();
+
+        return redirect()->route('admin.materi.edit', $request->material_id);
+    }
+
+    function deleteChapter($id)
+    {
         $chapter = Chapter::find($id);
         $chapter->delete();
         return redirect()->route('admin.materi.edit', $chapter->material_id);

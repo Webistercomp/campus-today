@@ -183,7 +183,8 @@ Route::prefix('admin')->group(function () {
         Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');
 
         // chapter
-        ROute::put('chapter/{id}', [MateriController::class, 'updateChapter'])->name('admin.chapter.update');
+        Route::post('chapter', [MateriController::class, 'createChapter'])->name('admin.chapter.create');
+        Route::put('chapter/{id}', [MateriController::class, 'updateChapter'])->name('admin.chapter.update');
         Route::delete('chapter/{id}', [MateriController::class, 'deleteChapter'])->name('admin.chapter.delete');
 
         // article
