@@ -89,7 +89,7 @@ export default function Article({ auth, title, articles, latest_article }) {
 
                 <div className="mt-8">
                     <div
-                        className="max-w-6xl overflow-x-scroll snap-x snap-mandatory scrollbar-hide"
+                        className="max-w-6xl overflow-x-scroll snap-x snap-mandatory scrollbar-hide mx-auto"
                         id="latest_article_wrapper"
                         style={{ scrollBehavior: "smooth" }}
                     >
@@ -108,21 +108,19 @@ export default function Article({ auth, title, articles, latest_article }) {
                                     key={i}
                                 >
                                     <div
-                                        className={`flex gap-6 items-center border-2 border-slate-200 max-w-6xl snap-center cursor-pointer`}
+                                        className={`flex flex-col lg:flex-row lg:items-center gap-6 border-2 border-slate-200 max-w-6xl snap-center cursor-pointer`}
                                         style={{
-                                            width:
-                                                latestArticleMetadata.latestArticleWrapperWidth -
-                                                50,
+                                            width: latestArticleMetadata.latestArticleWrapperWidth,
                                         }}
                                     >
                                         <figure>
                                             <img
                                                 src={latest.image}
                                                 alt={title}
-                                                className="bg-slate-500 w-full h-[300px] aspect-[3/2] basis-1/3 object-cover"
+                                                className="bg-slate-500 w-full aspect-[3/2] md:aspect-[4/2] lg:h-[300px] xl:h-[400px] lg:aspect-[4/3] basis-1/3 object-cover"
                                             />
                                         </figure>
-                                        <div className="basis-2/3 px-8 text-slate-700">
+                                        <div className="basis-2/3 px-4 pb-2 text-slate-700">
                                             <p className="text-xs text-slate-400">
                                                 {formatDate(latest.updated_at)}
                                             </p>
@@ -168,7 +166,7 @@ export default function Article({ auth, title, articles, latest_article }) {
                     </div>
                 </div>
 
-                <div className="mt-12 grid grid-cols-3 gap-4">
+                <div className="mt-12 grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
                     {articles.map((article, i) => (
                         <Link href={route("article.show", article.id)} key={i}>
                             <ArticleCard {...article} />
