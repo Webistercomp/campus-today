@@ -7,29 +7,33 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Intervention\Image\Facades\Image;
 
-class ArticleController extends Controller {
+class ArticleController extends Controller
+{
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
         return Inertia::render('Article/Index', [
             'title' => 'Articles',
             'articles' => Article::all(),
-            'latest_article' => Article::latest()->first(),
+            'latest_article' => Article::latest()->limit(3)->get(),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'title' => 'required',
             'description' => '',
@@ -56,7 +60,8 @@ class ArticleController extends Controller {
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {
+    public function show(string $id)
+    {
         $showArticle = Article::find($id);
         return Inertia::render('Article/ShowArticle', [
             'article' => $showArticle,
@@ -66,7 +71,8 @@ class ArticleController extends Controller {
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Article $article) {
+    public function edit(Article $article)
+    {
         return Inertia::render('ArticleEdit', [
             'article' => $article
         ]);
@@ -75,7 +81,8 @@ class ArticleController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Article $article) {
+    public function update(Request $request, Article $article)
+    {
         $newArticle = new Article;
         $newArticle->title = $request->title;
         $newArticle->description = $request->description;
@@ -95,7 +102,8 @@ class ArticleController extends Controller {
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article) {
+    public function destroy(Article $article)
+    {
         //
     }
 }

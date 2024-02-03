@@ -53,7 +53,7 @@ export default function Dashboard({ auth, articles, materialTypes }) {
         IconMateriSKB,
         IconMateriUM,
         IconMateriUTBK,
-    ]
+    ];
 
     return (
         <AuthenticatedLayout
@@ -207,7 +207,7 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                     Artikel
                 </h1>
                 <div className="overflow-x-auto w-full pb-8">
-                    <div className="flex gap-4 w-[1000px] xl:w-[1000px] px-14 md:px-24 mx-auto">
+                    <div className="flex gap-4 w-[1000px] xl:w-[1000px] px-14 md:px-24 mx-auto justify-center">
                         {articles
                             .slice(Math.max(articles.length - 3, 0))
                             .map((article, i) => {
