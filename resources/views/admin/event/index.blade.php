@@ -33,7 +33,7 @@
                 @endif
             </td>
             <td>
-                <a href={{route('admin.event.show', $tryout->id)}} class="badge bg-primary">
+                <a href={{route('admin.event.edit', $tryout->id)}} class="badge bg-primary">
                     <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>

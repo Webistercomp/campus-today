@@ -16,11 +16,11 @@ return new class extends Migration
             $table->id();
             $table->integer('tryout_id');
             $table->integer('group_type_id');
+            $table->text('question');
             $table->text('pembahasan')->nullable();
             $table->string('file_pembahasan')->nullable();
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE questions ADD question MEDIUMBLOB");
     }
 
     /**

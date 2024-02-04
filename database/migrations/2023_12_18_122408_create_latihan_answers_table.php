@@ -15,10 +15,10 @@ return new class extends Migration
         Schema::create('latihan_answers', function (Blueprint $table) {
             $table->id();
             $table->integer('latihan_question_id');
+            $table->text('answer');
             $table->integer('bobot');
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE latihan_answers ADD answer MEDIUMBLOB");
     }
 
     /**
