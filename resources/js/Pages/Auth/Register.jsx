@@ -1,11 +1,13 @@
 import InputError from "@/Components/InputError";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CTIcon from "@/images/ct_ 2.png";
 import IllusAuth from "@/images/illus-auth.png";
 import EnvelopeIcon from "@/icons/EnvelopeIcon";
 import TextInput from "@/Components/TextInput";
 import LockIcon from "@/icons/LockIcon";
+import EyeIcon from "@/icons/EyeIcon";
+import EyeSlashIcon from "@/icons/EyeSlashIcon";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -13,6 +15,10 @@ export default function Register() {
         email: "",
         password: "",
         password_confirmation: "",
+    });
+    const [passwordShow, setPasswordShow] = useState({
+        password: false,
+        confirm_password: false,
     });
 
     useEffect(() => {
@@ -111,11 +117,35 @@ export default function Register() {
                                 <TextInput
                                     id="password"
                                     icon={<LockIcon />}
-                                    placeholder="Enter your email address"
-                                    type="password"
+                                    placeholder="Enter your password"
+                                    type={
+                                        !passwordShow.password
+                                            ? "password"
+                                            : "text"
+                                    }
                                     value={data.password}
                                     onChange={(e) =>
                                         setData("password", e.target.value)
+                                    }
+                                    endIcon={
+                                        <span
+                                            className="absolute top-1/2 -translate-y-1/2 right-2"
+                                            onClick={() =>
+                                                setPasswordShow((prev) => {
+                                                    return {
+                                                        ...prev,
+                                                        password:
+                                                            !prev.password,
+                                                    };
+                                                })
+                                            }
+                                        >
+                                            {!passwordShow.password ? (
+                                                <EyeIcon className="w-6 h-6 stroke-slate-800 cursor-pointer hover:stroke-curious-blue transition-all duration-150" />
+                                            ) : (
+                                                <EyeSlashIcon className="w-6 h-6 stroke-slate-800 cursor-pointer hover:stroke-curious-blue transition-all duration-150" />
+                                            )}
+                                        </span>
                                     }
                                 />
 
@@ -135,14 +165,38 @@ export default function Register() {
                                 <TextInput
                                     id="password_confirmation"
                                     icon={<LockIcon />}
-                                    placeholder="Enter your email address"
-                                    type="password"
+                                    placeholder="Enter your password again"
+                                    type={
+                                        !passwordShow.confirm_password
+                                            ? "password"
+                                            : "text"
+                                    }
                                     value={data.password_confirmation}
                                     onChange={(e) =>
                                         setData(
                                             "password_confirmation",
                                             e.target.value
                                         )
+                                    }
+                                    endIcon={
+                                        <span
+                                            className="absolute top-1/2 -translate-y-1/2 right-2"
+                                            onClick={() =>
+                                                setPasswordShow((prev) => {
+                                                    return {
+                                                        ...prev,
+                                                        confirm_password:
+                                                            !prev.confirm_password,
+                                                    };
+                                                })
+                                            }
+                                        >
+                                            {!passwordShow.confirm_password ? (
+                                                <EyeIcon className="w-6 h-6 stroke-slate-800 cursor-pointer hover:stroke-curious-blue transition-all duration-150" />
+                                            ) : (
+                                                <EyeSlashIcon className="w-6 h-6 stroke-slate-800 cursor-pointer hover:stroke-curious-blue transition-all duration-150" />
+                                            )}
+                                        </span>
                                     }
                                 />
                             </div>

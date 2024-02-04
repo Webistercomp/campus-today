@@ -7,6 +7,7 @@ export default forwardRef(function TextInput(
         isFocused = false,
         icon = false,
         id = "",
+        endIcon = false,
         ...props
     },
     ref
@@ -33,6 +34,7 @@ export default forwardRef(function TextInput(
                 } pr-2 outline-none focus:border-b-primary-focus focus:bg-slate-50 w-full ${className}`}
                 ref={input}
             />
+            {endIcon && endIcon}
         </label>
     );
 });
