@@ -138,7 +138,9 @@ class MateriController extends Controller
             if (preg_match($shortUrlRegex, $url, $matches)) {
                 $youtube_id = $matches[count($matches) - 1];
             }
-            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id;
+            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id ;
+        } else {
+            $chapter->link = null;
         }
         $chapter->save();
 
@@ -188,7 +190,41 @@ class MateriController extends Controller
     function deleteChapter($id)
     {
         $chapter = Chapter::find($id);
+        
+        // remove file from db
+        $oldFile = $chapter->file;
+        if($oldFile != null) {
+            $oldFile = public_path('storage/materi/file') . '/' . $oldFile;
+            if(file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+        $chapter->file = null;
         $chapter->delete();
+        
+        return redirect()->route('admin.materi.edit', $chapter->material_id);
+    }
+
+    function deleteChapterFile($id) {
+        $chapter = Chapter::find($id);
+        $oldFile = $chapter->file;
+        if($oldFile != null) {
+            $oldFile = public_path('storage/materi/file') . '/' . $oldFile;
+            if(file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+        $chapter->file = null;
+        $chapter->save();
+        
+        return redirect()->route('admin.materi.edit', $chapter->material_id);
+    }
+
+    function deleteChapterVideo($id) {
+        $chapter = Chapter::find($id);
+        $chapter->link = null;
+        $chapter->save();
+        
         return redirect()->route('admin.materi.edit', $chapter->material_id);
     }
 }

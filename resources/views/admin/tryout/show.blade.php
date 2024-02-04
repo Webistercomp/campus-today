@@ -89,7 +89,7 @@ Tryouts | Campus Today
         <ol type="1">
             @foreach ($tryout->questions as $question)
             <li class="mb-4">
-                {{$question->question}}
+                {!!$question->question!!}
                 <ol type="A" class="row row-cols-3">
                     @foreach ($question->answers as $answer)
                         <li class="pr-4">{{$answer->answer}}</li>

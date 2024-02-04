@@ -4,6 +4,11 @@
     Tryouts | Campus Today
 @endsection
 
+@section('head')
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="card p-3">
@@ -88,7 +93,7 @@
             @foreach ($tryout->questions as $question)
             <li class="mb-4">
                 <div id={{"div_question_" . $question->id}} class="flex-column">
-                    <span class="question">{{$question->question}}</span>
+                    <span class="question"><span style="font-weight: 600">Pertanyaan :</span> {!!$question->question!!}</span>
                     <p class="m-0" style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->code}}@endif @endforeach</span></p>
                 </div>
                 <p class="m-0" style="font-weight: 600" id={{"p_divider_".$question->id}}>Pilihan jawaban : </p>
@@ -101,14 +106,14 @@
                 </ol>
                 <div id={{"div_pembahasan_" . $question->id}} class="flex-column">
                     <span style="font-weight: 600">Pembahasan : </span>
-                    <span class="pembahasan">{{$question->pembahasan}}</span>
+                    <span class="pembahasan">{!!$question->pembahasan!!}</span>
                 </div>
                 <form action={{route('admin.question.update')}} method="post" style="display: inline-block">
                     @csrf
                     <div id={{"input_question_" . $question->id}} style="display:none">
                         <input type="hidden" name="question_id" value={{$question->id}}>
                         <input type="hidden" name="tryout_id" value={{$question->tryout_id}}>
-                        <input type="text" name="question" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
+                        <textarea name="question" id="question_{{$question->id}}" class="question form-control ckeditor" placeholder="Badan Artikel">{{$question->question}}</textarea>
                         <div class="mb-2 mt-2">
                             <label for={{"group_type_".$question->id}} class="col-2 m-0 p-0" >
                                 Tipe soal :
@@ -139,7 +144,7 @@
                             Pembahasan
                         </div>
                         <div>
-                            <textarea type="text" name="pembahasan" id="pembahasan_{{$question->id}}" class="question form-control" rows="4">{{$question->pembahasan}}</textarea>
+                            <textarea name="pembahasan" id="pembahasan_{{$question->id}}" class="question form-control ckeditor">{{$question->pembahasan}}</textarea>
                         </div>
                     </div>
                     <button type="button" class="badge bg-warning border-0" onclick="startEditQuestion({{$question->id}})" id={{"editBtn_" . $question->id}}>edit</button>
@@ -160,6 +165,75 @@
         </div>
     </div>
 </div>
+
+<style>
+    p {
+        margin-bottom: 0;
+    }
+</style>
+
+<script>
+    let inputs = document.querySelectorAll( '.ckeditor' )
+    inputs.forEach(input => {
+        CKEDITOR.replace(input.id, {
+            filebrowserUploadUrl: "{{route('admin.ckeditor.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    })
+</script>
+<script>
+function startEditQuestion(idQuestion) {
+    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
+    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
+    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
+    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
+    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
+    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
+    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
+    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
+    questionInput.style.display = "block"
+    questionDiv.style.display = "none"
+    cancelBtn.style.display = "inline-block"
+    simpanBtn.style.display = "inline-block"
+    editBtn.style.display = "none"
+    editAnswers.style.display = "flex"
+    divAnswers.style.display = "none"
+    pDivider.innerText = "Pertanyaan"
+    pembahasanInput.style.display = "block"
+    pembahasanDiv.style.display = "none"
+}
+
+function cancelEditQuestion(idQuestion) {
+    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
+    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
+    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
+    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
+    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
+    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
+    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
+    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
+    questionInput.style.display = "none"
+    questionDiv.style.display = "flex"
+    cancelBtn.style.display = "none"
+    simpanBtn.style.display = "none"
+    editBtn.style.display = "inline-block"
+    editAnswers.style.display = "none"
+    divAnswers.style.display = "flex"
+    pDivider.innerText = "Pilihan jawaban :"
+    pembahasanInput.style.display = "none"
+    pembahasanDiv.style.display = "block"
+}
+
+function deleteNewQuestion(idQuestion){
+    const newQuestion_Li = document.querySelector(`#div_question_${idQuestion}`);
+    const parent = newQuestion_Li.parentNode;
+    parent.remove();
+}
+</script>
 <script>
 $(document).ready(function () {
     let questions = {!!json_encode($tryout->questions->toArray())!!}
@@ -380,57 +454,5 @@ $(document).ready(function () {
         questionsList_Ol.append(question_Li);
     })
 });
-
-function startEditQuestion(idQuestion) {
-    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
-    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
-    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
-    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
-    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
-    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
-    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
-    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
-    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
-    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
-    questionInput.style.display = "block"
-    questionDiv.style.display = "none"
-    cancelBtn.style.display = "inline-block"
-    simpanBtn.style.display = "inline-block"
-    editBtn.style.display = "none"
-    editAnswers.style.display = "flex"
-    divAnswers.style.display = "none"
-    pDivider.innerText = "Pertanyaan"
-    pembahasanInput.style.display = "block"
-    pembahasanDiv.style.display = "none"
-}
-
-function cancelEditQuestion(idQuestion) {
-    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
-    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
-    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
-    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
-    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
-    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
-    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
-    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
-    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
-    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
-    questionInput.style.display = "none"
-    questionDiv.style.display = "flex"
-    cancelBtn.style.display = "none"
-    simpanBtn.style.display = "none"
-    editBtn.style.display = "inline-block"
-    editAnswers.style.display = "none"
-    divAnswers.style.display = "flex"
-    pDivider.innerText = "Pilihan jawaban :"
-    pembahasanInput.style.display = "none"
-    pembahasanDiv.style.display = "block"
-}
-
-function deleteNewQuestion(idQuestion){
-    const newQuestion_Li = document.querySelector(`#div_question_${idQuestion}`);
-    const parent = newQuestion_Li.parentNode;
-    parent.remove();
-}
 </script>
 @endsection

@@ -178,7 +178,8 @@
                         <div>
                             <span style="font-weight: 600; display: block">Video : </span>
                             @if($chapter->link != null)
-                            <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                            <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> 
+                            <br>
                             <div class="video-container">
                                 <iframe 
                                     width="500px"
@@ -190,14 +191,24 @@
                             <input type="text" name="link" id="input_video_{{$chapter->id}}" class="form-control" value="{{$chapter->link}}" style="display: block" placeholder="Masukkan link video">
                         </div>
                     </div>
-                    <button type="button" class="badge bg-warning border-0" onclick="startEditChapter({{$chapter->id}})" id={{"editBtn_" . $chapter->id}}>edit</button>
-                    <button type="button" class="badge bg-secondary border-0" onclick="cancelEditChapter({{$chapter->id}})" id={{"cancelBtn_" . $chapter->id}} style="display:none">batal</button>
-                    <button type="submit" class="badge bg-primary border-0" onclick="cancelEditChapter({{$chapter->id}}, {{$chapter->material_id}})" id={{"simpanBtn_" . $chapter->id}} style="display:none">simpan</button>
+                    <button type="button" class="badge bg-warning border-0" onclick="startEditChapter({{$chapter->id}})" id={{"editBtn_" . $chapter->id}}>Edit</button>
+                    <button type="button" class="badge bg-secondary border-0" onclick="cancelEditChapter({{$chapter->id}})" id={{"cancelBtn_" . $chapter->id}} style="display:none">Batal</button>
+                    <button type="submit" class="badge bg-primary border-0" onclick="cancelEditChapter({{$chapter->id}}, {{$chapter->material_id}})" id={{"simpanBtn_" . $chapter->id}} style="display:none">Simpan</button>
                 </form>
                 <form action={{route('admin.chapter.delete', $chapter->id)}} method="POST" style="display:inline-block">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="badge bg-danger border-0" id={{"hapusBtn_" . $chapter->id}}>hapus</button>
+                    <button type="submit" class="badge bg-danger border-0" id={{"hapusBtn_" . $chapter->id}}>Hapus</button>
+                </form>
+                <form action={{route('admin.chapterFile.delete', $chapter->id)}} method="POST" style="display:inline-block">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="badge bg-danger border-0" id={{"hapusFileBtn_" . $chapter->id}}>Hapus File</button>
+                </form>
+                <form action={{route('admin.chapterVideo.delete', $chapter->id)}} method="POST" style="display:inline-block">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="badge bg-danger border-0" id={{"hapusVideoBtn_" . $chapter->id}}>Hapus Video</button>
                 </form>
             </li>
             @endforeach

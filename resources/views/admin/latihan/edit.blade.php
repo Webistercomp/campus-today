@@ -4,6 +4,10 @@
     Latihan | Campus Today
 @endsection
 
+@section('head')
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="card p-3">

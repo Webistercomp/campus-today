@@ -186,6 +186,8 @@ Route::prefix('admin')->group(function () {
         Route::post('chapter', [MateriController::class, 'createChapter'])->name('admin.chapter.create');
         Route::put('chapter/{id}', [MateriController::class, 'updateChapter'])->name('admin.chapter.update');
         Route::delete('chapter/{id}', [MateriController::class, 'deleteChapter'])->name('admin.chapter.delete');
+        Route::delete('chapter/file/{id}', [MateriController::class, 'deleteChapterFile'])->name('admin.chapterFile.delete');
+        Route::delete('chapter/video/{id}', [MateriController::class, 'deleteChapterVideo'])->name('admin.chapterVideo.delete');
 
         // article
         Route::get('article', [AdminArticleController::class, 'index'])->name('admin.article.index');
@@ -210,5 +212,8 @@ Route::prefix('admin')->group(function () {
         Route::get('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggShow'])->name('admin.minatbakat.wartegg.show');
         Route::put('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggUpdate'])->name('admin.minatbakat.wartegg.update');
         Route::delete('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggDestroy'])->name('admin.minatbakat.wartegg.delete');
+
+        // upload image ckeditor
+        Route::post('ckeditor/upload', [AdminController::class, 'uploadImage'])->name('admin.ckeditor.upload');
     });
 });
