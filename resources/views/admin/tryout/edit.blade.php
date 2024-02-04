@@ -4,78 +4,108 @@
     Tryouts | Campus Today
 @endsection
 
+@section('head')
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="card p-3">
-    <div class="row">
-        <div class="col-md-6 d-flex align-items-center">
-            <h5>Detail tryout</h5>
-        </div>
-        <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.tryout.show', $tryout->id)}}" class="btn btn-secondary">Kembali</a>
-        </div>
-    </div>
-    <table class="table table-striped">
-        <form action="{{route('admin.tryout.update', $tryout->id)}}" method="post">
-            @csrf
-            @method('PUT')
-            <table>
-                <tbody>
-                    <tr class="row">
-                        <th class="col-4">Tipe Materi</th>
-                        <td class="col-8">
-                            <select class="custom-select" name="material_type_id" id="material_type_id">
-                                @foreach ($materialTypes as $materialType)
-                                    <option value="{{$materialType->id}}" @if ($materialType->id == $tryout->material_type_id) selected @endif>{{$materialType->name}}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-4">Role</th>
-                        <td class="col-8">
-                            <input type="text" class="form-control" id="roles" name="roles" placeholder="Contoh: 1,2,3 atau 3,5,6" value={{$tryout->roles}}>
-                            <label for="roles" style="font-weight: 400!important; font-size: 12px!important;">Daftar role : @foreach ($roles as $role)
-                                {{$loop->iteration . ') ' . $role->name . ', '}}  
-                            @endforeach . Pisahkan dengan koma, contoh : 1,2,3 atau 3,5,6.</label>
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-4">Nama</th>
-                        <td class="col-8">
-                            <input type="text" class="form-control" id="name" name="name" value="{{$tryout->name}}">
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-4">Kode</th>
-                        <td class="col-8">
-                            <input type="text" class="form-control" id="code" name="code" value="{{$tryout->code}}">
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-4">Waktu</th>
-                        <td class="col-8">
-                            <input type="number" class="form-control" id="time" name="time" min="0" step="1" value="{{$tryout->time}}">
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-4">Deskripsi</th>
-                        <td class="col-8">
-                            <textarea type="text" class="form-control" id="description" name="description" placeholder="deskripsi">{{$tryout->description}}</textarea>
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-4">Active</th>
-                        <td class="col-8">
-                            <input type="checkbox" name="active" @if($tryout->active == 1) checked @endif>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="row mt-3 m-0">
-                <button type="submit" class="btn btn-primary ml-auto">Simpan</button>
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center">
+                <h5>Detail tryout</h5>
             </div>
-        </form>
+            <div class="col-md-6 text-right mb-3">
+                <a href="{{route('admin.tryout.index')}}" class="btn btn-secondary">Kembali</a>
+                <form class="d-inline-block" action="{{route('admin.event.delete', $tryout->id)}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">Delete</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteData" tabindex="-1" aria-labelledby="deleteDataLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Apakah anda yakin?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                                    <button type="submit" class="btn btn-primary">Yakin</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <form action="{{route('admin.tryout.update', $tryout->id)}}" method="post">
+                @csrf
+                @method('PUT')
+                <table>
+                    <tbody>
+                        <tr class="row">
+                            <th class="col-4">Tipe Materi</th>
+                            <td class="col-8">
+                                <select class="custom-select" name="material_type_id" id="material_type_id">
+                                    @foreach ($materialTypes as $materialType)
+                                        <option value="{{$materialType->id}}" @if ($materialType->id == $tryout->material_type_id) selected @endif>{{$materialType->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <th class="col-4">Role</th>
+                            <td class="col-8">
+                                <input type="text" class="form-control" id="roles" name="roles" placeholder="Contoh: 1,2,3 atau 3,5,6" value={{$tryout->roles}}>
+                                <label for="roles" style="font-weight: 400!important; font-size: 12px!important;">Daftar role : @foreach ($roles as $role)
+                                    {{$loop->iteration . ') ' . $role->name . ', '}}  
+                                @endforeach . Pisahkan dengan koma, contoh : 1,2,3 atau 3,5,6.</label>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <th class="col-4">Nama</th>
+                            <td class="col-8">
+                                <input type="text" class="form-control" id="name" name="name" value="{{$tryout->name}}">
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <th class="col-4">Kode</th>
+                            <td class="col-8">
+                                <input type="text" class="form-control" id="code" name="code" value="{{$tryout->code}}">
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <th class="col-4">Waktu</th>
+                            <td class="col-8">
+                                <input type="number" class="form-control" id="time" name="time" min="0" step="1" value="{{$tryout->time}}">
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <th class="col-4">Deskripsi</th>
+                            <td class="col-8">
+                                <textarea type="text" class="form-control" id="description" name="description" placeholder="deskripsi">{{$tryout->description}}</textarea>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <th class="col-4">Active</th>
+                            <td class="col-8">
+                                <input type="checkbox" name="active" @if($tryout->active == 1) checked @endif>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row mt-3 m-0">
+                    <button type="submit" class="btn btn-primary ml-auto">Simpan</button>
+                </div>
+            </form>
+        </table>
+        
+        {{-- SOAL --}}
         <div class="col-md-6 d-flex align-items-center mt-4" id="daftar-soal">
             <h5>Daftar Soal</h5>
         </div>
@@ -88,7 +118,8 @@
             @foreach ($tryout->questions as $question)
             <li class="mb-4">
                 <div id={{"div_question_" . $question->id}} class="flex-column">
-                    <span class="question">{{$question->question}}</span>
+                    <span style="font-weight: 600">Pertanyaan :</span> 
+                    <span class="question">{!!$question->question!!}</span>
                     <p class="m-0" style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->code}}@endif @endforeach</span></p>
                 </div>
                 <p class="m-0" style="font-weight: 600" id={{"p_divider_".$question->id}}>Pilihan jawaban : </p>
@@ -101,19 +132,19 @@
                 </ol>
                 <div id={{"div_pembahasan_" . $question->id}} class="flex-column">
                     <span style="font-weight: 600">Pembahasan : </span>
-                    <span class="pembahasan">{{$question->pembahasan}}</span>
+                    <span class="pembahasan">{!!$question->pembahasan!!}</span>
                 </div>
                 <form action={{route('admin.question.update')}} method="post" style="display: inline-block">
                     @csrf
                     <div id={{"input_question_" . $question->id}} style="display:none">
                         <input type="hidden" name="question_id" value={{$question->id}}>
                         <input type="hidden" name="tryout_id" value={{$question->tryout_id}}>
-                        <input type="text" name="question" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
+                        <textarea name="question" id="question_{{$question->id}}" class="question form-control ckeditor" placeholder="Badan Artikel">{{$question->question}}</textarea>
                         <div class="mb-2 mt-2">
                             <label for={{"group_type_".$question->id}} class="col-2 m-0 p-0" >
                                 Tipe soal :
                             </label>
-                            <select name="group_type" id={{"group_type_".$question->id}} class="form-control form-control-sm form-select col-2" aria-label="Default select example">
+                            <select name="group_type" id={{"group_type_".$question->id}} class="form-control form-control-sm form-select col-12" aria-label="Default select example">
                                 @foreach ($groupTypes as $groupType)
                                 <option value={{$groupType->id}} {{($groupType->id == $question->group_type_id ? "selected" : "")}}>{{$groupType->code}}</option>
                                 @endforeach
@@ -129,7 +160,7 @@
                             <input type="text" name="answers[]" id="question_{{$question->id}}_answer_{{$answer->id}}" class="answer form-control" value="{{$answer->answer}}">
                             <label for="answer_{{$answer->id}}_bobot" class="d-flex align-items-center my-1">
                                 <p class="col-4 mb-0">bobot :</p>
-                                <input type="number" name="bobot[]" id="answer_{{$answer->id}}_bobot" class="form-control form-control-sm col-4" value="{{$answer->bobot}}" min="0" max="5">
+                                <input type="number" name="bobot[]" id="answer_{{$answer->id}}_bobot" class="form-control form-control-sm col-8" value="{{$answer->bobot}}" min="0" max="5">
                             </label>
                         </li>
                         @endforeach
@@ -139,7 +170,7 @@
                             Pembahasan
                         </div>
                         <div>
-                            <textarea type="text" name="pembahasan" id="pembahasan_{{$question->id}}" class="question form-control" rows="4">{{$question->pembahasan}}</textarea>
+                            <textarea name="pembahasan" id="pembahasan_{{$question->id}}" class="question form-control ckeditor">{{$question->pembahasan}}</textarea>
                         </div>
                     </div>
                     <button type="button" class="badge bg-warning border-0" onclick="startEditQuestion({{$question->id}})" id={{"editBtn_" . $question->id}}>edit</button>
@@ -160,6 +191,75 @@
         </div>
     </div>
 </div>
+
+<style>
+    p {
+        margin-bottom: 0;
+    }
+</style>
+
+<script>
+    let inputs = document.querySelectorAll( '.ckeditor' )
+    inputs.forEach(input => {
+        CKEDITOR.replace(input.id, {
+            filebrowserUploadUrl: "{{route('admin.ckeditor.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    })
+</script>
+<script>
+function startEditQuestion(idQuestion) {
+    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
+    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
+    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
+    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
+    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
+    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
+    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
+    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
+    questionInput.style.display = "block"
+    questionDiv.style.display = "none"
+    cancelBtn.style.display = "inline-block"
+    simpanBtn.style.display = "inline-block"
+    editBtn.style.display = "none"
+    editAnswers.style.display = "flex"
+    divAnswers.style.display = "none"
+    pDivider.innerText = "Pertanyaan"
+    pembahasanInput.style.display = "block"
+    pembahasanDiv.style.display = "none"
+}
+
+function cancelEditQuestion(idQuestion) {
+    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
+    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
+    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
+    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
+    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
+    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
+    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
+    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
+    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
+    questionInput.style.display = "none"
+    questionDiv.style.display = "flex"
+    cancelBtn.style.display = "none"
+    simpanBtn.style.display = "none"
+    editBtn.style.display = "inline-block"
+    editAnswers.style.display = "none"
+    divAnswers.style.display = "flex"
+    pDivider.innerText = "Pilihan jawaban :"
+    pembahasanInput.style.display = "none"
+    pembahasanDiv.style.display = "block"
+}
+
+function deleteNewQuestion(idQuestion){
+    const newQuestion_Li = document.querySelector(`#div_question_${idQuestion}`);
+    const parent = newQuestion_Li.parentNode;
+    parent.remove();
+}
+</script>
 <script>
 $(document).ready(function () {
     let questions = {!!json_encode($tryout->questions->toArray())!!}
@@ -380,57 +480,5 @@ $(document).ready(function () {
         questionsList_Ol.append(question_Li);
     })
 });
-
-function startEditQuestion(idQuestion) {
-    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
-    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
-    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
-    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
-    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
-    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
-    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
-    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
-    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
-    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
-    questionInput.style.display = "block"
-    questionDiv.style.display = "none"
-    cancelBtn.style.display = "inline-block"
-    simpanBtn.style.display = "inline-block"
-    editBtn.style.display = "none"
-    editAnswers.style.display = "flex"
-    divAnswers.style.display = "none"
-    pDivider.innerText = "Pertanyaan"
-    pembahasanInput.style.display = "block"
-    pembahasanDiv.style.display = "none"
-}
-
-function cancelEditQuestion(idQuestion) {
-    let questionInput = document.querySelector(`#input_question_${idQuestion}`)
-    let questionDiv = document.querySelector(`#div_question_${idQuestion}`)
-    let cancelBtn = document.querySelector(`#cancelBtn_${idQuestion}`)
-    let simpanBtn = document.querySelector(`#simpanBtn_${idQuestion}`)
-    let editBtn = document.querySelector(`#editBtn_${idQuestion}`)
-    let editAnswers = document.querySelector(`#edit_answers_${idQuestion}`)
-    let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
-    let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
-    let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
-    let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
-    questionInput.style.display = "none"
-    questionDiv.style.display = "flex"
-    cancelBtn.style.display = "none"
-    simpanBtn.style.display = "none"
-    editBtn.style.display = "inline-block"
-    editAnswers.style.display = "none"
-    divAnswers.style.display = "flex"
-    pDivider.innerText = "Pilihan jawaban :"
-    pembahasanInput.style.display = "none"
-    pembahasanDiv.style.display = "block"
-}
-
-function deleteNewQuestion(idQuestion){
-    const newQuestion_Li = document.querySelector(`#div_question_${idQuestion}`);
-    const parent = newQuestion_Li.parentNode;
-    parent.remove();
-}
 </script>
 @endsection

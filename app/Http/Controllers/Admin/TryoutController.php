@@ -128,7 +128,7 @@ class TryoutController extends Controller
             $tryout->active = 1;
         }
         $tryout->save();
-        return redirect()->route('admin.tryout.show', $id);
+        return redirect()->route('admin.tryout.edit', $id);
     }
 
     function delete($id)

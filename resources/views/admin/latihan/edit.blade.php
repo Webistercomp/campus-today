@@ -4,6 +4,11 @@
     Latihan | Campus Today
 @endsection
 
+@section('head')
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="card p-3">
@@ -12,7 +17,29 @@
             <h5>Edit Latihan</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.latihan.show', $latihan->id)}}" class="btn btn-secondary">Kembali</a>
+            <a href="{{route('admin.latihan.index')}}" class="btn btn-secondary">Kembali</a>
+            <form class="d-inline-block" action="{{route('admin.latihan.delete', $latihan->id)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">Delete</button>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteData" tabindex="-1" aria-labelledby="deleteDataLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Apakah anda yakin?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                            <button type="submit" class="btn btn-primary">Yakin</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <table class="table table-striped">
@@ -92,7 +119,8 @@
             @foreach ($latihan->questions as $question)
             <li class="mb-4">
                 <div id={{"div_question_" . $question->id}} class="flex-column">
-                    <span class="question">{{$question->question}}</span>
+                    <span style="font-weight: 600">Pertanyaan : </span>
+                    <span class="question">{!!$question->question!!}</span>
                     <p class="m-0"  style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->code}}@endif @endforeach</span></p>
                 </div>
                 <p class="m-0" style="font-weight: 600" id={{"p_divider_".$question->id}}>Pilihan jawaban: </p>
@@ -105,19 +133,19 @@
                 </ol>
                 <div id={{"div_pembahasan_" . $question->id}} class="flex-column">
                     <span style="font-weight: 600">Pembahasan : </span>
-                    <span class="pembahasan">{{$question->pembahasan}}</span>
+                    <span class="pembahasan">{!!$question->pembahasan!!}</span>
                 </div>
                 <form action={{route('admin.questionLatihan.update')}} method="post" style="display: inline-block">
                     @csrf
                     <div id={{"input_question_" . $question->id}} style="display:none">
                         <input type="hidden" name="question_id" value={{$question->id}}>
                         <input type="hidden" name="latihan_id" value={{$question->latihan_id}}>
-                        <input type="text" name="question" id="question_{{$question->id}}" class="question form-control" value="{{$question->question}}">
+                        <textarea name="question" id="question_{{$question->id}}" class="question form-control ckeditor" placeholder="Badan Artikel">{{$question->question}}</textarea>
                         <div class="mb-2 mt-2">
                             <label for={{"group_type_".$question->id}} class="col-2 m-0" >
                                 Tipe soal :
                             </label>
-                            <select name="group_type" id={{"group_type_".$question->id}} class="form-control form-control-sm form-select col-2" aria-label="Default select example">
+                            <select name="group_type" id={{"group_type_".$question->id}} class="form-control form-control-sm form-select col-12" aria-label="Default select example">
                                 @foreach ($groupTypes as $groupType)
                                 <option value={{$groupType->id}} {{($groupType->id == $question->group_type_id ? "selected" : "")}}>{{$groupType->code}}</option>
                                 @endforeach
@@ -133,7 +161,7 @@
                             <input type="text" name="answers[]" id="question_{{$question->id}}_answer_{{$answer->id}}" class="answer form-control" value="{{$answer->answer}}">
                             <label for="answer_{{$answer->id}}_bobot" class="d-flex align-items-center my-1">
                                 <p class="col-4 mb-0">bobot :</p>
-                                <input type="number" name="bobot[]" id="answer_{{$answer->id}}_bobot" class="form-control form-control-sm col-4" value="{{$answer->bobot}}" min="0" max="5">
+                                <input type="number" name="bobot[]" id="answer_{{$answer->id}}_bobot" class="form-control form-control-sm col-8" value="{{$answer->bobot}}" min="0" max="5">
                             </label>
                         </li>
                         @endforeach
@@ -143,7 +171,7 @@
                             Pembahasan
                         </div>
                         <div>
-                            <textarea type="text" name="pembahasan" id="pembahasan_{{$question->id}}" class="question form-control" rows="4">{{$question->pembahasan}}</textarea>
+                            <textarea type="text" name="pembahasan" id="pembahasan_{{$question->id}}" class="question form-control ckeditor" rows="4">{{$question->pembahasan}}</textarea>
                         </div>
                     </div>
                     <button type="button" class="badge bg-warning border-0" onclick="startEditQuestion({{$question->id}})" id={{"editBtn_" . $question->id}}>edit</button>
@@ -164,6 +192,23 @@
         </div>
     </div>
 </div>
+
+<style>
+    p {
+        margin-bottom: 0;
+    }
+</style>
+
+{{-- ckeditor --}}
+<script>
+    let inputs = document.querySelectorAll( '.ckeditor' )
+    inputs.forEach(input => {
+        CKEDITOR.replace(input.id, {
+            filebrowserUploadUrl: "{{route('admin.ckeditor.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    })
+</script>
 
 <script>
     $(document).ready(function () {
@@ -433,6 +478,7 @@
         let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
         let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
         let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+        let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
         questionInput.style.display = "block"
         questionDiv.style.display = "none"
         cancelBtn.style.display = "inline-block"
@@ -442,6 +488,7 @@
         divAnswers.style.display = "none"
         pDivider.innerText = "Pertanyaan"
         pembahasanInput.style.display = "block"
+        pembahasanDiv.style.display = "none"
     }
 
     function cancelEditQuestion(idQuestion) {
@@ -454,6 +501,7 @@
         let divAnswers = document.querySelector(`#div_answers_${idQuestion}`)
         let pDivider = document.querySelector(`#p_divider_${idQuestion}`)
         let pembahasanInput = document.querySelector(`#input_pembahasan_${idQuestion}`)
+        let pembahasanDiv = document.querySelector(`#div_pembahasan_${idQuestion}`)
         questionInput.style.display = "none"
         questionDiv.style.display = "flex"
         cancelBtn.style.display = "none"
@@ -463,6 +511,7 @@
         divAnswers.style.display = "flex"
         pDivider.innerText = "Pilihan jawaban :"
         pembahasanInput.style.display = "none"
+        pembahasanDiv = "block"
     }
 
     function deleteNewQuestion(idQuestion){

@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Latihan({ auth, title, user, latihan }) {
+export default function Latihan({ auth, title, user, latihan, chapter, material, materialType }) {
     const data = latihan.questions;
     let no = 1;
     const [exerciseData, setExerciseData] = useState(() =>
@@ -80,7 +80,18 @@ export default function Latihan({ auth, title, user, latihan }) {
                 </div>
 
                 <div className="flex mt-8">
-                    <div className="min-w-fit grid grid-cols-3 gap-2 h-[calc(100vh_-_200px)] overflow-y-hidden hover:overflow-y-scroll gutter-stable p-2 content-start">
+                    <div className="">
+                        <div className="p-2">
+                            <a  href={route("material.type.video.subtype", [
+                                materialType.code,
+                                material.code,
+                                chapter.id
+                            ])}
+                            className="btn btn-primary text-white w-full">
+                                Kembali
+                            </a>
+                        </div>
+                        <div className="min-w-fit grid grid-cols-3 gap-2 h-[calc(100vh_-_200px)] overflow-y-hidden hover:overflow-y-scroll gutter-stable p-2 content-start">
                         {exerciseData.map((q, i) => (
                             <div
                                 className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
@@ -98,6 +109,7 @@ export default function Latihan({ auth, title, user, latihan }) {
                                 {no++}
                             </div>
                         ))}
+                    </div>
                     </div>
                     <div className="pl-8">
                         <p className="text-curious-blue font-bold text-3xl mb-4">

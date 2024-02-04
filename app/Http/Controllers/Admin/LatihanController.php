@@ -109,6 +109,7 @@ class LatihanController extends Controller
 
     function updateQuestion(Request $request)
     { // bobot is still not yet developed
+        // dd($request);
         $request->validate([
             'question_id' => 'required',
             'question' => 'required',
@@ -137,6 +138,7 @@ class LatihanController extends Controller
         } else {
             $question = LatihanQuestion::find($request->question_id);
             $question->question = $request->question;
+            $question->pembahasan = $request->pembahasan;
             $question->group_type_id = $request->group_type;
             $question->save();
             if ($question->answers->count() < count($request->answers)) {

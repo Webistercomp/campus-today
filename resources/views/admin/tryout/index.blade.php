@@ -37,7 +37,7 @@
                 @endif
             </td>
             <td class="">
-                <a href={{route('admin.tryout.show', $tryout->id)}} class="badge bg-primary">
+                <a href={{route('admin.tryout.edit', $tryout->id)}} class="badge bg-primary">
                     <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>

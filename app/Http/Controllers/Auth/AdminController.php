@@ -71,4 +71,23 @@ class AdminController extends Controller
         $menu = explode('.', $menu)[0];
         return view('admin.index', compact('user', 'menu', 'jumlah_user', 'jumlah_user_admin', 'jumlah_user_nonadmin', 'jumlah_tryout', 'jumlah_tryout_active', 'jumlah_tryout_nonactive', 'jumlah_latihan', 'jumlah_latihan_active', 'jumlah_latihan_nonactive', 'jumlah_event_tryout', 'jumlah_event_tryout_active', 'jumlah_event_tryout_nonactive', 'jumlah_article', 'jumlah_article_active', 'jumlah_article_nonactive', 'jumlah_packet', 'jumlah_materi', 'jumlah_latihan'));
     }
+
+    function uploadImage(Request $request) {
+        if($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName.'_'.time().'.'.$extension;
+         
+            $request->file('upload')->move(public_path('images'), $fileName);
+    
+            $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            $url = asset('images/'.$fileName); 
+            $msg = 'Image uploaded successfully'; 
+            $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+                
+            @header('Content-type: text/html; charset=utf-8'); 
+            echo $response;
+        }
+    }
 }

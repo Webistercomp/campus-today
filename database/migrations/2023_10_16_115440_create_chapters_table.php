@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('material_id');
             $table->string('judul');
             $table->string('subjudul')->nullable();
-            $table->text('body')->nullable();
+            $table->mediumText('body')->nullable();
             $table->string('file')->nullable();
             $table->string('link')->nullable();
             $table->timestamps();

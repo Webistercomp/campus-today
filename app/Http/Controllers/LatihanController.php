@@ -12,16 +12,23 @@ use Inertia\Inertia;
 
 class LatihanController extends Controller {
     function test($id) {
-        $latihan = Latihan::with('questions.answers')->find($id);
+        $latihan = Latihan::with('questions.answers', 'chapter.material')->find($id);
         $user = Auth::user();
         for ($i = 0; $i < count($latihan->questions); $i++) {
             $latihan->questions[$i]->no = ($i + 1);
             $latihan->questions[$i]->jawaban = null;
         }
+        $chapter = $latihan->chapter;
+        $material = $chapter->material;
+        $materialType = $material->materialType;
+        
         return Inertia::render('Latihan/Index', [
             'title' => 'Latihan Soal',
             'user' => $user,
             'latihan' => $latihan,
+            'chapter' => $chapter,
+            'material' => $material,
+            'materialType' => $materialType
         ]);
     }
 
