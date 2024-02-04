@@ -115,7 +115,7 @@
         </div>
         @if($material->chapters->count() == 0)
         <div class="p-2">
-            Tidak ada soal, klik tombol "tambah soal" untuk menambah soal.
+            Tidak ada soal, klik tombol "tambah bab" untuk menambah materi bab.
         </div>
         @endif
         <ol id="chapter-list" type="1">
@@ -250,7 +250,7 @@
         </ol>
         <input type="hidden" name="data" value="" id="data">
         <div class="d-flex mt-3 m-0 justify-content-end">
-            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter()">Tambah Soal</button>
+            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter()">Tambah Bab</button>
         </div>
     </div>
 </div>
@@ -279,212 +279,6 @@
             var code = title.replace(/\s+/g, '_').toLowerCase();
             $('#code').val(code);
         })
-        // $('#add-chapter').on('click', () => {
-        //     const questionUID = `new_${Date.now()}`
-        //     const answerUID = [];
-        //     for (let i = 1; i <= 5; i++) {
-        //         answerUID.push(`new_${Date.now()}`)
-        //     }
-        //     const questionsList_Ol = document.querySelector('#question-list');
-            
-        //     const question_Li = document.createElement("li");
-        //     question_Li.classList.add("mb-4");
-
-        //     const question_Div = document.createElement("div");
-        //     question_Div.setAttribute("id", `div_question_${questionUID}`);
-
-        //     const question_Span = document.createElement("span");
-        //     question_Span.classList.add("question");
-        //     question_Span.innerText = `Pertanyaan`;
-            
-        //     question_Div.append(question_Span);
-
-        //     const answersChoice_P = document.createElement("p");
-        //     answersChoice_P.setAttribute("id", `p_divider_${questionUID}`);
-        //     answersChoice_P.innerText = "Pilihan jawaban: ";
-        //     answersChoice_P.classList.add("m-0")
-
-        //     const answers_Ol = document.createElement("ol");
-        //     for (let i = 1; i <= 5; i++) {
-        //         const answer_Li = document.createElement("li");
-
-        //         const answer_Span = document.createElement("span");
-        //         answer_Span.innerText = `Jawaban ${i}`;
-        //         answer_Span.classList.add("answer");
-
-        //         answer_Li.setAttribute("id", `div_answer_${answerUID[i]}`);
-        //         answer_Li.classList.add("pr-4");
-        //         answer_Li.appendChild(answer_Span);
-                
-        //         answers_Ol.append(answer_Li);
-        //     }
-        //     answers_Ol.setAttribute("type", "A");
-        //     answers_Ol.classList.add("row", "row-cols-3");
-        //     answers_Ol.setAttribute("id", `div_answers_${questionUID}`);
-        //     question_Li.append(question_Div, answersChoice_P, answers_Ol);
-
-        //     const pembahasan_Div = document.createElement("div");
-        //     pembahasan_Div.setAttribute("id", `div_pembahasan_${questionUID}`);
-        //     const pembahasan_Span = document.createElement("span");
-        //     pembahasan_Span.classList.add("pembahasan");
-        //     pembahasan_Span.innerText = `Pembahasan`;
-        //     pembahasan_Div.append(pembahasan_Span);
-        //     question_Li.append(pembahasan_Div)
-            
-        //     const questionAnswerEdit_Form = document.createElement("form");
-        //     questionAnswerEdit_Form.innerHTML = `@csrf`;
-        //     questionAnswerEdit_Form.setAttribute("method", "POST");
-        //     questionAnswerEdit_Form.setAttribute("action", baseEditURL);
-        //     questionAnswerEdit_Form.style.display = "inline-block";
-        //     const questionEdit_Div = document.createElement("div");
-        //     const questionEditId_Input = document.createElement("input");
-        //     questionEditId_Input.setAttribute("type", "hidden");
-        //     questionEditId_Input.setAttribute("name", "question_id");
-        //     questionEditId_Input.setAttribute("value", questionUID);
-
-        //     const questionTryoutId_Input = document.createElement("input");
-        //     questionTryoutId_Input.setAttribute("type", "hidden");
-        //     questionTryoutId_Input.setAttribute("name", "tryout_id");
-        //     questionTryoutId_Input.setAttribute("value", tryout_id);
-
-        //     const questionEdit_Input = document.createElement("input");
-        //     questionEdit_Input.setAttribute("type", "text");
-        //     questionEdit_Input.setAttribute("name", "question");
-        //     questionEdit_Input.setAttribute("id", `question_${questionUID}`);
-        //     questionEdit_Input.setAttribute("value", "");
-        //     questionEdit_Input.setAttribute("placeholder", "Pertanyaan");
-        //     questionEdit_Input.classList.add("question", "form-control");
-
-        //     const groupTypeEdit_Div = document.createElement("div");
-        //     const groupTypeEdit_Label = document.createElement("label");
-        //     const groupTypeEdit_Select = document.createElement("select");
-        //     groupTypeEdit_Div.classList.add("row");
-        //     groupTypeEdit_Label.setAttribute("for", `group_type_${questionUID}`);
-        //     groupTypeEdit_Label.classList.add("col-2", "m-0");
-        //     groupTypeEdit_Label.innerText = "Tipe soal : ";
-        //     groupTypeEdit_Select.setAttribute("name", "group_type");
-        //     groupTypeEdit_Select.setAttribute("id", `group_type_${questionUID}`);
-        //     groupTypeEdit_Select.classList.add("form-select", "form-control", "form-control-sm", "col-2");
-        //     groupTypes.forEach(groupType => {
-        //         const groupTypeEdit_Option = document.createElement("option");
-        //         groupTypeEdit_Option.setAttribute("value", groupType.id);
-        //         groupTypeEdit_Option.innerText = groupType.code;
-        //         groupTypeEdit_Select.append(groupTypeEdit_Option);
-        //     });
-        //     groupTypeEdit_Div.append(groupTypeEdit_Label, groupTypeEdit_Select);
-
-        //     questionEdit_Div.append(questionEditId_Input, questionTryoutId_Input, questionEdit_Input, groupTypeEdit_Div);
-        //     questionEdit_Div.setAttribute("id", `input_question_${questionUID}`);
-        //     questionEdit_Div.style.display = "none";
-        //     questionAnswerEdit_Form.append(questionEdit_Div);
-
-        //     const answersEdit_Ol = document.createElement("ol");
-        //     answersEdit_Ol.setAttribute("type", "A");
-        //     answersEdit_Ol.setAttribute("id", `edit_answers_${questionUID}`);
-        //     answersEdit_Ol.classList.add("row", "row-cols-3");
-        //     answersEdit_Ol.style.display = "none";
-        //     for (let i = 1; i <= 5; i++) {
-        //         const answer_Li = document.createElement("li");
-
-        //         const answer_Input = document.createElement("input");
-        //         answer_Input.setAttribute("type", "text");
-        //         answer_Input.setAttribute("name", "answers[]");
-        //         answer_Input.setAttribute("id", `question_${questionUID}_answer_${i}`);
-        //         answer_Input.setAttribute("value", `Jawaban ${i}`);
-        //         answer_Input.classList.add("answer", "form-control");
-
-        //         answer_Li.setAttribute("id", `input_answer_${answerUID[i]}`);
-        //         answer_Li.classList.add("pr-4");
-        //         answer_Li.appendChild(answer_Input);
-
-        //         const answerBobot_Label = document.createElement("label");
-        //         answerBobot_Label.setAttribute("for",  `answer_${answerUID[i]}_bobot`);
-        //         answerBobot_Label.classList.add("row");
-        //         const answerBobot_P = document.createElement("p");
-        //         answerBobot_P.classList.add("col-4");
-        //         answerBobot_P.innerText = "bobot : ";
-        //         const answerBobot_Input = document.createElement("input");
-        //         answerBobot_Input.setAttribute("type", "number");
-        //         answerBobot_Input.setAttribute("name", "bobot[]");
-        //         answerBobot_Input.setAttribute("id", `answer_${answerUID[i]}_bobot`);
-        //         answerBobot_Input.setAttribute("value", 0);
-        //         answerBobot_Input.setAttribute("min", 0);
-        //         answerBobot_Input.setAttribute("max", 5);
-        //         answerBobot_Input.classList.add("form-control", "form-control-sm", "col-4");
-
-        //         answerBobot_Label.append(answerBobot_P, answerBobot_Input);
-        //         answer_Li.appendChild(answerBobot_Label);
-                
-        //         answersEdit_Ol.append(answer_Li);
-        //     }
-        //     questionAnswerEdit_Form.append(answersEdit_Ol);
-
-        //     const pembahasanEdit_Div = document.createElement("div");
-        //     pembahasanEdit_Div.setAttribute("id", `input_pembahasan_${questionUID}`);
-        //     pembahasanEdit_Div.style.display = "none";
-        //     pembahasanEdit_Div.style.marginTop = "1rem";
-        //     const pembahasanExplainer_Div = document.createElement("div");
-        //     pembahasanExplainer_Div.style.fontWeight = "600";
-        //     pembahasanExplainer_Div.innerText = "Pembahasan";
-
-        //     const pembahasanEdit_Input_Div = document.createElement("div");
-        //     const pembahasanEdit_Input = document.createElement("textarea");
-        //     pembahasanEdit_Input.setAttribute("type", "text");
-        //     pembahasanEdit_Input.setAttribute("name", "pembahasan");
-        //     pembahasanEdit_Input.setAttribute("id", `pembahasan_${questionUID}`);
-        //     pembahasanEdit_Input.setAttribute("rows", "4");
-        //     pembahasanEdit_Input.classList.add("pembahasan", "form-control");
-        //     pembahasanEdit_Input_Div.append(pembahasanEdit_Input);
-            
-        //     pembahasanEdit_Div.append(pembahasanExplainer_Div, pembahasanEdit_Input_Div);
-
-        //     questionAnswerEdit_Form.append(pembahasanEdit_Div);
-            
-        //     const questionAnswerEdit_Button = document.createElement("button");
-        //     questionAnswerEdit_Button.innerText = "edit";
-        //     questionAnswerEdit_Button.setAttribute("type", "button");
-        //     questionAnswerEdit_Button.setAttribute("onclick", `startEditQuestion("${questionUID}")`);
-        //     questionAnswerEdit_Button.setAttribute("id", `editBtn_${questionUID}`);
-        //     questionAnswerEdit_Button.classList.add("badge", "bg-warning", "border-0", "mr-1");
-        //     questionAnswerEdit_Form.append(questionAnswerEdit_Button);
-            
-        //     const questionAnswerCancelEdit_Button = document.createElement("button");
-        //     questionAnswerCancelEdit_Button.innerText = "batal";
-        //     questionAnswerCancelEdit_Button.setAttribute("type", "button");
-        //     questionAnswerCancelEdit_Button.setAttribute("onclick", `cancelEditQuestion("${questionUID}")`);
-        //     questionAnswerCancelEdit_Button.setAttribute("id", `cancelBtn_${questionUID}`);
-        //     questionAnswerCancelEdit_Button.classList.add("badge", "bg-secondary", "border-0", "mr-1");
-        //     questionAnswerCancelEdit_Button.style.display = "none";
-        //     questionAnswerEdit_Form.append(questionAnswerCancelEdit_Button);
-
-        //     const questionAnswerSaveEdit_Button = document.createElement("button");
-        //     questionAnswerSaveEdit_Button.innerText = "simpan";
-        //     questionAnswerSaveEdit_Button.setAttribute("type", "submit");
-        //     questionAnswerSaveEdit_Button.setAttribute("onclick", `cancelEditQuestion("${questionUID}")`);
-        //     questionAnswerSaveEdit_Button.setAttribute("id", `simpanBtn_${questionUID}`);
-        //     questionAnswerSaveEdit_Button.classList.add("badge", "bg-primary", "border-0");
-        //     questionAnswerSaveEdit_Button.style.display = "none";
-        //     questionAnswerEdit_Form.append(questionAnswerSaveEdit_Button);
-
-        //     question_Li.append(questionAnswerEdit_Form);
-            
-        //     const questionAnswerDelete_Form = document.createElement("form");
-        //     const deleteQuestionBtn_Button = document.createElement("button");
-        //     deleteQuestionBtn_Button.innerText = "hapus";
-        //     deleteQuestionBtn_Button.setAttribute("id", `hapusBtn_${questionUID}`);
-        //     deleteQuestionBtn_Button.setAttribute("type", 'button');
-        //     deleteQuestionBtn_Button.setAttribute("onclick", `deleteNewQuestion("${questionUID}")`);
-        //     deleteQuestionBtn_Button.classList.add("badge", "bg-danger", "border-0");
-        //     questionAnswerDelete_Form.innerHTML = `@csrf` + `@method('DELETE')`;
-        //     questionAnswerDelete_Form.append(deleteQuestionBtn_Button);
-        //     questionAnswerDelete_Form.setAttribute("method", "POST");
-        //     questionAnswerDelete_Form.setAttribute("action", baseDeleteURL.replace("question_ID", questionUID));
-        //     questionAnswerDelete_Form.style.display = "inline-block";
-        //     question_Li.append(questionAnswerDelete_Form);
-
-        //     questionsList_Ol.append(question_Li);
-        // })
-        
     });
 
     function addNewChapter(){
@@ -493,70 +287,105 @@
         const chapter_LI = document.createElement('li');
         chapter_LI.classList.add('mb-4');
         chapter_LI.setAttribute('id', `chapter_${newChapterUID}_LI`);
-        chapter_LI.innerHTML = `<div id="judul_chapter_${newChapterUID}" class="flex-column">
-                    <span style="font-weight: 600">Judul : </span>
-                    <span class="judul">Judul Bab Baru</span>
+        chapter_LI.innerHTML = `
+            <div id="judul_chapter_${newChapterUID}" class="flex-column">
+                <span style="font-weight: 600">Judul : </span>
+                <span class="judul">Judul Bab Baru</span>
+            </div>
+            <div id="subjudul_chapter_${newChapterUID}" class="flex-column">
+                <span style="font-weight: 600">Subjudul : </span>
+                <span class="subjudul">Subjudul Bab Baru</span>
+            </div>
+            <div id={{"body_chapter_" . $chapter->id}} class="flex-column">
+                <span style="font-weight: 600">Body : </span>
+                <span class="body">Body baru</span>
+            </div>
+            <div id="file_chapter_${newChapterUID}">
+                <span style="font-weight: 600">File : </span>
+                @if($chapter->file != null)
+                <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                <iframe
+                    src={{asset("storage/materi/file/" . $chapter->file)}}
+                    height="200px"
+                    loading="lazy"
+                    title="PDF-file"
+                ></iframe>
+                @else
+                Tidak ada file
+                @endif
+            </div>
+            <div id="video_chapter_${newChapterUID}">
+                <span style="font-weight: 600">Video : </span>
+                @if($chapter->link != null)
+                <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                <div class="video-container">
+                    <iframe 
+                        width="500px"
+                        height="auto" 
+                        src={{$chapter->link}}>
+                    </iframe>
                 </div>
-                <div id="subjudul_chapter_${newChapterUID}" class="flex-column">
-                    <span style="font-weight: 600">Subjudul : </span>
-                    <span class="subjudul">Subjudul Bab Baru</span>
-                </div>
-                <div id="file_chapter_${newChapterUID}">
-                    <span style="font-weight: 600">File : </span>
-                    @if($chapter->file != null)
-                    <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
-                    <iframe
-                        src={{asset("storage/materi/file/" . $chapter->file)}}
-                        height="200px"
-                        loading="lazy"
-                        title="PDF-file"
-                    ></iframe>
-                    @else
-                    Tidak ada file
-                    @endif
-                </div>
-                <div id="video_chapter_${newChapterUID}" >
-                    <span style="font-weight: 600">Video : </span>
-                    Tidak ada link video
-                </div>
-                <form action="{{route('admin.chapter.create')}}" method="POST" style="display: inline-block; width: 100%;" enctype="multipart/form-data">
-                    @csrf
-                    <div id="input_chapter_${newChapterUID}" style="display:none">
-                        <input type="hidden" name="chapter_id" value="${newChapterUID}"">
-                        <input type="hidden" name="material_id" value={{$chapter->material_id}}>
-                        <div>
-                            <span style="font-weight: 600; display: block;">Judul : </span>    
-                            <input type="text" name="judul" id="input_judul_${newChapterUID}" class="form-control" placeholder="Judul Bab Baru" style="display: block">
-                        </div>
-                        <div>
-                            <span style="font-weight: 600; display: block">Subjudul : </span>
-                            <input type="text" name="subjudul" id="input_subjudul_${newChapterUID}" class="form-control" placeholder="Subjudul Bab Baru" style="display: block">
-                        </div>
-                        <div>
-                            <span style="font-weight: 600; display: block">File : </span>
-                            @if($chapter->file == null)
-                            File materi kosong
-                            @else
-                            <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
-                            <iframe
-                                src={{asset("storage/materi/file/" . $chapter->file)}}
-                                height="200px"
-                                loading="lazy"
-                                title="PDF-file"
-                            ></iframe>
-                            @endif
-                            <input type="file" name="file" id="input_file_${newChapterUID}" class="form-control" value="{{$chapter->file}}" style="display: block" onchange="changePDF(${newChapterUID})">
-                        </div>
-                        <div>
-                            <span style="font-weight: 600; display: block">Video : </span>
-                            <input type="text" name="link" id="input_video_${newChapterUID}" class="form-control" style="display: block" placeholder="Masukkan link video">
-                        </div>
+                <style>
+                    .video-container {
+                    position: relative;
+                    padding-bottom: calc(56.25% * 0.5); /* 16:9 */
+                    width: 50%;
+                    height: 0;
+                    }
+                    .video-container iframe {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    }
+                </style>
+                @else
+                Tidak ada link video
+                @endif
+            </div>
+            <form action="{{route('admin.chapter.create')}}" method="POST" style="display: inline-block; width: 100%;" enctype="multipart/form-data">
+                @csrf
+                <div id="input_chapter_${newChapterUID}" style="display:none">
+                    <input type="hidden" name="chapter_id" value="${newChapterUID}"">
+                    <input type="hidden" name="material_id" value={{$chapter->material_id}}>
+                    <div>
+                        <span style="font-weight: 600; display: block;">Judul : </span>    
+                        <input type="text" name="judul" id="input_judul_${newChapterUID}" class="form-control" placeholder="Judul Bab Baru" style="display: block">
                     </div>
-                    <button type="button" class="badge bg-warning border-0" onclick="startEditChapter('${newChapterUID}')" id="editBtn_${newChapterUID}">edit</button>
-                    <button type="button" class="badge bg-secondary border-0" onclick="cancelEditChapter('${newChapterUID}')" id="cancelBtn_${newChapterUID}" style="display:none">batal</button>
-                    <button type="submit" class="badge bg-primary border-0" onclick="cancelEditChapter('${newChapterUID}', {{$chapter->material_id}})" id="simpanBtn_${newChapterUID}" style="display:none">simpan</button>
-                </form>
-                <button type="submit" class="badge bg-danger border-0" id="hapusBtn_${newChapterUID}" onclick="deleteNewChapter('${newChapterUID}')" >hapus</button>
+                    <div>
+                        <span style="font-weight: 600; display: block">Subjudul : </span>
+                        <input type="text" name="subjudul" id="input_subjudul_${newChapterUID}" class="form-control" placeholder="Subjudul Bab Baru" style="display: block">
+                    </div>
+                    <div>
+                        <span style="font-weight: 600; display: block">Body : </span>
+                        <textarea type="text" name="body" id="input_body_${newChapterUID}" class="form-control ckeditor" style="display: block"></textarea>
+                    </div>
+                    <div>
+                        <span style="font-weight: 600; display: block">File : </span>
+                        @if($chapter->file == null)
+                        File materi kosong
+                        @else
+                        <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                        <iframe
+                            src={{asset("storage/materi/file/" . $chapter->file)}}
+                            height="200px"
+                            loading="lazy"
+                            title="PDF-file"
+                        ></iframe>
+                        @endif
+                        <input type="file" name="file" id="input_file_${newChapterUID}" class="form-control" value="{{$chapter->file}}" style="display: block" onchange="changePDF(${newChapterUID})">
+                    </div>
+                    <div>
+                        <span style="font-weight: 600; display: block">Video : </span>
+                        <input type="text" name="link" id="input_video_${newChapterUID}" class="form-control" style="display: block" placeholder="Masukkan link video">
+                    </div>
+                </div>
+                <button type="button" class="badge bg-warning border-0" onclick="startEditChapter('${newChapterUID}')" id="editBtn_${newChapterUID}">edit</button>
+                <button type="button" class="badge bg-secondary border-0" onclick="cancelEditChapter('${newChapterUID}')" id="cancelBtn_${newChapterUID}" style="display:none">batal</button>
+                <button type="submit" class="badge bg-primary border-0" onclick="cancelEditChapter('${newChapterUID}', {{$chapter->material_id}})" id="simpanBtn_${newChapterUID}" style="display:none">simpan</button>
+            </form>
+            <button type="submit" class="badge bg-danger border-0" id="hapusBtn_${newChapterUID}" onclick="deleteNewChapter('${newChapterUID}')" >hapus</button>
         `;
         chapter_list_OL.append(chapter_LI);
     }
