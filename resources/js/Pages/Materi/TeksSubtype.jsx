@@ -109,10 +109,18 @@ export default function SkdTeksTwk({
                     <div className="w-full h-[calc(100vh_-_220px)] overflow-y-scroll gutter-stable scrollbar-hide">
                         <div>
                             <h4 className="judul-materi">{chapter.judul}</h4>
-                            <h6 className="subjudul-materi">
+                            <h6 className="subjudul-materi font-bold">
                                 {chapter.subjudul}
                             </h6>
-                            <p className="isi-materi">{chapter.body}</p>
+                            <div className="isi-materi" dangerouslySetInnerHTML={{__html: chapter.body}} />
+                            <div>
+                                <div className="font-semibold">File :</div>
+                                <div>
+                                    {chapter.file === null ? "Tidak ada file" : 
+                                        <a href={chapter.file} target="_blank" class="btn btn-primary py-1">Open in new tab</a>
+                                    }
+                                </div>
+                            </div>
                         </div>
                         <Link
                             href={route("latihan.test", chapter.id)}

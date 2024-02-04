@@ -44,6 +44,11 @@ class MaterialController extends Controller {
             ->where('type', 'teks')
             ->first();
         $chapters = Chapter::where('material_id', $material->id)->get();
+        foreach($chapters as $chapter) {
+            if($chapter->file) {
+                $chapter->file = env('APP_URL') . 'storage/materi/file/' . $chapter->file;
+            }
+        }
         if ($id == null) {
             $chapter = $chapters[0];
             $nextChapter = $chapters[1] ?? null;

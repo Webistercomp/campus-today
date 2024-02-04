@@ -27,7 +27,7 @@
             <td>{{$materi->title}}</td>
             <td>{{$materi->type}}</td>
             <td>
-                <a href={{route('admin.materi.show', $materi->id)}} class="badge bg-primary">
+                <a href={{route('admin.materi.edit', $materi->id)}} class="badge bg-primary">
                     <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
                 </a>
             </td>

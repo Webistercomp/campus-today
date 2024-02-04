@@ -152,6 +152,7 @@ class MateriController extends Controller
         $chapter = Chapter::find($request->chapter_id);
         $chapter->judul = $request->judul;
         $chapter->subjudul = $request->subjudul;
+        $chapter->body = $request->body;
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '.' . $file->getClientOriginalExtension();

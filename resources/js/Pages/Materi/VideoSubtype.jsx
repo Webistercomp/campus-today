@@ -96,17 +96,23 @@ export default function SkdVideoTwk({
                     <div className="w-full h-[calc(100vh_-_220px)] overflow-y-scroll gutter-stable scrollbar-hide">
                         <div>
                             <h4 className="judul-materi">{chapter.judul}</h4>
-                            <iframe
-                                src={
-                                    chapter.link
-                                        ? chapter.link
-                                        : "https://www.youtube.com/embed/0nfOlN9DoNw?si=iFu_9peG8XmvI1e1"
+                            <h6 className="subjudul-materi font-bold">
+                                {chapter.subjudul}
+                            </h6>
+                            <div className="isi-materi" dangerouslySetInnerHTML={{__html: chapter.body}} />
+                            <div>
+                                <div className="font-semibold">Video :</div>
+                                {chapter.link === null ? 'Tidak ada video' : 
+                                    <iframe
+                                        src={chapter.link}
+                                        title={chapter.judul}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                        className="aspect-video w-full md:w-2/3 xl:w-4/5"
+                                    ></iframe>
                                 }
-                                title={chapter.judul}
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                                className="aspect-video w-full md:w-2/3 xl:w-4/5"
-                            ></iframe>
+                            </div>
+                            
                         </div>
                         <Link 
                             href={route("latihan.test", chapter.id)}

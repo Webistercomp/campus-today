@@ -18,6 +18,28 @@
         </div>
         <div class="col-md-6 text-right mb-3">
             <a href="{{route('admin.event.index')}}" class="btn btn-secondary">Kembali</a>
+            <form class="d-inline-block" action="{{route('admin.event.delete', $tryout->id)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">Delete</button>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteData" tabindex="-1" aria-labelledby="deleteDataLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Apakah anda yakin?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                            <button type="submit" class="btn btn-primary">Yakin</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <table class="table table-striped">

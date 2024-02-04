@@ -1,5 +1,10 @@
 @extends('admin.layouts')
 
+@section('head')
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+@endsection
+
 @section('title')
     Materi | Campus Today
 @endsection
@@ -13,6 +18,28 @@
         </div>
         <div class="col-md-6 text-right mb-3">
             <a href="{{route('admin.materi.show', $material->id)}}" class="btn btn-secondary">Kembali</a>
+            <form class="d-inline-block" action="{{route('admin.materi.delete', $material->id)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">Delete</button>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteData" tabindex="-1" aria-labelledby="deleteDataLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Apakah anda yakin?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                            <button type="submit" class="btn btn-primary">Yakin</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <table class="table table-striped">
@@ -102,6 +129,10 @@
                     <span style="font-weight: 600">Subjudul : </span>
                     <span class="subjudul">{{$chapter->subjudul}}</span>
                 </div>
+                <div id={{"body_chapter_" . $chapter->id}} class="flex-column">
+                    <span style="font-weight: 600">Body : </span>
+                    <span class="body">{!!$chapter->body!!}</span>
+                </div>
                 <div id={{"file_chapter_" . $chapter->id}}>
                     <span style="font-weight: 600">File : </span>
                     @if($chapter->file != null)
@@ -159,6 +190,10 @@
                         <div>
                             <span style="font-weight: 600; display: block">Subjudul : </span>
                             <input type="text" name="subjudul" id="input_subjudul_{{$chapter->id}}" class="form-control" value="{{$chapter->subjudul}}" style="display: block">
+                        </div>
+                        <div>
+                            <span style="font-weight: 600; display: block">Body : </span>
+                            <textarea type="text" name="body" id="input_body_{{$chapter->id}}" class="form-control ckeditor" style="display: block">{{$chapter->body}}</textarea>
                         </div>
                         <div>
                             <span style="font-weight: 600; display: block">File : </span>
@@ -219,6 +254,23 @@
         </div>
     </div>
 </div>
+
+<style>
+    p {
+        margin-bottom: 0;
+    }
+</style>
+
+{{-- ckeditor --}}
+<script>
+    let inputs = document.querySelectorAll( '.ckeditor' )
+    inputs.forEach(input => {
+        CKEDITOR.replace(input.id, {
+            filebrowserUploadUrl: "{{route('admin.ckeditor.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    })
+</script>
 
 <script>
     $(document).ready(function() {
