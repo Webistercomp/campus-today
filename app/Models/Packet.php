@@ -27,10 +27,6 @@ class Packet extends Model
         return $this->hasMany(VideoType::class);
     }
     
-    function scheduleBimbels() {
-        return $this->hasMany(ScheduleBimbel::class);
-    }
-
     function packetHistory() {
         return $this->hasMany(PacketHistory::class);
     }

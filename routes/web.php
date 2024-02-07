@@ -8,18 +8,17 @@ use App\Http\Controllers\Admin\MinatBakatController as AdminMinatBakatController
 use App\Http\Controllers\Admin\PacketController as AdminPacketController;
 use App\Http\Controllers\Admin\TryoutController as AdminTryoutController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PacketHistoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
-use App\Http\Controllers\EventTryOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LatihanController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MinatBakatController;
 use App\Http\Controllers\PacketController;
+use App\Http\Controllers\PacketHistoryController as ControllersPacketHistoryController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Packet;
 use App\Http\Controllers\TryoutController;
-use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -132,6 +131,14 @@ Route::prefix('admin')->group(function () {
         Route::get('packets/edit/{id}', [AdminPacketController::class, 'edit'])->name('admin.packet.edit');
         Route::put('packets/{id}', [AdminPacketController::class, 'update'])->name('admin.packet.update');
         Route::delete('packets/{id}', [AdminPacketController::class, 'destroy'])->name('admin.packet.delete');
+
+        // packet history
+        Route::get('packet_histories', [PacketHistoryController::class, 'index'])->name('admin.packethistory.index');
+        Route::get('packet_histories/create', [PacketHistoryController::class, 'create'])->name('admin.packethistory.create');
+        Route::post('packet_histories', [PacketHistoryController::class, 'store'])->name('admin.packethistory.store');
+        Route::get('packet_history/{id}', [PacketHistoryController::class, 'show'])->name('admin.packethistory.show');
+        Route::delete('packet_history/{id}', [PacketHistoryController::class, 'destroy'])->name('admin.packethistory.delete');
+        Route::post('packet_history/{id}/updateStatus', [PacketHistoryController::class, 'updateStatus'])->name('admin.packethistory.updateStatus');
 
         // tryout
         Route::get('tryouts', [AdminTryoutController::class, 'index'])->name('admin.tryout.index');

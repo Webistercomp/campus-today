@@ -102,7 +102,7 @@ Dashboard Admin | Campus Today
         <div class="small-box bg-light">
           <div style="display: flex">
             <div class="inner p-2" style="width: 40%">
-              <h3>{{$jumlah_packet}}</h3>
+              <h3>{{$jumlah_packet_history}}</h3>
               
               <p>Packets</p>
             </div>
@@ -110,6 +110,27 @@ Dashboard Admin | Campus Today
             </div>
           </div>
           <a href={{route('admin.packet.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box text-light" style="background-color: #6610f2;">
+          <div style="display: flex">
+            <div class="inner p-2" style="width: 40%">
+              <h3>{{$jumlah_packet_history}}</h3>
+              
+              <p>Packet Histories</p>
+            </div>
+            <div class="p-2" style="width: 60%; text-align: end;">
+              <div class="badge bg-warning border-0" style="width: auto">{{$jumlah_packet_history_pending}} Pending</div> <br>
+              <div class="badge bg-info border-0" style="width: auto">{{$jumlah_packet_history_verification}} Verification</div> <br>
+              <div class="badge bg-success border-0" style="width: auto">{{$jumlah_packet_history_success}} Success</div>
+              <div class="badge bg-danger border-0" style="width: auto">{{$jumlah_packet_history_failed}} Failed</div>
+            </div>
+          </div>
+          <a href={{route('admin.packethistory.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
