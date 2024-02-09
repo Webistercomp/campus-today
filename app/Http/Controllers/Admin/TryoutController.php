@@ -23,7 +23,10 @@ class TryoutController extends Controller
         foreach ($tryouts as $tryout) {
             $roles = '';
             foreach (json_decode($tryout->roles) as $role) {
-                $roles .= Role::find($role)->name . ', ';
+                $findrole = Role::find($role);
+                if($findrole != null) {
+                    $roles .= $findrole->name . ', ';
+                }
             }
             $tryout->roles = substr($roles, 0, -2);
         }
