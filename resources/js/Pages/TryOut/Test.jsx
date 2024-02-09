@@ -165,7 +165,7 @@ export default function Test({ auth, user, tryout, timeLeft }) {
                         <p className="text-curious-blue font-bold text-3xl mb-4">
                             Soal ke-{activeQuestion.no}
                         </p>
-                        <p className="text-lg">{activeQuestion.question}</p>
+                        <p className="text-lg" dangerouslySetInnerHTML={{__html: activeQuestion.question}}></p>
                         <ol className="list-upper-alpha list-inside grid grid-cols-2 gap-4 mt-8 ml-0">
                             {activeQuestion.answers.map((choice, i) => (
                                 <label

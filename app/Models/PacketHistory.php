@@ -13,4 +13,8 @@ class PacketHistory extends Model
     function packet() {
         return $this->belongsTo(Packet::class);
     }
+
+    function user() {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             MinatBakatSeeder::class,
             MinatBakatQuestionSeeder::class,
             MinatBakatAnswerSeeder::class,
+            PacketHistorySeeder::class,
         ]);
     }
 }

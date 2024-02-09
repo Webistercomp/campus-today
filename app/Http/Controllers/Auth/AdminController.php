@@ -9,6 +9,7 @@ use App\Models\Article;
 use App\Models\Latihan;
 use App\Models\Material;
 use App\Models\Packet;
+use App\Models\PacketHistory;
 use App\Models\Tryout;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -63,13 +64,19 @@ class AdminController extends Controller
         $jumlah_article_active = Article::where('active', 1)->get()->count();
         $jumlah_article_nonactive = $jumlah_article - $jumlah_article_active;
 
+        $jumlah_packet_history = PacketHistory::get()->count();
+        $jumlah_packet_history_pending = PacketHistory::where('status', 'pending')->count();
+        $jumlah_packet_history_verification = PacketHistory::where('status', 'verification')->count();
+        $jumlah_packet_history_success = PacketHistory::where('status', 'success')->count();
+        $jumlah_packet_history_failed = PacketHistory::where('status', 'failed')->count();
+
         $jumlah_packet = Packet::get()->count();
 
         $jumlah_materi = Material::get()->count();
 
         $menu = Route::currentRouteName();
         $menu = explode('.', $menu)[0];
-        return view('admin.index', compact('user', 'menu', 'jumlah_user', 'jumlah_user_admin', 'jumlah_user_nonadmin', 'jumlah_tryout', 'jumlah_tryout_active', 'jumlah_tryout_nonactive', 'jumlah_latihan', 'jumlah_latihan_active', 'jumlah_latihan_nonactive', 'jumlah_event_tryout', 'jumlah_event_tryout_active', 'jumlah_event_tryout_nonactive', 'jumlah_article', 'jumlah_article_active', 'jumlah_article_nonactive', 'jumlah_packet', 'jumlah_materi', 'jumlah_latihan'));
+        return view('admin.index', compact('user', 'menu', 'jumlah_user', 'jumlah_user_admin', 'jumlah_user_nonadmin', 'jumlah_tryout', 'jumlah_tryout_active', 'jumlah_tryout_nonactive', 'jumlah_latihan', 'jumlah_latihan_active', 'jumlah_latihan_nonactive', 'jumlah_event_tryout', 'jumlah_event_tryout_active', 'jumlah_event_tryout_nonactive', 'jumlah_article', 'jumlah_article_active', 'jumlah_article_nonactive', 'jumlah_packet_history', 'jumlah_packet_history_pending', 'jumlah_packet_history_verification', 'jumlah_packet_history_success', 'jumlah_packet_history_failed', 'jumlah_packet', 'jumlah_materi', 'jumlah_latihan'));
     }
 
     function uploadImage(Request $request) {

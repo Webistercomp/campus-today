@@ -234,6 +234,18 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href={{route('admin.packethistory.index')}} @if($menu == 'packethistory')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Packet Histories
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href={{route('admin.article.index')}} @if($menu == 'article')
             class="nav-link active"
           @else

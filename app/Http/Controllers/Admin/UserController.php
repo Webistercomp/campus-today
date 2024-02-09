@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     function index() {
-        $users = User::all();
+        $users = User::where('email_verified_at', '!=', null)->get();
         $menu = Route::currentRouteName();
         $menu = explode('.', $menu)[1];
         return view('admin.user.index', compact('users', 'menu'));
