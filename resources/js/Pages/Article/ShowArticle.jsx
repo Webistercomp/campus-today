@@ -22,7 +22,7 @@ export default function showArticle({ auth, article }) {
                         className="bg-slate-500 w-3/4 aspect-video object-cover block mx-auto"
                     />
                 </figure>
-                <div className="w-4/5 text-justify">{article.body}</div>
+                <div className="w-4/5 text-justify" dangerouslySetInnerHTML={{__html: article.body}} />
                 {/* tombol kembali */}
                 <div className="mt-8 flex pb-14">
                     <a href={route("article.index")} className="btn btn-primary btn-outline">

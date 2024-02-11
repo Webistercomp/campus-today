@@ -38,15 +38,17 @@ export default function Payment({ auth, title, packet, user_data }) {
             packet_id: packet.id,
             user_id: auth.user.id,
             payment_method: user_data.payment_method,
-            files: paymentProof,
+            bukti_pembayaran: paymentProof,
         };
+        console.log('user_data: ', user_data)
+        console.log('submit data: ', submitData)
 
         try {
-            const sumbit = axios.post(route("paket.store"), submitData);
-            const response = await sumbit;
+            const submit = axios.post(route("paket.store"), submitData);
+            const response = await submit;
             console.log(response);
 
-            return router.get(route("paket.verification", packet.id));
+            return router.post(route("paket.verification", packet.id));
         } catch (err) {
             console.log(err);
         } finally {

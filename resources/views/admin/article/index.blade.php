@@ -14,6 +14,7 @@
         <th>Id</th>
         <th>Judul</th>
         <th>Deskripsi</th>
+        <th>Cover</th>
         <th>Aktif</th>
         <th>Detail</th>
     </thead>
@@ -23,7 +24,18 @@
             <td>{{$article->id}}</td>
             <td>{{$article->title}}</td>
             <td>{{$article->description}}</td>
-            <td>{{$article->active}}</td>
+            <td>
+                <div style="height: 50px; width: 100px; overflow: hidden; ">
+                    <img src={{$article->image}} alt="" style="width: 100%; height: 100%;">
+                </div>
+            </td>
+            <td>
+                @if($article->active)
+                    <span class="badge bg-success">V</span>
+                @else
+                    <span class="badge bg-success">X</span>
+                @endif
+            </td>
             <td>
                 <a href={{route('admin.article.show', $article->id)}} class="badge bg-primary">
                     <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>

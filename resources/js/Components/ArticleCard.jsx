@@ -10,7 +10,7 @@ export default function ArticleCard({ image, title, body }) {
             </figure>
             <div className="card-body p-2 md:p-4 text-sm xl:text-base">
                 <h2 className="card-title text-lg">{title}</h2>
-                <p className="line-clamp-3">{body}</p>
+                <div className="line-clamp-2" dangerouslySetInnerHTML={{__html: body}} />
             </div>
         </div>
     );

@@ -5,7 +5,8 @@
 @endsection
 
 @section('head')
-<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
 @endsection
 
 @section('content')
@@ -41,7 +42,7 @@
                         <th class="col-4">Body</th>
                         <td class="col-8">
                             <div class="form-floating">
-                                <textarea class="form-control" name="body" id="body" placeholder="Badan Artikel">{{$article->body}}</textarea>
+                                <textarea class="form-control ckeditor" name="body" id="body" placeholder="Badan Artikel">{{$article->body}}</textarea>
                             </div>
                         </td>
                     </tr>
@@ -95,10 +96,12 @@
         });
     })
 
-    ClassicEditor
-        .create( document.querySelector( '#body' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    let inputs = document.querySelectorAll( '.ckeditor' )
+    inputs.forEach(input => {
+        CKEDITOR.replace(input.id, {
+            filebrowserUploadUrl: "{{route('admin.ckeditor.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    })
 </script>
 @endsection

@@ -29,12 +29,14 @@ class PacketController extends Controller {
         $request->validate([
             'packet_id' => 'required',
             'user_id' => 'required',
-            'file' => '',
+            // 'bukti_pembayaran' => 'required',
             'payment_method' => 'required',
         ]);
         $newPacketHistory = new PacketHistory();
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
+        return response()->json(['bukti_pembayaran' => $request->bukti_pembayaran, 'message' => 'File not found'], 404);
+        if ($request->hasFile('bukti_pembayaran')) {
+            return response()->json(['message' => 'File found'], 404);
+            $file = $request->file('bukti_pembayaran');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/bukti_pembayaran', $fileName);
             $newPacketHistory->bukti_pembayaran = $fileName;
@@ -44,7 +46,7 @@ class PacketController extends Controller {
         $newPacketHistory->payment_method = $request->payment_method;
         $newPacketHistory->save();
 
-        return redirect()->route('paket.verification', $request->packet_id);
+        return response()->json(['message' => 'Paket berhasil dibeli', 'data' => $newPacketHistory], 200);
     }
 
     function show($packet_id) {
@@ -55,7 +57,7 @@ class PacketController extends Controller {
         ]);
     }
 
-    function checkout($packet_id) {
+    function checkout(Request $request, $packet_id) {
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Checkout', [
             'title' => 'Checkout Paket ' . $packet->name,
@@ -64,15 +66,17 @@ class PacketController extends Controller {
     }
 
     function payment($packet_id, Request $request) {
+        $payment_method = $request->payment_method;
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Payment', [
             'title' => 'Pembayaran Paket ' . $packet->name,
             'packet' => $packet,
             'user_data' => $request,
+            'payment_method' => $payment_method,
         ]);
     }
 
-    function verification($packet_id) {
+    function verification(Request $request, $packet_id) {
         return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
     }
 }

@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import CheckIcon from "@/icons/CheckIcon";
 import XIcon from "@/icons/XIcon";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import EWallet from "@/images/e-wallet-rafiki.png";
 
 export default function Deskripsi({ auth, title, packet }) {
@@ -11,6 +11,10 @@ export default function Deskripsi({ auth, title, packet }) {
         benefit: JSON.parse(packet.benefits).v,
         nonBenefit: JSON.parse(packet.benefits).x,
     };
+
+    const onclickBeliSekarang = () => {
+        router.get(route("paket.checkout", packet.id));
+    }
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -93,11 +97,10 @@ export default function Deskripsi({ auth, title, packet }) {
                                 deskripsiPaket.price
                             )}
                         </p>
-                        <Link href={route("paket.checkout", packet.id)}>
-                            <button className="btn btn-primary">
-                                Beli Sekarang
-                            </button>
-                        </Link>
+                        <button className="btn btn-primary"
+                        onClick={onclickBeliSekarang}>
+                            Beli Sekarang
+                        </button>
                     </div>
                 </div>
             </section>
