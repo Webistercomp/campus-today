@@ -38,11 +38,16 @@ class MaterialController extends Controller {
         ]);
     }
 
-    function materialTeksSubtype($type, $materialcode, $id = null) {
+    function materialTeksSubtype($type, $materialcode, $id = null) {    
+        $role_user = Auth::user()->role;
         $material = Material::with('materialType')
             ->where('code', $materialcode)
             ->where('type', 'teks')
             ->first();
+        $material_roles = json_decode($material->roles);
+        if(!in_array($role_user->id, $material_roles)) {
+            return redirect()->route('material.type.teks', $type);
+        }
         $chapters = Chapter::where('material_id', $material->id)->get();
         foreach($chapters as $chapter) {
             if($chapter->file) {
@@ -94,10 +99,15 @@ class MaterialController extends Controller {
     }
 
     function materialVideoSubtype($type, $materialcode, $id = null) {
+        $role_user = Auth::user()->role;
         $material = Material::with('materialType')
             ->where('code', $materialcode)
             ->where('type', 'video')
             ->first();
+        $material_roles = json_decode($material->roles);
+        if(!in_array($role_user->id, $material_roles)) {
+            return redirect()->route('material.type.video', $type);
+        }
         $chapters = Chapter::where('material_id', $material->id)->get();
         if ($id == null) {
             $chapter = $chapters[0];
