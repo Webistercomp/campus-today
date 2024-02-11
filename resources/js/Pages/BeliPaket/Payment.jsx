@@ -82,15 +82,25 @@ export default function Payment({ auth, title, packet, user_data }) {
                     {title}
                 </h1>
                 <div className="border-2 p-6 rounded-2xl max-w-4xl mt-6 text-center text-slate-800 mx-auto">
-                    <div>
-                        <p>
-                            Pembayaran dapat ditransfer melalui nomor rekening
-                            berikut
-                        </p>
-                        <h3 className="text-4xl text-curious-blue mt-4">
-                            1209187276344
-                        </h3>
-                    </div>
+                    {user_data.payment_method === "transfer_bank" ? 
+                        <div>
+                            <p>
+                                Pembayaran dapat ditransfer melalui nomor rekening bank <b>BRI</b> berikut. Atas nama <b>Nizar Manarul Hidayat</b>.
+                            </p>
+                            <h3 className="text-4xl text-curious-blue mt-4">
+                                1209187276344
+                            </h3>
+                        </div>
+                        : 
+                        <div>
+                            <p>
+                                Pembayaran dapat ditransfer melalui nomor <b>Gopay</b> berikut. Atas nama <b>Nizar Manarul Hidayat</b>.
+                            </p>
+                            <h3 className="text-4xl text-curious-blue mt-4">
+                                085786742735
+                            </h3>
+                        </div>
+                    }
                     <div className="mt-8">
                         <p>Upload bukti pembayaran</p>
                         <input
