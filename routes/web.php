@@ -52,8 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/paket', [PacketController::class, 'index'])->name('paket.index');
     Route::get('/paket/{packet_id}', [PacketController::class, 'show'])->name('paket.show');
     Route::get('/paket/{packet_id}/checkout', [PacketController::class, 'checkout'])->name('paket.checkout');
-    Route::get('/paket/{packet_id}/checkout/payment', [PacketController::class, 'payment'])->name('paket.payment');
-    Route::get('/paket/{packet_id}/checkout/verification', [PacketController::class, 'verification'])->name('paket.verification');
+    Route::post('/paket/{packet_id}/checkout/payment', [PacketController::class, 'payment'])->name('paket.payment');
+    Route::post('/paket/{packet_id}/checkout/verification', [PacketController::class, 'verification'])->name('paket.verification');
     Route::post('/paket', [PacketController::class, 'store'])->name('paket.store');
 
     Route::get('/tryout', [TryoutController::class, 'index'])->name('tryout');

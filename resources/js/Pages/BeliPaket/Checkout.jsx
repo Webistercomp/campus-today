@@ -43,7 +43,7 @@ export default function Checkout({ auth, title, packet }) {
             }, 2000);
         }
 
-        return router.get(route("paket.payment", packet.id), {
+        return router.post(route("paket.payment", packet.id), {
             payment_method: checkoutData.payment_method,
         });
     };
@@ -120,10 +120,11 @@ export default function Checkout({ auth, title, packet }) {
                                 <option value="default" disabled>
                                     Metode Pembayaran
                                 </option>
-                                <option value="transfer">Transfer</option>
+                                <option value="transfer_bank">Transfer Bank</option>
                                 <option value="gopay">Gopay</option>
                                 <option value="shopeepay">ShopeePay</option>
                             </select>
+                            <div className="text-xs">*Data diambil dari profile user</div>
                         </div>
                         <div className="divider divider-vertical lg:divider-horizontal"></div>
                         <div className="basis-3/4 text-slate-800">
