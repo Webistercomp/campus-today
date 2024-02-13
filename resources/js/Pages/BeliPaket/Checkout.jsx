@@ -122,7 +122,6 @@ export default function Checkout({ auth, title, packet }) {
                                 </option>
                                 <option value="transfer_bank">Transfer Bank</option>
                                 <option value="gopay">Gopay</option>
-                                <option value="shopeepay">ShopeePay</option>
                             </select>
                             <div className="text-xs">*Data diambil dari profile user</div>
                         </div>
