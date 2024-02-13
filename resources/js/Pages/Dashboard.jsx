@@ -104,6 +104,7 @@ export default function Dashboard({ auth, articles, materialTypes }) {
                         <h4 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold">
                             Wujudkan Potensi Terbaik dengan Materi Premium
                         </h4>
+                        {auth.user ? (auth.user.role_id)}
                         <Link
                             href={route("paket.index")}
                             className="btn bg-white border-none text-curious-blue-300 capitalize text-sm lg:text-lg xl:text-xl"
