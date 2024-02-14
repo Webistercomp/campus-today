@@ -17,7 +17,12 @@ import IconMateriUM from "@/svg/icon-materium.svg";
 import IconMateriUTBK from "@/svg/icon-materiutbk.svg";
 import IconVideoSeries from "@/svg/icon-videoseries.svg";
 
-export default function Dashboard({ auth, articles, materialTypes }) {
+export default function Dashboard({ auth, articles, materialTypes, role }) {
+    const hideUserPacketNotif = () => {
+        const paketUser = document.getElementById("paketUser");
+        paketUser.style.display = "none";
+    }
+
     const FAQ = [
         {
             question: "Bagaimana cara membuat akun di Campus Today?",
@@ -66,7 +71,23 @@ export default function Dashboard({ auth, articles, materialTypes }) {
         >
             <Head title="Dashboard" />
 
-            <section className="bg-white mt-6 px-4 md:px-14 lg:px-24 xl:px-32">
+            <section className="bg-white mt-7 px-4 md:px-14 lg:px-24 xl:px-32" id="paketUser">
+                <div className="bg-green rounded p-3 text-white flex">
+                    <div className="flex-1 text-sm">
+                        <div>Paket Anda saat ini adalah <b>{role.name}</b>. Segera upgrade paket Anda untuk mendapatkan akses lebih banyak. <Link href={route('paket.index')}>
+                                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Beli Paket</span>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="flex-initial">
+                        <button type="button" onClick={hideUserPacketNotif} className="border-0">
+                            <b>x</b>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section className="bg-white mt-7 px-4 md:px-14 lg:px-24 xl:px-32">
                 <h1 className="font-bold text-3xl">Mulai Belajar</h1>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-6 justify-between mt-6">
                     {materialTypes.map((materialType, i) => {
