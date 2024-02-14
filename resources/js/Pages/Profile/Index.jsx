@@ -4,8 +4,9 @@ import { Head, router } from "@inertiajs/react";
 import { useState } from "react";
 import MyProfile from "./MyProfile";
 import Settings from "./Settings";
+import PembelianPaket from "./PembelianPaket";
 
-export default function Profile({ auth }) {
+export default function Profile({ auth, historyPembelian }) {
     const { user } = auth;
     const [tabsIndex, setTabsIndex] = useState(0);
     const [isEdit, setIsEdit] = useState(false);
@@ -138,6 +139,16 @@ export default function Profile({ auth }) {
                         >
                             Setting
                         </button>
+                        <button
+                            className={`text-center relative cursor-pointer ${
+                                tabsIndex === 2
+                                    ? "tab-active after:opacity-100"
+                                    : "tab-active after:opacity-0 after:bottom-0"
+                            }`}
+                            onClick={() => setTabsIndex(2)}
+                        >
+                            Pembelian Paket
+                        </button>
                     </div>
                 </div>
 
@@ -151,6 +162,8 @@ export default function Profile({ auth }) {
                 )}
 
                 {tabsIndex === 1 && <Settings setAlertData={setAlertData} />}
+
+                {tabsIndex === 2 && <PembelianPaket historyPembelian={historyPembelian} />}
             </section>
 
             <Alert {...alertData} />

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\PacketHistory;
 use App\Models\User;
 use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -18,7 +19,8 @@ class ProfileController extends Controller {
      * Display the user's profile form.
      */
     public function index() {
-        return Inertia::render('Profile/Index');
+        $historyPembelian = PacketHistory::with('packet')->where('user_id', Auth::user()->id)->get();
+        return Inertia::render('Profile/Index', compact('historyPembelian'));
     }
 
     /**
