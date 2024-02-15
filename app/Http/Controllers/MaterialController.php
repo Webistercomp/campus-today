@@ -6,12 +6,15 @@ use App\Models\Chapter;
 use App\Models\GroupType;
 use App\Models\Material;
 use App\Models\MaterialType;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class MaterialController extends Controller {
-    function materialType($type) {
+class MaterialController extends Controller
+{
+    function materialType($type)
+    {
         if ($type == "videoseries") {
             return redirect()->route('material.type.video', $type);
         }
@@ -21,7 +24,8 @@ class MaterialController extends Controller {
         ]);
     }
 
-    function materialTeks($type) {
+    function materialTeks($type)
+    {
         $materials = Material::with('materialType', 'groupType')
             ->whereHas('materialType', function ($q) use ($type) {
                 $q->where('code', $type);
@@ -38,19 +42,22 @@ class MaterialController extends Controller {
         ]);
     }
 
-    function materialTeksSubtype($type, $materialcode, $id = null) {    
+    function materialTeksSubtype($type, $materialcode, $id = null)
+    {
         $role_user = Auth::user()->role;
         $material = Material::with('materialType')
             ->where('code', $materialcode)
             ->where('type', 'teks')
             ->first();
         $material_roles = json_decode($material->roles);
-        if(!in_array($role_user->id, $material_roles)) {
+        if (!in_array($role_user->id, $material_roles)) {
+            session()->flash('type', 'info');
+            session()->flash('msg', 'Paket ada masih ' . Auth::user()->role->name . ', upgrade paket Anda untuk menikmati layanan lainnya');
             return redirect()->route('material.type.teks', $type);
         }
         $chapters = Chapter::where('material_id', $material->id)->get();
-        foreach($chapters as $chapter) {
-            if($chapter->file) {
+        foreach ($chapters as $chapter) {
+            if ($chapter->file) {
                 $chapter->file = env('APP_URL') . 'storage/materi/file/' . $chapter->file;
             }
         }
@@ -80,7 +87,8 @@ class MaterialController extends Controller {
         ]);
     }
 
-    function materialVideo($type) {
+    function materialVideo($type)
+    {
         $materialType = MaterialType::where('code', $type)->first();
         $materials = Material::with('materialType', 'groupType')
             ->whereHas('materialType', function ($q) use ($type) {
@@ -98,14 +106,17 @@ class MaterialController extends Controller {
         ]);
     }
 
-    function materialVideoSubtype($type, $materialcode, $id = null) {
+    function materialVideoSubtype($type, $materialcode, $id = null)
+    {
         $role_user = Auth::user()->role;
         $material = Material::with('materialType')
             ->where('code', $materialcode)
             ->where('type', 'video')
             ->first();
         $material_roles = json_decode($material->roles);
-        if(!in_array($role_user->id, $material_roles)) {
+        if (!in_array($role_user->id, $material_roles)) {
+            session()->flash('type', 'info');
+            session()->flash('msg', 'Paket ada masih ' . Auth::user()->role->name . ', upgrade paket Anda untuk menikmati layanan lainnya');
             return redirect()->route('material.type.video', $type);
         }
         $chapters = Chapter::where('material_id', $material->id)->get();
@@ -134,7 +145,8 @@ class MaterialController extends Controller {
         ]);
     }
 
-    function complete($materialid) {
+    function complete($materialid)
+    {
         $user = Auth::user();
         $material = Material::find($materialid);
         return Inertia::render('Materi/Completed', [

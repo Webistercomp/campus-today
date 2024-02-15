@@ -1,15 +1,31 @@
+import Alert from "@/Components/Alert";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DocumentIcon from "@/icons/DocumentIcon";
 import { Head, Link } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Teks({ auth, title, type, materials }) {
+export default function Teks({ auth, title, type, materials, flash }) {
     const tabGroup = materials.map((material) => material.group_type);
     const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
     const [currentMaterials, setCurrentMaterials] = useState(() =>
         materials.filter((material) => material.group_id === tabIndexActive)
     );
     const [searchkeyword, setSearchKeyword] = useState("");
+    const [flashData, setFlashData] = useState({
+        type: "success",
+        isShow: false,
+        msg: "",
+    });
+
+    useEffect(() => {
+        if (flash.msg !== null) setFlashData({ ...flash, isShow: true });
+
+        const flashTimeout = setTimeout(() => {
+            setFlashData({ ...flash, isShow: false });
+        }, 3000);
+
+        return () => clearTimeout(flashTimeout);
+    }, []);
 
     useEffect(() => {
         setCurrentMaterials(
@@ -109,6 +125,7 @@ export default function Teks({ auth, title, type, materials }) {
                     })}
                 </div>
             </section>
+            <Alert {...flashData} />
         </AuthenticatedLayout>
     );
 }
