@@ -21,9 +21,11 @@ class HomeController extends Controller
     function dashboard() {
         $materialTypes = MaterialType::all();
         $articles = Article::all();
+        $role = auth()->user()->role;
         return Inertia::render('Dashboard', [
             'materialTypes' => $materialTypes,
-            'articles' => $articles
+            'articles' => $articles,
+            'role' => $role
         ]);
     }
 }

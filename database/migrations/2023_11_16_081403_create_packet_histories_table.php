@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('payment_method')->nullable();
             $table->string('bukti_pembayaran')->nullable();
             $table->enum('status', ['pending', 'verification', 'success', 'failed'])->default('pending');
+            $table->timestamp('expired_at')->nullable();
             $table->timestamps();
         });
     }
