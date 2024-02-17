@@ -21,7 +21,7 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
     const hideUserPacketNotif = () => {
         const paketUser = document.getElementById("paketUser");
         paketUser.style.display = "none";
-    }
+    };
 
     const FAQ = [
         {
@@ -71,16 +71,29 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
         >
             <Head title="Dashboard" />
 
-            <section className="bg-white mt-7 px-4 md:px-14 lg:px-24 xl:px-32" id="paketUser">
+            <section
+                className="bg-white mt-7 px-4 md:px-14 lg:px-24 xl:px-32"
+                id="paketUser"
+            >
                 <div className="bg-green rounded p-3 text-white flex">
                     <div className="flex-1 text-sm">
-                        <div>Paket Anda saat ini adalah <b>{role.name}</b>. Segera upgrade paket Anda untuk mendapatkan akses lebih banyak. <Link href={route('paket.index')}>
-                                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Beli Paket</span>
+                        <div>
+                            Paket Anda saat ini adalah <b>{role.name}</b>.
+                            Segera upgrade paket Anda untuk mendapatkan akses
+                            lebih banyak.{" "}
+                            <Link href={route("paket.index")}>
+                                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                    Beli Paket
+                                </span>
                             </Link>
                         </div>
                     </div>
                     <div className="flex-initial">
-                        <button type="button" onClick={hideUserPacketNotif} className="border-0">
+                        <button
+                            type="button"
+                            onClick={hideUserPacketNotif}
+                            className="border-0"
+                        >
                             <b>x</b>
                         </button>
                     </div>
@@ -202,7 +215,7 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
                             </h3>
                             <Link
                                 as="button"
-                                href={route("minatbakat")}
+                                href={""}
                                 className="btn btn-primary capitalize text-white px-8 mt-2"
                             >
                                 Mulai
