@@ -219,7 +219,7 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                 ref={ref}
             >
                 <div className="flex justify-between w-full relative">
-                    <a href="#" className="relative">
+                    <a href="/" className="relative">
                         <img
                             src={CTLogo}
                             alt="ct-logo"

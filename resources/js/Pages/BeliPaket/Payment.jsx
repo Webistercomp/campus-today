@@ -34,26 +34,29 @@ export default function Payment({ auth, title, packet, user_data }) {
 
         setIsLoading(true);
 
-        const submitData = {
-            packet_id: packet.id,
-            user_id: auth.user.id,
-            payment_method: user_data.payment_method,
-            bukti_pembayaran: paymentProof,
-        };
-        console.log('user_data: ', user_data)
-        console.log('submit data: ', submitData)
+        const submitData = new FormData();
+        submitData.append("packet_id", packet.id);
+        submitData.append("user_id", auth.user.id);
+        submitData.append("payment_method", user_data.payment_method);
+        submitData.append(
+            "bukti_pembayaran",
+            paymentProof,
+            `payment_${auth.user.name}_${packet.name}.${paymentProof.name
+                .split(".")
+                .pop()}`
+        );
 
-        try {
-            const submit = axios.post(route("paket.store"), submitData);
-            const response = await submit;
-            console.log(response);
-
-            return router.post(route("paket.verification", packet.id));
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setIsLoading(false);
-        }
+        axios
+            .post(route("paket.store"), submitData)
+            .then((res) => {
+                return router.post(route("paket.verification", packet.id));
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     return (
@@ -82,25 +85,29 @@ export default function Payment({ auth, title, packet, user_data }) {
                     {title}
                 </h1>
                 <div className="border-2 p-6 rounded-2xl max-w-4xl mt-6 text-center text-slate-800 mx-auto">
-                    {user_data.payment_method === "transfer_bank" ? 
+                    {user_data.payment_method === "transfer_bank" ? (
                         <div>
                             <p>
-                                Pembayaran dapat ditransfer melalui nomor rekening bank <b>BRI</b> berikut. Atas nama <b>Nizar Manarul Hidayat</b>.
+                                Pembayaran dapat ditransfer melalui nomor
+                                rekening bank <b>BRI</b> berikut. Atas nama{" "}
+                                <b>Nizar Manarul Hidayat</b>.
                             </p>
                             <h3 className="text-4xl text-curious-blue mt-4">
                                 1209187276344
                             </h3>
                         </div>
-                        : 
+                    ) : (
                         <div>
                             <p>
-                                Pembayaran dapat ditransfer melalui nomor <b>Gopay</b> berikut. Atas nama <b>Nizar Manarul Hidayat</b>.
+                                Pembayaran dapat ditransfer melalui nomor{" "}
+                                <b>Gopay</b> berikut. Atas nama{" "}
+                                <b>Nizar Manarul Hidayat</b>.
                             </p>
                             <h3 className="text-4xl text-curious-blue mt-4">
                                 085786742735
                             </h3>
                         </div>
-                    }
+                    )}
                     <div className="mt-8">
                         <p>Upload bukti pembayaran</p>
                         <input

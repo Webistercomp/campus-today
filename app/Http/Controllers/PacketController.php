@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Symfony\Component\Routing\RequestContext;
 
-class PacketController extends Controller {
-    function index() {
+class PacketController extends Controller
+{
+    function index()
+    {
         $packets = Packet::all();
         $mandiri = $packets->where('type', 'mandiri');
         $bimbel = $packets->where('type', 'bimbel');
@@ -25,21 +27,24 @@ class PacketController extends Controller {
         ]);
     }
 
-    function store(Request $request) {
+    function store(Request $request)
+    {
         $request->validate([
             'packet_id' => 'required',
             'user_id' => 'required',
-            // 'bukti_pembayaran' => 'required',
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg|max:1024',
             'payment_method' => 'required',
         ]);
         $newPacketHistory = new PacketHistory();
-        return response()->json(['bukti_pembayaran' => $request->bukti_pembayaran, 'message' => 'File not found'], 404);
         if ($request->hasFile('bukti_pembayaran')) {
-            return response()->json(['message' => 'File found'], 404);
+            $path = storage_path('/app/public/bukti_pembayaran');
+            !is_dir($path) && mkdir($path, 0777, true);
+
             $file = $request->file('bukti_pembayaran');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/bukti_pembayaran', $fileName);
-            $newPacketHistory->bukti_pembayaran = $fileName;
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->move($path, $filename);
+
+            $newPacketHistory->bukti_pembayaran = $filename;
         }
         $newPacketHistory->packet_id = $request->packet_id;
         $newPacketHistory->user_id = $request->user_id;
@@ -49,7 +54,8 @@ class PacketController extends Controller {
         return response()->json(['message' => 'Paket berhasil dibeli', 'data' => $newPacketHistory], 200);
     }
 
-    function show($packet_id) {
+    function show($packet_id)
+    {
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Deskripsi', [
             'title' => 'Paket ' . $packet->nama,
@@ -57,7 +63,8 @@ class PacketController extends Controller {
         ]);
     }
 
-    function checkout(Request $request, $packet_id) {
+    function checkout(Request $request, $packet_id)
+    {
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Checkout', [
             'title' => 'Checkout Paket ' . $packet->name,
@@ -65,7 +72,8 @@ class PacketController extends Controller {
         ]);
     }
 
-    function payment($packet_id, Request $request) {
+    function payment($packet_id, Request $request)
+    {
         $payment_method = $request->payment_method;
         $packet = Packet::find($packet_id);
         return Inertia::render('BeliPaket/Payment', [
@@ -76,7 +84,8 @@ class PacketController extends Controller {
         ]);
     }
 
-    function verification(Request $request, $packet_id) {
+    function verification(Request $request, $packet_id)
+    {
         return Inertia::render('BeliPaket/Verification', ['title' => 'Pembayaran', 'nama_paket' => 'Friendly']);
     }
 }
