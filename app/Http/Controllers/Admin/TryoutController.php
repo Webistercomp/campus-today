@@ -73,23 +73,7 @@ class TryoutController extends Controller
             $newTryout->active = 0;
         }
         $newTryout->save();
-        $newTryoutId = $newTryout->id;
-        for ($i = 1; $i <= 3; $i++) {
-            $newTryoutQuestion = new Question();
-            $newTryoutQuestion->tryout_id = $newTryoutId;
-            $newTryoutQuestion->group_type_id = $newTryout->material_type_id;
-            $newTryoutQuestion->question = "Question " . $i;
-            $newTryoutQuestion->pembahasan = "Pembahasan " . $i;
-            $newTryoutQuestion->save();
-            $newTryoutQuestionId = $newTryoutQuestion->id;
-            for ($j = 1; $j <= 5; $j++) {
-                $newAnswer = new Answer();
-                $newAnswer->question_id = $newTryoutQuestionId;
-                $newAnswer->answer = "Jawaban " . $j;
-                $newAnswer->bobot = 0;
-                $newAnswer->save();
-            }
-        }
+
         return redirect()->route('admin.tryout.index');
     }
 

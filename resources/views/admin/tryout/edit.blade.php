@@ -218,7 +218,7 @@ function addNewQuestion(){
         <div id="div_question_${newQuestionUID}" class="flex-column">
             <span style="font-weight: 600">Pertanyaan :</span> 
             <span class="question">Pertanyaan Baru</span>
-            <p class="m-0" style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->code}}@endif @endforeach</span></p>
+            <p class="m-0" style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">mtk</span></p>
         </div>
         <p class="m-0" style="font-weight: 600" id="p_divider_${newQuestionUID}">Pilihan jawaban : </p>
         <ol type="A" class="row row-cols-3" id="div_answers_${newQuestionUID}">
@@ -236,7 +236,7 @@ function addNewQuestion(){
             @csrf
             <div id="input_question_${newQuestionUID}" style="display:none">
                 <input type="hidden" name="question_id" value="${newQuestionUID}">
-                <input type="hidden" name="tryout_id" value={{$question->tryout_id}}>
+                <input type="hidden" name="tryout_id" value={{$tryout->id}}>
                 <textarea name="question" id="question_${newQuestionUID}" class="question form-control ckeditor new-input" placeholder="Badan Artikel">Pertanyaan Baru</textarea>
                 <div class="mb-2 mt-2">
                     <label for="group_type_${newQuestionUID}" class="col-2 m-0 p-0" >
@@ -244,7 +244,7 @@ function addNewQuestion(){
                     </label>
                     <select name="group_type" id="group_type_${newQuestionUID}" class="form-control form-control-sm form-select col-12" aria-label="Default select example">
                         @foreach ($groupTypes as $groupType)
-                        <option value={{$groupType->id}} {{($groupType->id == $question->group_type_id ? "selected" : "")}}>{{$groupType->code}}</option>
+                        <option value={{$groupType->id}} >{{$groupType->code}}</option>
                         @endforeach
                     </select>
                 </div>
