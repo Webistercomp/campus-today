@@ -11,11 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    function index() {
-        $users = User::where('email_verified_at', '!=', null)->get();
+    function index(Request $request) {
+        $users = User::where('email_verified_at', '!=', null);
+        if($request->has('role') && $request->role != 'all') {
+            $users = $users->where('role_id', $request->role);
+        }
+        $users = $users->get();
         $menu = Route::currentRouteName();
         $menu = explode('.', $menu)[1];
-        return view('admin.user.index', compact('users', 'menu'));
+        $user = Auth::user();
+        $roles = Role::all();
+        $requestroleid = $request->role;
+        return view('admin.user.index', compact('users', 'menu', 'roles', 'user', 'requestroleid'));
     }
 
     function show($id) {
