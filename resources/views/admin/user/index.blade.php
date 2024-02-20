@@ -48,9 +48,11 @@
             </div>
         </div>
     </div>
+    @if($requestroleid != '')
     <div class="mb-3" style="color: red;">
         Search result : {{$users->count()}} data
     </div>
+    @endif
     <div class="mt-3">
         <table class="table table-striped">
             <thead>
@@ -69,8 +71,8 @@
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->role->name}}</td>
-                    <td>{{$user->nohp}}</td>
-                    <td>{{$user->tanggal_lahir}}</td>
+                    <td>{{$user->nohp ?? '-'}}</td>
+                    <td>{{$user->tanggal_lahir ?? '-'}}</td>
                     <td>
                         <a href={{route('admin.user.show', $user->id)}}>
                             <i class="fa fa-eye text-center" style="font-size:16px;color:blue"></i>

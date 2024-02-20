@@ -97,10 +97,10 @@
             @foreach ($packetHistories as $packetHistory)
             <tr>
                 <td>{{$packetHistory->id}}</td>
-                <td>{{$packetHistory->created_at}}</td>
-                <td>{{$packetHistory->packet->name}}</td>
-                <td>{{$packetHistory->user->name}}</td>
-                <td>{{$packetHistory->payment_method}}</td>
+                <td>{{$packetHistory->created_at ?? '-'}}</td>
+                <td>{{$packetHistory->packet->name ?? '-'}}</td>
+                <td>{{$packetHistory->user->name ?? '-'}}</td>
+                <td>{{$packetHistory->payment_method ?? '-'}}</td>
                 <td>
                     <!-- Button trigger modal -->
                     <button type="button" class="badge bg-primary border-0" data-toggle="modal" data-target={{'#buktipembayaran' . $packetHistory->id}}>

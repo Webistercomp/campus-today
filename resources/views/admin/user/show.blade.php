@@ -42,55 +42,55 @@
         <tbody>
             <tr>
                 <th>Name</th>
-                <td>{{$selectedUser->name}}</td>
+                <td>{{$selectedUser->name ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Role</th>
-                <td>{{$selectedUser->role->name}}</td>
+                <td>{{$selectedUser->role->name ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{$selectedUser->email}}</td>
+                <td>{{$selectedUser->email ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Email Verified at</th>
-                <td>{{$selectedUser->email_verified_at}}</td>
+                <td>{{$selectedUser->email_verified_at ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Tanggal Lahir</th>
-                <td>{{$selectedUser->tanggal_lahir}}</td>
+                <td>{{$selectedUser->tanggal_lahir ?? '-'}}</td>
             </tr>
             <tr>
                 <th>No. HP</th>
-                <td>{{$selectedUser->nohp}}</td>
+                <td>{{$selectedUser->nohp ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Pekerjaan</th>
-                <td>{{$selectedUser->pekerjaan}}</td>
+                <td>{{$selectedUser->pekerjaan ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Jenis Kelamin</th>
-                <td>{{$selectedUser->jenis_kelamin}}</td>
+                <td>{{$selectedUser->jenis_kelamin ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Kota / Kabupaten</th>
-                <td>{{$selectedUser->kota_kabupaten}}</td>
+                <td>{{$selectedUser->kota_kabupaten ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Provinsi</th>
-                <td>{{$selectedUser->provinsi}}</td>
+                <td>{{$selectedUser->provinsi ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Pendidikan Terakhir</th>
-                <td>{{$selectedUser->pendidikan_terakhir}}</td>
+                <td>{{$selectedUser->pendidikan_terakhir ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Institusi</th>
-                <td>{{$selectedUser->institusi}}</td>
+                <td>{{$selectedUser->institusi ?? '-'}}</td>
             </tr>
             <tr>
                 <th>Joined at</th>
-                <td>{{$selectedUser->created_at}}</td>
+                <td>{{$selectedUser->created_at ?? '-'}}</td>
             </tr>
         </tbody>
     </table>
