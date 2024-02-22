@@ -34,6 +34,8 @@ import Testi8 from "@/images/testi-buku/testi-8.jpg";
 import Testi9 from "@/images/testi-buku/testi-9.jpg";
 import Testi10 from "@/images/testi-buku/testi-10.jpg";
 import { useEffect, useState } from "react";
+import ArrowRightIcon from "@/icons/ArrowRightIcon";
+import ArrowLeftIcon from "@/icons/ArrowLeftIcon";
 
 export default function Homepage({ title, packets }) {
     const FAQ = [
@@ -139,61 +141,102 @@ export default function Homepage({ title, packets }) {
     const mandiriPacket = packets.filter((dt) => dt.type === "mandiri");
     const bimbelPacket = packets.filter((dt) => dt.type === "bimbel");
 
-    const [activeTesti, setActiveTesti] = useState(1);
+    const [activeTesti, setActiveTesti] = useState(0);
     const [testiScroll, setTestiScroll] = useState(0);
-    const [activeBuku, setActiveBuku] = useState(1);
+    const [activeBuku, setActiveBuku] = useState(0);
     const [bukuScroll, setBukuScroll] = useState(0);
+    const [pauseInterval, setPauseInterval] = useState(false);
 
     useEffect(() => {
         const testiCardWidth =
             document.getElementById("testi-card").clientWidth;
+        setTestiScroll(() =>
+            testiData.map(
+                (_, i) => testiCardWidth * (i + 1) - testiCardWidth + 32
+            )
+        );
 
+        const bukuCardWidth = document.getElementById("buku-card").clientWidth;
+        setBukuScroll(() =>
+            testiBuku.map(
+                (_, i) => bukuCardWidth * (i + 1) - bukuCardWidth + 16
+            )
+        );
+    }, []);
+
+    useEffect(() => {
         const testiInterval = setInterval(() => {
-            setActiveTesti((prev) => {
-                if (prev + 1 <= testiData.length) {
-                    setTestiScroll((prev) => {
-                        return prev + (testiCardWidth + 32);
-                    });
-                    return prev + 1;
-                } else {
-                    setTestiScroll(0);
-                    return 1;
-                }
-            });
+            if (!pauseInterval) {
+                setActiveTesti((prev) => {
+                    if (prev + 1 <= testiData.length) return prev + 1;
+                    return 0;
+                });
+            }
         }, 5000);
 
         return () => clearInterval(testiInterval);
-    }, []);
+    }, [pauseInterval]);
 
     useEffect(() => {
         const testiCardWrapper = document.getElementById("testi-wrapper");
-        testiCardWrapper.scrollTo({ left: testiScroll, top: 0 });
-    }, [testiScroll]);
+        testiCardWrapper.scrollTo({ left: testiScroll[activeTesti], top: 0 });
+    }, [activeTesti]);
+
+    const nextTesti = () => {
+        setPauseInterval(true);
+        setActiveTesti(
+            activeTesti + 1 >= testiData.length ? 0 : activeTesti + 1
+        );
+        setTimeout(() => {
+            setPauseInterval(false);
+        }, 5000);
+    };
+
+    const prevTesti = () => {
+        setPauseInterval(true);
+        setActiveTesti(
+            activeTesti - 1 <= -1 ? testiData.length - 1 : activeTesti - 1
+        );
+        setTimeout(() => {
+            setPauseInterval(false);
+        }, 5000);
+    };
 
     useEffect(() => {
-        const bukuCardWidth = document.getElementById("buku-card").clientWidth;
-
         const bukuInterval = setInterval(() => {
-            setActiveBuku((prev) => {
-                if (prev + 1 <= testiBuku.length) {
-                    setBukuScroll((prev) => {
-                        return prev + (bukuCardWidth + 16);
-                    });
-                    return prev + 1;
-                } else {
-                    setBukuScroll(0);
-                    return 1;
-                }
-            });
+            if (!pauseInterval) {
+                setActiveBuku((prev) => {
+                    if (prev + 1 < testiBuku.length) return prev + 1;
+                    return 0;
+                });
+            }
         }, 5000);
 
         return () => clearInterval(bukuInterval);
-    }, []);
+    }, [pauseInterval]);
 
     useEffect(() => {
         const bukuWrapper = document.getElementById("buku-wrapper");
-        bukuWrapper.scrollTo({ left: bukuScroll, top: 0 });
-    }, [bukuScroll]);
+        bukuWrapper.scrollTo({ left: bukuScroll[activeBuku], top: 0 });
+    }, [activeBuku]);
+
+    const nextBuku = () => {
+        setPauseInterval(true);
+        setActiveBuku(activeBuku + 1 >= testiBuku.length ? 0 : activeBuku + 1);
+        setTimeout(() => {
+            setPauseInterval(false);
+        }, 5000);
+    };
+
+    const prevBuku = () => {
+        setPauseInterval(true);
+        setActiveBuku(
+            activeBuku - 1 <= -1 ? testiBuku.length - 1 : activeBuku - 1
+        );
+        setTimeout(() => {
+            setPauseInterval(false);
+        }, 5000);
+    };
 
     useEffect(() => {
         const scrollElement = document.getElementById("scroll-element");
@@ -547,26 +590,40 @@ export default function Homepage({ title, packets }) {
             </section>
 
             <section
-                className="px-4 md:px-14 lg:px-24 xl:px-32 py-14 bg-white"
+                className="px-4 md:px-14 lg:px-24 xl:px-32 py-14 bg-white relative"
                 id="testimoni"
             >
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
                     #ApaKata<span className="text-[#DA5957]">Mereka</span>
                 </h1>
                 <div
-                    className="overflow-x-scroll snap-x snap-mandatory py-8 scrollbar-hide"
+                    className="overflow-x-scroll snap-x snap-mandatory py-8 scrollbar-hide relative"
                     id="testi-wrapper"
                     style={{ scrollBehavior: "smooth" }}
                 >
-                    <div className="flex w-[3000px] md:w-[5000px] xl:w-[20000px] px-[100px] md:px-[300px] xl:px-[500px] gap-8 justify-start">
+                    <div className="flex w-[3000px] md:w-[5000px] xl:w-[20000px] px-[100px] md:px-[300px] xl:px-[500px] gap-8 justify-start relative">
                         {testiData.map((testi, i) => (
                             <TestiCard
                                 key={i}
-                                isActive={activeTesti - 1 === i}
+                                isActive={activeTesti === i}
                                 {...testi}
                             />
                         ))}
                     </div>
+                </div>
+                <div className="absolute w-full left-0 top-[calc(50%_+_36px)] -translate-y-1/2 flex justify-between px-8 md:px-3 lg:px-8 xl:px-8">
+                    <button
+                        onClick={prevTesti}
+                        className="p-4 bg-white shadow-md rounded-full hover:bg-slate-300 transition-colors duration-150"
+                    >
+                        <ArrowLeftIcon className="w-6 h-6 stroke-slate-700" />
+                    </button>
+                    <button
+                        onClick={nextTesti}
+                        className="p-4 bg-white shadow-md rounded-full hover:bg-slate-300 transition-colors duration-150"
+                    >
+                        <ArrowRightIcon className="w-6 h-6 stroke-slate-700" />
+                    </button>
                 </div>
             </section>
 
@@ -614,7 +671,7 @@ export default function Homepage({ title, packets }) {
             </section>
 
             <section
-                className="px-4 lg:px-24 xl:px-32 py-14 bg-white"
+                className="px-4 lg:px-24 xl:px-32 py-14 bg-white relative"
                 id="testimoni"
             >
                 <h1 className="text-3xl font-bold text-slate-700 mb-12 text-center">
@@ -626,7 +683,10 @@ export default function Homepage({ title, packets }) {
                         id="buku-wrapper"
                         style={{ scrollBehavior: "smooth" }}
                     >
-                        <div className="flex gap-4 w-[8000px] px-[500px]">
+                        <div
+                            className="flex px-4"
+                            style={{ width: (288 + 16) * 10 }}
+                        >
                             {testiBuku.map((ts, i) => (
                                 <img
                                     key={i}
@@ -643,6 +703,20 @@ export default function Homepage({ title, packets }) {
                         alt="mockup-hp"
                         className="w-72 h-full aspect-auto mx-auto absolute top-0 left-1/2 -translate-x-1/2"
                     />
+                </div>
+                <div className="absolute max-w-lg w-full mx-auto left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex justify-between">
+                    <button
+                        onClick={prevBuku}
+                        className="p-4 bg-white shadow-md rounded-full hover:bg-slate-300 transition-colors duration-150"
+                    >
+                        <ArrowLeftIcon className="w-6 h-6 stroke-slate-700" />
+                    </button>
+                    <button
+                        onClick={nextBuku}
+                        className="p-4 bg-white shadow-md rounded-full hover:bg-slate-300 transition-colors duration-150"
+                    >
+                        <ArrowRightIcon className="w-6 h-6 stroke-slate-700" />
+                    </button>
                 </div>
             </section>
 

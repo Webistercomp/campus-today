@@ -1,3 +1,4 @@
+import Alert from "@/Components/Alert";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DocumentIcon from "@/icons/DocumentIcon";
 import PlayIcon from "@/icons/PlayIcon";
@@ -10,6 +11,7 @@ export default function SkdVideo({
     type,
     materialType,
     materials,
+    flash,
 }) {
     const tabGroup = materials.map((material) => material.group_type);
     const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
@@ -17,6 +19,21 @@ export default function SkdVideo({
         materials.filter((material) => material.group_id === tabIndexActive)
     );
     const [searchkeyword, setSearchKeyword] = useState("");
+    const [flashData, setFlashData] = useState({
+        type: "success",
+        isShow: false,
+        msg: "",
+    });
+
+    useEffect(() => {
+        if (flash.msg !== null) setFlashData({ ...flash, isShow: true });
+
+        const flashTimeout = setTimeout(() => {
+            setFlashData({ ...flash, isShow: false });
+        }, 3000);
+
+        return () => clearTimeout(flashTimeout);
+    }, []);
 
     useEffect(() => {
         setCurrentMaterials(
@@ -118,6 +135,7 @@ export default function SkdVideo({
                     })}
                 </div>
             </section>
+            <Alert {...flashData} />
         </AuthenticatedLayout>
     );
 }

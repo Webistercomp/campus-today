@@ -1,6 +1,6 @@
 import InputError from "@/Components/InputError";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CTIcon from "@/images/ct_ 2.png";
 import IllusAuth from "@/images/illus-auth.png";
 import EnvelopeIcon from "@/icons/EnvelopeIcon";
@@ -8,6 +8,8 @@ import TextInput from "@/Components/TextInput";
 import LockIcon from "@/icons/LockIcon";
 import FbIcon from "@/images/fb-icon.png";
 import GoogleIcon from "@/images/google-icon.png";
+import EyeIcon from "@/icons/EyeIcon";
+import EyeSlashIcon from "@/icons/EyeSlashIcon";
 
 export default function Login({ canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,6 +17,8 @@ export default function Login({ canResetPassword }) {
         password: "",
         remember: false,
     });
+
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         return () => {
@@ -94,11 +98,25 @@ export default function Login({ canResetPassword }) {
                                     id="password"
                                     icon={<LockIcon />}
                                     placeholder="Enter your email address"
-                                    type="password"
+                                    type={!showPassword ? "password" : "text"}
                                     autoComplete="current-password"
                                     value={data.password}
                                     onChange={(e) =>
                                         setData("password", e.target.value)
+                                    }
+                                    endIcon={
+                                        <span
+                                            className="absolute top-1/2 -translate-y-1/2 right-2"
+                                            onClick={() =>
+                                                setShowPassword(!showPassword)
+                                            }
+                                        >
+                                            {!showPassword ? (
+                                                <EyeIcon className="w-6 h-6 stroke-slate-800 cursor-pointer hover:stroke-curious-blue transition-all duration-150" />
+                                            ) : (
+                                                <EyeSlashIcon className="w-6 h-6 stroke-slate-800 cursor-pointer hover:stroke-curious-blue transition-all duration-150" />
+                                            )}
+                                        </span>
                                     }
                                 />
 

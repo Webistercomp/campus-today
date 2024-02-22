@@ -14,37 +14,39 @@ use Illuminate\Support\Facades\Storage;
 
 class PacketHistoryController extends Controller
 {
-    function index(Request $request) {
+    function index(Request $request)
+    {
         $packetHistories = PacketHistory::all();
         $user = Auth::user();
         $menu = 'packethistory';
         $packets = Packet::all();
-        if($request->status && $request->status != 'all') {
+        if ($request->status && $request->status != 'all') {
             $packetHistories = PacketHistory::where('status', $request->status)->get();
         }
-        if($request->tanggal_pembayaran) {
-            if($request->tanggal_pembayaran == 'today') {
+        if ($request->tanggal_pembayaran) {
+            if ($request->tanggal_pembayaran == 'today') {
                 $packetHistories = PacketHistory::whereDate('created_at', date('Y-m-d'))->get();
-            } else if($request->tanggal_pembayaran == 'week') {
+            } else if ($request->tanggal_pembayaran == 'week') {
                 $packetHistories = PacketHistory::whereBetween('created_at', [date('Y-m-d', strtotime('last monday')), date('Y-m-d', strtotime('next sunday'))])->get();
-            } else if($request->tanggal_pembayaran == 'month') {
+            } else if ($request->tanggal_pembayaran == 'month') {
                 $packetHistories = PacketHistory::whereMonth('created_at', date('m'))->get();
-            } else if($request->tanggal_pembayaran == 'year') {
+            } else if ($request->tanggal_pembayaran == 'year') {
                 $packetHistories = PacketHistory::whereYear('created_at', date('Y'))->get();
             }
         }
-        if($request->packet && $request->packet != 'all') {
+        if ($request->packet && $request->packet != 'all') {
             $packetHistories = PacketHistory::where('packet_id', $request->packet)->get();
         }
 
-        foreach($packetHistories as $packetHistory) {
-            $packetHistory->bukti_pembayaran = Storage::url('packethistory/bukti_pembayaran/'.$packetHistory->bukti_pembayaran);
+        foreach ($packetHistories as $packetHistory) {
+            $packetHistory->bukti_pembayaran = Storage::url('bukti_pembayaran/' . $packetHistory->bukti_pembayaran);
         }
 
         return view('admin.packethistory.index', compact('packetHistories', 'user', 'menu', 'packets'));
     }
 
-    function create() {
+    function create()
+    {
         $packets = Packet::all();
         $users = User::where('is_admin', 0)->where('email_verified_at', '!=', null)->get();
         $menu = 'packethistory';
@@ -52,7 +54,8 @@ class PacketHistoryController extends Controller
         return view('admin.packethistory.create', compact('packets', 'users', 'menu'));
     }
 
-    function store(Request $request) {
+    function store(Request $request)
+    {
         $request->validate([
             'packet_id' => 'required',
             'user_id' => 'required',
@@ -71,34 +74,37 @@ class PacketHistoryController extends Controller
         $newPacketHistory->payment_method = $request->payment_method;
         $newPacketHistory->status = $request->status;
 
-        if($request->hasFile('bukti_pembayaran')) {
+        if ($request->hasFile('bukti_pembayaran')) {
             $time = time();
             $ext = $request->bukti_pembayaran->extension();
-            $request->file('bukti_pembayaran')->storeAs('public/packethistory/bukti_pembayaran/', $time.'.'.$ext);
-            $newPacketHistory->bukti_pembayaran = $time.'.'.$ext;
+            $request->file('bukti_pembayaran')->storeAs('public/packethistory/bukti_pembayaran/', $time . '.' . $ext);
+            $newPacketHistory->bukti_pembayaran = $time . '.' . $ext;
         }
         $newPacketHistory->save();
 
         return redirect()->route('admin.packethistory.index');
     }
 
-    function show($id) {
+    function show($id)
+    {
         $packetHistory = PacketHistory::find($id);
-        $packetHistory->bukti_pembayaran = Storage::url('packethistory/bukti_pembayaran/'.$packetHistory->bukti_pembayaran);
+        $packetHistory->bukti_pembayaran = Storage::url('packethistory/bukti_pembayaran/' . $packetHistory->bukti_pembayaran);
         $user = Auth::user();
         $menu = 'packethistory';
 
         return view('admin.packethistory.show', compact('packetHistory', 'menu', 'user'));
     }
 
-    function destroy($id) {
+    function destroy($id)
+    {
         $packetHistory = PacketHistory::find($id);
         $packetHistory->delete();
 
         return redirect()->route('admin.packethistory.index');
     }
 
-    function updateStatus(Request $request, $id) {
+    function updateStatus(Request $request, $id)
+    {
         $request->validate([
             'status' => 'required',
         ]);

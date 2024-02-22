@@ -24,7 +24,7 @@ class TryoutController extends Controller
             $roles = '';
             foreach (json_decode($tryout->roles) as $role) {
                 $findrole = Role::find($role);
-                if($findrole != null) {
+                if ($findrole != null) {
                     $roles .= $findrole->name . ', ';
                 }
             }
@@ -60,7 +60,7 @@ class TryoutController extends Controller
         $newTryout = new Tryout();
         $newTryout->material_type_id = $request->material_type_id;
         $roles = explode(',', $request->roles);
-        for($i = 0; $i < count($roles); $i++) {
+        for ($i = 0; $i < count($roles); $i++) {
             $roles[$i] = intval($roles[$i]);
         }
         $newTryout->roles = json_encode($roles);
@@ -73,6 +73,7 @@ class TryoutController extends Controller
             $newTryout->active = 0;
         }
         $newTryout->save();
+
         return redirect()->route('admin.tryout.index');
     }
 
@@ -117,7 +118,7 @@ class TryoutController extends Controller
         $tryout = Tryout::find($id);
         $tryout->material_type_id = $request->material_type_id;
         $roles = explode(',', $request->roles);
-        for($i = 0; $i < count($roles); $i++) {
+        for ($i = 0; $i < count($roles); $i++) {
             $roles[$i] = intval($roles[$i]);
         }
         $tryout->roles = json_encode($roles);
@@ -142,7 +143,7 @@ class TryoutController extends Controller
     }
 
     function updateQuestion(Request $request)
-    { // bobot is still not yet developed
+    {
         $request->validate([
             'question_id' => 'required',
             'question' => 'required',
@@ -166,7 +167,7 @@ class TryoutController extends Controller
                 $newAnswer->save();
                 $index++;
             }
-            if($tryout->is_event == 0) {
+            if ($tryout->is_event == 0) {
                 return redirect()->route('admin.tryout.edit', $request->tryout_id);
             } else {
                 return redirect()->route('admin.event.edit', $request->tryout_id);
@@ -208,7 +209,7 @@ class TryoutController extends Controller
                     $answer->save();
                 }
             }
-            if($tryout->is_event == 0) {
+            if ($tryout->is_event == 0) {
                 return redirect()->route('admin.tryout.edit', $request->tryout_id);
             } else {
                 return redirect()->route('admin.event.edit', $request->tryout_id);
@@ -224,20 +225,21 @@ class TryoutController extends Controller
         }
         $question->delete();
         $tryout = Tryout::find($question->tryout_id);
-        if($tryout->is_event == 0) {
+        if ($tryout->is_event == 0) {
             return redirect()->route('admin.tryout.edit', $question->tryout_id);
         } else {
             return redirect()->route('admin.event.edit', $question->tryout_id);
         }
     }
 
-    function historyIndex() {
+    function historyIndex()
+    {
         $user = Auth::user();
         $menu = 'tryouthistory';
-        $tryoutHistories = TryoutHistory::whereHas('tryout', function($query) {
+        $tryoutHistories = TryoutHistory::whereHas('tryout', function ($query) {
             $query->where('is_event', 0);
         })->get();
-        foreach($tryoutHistories as $tryoutHistory) {
+        foreach ($tryoutHistories as $tryoutHistory) {
             $start_tryout = Carbon::parse($tryoutHistory->start_timestamp);
             $end_tryout = Carbon::parse($tryoutHistory->end_timestamp);
             $tryoutHistory->duration = $start_tryout->diff($end_tryout)->format('%H:%I:%S');
@@ -245,7 +247,8 @@ class TryoutController extends Controller
         return view('admin.tryouthistory.index', compact('user', 'menu', 'tryoutHistories'));
     }
 
-    function historyShow($id) {
+    function historyShow($id)
+    {
         $user = Auth::user();
         $menu = 'tryouthistory';
         $tryoutHistory = TryoutHistory::find($id);
