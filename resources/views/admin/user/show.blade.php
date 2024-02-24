@@ -46,7 +46,9 @@
             </tr>
             <tr>
                 <th>Role</th>
-                <td>{{$selectedUser->role->name ?? '-'}}</td>
+                <td>
+                    <a href={{route('admin.packet.show', $selectedUser->role->id)}} class="btn bg-primary">{{$selectedUser->role->name ?? '-'}}</a>
+                </td>
             </tr>
             <tr>
                 <th>Email</th>

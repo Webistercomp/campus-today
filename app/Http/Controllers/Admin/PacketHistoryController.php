@@ -88,7 +88,7 @@ class PacketHistoryController extends Controller
     function show($id)
     {
         $packetHistory = PacketHistory::find($id);
-        $packetHistory->bukti_pembayaran = Storage::url('packethistory/bukti_pembayaran/' . $packetHistory->bukti_pembayaran);
+        $packetHistory->bukti_pembayaran = Storage::url('bukti_pembayaran/' . $packetHistory->bukti_pembayaran);
         $user = Auth::user();
         $menu = 'packethistory';
 
@@ -110,6 +110,12 @@ class PacketHistoryController extends Controller
         ]);
         $packetHistory = PacketHistory::find($id);
         $packetHistory->status = $request->status;
+        if($request->status == 'success') {
+            $user = User::find($packetHistory->user_id);
+            $packetHistory->load('packet');
+            $user->role_id = $packetHistory->packet->role_id;
+            $user->save();         
+        }
         $packetHistory->save();
 
         return redirect()->route('admin.packethistory.show', $id);

@@ -14,13 +14,28 @@ use Illuminate\Support\Facades\Route;
 
 class MateriController extends Controller
 {
-    function index()
+    function index(Request $request)
     {
         $materials = Material::all();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
-        return view('admin.materi.index', compact('materials', 'user', 'menu'));
+        $materialTypes = MaterialType::all();
+        $groupTypes = GroupType::all();
+        $tipemateri = $request->tipemateri;
+        $grouptype = $request->grouptype;
+        $tipepembelajaran = $request->tipepembelajaran;
+        if($request->has('tipemateri') && $tipemateri != 'all') {
+            $materials = $materials->where('material_type_id', $tipemateri);
+        }
+        if($request->has('grouptype') && $grouptype != 'all') {
+            $materials = $materials->where('group_id', $grouptype);
+        }
+        if($request->has('tipepembelajaran') && $tipepembelajaran != 'all') {
+            $materials = $materials->where('type', $tipepembelajaran);
+        }
+
+        return view('admin.materi.index', compact('materials', 'user', 'menu', 'materialTypes', 'groupTypes', 'tipemateri', 'grouptype', 'tipepembelajaran'));
     }
 
     function create()
@@ -89,12 +104,18 @@ class MateriController extends Controller
     {
         $material = Material::find($id);
         $material->update($request->all());
+        $material->roles = json_encode(explode(',', $request->roles));
+        $material->save();
         return redirect()->route('admin.materi.index');
     }
 
     function destroy($id)
     {
         $material = Material::find($id);
+        $chapters = Chapter::where('material_id', $material->id)->get();
+        foreach($chapters as $chapter) {
+            $chapter->delete();
+        }
         $material->delete();
         return redirect()->route('admin.materi.index');
     }

@@ -58,7 +58,22 @@
             <tr>
                 <th>Bukti Pembayaran</th>
                 <td>
-                    <img src={{$packetHistory->bukti_pembayaran}} width="100%" height="auto">
+                    <img src={{$packetHistory->bukti_pembayaran}} width="200px" height="auto">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="badge bg-primary border-0 ml-2" data-toggle="modal" data-target="#buktipembayaran">
+                        Lihat
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="buktipembayaran" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <img src={{$packetHistory->bukti_pembayaran}} width="100%" height="auto">
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>

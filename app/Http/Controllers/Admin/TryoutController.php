@@ -17,9 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 class TryoutController extends Controller
 {
-    function index()
+    function index(Request $request)
     {
         $tryouts = Tryout::where('is_event', 0)->get();
+        $materialTypes = MaterialType::all();
+        $materialTypeId = $request->materialTypeId;
+        $active = $request->active;
+        if($materialTypeId && $materialTypeId != 'all') {
+            $tryouts = $tryouts->where('material_type_id', $materialTypeId);
+        }
+        if($active && $active != 'all') {
+            $tryouts = $tryouts->where('active', $active);
+        }
         foreach ($tryouts as $tryout) {
             $roles = '';
             foreach (json_decode($tryout->roles) as $role) {
@@ -36,7 +45,7 @@ class TryoutController extends Controller
         foreach ($tryouts as $tryout) {
             $tryout->jumlah_soal = $tryout->questions()->count();
         }
-        return view('admin.tryout.index', compact('tryouts', 'user', 'menu'));
+        return view('admin.tryout.index', compact('tryouts', 'user', 'menu', 'materialTypes', 'materialTypeId', 'active'));
     }
 
     function create()

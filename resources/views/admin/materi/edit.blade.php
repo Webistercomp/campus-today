@@ -17,7 +17,7 @@
             <h5>Detail Materi</h5>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="{{route('admin.materi.show', $material->id)}}" class="btn btn-secondary">Kembali</a>
+            <a href="{{route('admin.materi.index')}}" class="btn btn-secondary">Kembali</a>
             <form class="d-inline-block" action="{{route('admin.materi.delete', $material->id)}}" method="post">
                 @csrf
                 @method('DELETE')

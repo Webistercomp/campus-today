@@ -35,7 +35,7 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                         </Link>
                         <Link href={route("article.index")}>
                             <li className="py-2 px-4 bg-slate-200 hover:bg-slate-700 hover:text-white rounded-md transition-all duration-150">
-                                Artikela
+                                Artikel
                             </li>
                         </Link>
                         <Link href={route("paket.index")}>

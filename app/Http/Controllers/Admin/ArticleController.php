@@ -11,12 +11,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    function index() {
+    function index(Request $request) {
         $articles = Article::all();
+        $title = $request->title;
+        if($title) {
+            $articles = $articles->where('title', '% LIKE %', $title);
+        }
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
-        return view('admin.article.index', compact('articles', 'user', 'menu'));
+
+        return view('admin.article.index', compact('articles', 'user', 'menu', 'title'));
     }
 
     function create() {

@@ -83,6 +83,7 @@
                             <th class="col-4">Waktu</th>
                             <td class="col-8">
                                 <input type="number" class="form-control" id="time" name="time" min="0" step="1" value="{{$tryout->time}}">
+                                <label for="roles" style="font-weight: 400!important; font-size: 12px!important;">*Dalam menit</label>
                             </td>
                         </tr>
                         <tr class="row">
