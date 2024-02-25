@@ -404,6 +404,12 @@ class TryoutController extends Controller
     public function grafik(Request $request) {
         $userid = $request->userid;
         $user = User::find($userid);
-        
+        $now = Carbon::now();
+        $tryoutHistories = TryoutHistory::where('user_id', $user->id)
+                            ->where('finish_timestamp', '<=', $now)
+                            ->get();
+        return response()->json([
+            'tryout_histories' => $tryoutHistories,
+        ]);
     }
 }
