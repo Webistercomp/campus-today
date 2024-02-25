@@ -9,6 +9,7 @@ use App\Models\Participant;
 use App\Models\Question;
 use App\Models\Tryout;
 use App\Models\TryoutHistory;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -398,5 +399,11 @@ class TryoutController extends Controller
         return Inertia::render('TryOut/EventIsOver', [
             'title' => 'Event TryOut',
         ]);
+    }
+
+    public function grafik(Request $request) {
+        $userid = $request->userid;
+        $user = User::find($userid);
+        
     }
 }

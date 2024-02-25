@@ -15,7 +15,7 @@ class ArticleController extends Controller
         $articles = Article::all();
         $title = $request->title;
         if($title) {
-            $articles = $articles->where('title', '% LIKE %', $title);
+            $articles = Article::where('title', 'LIKE', '%' . $title . '%')->get();
         }
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
