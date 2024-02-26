@@ -217,6 +217,7 @@ class TryoutController extends Controller
             'tryout_id' => $request->tryout_id,
             'start_timestamp' => $start->toDateTimeString(),
             'finish_timestamp' => $finish->toDateTimeString(),
+            'answers' => json_encode(array()),
         ]);
         if (!$tryout->is_event) {
             return redirect()->route('tryout.confirm', $request->tryout_id);
