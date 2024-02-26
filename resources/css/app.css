@@ -73,3 +73,8 @@ p {
         @apply ml-6;
     }
 }
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
