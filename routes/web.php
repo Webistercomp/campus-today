@@ -185,7 +185,7 @@ Route::prefix('admin')->group(function () {
         Route::get('materi', [MateriController::class, 'index'])->name('admin.materi.index');
         Route::get('materi/create', [MateriController::class, 'create'])->name('admin.materi.create');
         Route::post('materi/store', [MateriController::class, 'store'])->name('admin.materi.store');
-        Route::get('materi/{id}', [MateriController::class, 'show'])->name('admin.materi.show');
+        // Route::get('materi/{id}', [MateriController::class, 'show'])->name('admin.materi.show');
         Route::get('materi/edit/{id}', [MateriController::class, 'edit'])->name('admin.materi.edit');
         Route::put('materi/{id}', [MateriController::class, 'update'])->name('admin.materi.update');
         Route::delete('materi/{id}', [MateriController::class, 'destroy'])->name('admin.materi.delete');

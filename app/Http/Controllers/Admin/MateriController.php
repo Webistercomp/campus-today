@@ -57,7 +57,7 @@ class MateriController extends Controller
             'roles' => 'required',
             'title' => 'required',
             'code' => 'required',
-            'description' => 'required',
+            'description' => '',
             'type' => 'required',
         ]);
         $newMaterial = new Material();
@@ -72,20 +72,20 @@ class MateriController extends Controller
         return redirect()->route('admin.materi.index');
     }
 
-    function show($id)
-    {
-        $material = Material::find($id);
-        $material->totalChapter = $material->chapters->count();
-        $roles = '';
-        foreach (json_decode($material->roles) as $role) {
-            $roles .= Role::find($role)->name . ', ';
-        }
-        $material->roles = substr($roles, 0, -2);
-        $user = Auth::user();
-        $menu = Route::getCurrentRoute()->getName();
-        $menu = explode('.', $menu)[1];
-        return view('admin.materi.show', compact('material', 'user', 'menu'));
-    }
+    // function show($id)
+    // {
+    //     $material = Material::find($id);
+    //     $material->totalChapter = $material->chapters->count();
+    //     $roles = '';
+    //     foreach (json_decode($material->roles) as $role) {
+    //         $roles .= Role::find($role)->name . ', ';
+    //     }
+    //     $material->roles = substr($roles, 0, -2);
+    //     $user = Auth::user();
+    //     $menu = Route::getCurrentRoute()->getName();
+    //     $menu = explode('.', $menu)[1];
+    //     return view('admin.materi.show', compact('material', 'user', 'menu'));
+    // }
 
     function edit($id)
     {

@@ -28,6 +28,9 @@
                                     <option value="{{$materialType->id}}">{{$materialType->name}}</option>
                                 @endforeach
                             </select>
+                            @error('material_type_id')
+                            <div style="color: red;">{{$message}}</div>
+                            @enderror
                         </td>
                     </tr>
                     <tr class="row">
@@ -38,12 +41,18 @@
                                     <option value="{{$group->id}}">{{$group->name}}</option>
                                 @endforeach
                             </select>
+                            @error('group_id')
+                            <div style="color: red; font-size: 12px;">{{$message}}</div>
+                            @enderror
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Role</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="roles" name="roles" placeholder="Contoh: 1,2,3 atau 3,5,6">
+                            @error('roles')
+                            <div style="color: red; font-size: 12px;">{{$message}}</div>
+                            @enderror
                             <label for="roles" style="font-weight: 400!important; font-size: 12px!important;">Daftar role : @foreach ($roles as $role)
                                 {{$loop->iteration . ') ' . $role->name . ', '}}  
                             @endforeach . Pisahkan dengan koma, contoh : 1,2,3 atau 3,5,6.</label>
@@ -53,18 +62,27 @@
                         <th class="col-4">Title</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="title" name="title">
+                            @error('title')
+                            <div style="color: red; font-size: 12px;">{{$message}}</div>
+                            @enderror
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Code</th>
                         <td class="col-8">
                             <input type="text" class="form-control" id="code" name="code">
+                            @error('code')
+                            <div style="color: red; font-size: 12px;">{{$message}}</div>
+                            @enderror
                         </td>
                     </tr>
                     <tr class="row">
                         <th class="col-4">Description</th>
                         <td class="col-8">
                             <textarea type="text" class="form-control" id="description" name="description"></textarea>
+                            @error('description')
+                            <div style="color: red; font-size: 12px;">{{$message}}</div>
+                            @enderror
                         </td>
                     </tr>
                     <tr class="row">
@@ -74,6 +92,9 @@
                                 <option value="teks">Teks</option>
                                 <option value="video">Video</option>
                             </select>
+                            @error('type')
+                            <div style="color: red; font-size: 12px;">{{$message}}</div>
+                            @enderror
                         </td>
                     </tr>
                 </tbody>
