@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import CompletedImg from "@/images/completed-pana.png";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Completed({ auth, title, user, material }) {
+export default function Completed({ auth, title, user, material, materialType }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -29,7 +29,11 @@ export default function Completed({ auth, title, user, material }) {
                     >
                         Kelas
                     </Link>
-                    <button className="btn bg-white shadow-lg">Try Out</button>
+                    <Link
+                        href={route("tryout.type", materialType.code)}
+                    >
+                        <button className="btn bg-white shadow-lg">Try Out</button>
+                    </Link>
                 </div>
             </section>
         </AuthenticatedLayout>

@@ -148,11 +148,13 @@ class MaterialController extends Controller
     function complete($materialid)
     {
         $user = Auth::user();
-        $material = Material::find($materialid);
+        $material = Material::with('materialType')->find($materialid);
+        $materialType = $material->materialType;
         return Inertia::render('Materi/Completed', [
             'title' => 'Completed',
             'user' => $user,
-            'material' => $material
+            'material' => $material,
+            'materialType' => $materialType,
         ]);
     }
 }
