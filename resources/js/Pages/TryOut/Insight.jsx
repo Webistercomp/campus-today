@@ -28,8 +28,19 @@ export default function Insight({ auth, title, tryoutName, tryout }) {
                 <ol className="list-decimal ml-4 mt-4">
                     {tryout.questions.map((soal, i) => (
                         <li className="mb-8" key={i}>
-                            <p>{soal.question}</p>
-                            <p><span className="font-bold">Jawaban Anda</span> : {soal.jawaban_user ? soal.jawaban_user : "Tidak dijawab"} (Nilai {soal.jawaban_user_bobot})</p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: soal.question,
+                                }}
+                            ></p>
+                            <p>
+                                <span className="font-bold">Jawaban Anda</span>{" "}
+                                :{" "}
+                                {soal.jawaban_user
+                                    ? soal.jawaban_user
+                                    : "Tidak dijawab"}{" "}
+                                (Nilai {soal.jawaban_user_bobot})
+                            </p>
                             <ol className="list-upper-alpha list-inside grid grid-cols-3 gap-4 my-2 ml-0">
                                 {soal.answers.map((choice, i) => (
                                     <label
@@ -42,29 +53,41 @@ export default function Insight({ auth, title, tryoutName, tryout }) {
                                             className="peer hidden"
                                             value={choice.id}
                                             checked={
-                                                (parseInt(soal.jawaban) ===
-                                                choice.id || soal.jawaban_user_id == choice.id)
+                                                parseInt(soal.jawaban) ===
+                                                    choice.id ||
+                                                soal.jawaban_user_id ==
+                                                    choice.id
                                                     ? true
                                                     : false
                                             }
                                             readOnly
                                         />
-                                        <li className={
-                                            (parseInt(soal.jawaban) === choice.id || soal.jawaban_user_id == choice.id) ?
-                                                (parseInt(soal.jawaban) === choice.id) ?
-                                                "border-2 border-curious-blue px-8 py-3 rounded-md transition-all duration-75 peer-checked:text-white peer-checked:bg-curious-blue"
-                                                :
-                                                "border-2 border-red-500 px-8 py-3 rounded-md transition-all duration-75 peer-checked:text-white peer-checked:bg-red-500"
-                                            :
-                                                "border-2 border-curious-blue px-8 py-3 rounded-md transition-all duration-75"  
-                                        }>
+                                        <li
+                                            className={
+                                                parseInt(soal.jawaban) ===
+                                                    choice.id ||
+                                                soal.jawaban_user_id ==
+                                                    choice.id
+                                                    ? parseInt(soal.jawaban) ===
+                                                      choice.id
+                                                        ? "border-2 border-curious-blue px-8 py-3 rounded-md transition-all duration-75 peer-checked:text-white peer-checked:bg-curious-blue"
+                                                        : "border-2 border-red-500 px-8 py-3 rounded-md transition-all duration-75 peer-checked:text-white peer-checked:bg-red-500"
+                                                    : "border-2 border-curious-blue px-8 py-3 rounded-md transition-all duration-75"
+                                            }
+                                        >
                                             {choice.answer}
                                         </li>
                                     </label>
                                 ))}
                             </ol>
-                            <p><span className="font-bold">Pembahasan</span> :</p>
-                            <p>{soal.pembahasan}</p>
+                            <p>
+                                <span className="font-bold">Pembahasan</span> :
+                            </p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: soal.pembahasan,
+                                }}
+                            ></p>
                         </li>
                     ))}
                 </ol>
