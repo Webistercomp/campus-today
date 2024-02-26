@@ -31,5 +31,8 @@ class RoleSeeder extends Seeder
         Role::create([
             'name' => 'Gold'
         ]);
+        Role::create([
+            'name' => 'Admin'
+        ]);
     }
 }

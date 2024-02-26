@@ -50,7 +50,7 @@ class MaterialController extends Controller
             ->where('type', 'teks')
             ->first();
         $material_roles = json_decode($material->roles);
-        if (!in_array($role_user->id, $material_roles)) {
+        if (!in_array($role_user->id, $material_roles) && $role_user->id != 7) {
             session()->flash('type', 'info');
             session()->flash('msg', 'Paket ada masih ' . Auth::user()->role->name . ', upgrade paket Anda untuk menikmati layanan lainnya');
             return redirect()->route('material.type.teks', $type);
@@ -114,7 +114,7 @@ class MaterialController extends Controller
             ->where('type', 'video')
             ->first();
         $material_roles = json_decode($material->roles);
-        if (!in_array($role_user->id, $material_roles)) {
+        if (!in_array($role_user->id, $material_roles) && $role_user->id != 7) {
             session()->flash('type', 'info');
             session()->flash('msg', 'Paket ada masih ' . Auth::user()->role->name . ', upgrade paket Anda untuk menikmati layanan lainnya');
             return redirect()->route('material.type.video', $type);
