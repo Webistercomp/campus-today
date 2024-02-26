@@ -744,12 +744,19 @@ export default function Homepage({ title, packets }) {
                             kampus impian
                         </p>
                         <div className="flex gap-4 mt-8 justify-center">
-                            <button className="btn bg-white text-curious-blue border-none">
+                            <Link
+                                href={route("dashboard")}
+                                className="btn bg-white text-curious-blue border-none"
+                            >
                                 Mulai Belajar
-                            </button>
-                            <button className="btn bg-white text-curious-blue border-none">
+                            </Link>
+                            <a
+                                href="https://wa.me/6285172147217"
+                                target="_blank"
+                                className="btn bg-white text-curious-blue border-none"
+                            >
                                 Tanya Admin
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
