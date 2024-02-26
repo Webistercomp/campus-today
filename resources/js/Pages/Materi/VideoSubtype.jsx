@@ -122,7 +122,7 @@ export default function SkdVideoTwk({
                         </Link>
                         {nextChapter ? (
                             <Link
-                                href={route("material.type.teks.subtype", [
+                                href={route("material.type.video.subtype", [
                                     type,
                                     material.code,
                                     nextChapter.id,
