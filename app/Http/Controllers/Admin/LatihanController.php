@@ -18,31 +18,24 @@ use Illuminate\Support\Facades\Route;
 class LatihanController extends Controller
 {
     function index(Request $request) {
-        $latihans = Latihan::with('chapter');
+        $latihans = Latihan::with('chapter.material')->get();
         $materials = Material::all();
-        $materialid = $request->materialid;
         $chapters = Chapter::all();
         $chapterid = $request->chapterid;
         $active = $request->active;
-        if($materialid && $materialid != 'all') {
-            $latihans = $latihans->whereHas('chapter', function ($q) use ($materialid) {
-                $q->where('material_id', $materialid);
-            });
-        }
         if($chapterid && $chapterid != 'all') {
             $latihans = $latihans->where('chapter_id', $chapterid);
         }
         if($active && $active != 'all') {
             $latihans = $latihans->where('active', $active);
         }
-        $latihans = $latihans->get();
         foreach($latihans as $latihan) {
             $latihan->jumlah_soal = $latihan->questions->count();
         }
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
-        return view('admin.latihan.index', compact('latihans', 'user', 'menu', 'materials', 'materialid', 'chapters', 'chapterid', 'active'));
+        return view('admin.latihan.index', compact('latihans', 'user', 'menu', 'materials', 'chapters', 'chapterid', 'active'));
     }
 
     function create() {

@@ -30,17 +30,6 @@
                             <div class="modal-body">
                                 <table class="w-100">
                                     <tr class="mb-3">
-                                        <td style="font-weight: 600">Materi</td>
-                                        <td>
-                                            <select name="materialid" id="materialid" class="form-control" style="min-width: 200px;">
-                                                <option value="all">all</option>
-                                                @foreach($materials as $material)
-                                                <option value={{$material->id}} @if($material->id == $materialid) selected @endif>{{$material->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr class="mb-3">
                                         <td style="font-weight: 600">Bab Materi</td>
                                         <td>
                                             <select name="chapterid" id="chapterid" class="form-control" style="min-width: 200px;">
@@ -72,7 +61,7 @@
             </div>
         </div>
     </div>
-    @if($materialid != '' || $chapterid != '' || $active != '')
+    @if($chapterid != '' || $active != '')
     <div class="mb-3" style="color: red;">
         Search result : {{$latihans->count()}} data
     </div>

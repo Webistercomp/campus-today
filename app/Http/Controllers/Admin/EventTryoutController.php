@@ -77,7 +77,6 @@ class EventTryoutController extends Controller
     
     function show($id) {
         $tryout = Tryout::find($id);
-        dd($tryout);
         $tryout->roles = implode(',', json_decode($tryout->roles));
         $tryout->jumlah_question = $tryout->questions()->count();
         $user = Auth::user();
