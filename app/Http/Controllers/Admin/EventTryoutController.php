@@ -77,6 +77,7 @@ class EventTryoutController extends Controller
     
     function show($id) {
         $tryout = Tryout::find($id);
+        dd($tryout);
         $tryout->roles = implode(',', json_decode($tryout->roles));
         $tryout->jumlah_question = $tryout->questions()->count();
         $user = Auth::user();
@@ -127,8 +128,14 @@ class EventTryoutController extends Controller
         return redirect()->route('admin.event.index');
     }
 
-    function delete($id) {
-        $tryout = Tryout::find($id);
+    function destroy($id) {
+        $tryout = Tryout::with('questions.answers')->find($id);
+        foreach($tryout->questions as $question) {
+            foreach($question->answers as $answer) {
+                $answer->delete();
+            }
+            $question->delete();
+        }
         $tryout->delete();
         return redirect()->route('admin.event.index');
     }

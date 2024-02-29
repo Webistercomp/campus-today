@@ -156,10 +156,10 @@
                     <div id={{"input_question_" . $question->id}} style="display:none">
                         <input type="hidden" name="question_id" value={{$question->id}}>
                         <input type="hidden" name="tryout_id" value={{$question->tryout_id}}>
-                        <textarea name="question" id="question_{{$question->id}}" class="question form-control ckeditor" placeholder="Badan Artikel">{{$question->question}}</textarea>
+                        <textarea name="question" id="question_{{$question->id}}" class="question form-control ckeditor" placeholder="Badan Artikel" required>{{$question->question}}</textarea>
                         <div class="mb-2 mt-2">
                             <label for={{"group_type_".$question->id}} class="col-2 m-0 p-0" >
-                                Tipe soal :
+                                Tipe soal :x
                             </label>
                             <select name="group_type" id={{"group_type_".$question->id}} class="form-control form-control-sm form-select col-12" aria-label="Default select example">
                                 @foreach ($groupTypes as $groupType)
