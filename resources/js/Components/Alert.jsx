@@ -5,7 +5,9 @@ function Alert({ type, isShow, msg }) {
         return (
             <div
                 className={`w-full px-4 md:px-14 lg:px-24 xl:px-32 fixed left-1/2 -translate-x-1/2 transition-all duration-150 ${
-                    isShow ? "top-24 xl:top-28 opacity-100" : "top-0 opacity-0"
+                    isShow
+                        ? "top-24 xl:top-28 opacity-100 z-[100]"
+                        : "top-0 opacity-0 z-[0]"
                 }`}
             >
                 <div
@@ -32,7 +34,9 @@ function Alert({ type, isShow, msg }) {
         return (
             <div
                 className={`w-full px-4 md:px-14 lg:px-24 xl:px-32 fixed left-1/2 -translate-x-1/2 transition-all duration-150 ${
-                    isShow ? "top-24 xl:top-28 opacity-100" : "top-0 opacity-0"
+                    isShow
+                        ? "top-24 xl:top-28 opacity-100 z-[100]"
+                        : "top-0 opacity-0 z-[0]"
                 }`}
             >
                 <div
@@ -59,7 +63,9 @@ function Alert({ type, isShow, msg }) {
         return (
             <div
                 className={`w-full px-4 md:px-14 lg:px-24 xl:px-32 fixed left-1/2 -translate-x-1/2 transition-all duration-150 ${
-                    isShow ? "top-24 xl:top-28 opacity-100" : "top-0 opacity-0"
+                    isShow
+                        ? "top-24 xl:top-28 opacity-100 z-[100]"
+                        : "top-0 opacity-0 z-[0]"
                 }`}
             >
                 <div
@@ -86,7 +92,9 @@ function Alert({ type, isShow, msg }) {
         return (
             <div
                 className={`w-full px-4 md:px-14 lg:px-24 xl:px-32 fixed left-1/2 -translate-x-1/2 transition-all duration-150 ${
-                    isShow ? "top-24 xl:top-28 opacity-100" : "top-0 opacity-0"
+                    isShow
+                        ? "top-24 xl:top-28 opacity-100 z-[100]"
+                        : "top-0 opacity-0 z-[0]"
                 }`}
             >
                 <div
