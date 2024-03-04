@@ -88,7 +88,7 @@ export default function Profile({ auth, historyPembelian }) {
                             <img
                                 src={user.picture}
                                 alt=""
-                                className="aspect-square w-16 xl:w-24 rounded-full bg-slate-300 relative"
+                                className="aspect-square w-16 xl:w-24 rounded-full bg-slate-300 relative object-cover"
                             />
                             {isEdit && (
                                 <button
