@@ -26,6 +26,11 @@ export default function VerifyEmail({ status }) {
                         will gladly send you another.
                     </div>
 
+                    <p className="text-sm text-gray-600">
+                        And if you don't see it, you may need to check it in
+                        your <b>spam folder</b>.
+                    </p>
+
                     {status === "verification-link-sent" && (
                         <div className="mb-4 font-medium text-sm text-green-600">
                             A new verification link has been sent to the email

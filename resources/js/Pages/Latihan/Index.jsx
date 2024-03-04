@@ -2,7 +2,15 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Latihan({ auth, title, user, latihan, chapter, material, materialType }) {
+export default function Latihan({
+    auth,
+    title,
+    user,
+    latihan,
+    chapter,
+    material,
+    materialType,
+}) {
     const data = latihan.questions;
     let no = 1;
     const [exerciseData, setExerciseData] = useState(() =>
@@ -62,7 +70,7 @@ export default function Latihan({ auth, title, user, latihan, chapter, material,
         const postData = await axios.post(route("latihan.scoring"), {
             ...finalData,
         });
-        console.log(postData)
+        console.log(postData);
         return router.post(route("latihan.result", latihan.id), {
             data: postData.data,
         });
@@ -82,34 +90,32 @@ export default function Latihan({ auth, title, user, latihan, chapter, material,
                 <div className="flex mt-8">
                     <div className="">
                         <div className="p-2">
-                            <a  href={route("material.type.video.subtype", [
-                                materialType.code,
-                                material.code,
-                                chapter.id
-                            ])}
-                            className="btn btn-primary text-white w-full">
+                            <button
+                                onClick={() => window.history.back()}
+                                className="btn btn-primary text-white w-full"
+                            >
                                 Kembali
-                            </a>
+                            </button>
                         </div>
                         <div className="min-w-fit grid grid-cols-3 gap-2 h-[calc(100vh_-_200px)] overflow-y-hidden hover:overflow-y-scroll gutter-stable p-2 content-start">
-                        {exerciseData.map((q, i) => (
-                            <div
-                                className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
-                                    q.jawaban !== null
-                                        ? "bg-curious-blue text-white hover:text-black"
-                                        : "bg-white"
-                                } ${
-                                    active === i + 1
-                                        ? "ring-2 ring-curious-blue-700"
-                                        : "ring-0 ring-transparent"
-                                }`}
-                                key={i}
-                                onClick={() => setActive(q.no)}
-                            >
-                                {no++}
-                            </div>
-                        ))}
-                    </div>
+                            {exerciseData.map((q, i) => (
+                                <div
+                                    className={`aspect-square flex items-center justify-center h-12 border-2 border-curious-blue rounded-md hover:bg-curious-blue hover:bg-opacity-20 transition-all duration-75 cursor-pointer ${
+                                        q.jawaban !== null
+                                            ? "bg-curious-blue text-white hover:text-black"
+                                            : "bg-white"
+                                    } ${
+                                        active === i + 1
+                                            ? "ring-2 ring-curious-blue-700"
+                                            : "ring-0 ring-transparent"
+                                    }`}
+                                    key={i}
+                                    onClick={() => setActive(q.no)}
+                                >
+                                    {no++}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <div className="pl-8">
                         <p className="text-curious-blue font-bold text-3xl mb-4">

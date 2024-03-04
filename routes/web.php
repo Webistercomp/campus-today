@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tes', [TryoutController::class, 'grafik']);
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/picture', [ProfileController::class, 'updatePicture'])->name('profile.update.picture');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/materi/complete/{materialid}', [MaterialController::class, 'complete'])->name('material.complete');

@@ -10,15 +10,19 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ProfileController extends Controller {
+class ProfileController extends Controller
+{
     /**
      * Display the user's profile form.
      */
-    public function index() {
+    public function index()
+    {
         $historyPembelian = PacketHistory::with('packet')->where('user_id', Auth::user()->id)->get();
         return Inertia::render('Profile/Index', compact('historyPembelian'));
     }
@@ -26,7 +30,8 @@ class ProfileController extends Controller {
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $userid = Auth::user()->id;
         $user = User::find($userid);
         $user->name = $request->name ?? $user->name;
@@ -39,7 +44,7 @@ class ProfileController extends Controller {
         $user->pendidikan_terakhir = $request->pendidikan ?? $user->pendidikan_terakhir;
         $user->institusi = $request->institusi ?? $user->institusi;
 
-        if($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar')) {
             $filename = $user->id . '.' . $request->file('avatar')->extension();
             $user->image = $request->file('avatar')->storeAs('avatar', $filename);
         }
@@ -48,10 +53,40 @@ class ProfileController extends Controller {
         return redirect()->back();
     }
 
+    public function updatePicture(Request $request)
+    {
+        $request->validate([
+            'picture' => 'required|image|mimes:jpeg,png,jpg|max:1024'
+        ]);
+
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+
+        if ($user->picture) {
+            if (Storage::exists('public/' . $user->picture)) {
+                Storage::delete('public/' . $user->picture);
+            }
+        }
+
+        $path = storage_path('/app/public/images/profile');
+        !is_dir($path) && mkdir($path, 0777, true);
+
+        $file = $request->file('picture');
+        $file->move($path, $file->getClientOriginalName());
+
+        $img_path = 'images/profile/' . $file->getClientOriginalName();
+
+        $user->picture = $img_path;
+        $user->save();
+
+        return response()->json(['status' => 'success', 'type' => 'success', 'msg' => 'Foto berhasil diperbarui']);
+    }
+
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse {
+    public function destroy(Request $request): RedirectResponse
+    {
         $request->validate([
             'password' => ['required', 'current_password'],
         ]);
