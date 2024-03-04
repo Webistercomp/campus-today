@@ -79,8 +79,8 @@ class LatihanController extends Controller
     
     function edit($id) {
         $latihan = Latihan::with('chapter.material')->find($id);
-        $materialTypeID = $latihan->chapter->material->material_type_id;
-        $materialID = $latihan->chapter->material_id;
+        $materialTypeID = $latihan->chapter->material->material_type_id ?? '';
+        $materialID = $latihan->chapter->material_id ?? '';
         $chapterID = $latihan->chapter_id;
         $materialTypes = MaterialType::all();
         $materials = Material::all();
