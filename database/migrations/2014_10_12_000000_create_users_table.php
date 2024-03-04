@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('role_id');
             $table->date('expired_at')->nullable();
             $table->string('name');
+            $table->string('picture')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
