@@ -81,8 +81,8 @@
             @foreach ($latihans as $latihan)
             <tr>
                 <td>{{$latihan->id}}</td>
-                <td>{{$latihan->chapter->material->title}}</td>
-                <td>{{$latihan->chapter->judul}}</td>
+                <td>{{$latihan->chapter->material->title ?? ''}}</td>
+                <td>{{$latihan->chapter->judul ?? ''}}</td>
                 <td>{{$latihan->name}}</td>
                 <td>{{$latihan->jumlah_soal}}</td>
                 <td>
