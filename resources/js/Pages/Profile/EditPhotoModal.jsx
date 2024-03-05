@@ -1,13 +1,33 @@
 import Alert from "@/Components/Alert";
 import XIcon from "@/icons/XIcon";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
+
+import "react-image-crop/dist/ReactCrop.css";
+
+function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
+    return centerCrop(
+        makeAspectCrop(
+            {
+                unit: "%",
+                width: 320,
+            },
+            aspect,
+            mediaWidth,
+            mediaHeight
+        ),
+        mediaWidth,
+        mediaHeight
+    );
+}
 
 export default function EditPhotoModal({
     handleOnCloseUploadFotoModal,
     userPicture,
     userName,
 }) {
+    const aspect = 1 / 1;
     const [userUploadPict, setUserUploadPict] = useState();
     const [userPictUrl, setUserPictUrl] = useState(userPicture);
     const [alertData, setAlertData] = useState({
@@ -15,8 +35,14 @@ export default function EditPhotoModal({
         msg: "",
         isShow: false,
     });
+    const [cropMode, setCropMode] = useState(false);
+    const [crop, setCrop] = useState();
+    const [completedCrop, setCompletedCrop] = useState();
+
+    const imgRef = useRef();
 
     const handleOnChangeUserPicture = (ev) => {
+        setCrop(undefined);
         setUserUploadPict(ev.target.files[0]);
     };
 
@@ -40,6 +66,52 @@ export default function EditPhotoModal({
                     setAlertData({ ...alertData, isShow: false });
                 }, 2000);
             });
+    };
+
+    const handleOnSetCropMode = () => setCropMode(!cropMode);
+
+    const onLoadPicture = (ev) => {
+        const { width, height } = ev.currentTarget;
+        setCrop(centerAspectCrop(width, height, aspect));
+    };
+
+    const handleOnCompleteCropPicture = async () => {
+        const image = imgRef.current;
+
+        const canvas = document.createElement("canvas");
+
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+        canvas.width = completedCrop.width;
+        canvas.height = completedCrop.height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(
+            image,
+            completedCrop.x * scaleX,
+            completedCrop.y * scaleY,
+            completedCrop.width * scaleX,
+            completedCrop.height * scaleY,
+            0,
+            0,
+            completedCrop.width,
+            completedCrop.height
+        );
+        const toBase64 = canvas.toDataURL("image/jpeg", 1.0);
+        setUserPictUrl(toBase64);
+        fetch(toBase64)
+            .then((res) => res.blob())
+            .then((blob) => {
+                const croppedFile = new File(
+                    [blob],
+                    `${userName}-croppedPicture`,
+                    {
+                        type: "image/jpeg",
+                    }
+                );
+                setUserUploadPict(croppedFile);
+            });
+        setCropMode(false);
     };
 
     useEffect(() => {
@@ -69,17 +141,38 @@ export default function EditPhotoModal({
                         </button>
                     </div>
                     <div className="mt-6 flex gap-4 items-start">
-                        <img
-                            src={userPictUrl}
-                            alt={
-                                !userPicture
-                                    ? "Foto tidak ditemukan"
-                                    : userPicture
-                            }
-                            className={`${
-                                userPictUrl ? "aspect-auto" : "aspect-square"
-                            } max-w-xs basis-1/2 bg-slate-300`}
-                        />
+                        <div className="w-full max-w-xs basis-1/2">
+                            {cropMode ? (
+                                <ReactCrop
+                                    crop={crop}
+                                    onChange={(_, percentCrop) =>
+                                        setCrop(percentCrop)
+                                    }
+                                    onComplete={(e) => setCompletedCrop(e)}
+                                    aspect={aspect}
+                                    minWidth={50}
+                                >
+                                    <img
+                                        ref={imgRef}
+                                        src={userPictUrl}
+                                        alt="user-picture"
+                                        onLoad={onLoadPicture}
+                                        className="w-full"
+                                    />
+                                </ReactCrop>
+                            ) : (
+                                <img
+                                    ref={imgRef}
+                                    src={userPictUrl}
+                                    alt="user-picture"
+                                    className={`w-full ${
+                                        userPictUrl
+                                            ? "aspect-auto"
+                                            : "aspect-square"
+                                    } bg-slate-300`}
+                                />
+                            )}
+                        </div>
                         <div className="flex flex-col gap-4 basis-1/2">
                             <div>
                                 <label
@@ -100,9 +193,20 @@ export default function EditPhotoModal({
                                     }
                                 />
                             </div>
-                            {/* <button className="btn btn-warning">
-                                Potong Gambar
-                            </button> */}
+                            {cropMode && (
+                                <button
+                                    className="btn btn-warning"
+                                    onClick={handleOnCompleteCropPicture}
+                                >
+                                    Potong Gambar
+                                </button>
+                            )}
+                            <button
+                                className={`btn ${!cropMode && "btn-warning"}`}
+                                onClick={handleOnSetCropMode}
+                            >
+                                {!cropMode ? "Potong Gambar" : "Batal"}
+                            </button>
                             <hr className="h-[2px] bg-slate-200 rounded-full" />
                             <button
                                 onClick={handleOnClickSavePicture}
