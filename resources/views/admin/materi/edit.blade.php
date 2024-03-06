@@ -296,7 +296,7 @@
                 <span style="font-weight: 600">Subjudul : </span>
                 <span class="subjudul">Subjudul Bab Baru</span>
             </div>
-            <div id={{"body_chapter_" . $chapter->id}} class="flex-column">
+            <div id="body_chapter_" class="flex-column">
                 <span style="font-weight: 600">Body : </span>
                 <span class="body">Body baru</span>
             </div>
