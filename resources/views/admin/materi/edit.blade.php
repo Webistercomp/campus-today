@@ -250,7 +250,7 @@
         </ol>
         <input type="hidden" name="data" value="" id="data">
         <div class="d-flex mt-3 m-0 justify-content-end">
-            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter()">Tambah Bab</button>
+            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter({{$chapter->id}})">Tambah Bab</button>
         </div>
     </div>
 </div>
@@ -281,7 +281,7 @@
         })
     });
 
-    function addNewChapter(){
+    function addNewChapter(chapterID){
         const newChapterUID = 'new_chapter_' + Date.now();
         const chapter_list_OL = document.querySelector('#chapter-list');
         const chapter_LI = document.createElement('li');
@@ -296,7 +296,7 @@
                 <span style="font-weight: 600">Subjudul : </span>
                 <span class="subjudul">Subjudul Bab Baru</span>
             </div>
-            <div id={{"body_chapter_" . $chapter->id}} class="flex-column">
+            <div id="body_chapter_${chapterID}" class="flex-column">
                 <span style="font-weight: 600">Body : </span>
                 <span class="body">Body baru</span>
             </div>
