@@ -22,7 +22,9 @@
     },
     "dependencies": {
         "@uidotdev/usehooks": "^2.4.1",
+        "chart.js": "^4.4.2",
         "prop-types": "^15.8.1",
+        "react-chartjs-2": "^5.2.0",
         "react-countdown": "^2.3.5",
         "react-image-crop": "^11.0.5",
         "tailwind-merge": "^1.14.0"
