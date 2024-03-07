@@ -74,7 +74,7 @@ class LatihanController extends Controller
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
-        return view('admin.latihan.show', compact('latihan', 'user', 'menu'));
+        return redirect()->route('admin.latihan.edit', $id);
     }
     
     function edit($id) {

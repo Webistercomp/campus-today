@@ -250,7 +250,7 @@
         </ol>
         <input type="hidden" name="data" value="" id="data">
         <div class="d-flex mt-3 m-0 justify-content-end">
-            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter()">Tambah Bab</button>
+            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter({{$material->id}})">Tambah Bab</button>
         </div>
     </div>
 </div>
@@ -281,7 +281,7 @@
         })
     });
 
-    function addNewChapter(){
+    function addNewChapter(materialID){
         const newChapterUID = 'new_chapter_' + Date.now();
         const chapter_list_OL = document.querySelector('#chapter-list');
         const chapter_LI = document.createElement('li');
@@ -302,53 +302,17 @@
             </div>
             <div id="file_chapter_${newChapterUID}">
                 <span style="font-weight: 600">File : </span>
-                @if($chapter->file != null)
-                <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
-                <iframe
-                    src={{asset("storage/materi/file/" . $chapter->file)}}
-                    height="200px"
-                    loading="lazy"
-                    title="PDF-file"
-                ></iframe>
-                @else
                 Tidak ada file
-                @endif
             </div>
             <div id="video_chapter_${newChapterUID}">
                 <span style="font-weight: 600">Video : </span>
-                @if($chapter->link != null)
-                <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
-                <div class="video-container">
-                    <iframe 
-                        width="500px"
-                        height="auto" 
-                        src={{$chapter->link}}>
-                    </iframe>
-                </div>
-                <style>
-                    .video-container {
-                    position: relative;
-                    padding-bottom: calc(56.25% * 0.5); /* 16:9 */
-                    width: 50%;
-                    height: 0;
-                    }
-                    .video-container iframe {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    }
-                </style>
-                @else
                 Tidak ada link video
-                @endif
             </div>
             <form action="{{route('admin.chapter.create')}}" method="POST" style="display: inline-block; width: 100%;" enctype="multipart/form-data">
                 @csrf
                 <div id="input_chapter_${newChapterUID}" style="display:none">
                     <input type="hidden" name="chapter_id" value="${newChapterUID}"">
-                    <input type="hidden" name="material_id" value={{$chapter->material_id}}>
+                    <input type="hidden" name="material_id" value="${materialID}">
                     <div>
                         <span style="font-weight: 600; display: block;">Judul : </span>    
                         <input type="text" name="judul" id="input_judul_${newChapterUID}" class="form-control" placeholder="Judul Bab Baru" style="display: block">
@@ -363,18 +327,8 @@
                     </div>
                     <div>
                         <span style="font-weight: 600; display: block">File : </span>
-                        @if($chapter->file == null)
                         File materi kosong
-                        @else
-                        <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
-                        <iframe
-                            src={{asset("storage/materi/file/" . $chapter->file)}}
-                            height="200px"
-                            loading="lazy"
-                            title="PDF-file"
-                        ></iframe>
-                        @endif
-                        <input type="file" name="file" id="input_file_${newChapterUID}" class="form-control" value="{{$chapter->file}}" style="display: block" onchange="changePDF(${newChapterUID})">
+                        <input type="file" name="file" id="input_file_${newChapterUID}" class="form-control" style="display: block" onchange="changePDF(${newChapterUID})">
                     </div>
                     <div>
                         <span style="font-weight: 600; display: block">Video : </span>
@@ -383,7 +337,7 @@
                 </div>
                 <button type="button" class="badge bg-warning border-0" onclick="startEditChapter('${newChapterUID}')" id="editBtn_${newChapterUID}">edit</button>
                 <button type="button" class="badge bg-secondary border-0" onclick="cancelEditChapter('${newChapterUID}')" id="cancelBtn_${newChapterUID}" style="display:none">batal</button>
-                <button type="submit" class="badge bg-primary border-0" onclick="cancelEditChapter('${newChapterUID}', {{$chapter->material_id}})" id="simpanBtn_${newChapterUID}" style="display:none">simpan</button>
+                <button type="submit" class="badge bg-primary border-0" onclick="cancelEditChapter('${newChapterUID}')" id="simpanBtn_${newChapterUID}" style="display:none">simpan</button>
             </form>
             <button type="submit" class="badge bg-danger border-0" id="hapusBtn_${newChapterUID}" onclick="deleteNewChapter('${newChapterUID}')" >hapus</button>
         `;

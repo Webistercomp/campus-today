@@ -12,7 +12,10 @@ use Inertia\Inertia;
 
 class LatihanController extends Controller {
     function test($id) {
-        $latihan = Latihan::with('questions.answers', 'chapter.material')->find($id);
+        $latihan = Latihan::with('questions.answers', 'chapter.material')->where('active', 1)->where('chapter_id', $id)->first();
+        if(!$latihan || $latihan->questions->count() == 0) {
+            return redirect()->back()->with('error', 'Latihan tidak ditemukan atau belum ada soal');
+        }
         $user = Auth::user();
         for ($i = 0; $i < count($latihan->questions); $i++) {
             $latihan->questions[$i]->no = ($i + 1);
