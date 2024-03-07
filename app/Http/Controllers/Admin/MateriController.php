@@ -16,7 +16,7 @@ class MateriController extends Controller
 {
     function index(Request $request)
     {
-        $materials = Material::all();
+        $materials = Material::with('chapters')->get();
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
@@ -33,6 +33,9 @@ class MateriController extends Controller
         }
         if($request->has('tipepembelajaran') && $tipepembelajaran != 'all') {
             $materials = $materials->where('type', $tipepembelajaran);
+        }
+        foreach($materials as $materi) {
+            $materi->jumlah_bab = $materi->chapters->count();
         }
 
         return view('admin.materi.index', compact('materials', 'user', 'menu', 'materialTypes', 'groupTypes', 'tipemateri', 'grouptype', 'tipepembelajaran'));

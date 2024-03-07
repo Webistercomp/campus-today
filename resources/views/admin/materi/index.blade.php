@@ -85,6 +85,7 @@
             <th>Group</th>
             <th>Judul</th>
             <th>Tipe Pembelajaran</th>
+            <th>Jumlah Bab</th>
             <th>Detail</th>
         </thead>
         <tbody>
@@ -95,6 +96,7 @@
                 <td>{{$materi->groupType->name}}</td>
                 <td>{{$materi->title}}</td>
                 <td>{{$materi->type}}</td>
+                <td>{{$materi->jumlah_bab}}</td>
                 <td>
                     <a href={{route('admin.materi.edit', $materi->id)}} class="badge bg-primary">
                         <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>
