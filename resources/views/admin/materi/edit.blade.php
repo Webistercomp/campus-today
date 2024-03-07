@@ -250,7 +250,7 @@
         </ol>
         <input type="hidden" name="data" value="" id="data">
         <div class="d-flex mt-3 m-0 justify-content-end">
-            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter()">Tambah Bab</button>
+            <button id="add-chapter" type="button" class="btn btn-warning" onclick="addNewChapter({{$material->id}})">Tambah Bab</button>
         </div>
     </div>
 </div>
@@ -281,7 +281,7 @@
         })
     });
 
-    function addNewChapter(){
+    function addNewChapter(materialID){
         const newChapterUID = 'new_chapter_' + Date.now();
         const chapter_list_OL = document.querySelector('#chapter-list');
         const chapter_LI = document.createElement('li');
@@ -312,7 +312,7 @@
                 @csrf
                 <div id="input_chapter_${newChapterUID}" style="display:none">
                     <input type="hidden" name="chapter_id" value="${newChapterUID}"">
-                    <input type="hidden" name="material_id">
+                    <input type="hidden" name="material_id" value="${materialID}">
                     <div>
                         <span style="font-weight: 600; display: block;">Judul : </span>    
                         <input type="text" name="judul" id="input_judul_${newChapterUID}" class="form-control" placeholder="Judul Bab Baru" style="display: block">
