@@ -10,11 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class LatihanController extends Controller {
-    function test($id) {
+class LatihanController extends Controller
+{
+    function test($id)
+    {
         $latihan = Latihan::with('questions.answers', 'chapter.material')->where('active', 1)->where('chapter_id', $id)->first();
-        if(!$latihan || $latihan->questions->count() == 0) {
-            return redirect()->back()->with('error', 'Latihan tidak ditemukan atau belum ada soal');
+        if (!$latihan || $latihan->questions->count() == 0) {
+            session()->flash('type', 'error');
+            session()->flash('msg', 'Latihan tidak ditemukan atau belum ada soal');
+            return redirect()->back();
         }
         $user = Auth::user();
         for ($i = 0; $i < count($latihan->questions); $i++) {
@@ -24,7 +28,7 @@ class LatihanController extends Controller {
         $chapter = $latihan->chapter;
         $material = $chapter->material;
         $materialType = $material->materialType;
-        
+
         return Inertia::render('Latihan/Index', [
             'title' => 'Latihan Soal',
             'user' => $user,
@@ -35,7 +39,8 @@ class LatihanController extends Controller {
         ]);
     }
 
-    function result(Request $request) {
+    function result(Request $request)
+    {
         $data = $request->data;
         return Inertia::render('Latihan/Result', [
             'title' => 'Latihan Selesai',
@@ -48,7 +53,8 @@ class LatihanController extends Controller {
         ]);
     }
 
-    function scoring(Request $request) {
+    function scoring(Request $request)
+    {
         $request->validate([
             'latihan_id' => 'required',
             'user_id' => 'required',

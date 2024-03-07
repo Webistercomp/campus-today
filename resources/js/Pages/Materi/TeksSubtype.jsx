@@ -1,3 +1,4 @@
+import Alert from "@/Components/Alert";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import ChevronRightIcon from "@/icons/ChevronRightIcon";
 import { Head, Link } from "@inertiajs/react";
@@ -11,8 +12,14 @@ export default function SkdTeksTwk({
     chapters,
     chapter,
     nextChapter,
+    flash,
 }) {
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+    const [flashData, setFlashData] = useState({
+        type: "success",
+        msg: "",
+        isShow: false,
+    });
 
     useEffect(() => {
         localStorage.setItem(
@@ -24,6 +31,18 @@ export default function SkdTeksTwk({
                 nextChapterId: nextChapter?.id,
             })
         );
+    }, []);
+
+    useEffect(() => {
+        if (flash) {
+            setFlashData({ ...flash, isShow: true });
+
+            setTimeout(() => {
+                setFlashData((prev) => {
+                    return { ...prev, isShow: false };
+                });
+            }, 3000);
+        }
     }, []);
 
     return (
@@ -112,13 +131,26 @@ export default function SkdTeksTwk({
                             <h6 className="subjudul-materi font-bold">
                                 {chapter.subjudul}
                             </h6>
-                            <div className="isi-materi" dangerouslySetInnerHTML={{__html: chapter.body}} />
+                            <div
+                                className="isi-materi"
+                                dangerouslySetInnerHTML={{
+                                    __html: chapter.body,
+                                }}
+                            />
                             <div>
                                 <div className="font-semibold">File :</div>
                                 <div>
-                                    {chapter.file === null ? "Tidak ada file" : 
-                                        <a href={chapter.file} target="_blank" class="btn btn-primary py-1">Open in new tab</a>
-                                    }
+                                    {chapter.file === null ? (
+                                        "Tidak ada file"
+                                    ) : (
+                                        <a
+                                            href={chapter.file}
+                                            target="_blank"
+                                            class="btn btn-primary py-1"
+                                        >
+                                            Open in new tab
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -150,6 +182,7 @@ export default function SkdTeksTwk({
                     </div>
                 </div>
             </section>
+            <Alert {...flashData} />
         </AuthenticatedLayout>
     );
 }
