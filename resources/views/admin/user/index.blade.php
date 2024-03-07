@@ -37,6 +37,16 @@
                                             </select>
                                         </td>
                                     </tr>
+                                    <tr class="mb-3">
+                                        <td style="font-weight: 600">Email Verified</td>
+                                        <td>
+                                            <select name="is_email_verified" id="is_email_verified" class="form-control" style="min-width: 200px;">
+                                                <option value="all">all</option>
+                                                <option value="0">Belum terverifikasi</option>
+                                                <option value="1">Sudah terverifikasi</option>
+                                            </select>
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                             <div class="modal-footer">
@@ -48,7 +58,7 @@
             </div>
         </div>
     </div>
-    @if($requestroleid != '')
+    @if($requestroleid != '' || $requestisemailverified)
     <div class="mb-3" style="color: red;">
         Search result : {{$users->count()}} data
     </div>
@@ -61,7 +71,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Phone</th>
-                <th>Tanggal Lahir</th>
+                <th>Email Verified</th>
                 <th>Detail</th>
             </thead>
             <tbody>
@@ -72,7 +82,13 @@
                     <td>{{$user->email}}</td>
                     <td>{{$user->role->name}}</td>
                     <td>{{$user->nohp ?? '-'}}</td>
-                    <td>{{$user->tanggal_lahir ?? '-'}}</td>
+                    <td>
+                        @if($user->email_verified_at)
+                            <span class="badge bg-success">V</span>
+                        @else
+                            <span class="badge bg-danger">X</span>
+                        @endif
+                    </td>
                     <td>
                         <a href={{route('admin.user.show', $user->id)}} class="badge bg-primary">
                             <i class="fa fa-eye text-center" style="font-size:16px;color:white"></i>

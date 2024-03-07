@@ -45,7 +45,7 @@ class AdminController extends Controller
     function index() {
         $user = Auth::user();
         $jumlah_user = User::get()->count();
-        $jumlah_user_admin = User::where('is_admin', 0)->get()->count();
+        $jumlah_user_admin = User::where('is_admin', 1)->get()->count();
         $jumlah_user_nonadmin = $jumlah_user - $jumlah_user_admin;
 
         $jumlah_tryout = Tryout::where('is_event', 0)->get()->count();

@@ -68,6 +68,12 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr class="mb-3"> 
+                                        <td style="font-weight: 600">Nama User</td>
+                                        <td>
+                                            <input type="text" name="namauser" id="namauser" class="form-control" value={{$requestnamauser}}>
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                             <div class="modal-footer">

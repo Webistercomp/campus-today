@@ -37,12 +37,18 @@ class PacketHistoryController extends Controller
         if ($request->packet && $request->packet != 'all') {
             $packetHistories = PacketHistory::where('packet_id', $request->packet)->get();
         }
+        if ($request->namauser && $request->namauser != 'all') {
+            $packetHistories = PacketHistory::whereHas('user', function($q) use($request) {
+                $q->where('name', 'like', '%' . $request->namauser . '%');
+            })->get();
+        }
+        $requestnamauser = $request->namauser;
 
         foreach ($packetHistories as $packetHistory) {
             $packetHistory->bukti_pembayaran = Storage::url('bukti_pembayaran/' . $packetHistory->bukti_pembayaran);
         }
 
-        return view('admin.packethistory.index', compact('packetHistories', 'user', 'menu', 'packets'));
+        return view('admin.packethistory.index', compact('packetHistories', 'user', 'menu', 'packets', 'requestnamauser'));
     }
 
     function create()
