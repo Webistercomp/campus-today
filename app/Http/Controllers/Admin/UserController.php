@@ -13,9 +13,16 @@ class UserController extends Controller
 {
     function index(Request $request)
     {
-        $users = User::where('email_verified_at', '!=', null);
+        $users = User::query();
         if ($request->has('role') && $request->role != 'all') {
             $users = $users->where('role_id', $request->role);
+        }
+        if ($request->has('is_email_verified') && $request->is_email_verified != 'all') {
+            if ($request->is_email_verified == '0') {
+                $users = $users->whereNull('email_verified_at');
+            } else {
+                $users = $users->where('email_verified_at', '!=', null);
+            }
         }
         $users = $users->get();
         $menu = Route::currentRouteName();
@@ -23,7 +30,8 @@ class UserController extends Controller
         $user = Auth::user();
         $roles = Role::all();
         $requestroleid = $request->role;
-        return view('admin.user.index', compact('users', 'menu', 'roles', 'user', 'requestroleid'));
+        $requestisemailverified = $request->is_email_verified;
+        return view('admin.user.index', compact('users', 'menu', 'roles', 'user', 'requestroleid', 'requestisemailverified'));
     }
 
     function show($id)

@@ -113,6 +113,9 @@ class MaterialController extends Controller
             ->where('code', $materialcode)
             ->where('type', 'video')
             ->first();
+        if($material == null) {
+            return abort(404);
+        }
         $material_roles = json_decode($material->roles);
         if (!in_array($role_user->id, $material_roles) && $role_user->id != 7) {
             session()->flash('type', 'info');

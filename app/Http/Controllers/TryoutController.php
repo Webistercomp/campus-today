@@ -337,21 +337,27 @@ class TryoutController extends Controller
         foreach ($tryoutHistory->tryout->questions as $question) {
             $question->no = $no++;
             $question->jawaban = $question->answers->sortByDesc('bobot')->first()->id;
-            foreach ($answers as $answer) {
-                if ($answer->question_id == $question->id) {
-                    $answerFromDB = Answer::find($answer->answer_id);
-                    if ($answerFromDB == null) {
-                        $question->jawaban_user_id = null;
-                        $question->jawaban_user_bobot = 0;
-                        $question->jawaban_user = null;
-                        break;
-                    } else {
-                        $question->jawaban_user_id = $answerFromDB->id;
-                        $question->jawaban_user_bobot = $answerFromDB->bobot;
-                        $question->jawaban_user = $answerFromDB->answer;
-                        break;
+            if ($answers) {
+                foreach ($answers as $answer) {
+                    if ($answer->question_id == $question->id) {
+                        $answerFromDB = Answer::find($answer->answer_id);
+                        if ($answerFromDB == null) {
+                            $question->jawaban_user_id = null;
+                            $question->jawaban_user_bobot = 0;
+                            $question->jawaban_user = null;
+                            break;
+                        } else {
+                            $question->jawaban_user_id = $answerFromDB->id;
+                            $question->jawaban_user_bobot = $answerFromDB->bobot;
+                            $question->jawaban_user = $answerFromDB->answer;
+                            break;
+                        }
                     }
                 }
+            } else {
+                $question->jawaban_user_id = null;
+                $question->jawaban_user_bobot = 0;
+                $question->jawaban_user = null;
             }
         }
         return Inertia::render('TryOut/Insight', [
