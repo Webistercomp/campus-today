@@ -168,7 +168,7 @@ export default function Homepage({ title, packets }) {
         const testiInterval = setInterval(() => {
             if (!pauseInterval) {
                 setActiveTesti((prev) => {
-                    if (prev + 1 <= testiData.length) return prev + 1;
+                    if (prev + 1 < testiData.length) return prev + 1;
                     return 0;
                 });
             }
