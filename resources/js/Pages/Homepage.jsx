@@ -751,7 +751,7 @@ export default function Homepage({ title, packets }) {
                                 Mulai Belajar
                             </Link>
                             <a
-                                href="https://wa.me/6285172147217"
+                                href="https://wa.me/+6285786742735"
                                 target="_blank"
                                 className="btn bg-white text-curious-blue border-none"
                             >
