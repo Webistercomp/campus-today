@@ -19,7 +19,7 @@ export default function TestiCard({
                 <img
                     src={image}
                     alt=""
-                    className="w-24 aspect-square rounded-full bg-slate-500 mb-4 shadow-lg shadow-curious-blue-300"
+                    className="w-24 object-cover aspect-square rounded-full bg-slate-500 mb-4 shadow-lg shadow-curious-blue-300"
                 />
                 <h4 className="font-semibold text-center">{name}</h4>
                 <p className="text-center">{agency}</p>

@@ -18,11 +18,6 @@ import holding from "@/images/holding.png";
 import notes from "@/images/notes.png";
 import prof from "@/images/prof.png";
 import CampusToday from "@/images/campus-today.png";
-import Fatur from "@/images/fatur.jpg";
-import Tasya from "@/images/tasya.jpg";
-import Shifa from "@/images/shifa.jpg";
-import Rasya from "@/images/rasya.jpg";
-import Dimas from "@/images/dimas.jpg";
 import Testi1 from "@/images/testi-buku/testi-1.jpg";
 import Testi2 from "@/images/testi-buku/testi-2.jpg";
 import Testi3 from "@/images/testi-buku/testi-3.jpg";
@@ -37,7 +32,7 @@ import { useEffect, useState } from "react";
 import ArrowRightIcon from "@/icons/ArrowRightIcon";
 import ArrowLeftIcon from "@/icons/ArrowLeftIcon";
 
-export default function Homepage({ title, packets }) {
+export default function Homepage({ title, packets, testimonis }) {
     const FAQ = [
         {
             question: "Bagaimana cara membuat akun di Campus Today?",
@@ -67,43 +62,13 @@ export default function Homepage({ title, packets }) {
         },
     ];
 
-    const testiData = [
-        {
-            name: "Fawas Fatchur Rois Riadi",
-            as: "Alumni SMAN 1 AJIBARANG",
-            agency: "Universitas Jenderal Soedirman",
-            testi: "Bimbel SPASI ini sangat bagus. Cara pembelajarannya tidak terlalu terburu buru dan mulai dari awal jadi tidak takut untuk ketinggalan materi.",
-            image: Fatur,
-        },
-        {
-            name: "Anatasia Permata Sari Manurung",
-            as: "Alumni SMAN 10 TANGERANG",
-            agency: "Universitas Pertamina",
-            testi: "Kakaknya ngajarnya seru, jadi kita nggak bosen saat belajar. Selain itu, cara ngajarnya juga pelan-pelan jadi lebih mudah dimengerti materi pembelajarannya.",
-            image: Tasya,
-        },
-        {
-            name: "Shifa Dwi Pramudita",
-            as: "Alumni SMAN 1 JALAKSANA",
-            agency: "Universitas Jenderal Achmad Yani",
-            testi: "Kesan saya selama bimbel disini saya merasa nyaman, santai, dan pastinya juga seru. Dari penyampaian materinya pun berurut sehingga ketika memasuki materi lain yang bergubungan dapat dimengerti. Dalam belajar kita saling support dan mendukung satu sama lain apabila ada yang belum dimengerti, dengan senang hati pasti akan dijelaskan kembali.",
-            image: Shifa,
-        },
-        {
-            name: "Rasya Kharomah Putri",
-            as: "Alumni SMA N 7 Bengkulu",
-            agency: "Universitas Islam Indonesia",
-            testi: "Bimbel di SPASI sangat membantu, banyak diberi latihan soal, aplikasi Try Out gratis dan kuis di akhir pertemuan. pengajar juga ramah dan bagus dalam menjelaskan materi pelajaran. Pake sistem daring (online) jadi lebih konsentrasi dan nggak banyak orang. plus lagi, kita dapet buku latihan super lengkap.",
-            image: Rasya,
-        },
-        {
-            name: "Dimas Ghifar Farisi",
-            as: "Alumni SMA N 2 Cibinong",
-            agency: "Universitas Brawijaya",
-            testi: 'Bimbel sama Kak Nizar tuh pastinya trusted. Sistem belajarnya step by step. Pembelajaran juga menarik, detail, nggak ngebosenin dan mudah dipahami. Tentu saja benefitnya kita dapat mengerjakan soal HOTS dari yang termudah hingga tersulit sehingga membuat kita lebih terbiasa untuk mengerjakan tipe tipe soal lainnya. 1 kata bimbel bersama kak nizar yaitu “AWESOME".',
-            image: Dimas,
-        },
-    ];
+    const testiData = testimonis.map((testimoni) => ({
+        name: testimoni.name,
+        as: testimoni.institusi_sebelumnya,
+        agency: testimoni.institusi_sekarang,
+        testi: testimoni.testimoni,
+        image: testimoni.photo,
+    }));
 
     const testiBuku = [
         {

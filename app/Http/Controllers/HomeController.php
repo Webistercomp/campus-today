@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\MaterialType;
 use App\Models\Packet;
+use App\Models\Testimoni;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,14 @@ class HomeController extends Controller
 {
     function home() {
         $packets = Packet::all();
+        $testimonis = Testimoni::where('active', 1)->get();
+        foreach($testimonis as $testimoni) {
+            $testimoni->photo = asset('storage/testimoni/photo/'.$testimoni->photo);
+        }
         return Inertia::render('Homepage', [
             'title' => 'Campus Today | E-Learning CPNS',
-            'packets' => $packets
+            'packets' => $packets,
+            'testimonis' => $testimonis
         ]);
     }
 
