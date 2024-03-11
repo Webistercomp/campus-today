@@ -219,13 +219,13 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                 ref={ref}
             >
                 <div className="flex justify-between w-full relative">
-                    <a href="/" className="relative">
+                    <Link href={route("home")} className="relative">
                         <img
                             src={CTLogo}
                             alt="ct-logo"
                             className="h-12 lg:h-16 xl:h-20"
                         />
-                    </a>
+                    </Link>
                     <ul className="menu menu-horizontal px-1 gap-4 hidden md:flex md:items-center relative">
                         <li>
                             <a href="#about-us">Tentang</a>

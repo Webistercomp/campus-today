@@ -323,7 +323,7 @@
                     </div>
                     <div>
                         <span style="font-weight: 600; display: block">Body : </span>
-                        <textarea type="text" name="body" id="input_body_${newChapterUID}" class="form-control ckeditor" style="display: block"></textarea>
+                        <textarea type="text" name="body" id="input_body_${newChapterUID}" class="form-control new-ckeditor" style="display: block"></textarea>
                     </div>
                     <div>
                         <span style="font-weight: 600; display: block">File : </span>
@@ -342,6 +342,11 @@
             <button type="submit" class="badge bg-danger border-0" id="hapusBtn_${newChapterUID}" onclick="deleteNewChapter('${newChapterUID}')" >hapus</button>
         `;
         chapter_list_OL.append(chapter_LI);
+        let bodies = document.querySelectorAll('.new-ckeditor');
+        bodies.forEach((body) => {
+            CKEDITOR.replace(body.id, {filebrowserUploadUrl: "{{route('admin.ckeditor.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'})
+        })
     }
 
     function startEditChapter(idQuestion) {

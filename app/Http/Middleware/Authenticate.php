@@ -14,13 +14,17 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        $user = User::find(auth()->user()->id);
-        $now = Carbon::now();
-        $expired_at = Carbon::parse($user->expired_at);
-        if($now > $expired_at) {
-            $user->role_id = 1;
-            $user->save();
+        try {
+            $user = User::find(auth()->user()->id);
+            $now = Carbon::now();
+            $expired_at = Carbon::parse($user->expired_at);
+            if ($now > $expired_at) {
+                $user->role_id = 1;
+                $user->save();
+            }
+        } catch (\Throwable $th) {
+        } finally {
+            return $request->expectsJson() ? null : route('login');
         }
-        return $request->expectsJson() ? null : route('login');
     }
 }

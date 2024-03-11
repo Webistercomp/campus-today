@@ -1,10 +1,12 @@
 import Alert from "@/Components/Alert";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import PencilIcon from "@/icons/PencilIcon";
 import { Head, router } from "@inertiajs/react";
 import { useState } from "react";
+import EditPhotoModal from "./EditPhotoModal";
 import MyProfile from "./MyProfile";
-import Settings from "./Settings";
 import PembelianPaket from "./PembelianPaket";
+import Settings from "./Settings";
 
 export default function Profile({ auth, historyPembelian }) {
     const { user } = auth;
@@ -27,6 +29,7 @@ export default function Profile({ auth, historyPembelian }) {
         institusi: user.institusi ?? null,
     });
     const [prevData, setPrevData] = useState(data);
+    const [openEditPhotoModal, setOpenEditPhotoModal] = useState(false);
 
     const formatDateHTML = (dateString, join = "-", format = "dmy") => {
         var [date, month, year] = [
@@ -70,6 +73,10 @@ export default function Profile({ auth, historyPembelian }) {
         return setIsEdit(false);
     };
 
+    const handleOnCloseUploadFotoModal = () => {
+        setOpenEditPhotoModal(false);
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Profil" />
@@ -77,11 +84,25 @@ export default function Profile({ auth, historyPembelian }) {
             <section className="py-6 px-4 md:px-14 lg:px-24 xl:px-32">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-8">
-                        <img
-                            src=""
-                            alt=""
-                            className="aspect-square w-16 xl:w-24 rounded-full bg-slate-300"
-                        />
+                        <div className="relative">
+                            <img
+                                src={user.picture}
+                                alt=""
+                                className="aspect-square w-16 xl:w-24 rounded-full bg-slate-300 relative object-cover"
+                            />
+                            {isEdit && (
+                                <button
+                                    onClick={() =>
+                                        setOpenEditPhotoModal(
+                                            !openEditPhotoModal
+                                        )
+                                    }
+                                    className="absolute aspect-square w-16 xl:w-24 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center group"
+                                >
+                                    <PencilIcon className="w-6 h-6 xl:w-8 xl:h-8 stroke-slate-600" />
+                                </button>
+                            )}
+                        </div>
                         <div>
                             <h1 className="text-lg xl:text-3xl font-bold text-curious-blue">
                                 {user.name}
@@ -163,30 +184,20 @@ export default function Profile({ auth, historyPembelian }) {
 
                 {tabsIndex === 1 && <Settings setAlertData={setAlertData} />}
 
-                {tabsIndex === 2 && <PembelianPaket historyPembelian={historyPembelian} />}
+                {tabsIndex === 2 && (
+                    <PembelianPaket historyPembelian={historyPembelian} />
+                )}
             </section>
 
             <Alert {...alertData} />
 
-            {/* <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
-
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
-
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
-                </div>
-            </div> */}
+            {openEditPhotoModal && (
+                <EditPhotoModal
+                    handleOnCloseUploadFotoModal={handleOnCloseUploadFotoModal}
+                    userPicture={user.picture}
+                    userName={user.name}
+                />
+            )}
         </AuthenticatedLayout>
     );
 }
