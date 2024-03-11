@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PacketController as AdminPacketController;
 use App\Http\Controllers\Admin\TryoutController as AdminTryoutController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PacketHistoryController;
+use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\HomeController;
@@ -221,6 +222,14 @@ Route::prefix('admin')->group(function () {
         Route::get('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggShow'])->name('admin.minatbakat.wartegg.show');
         Route::put('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggUpdate'])->name('admin.minatbakat.wartegg.update');
         Route::delete('minatbakat/wartegg/{id}', [AdminMinatBakatController::class, 'warteggDestroy'])->name('admin.minatbakat.wartegg.delete');
+
+        // Testimoni
+        Route::get('testimoni', [TestimoniController::class, 'index'])->name('admin.testimoni.index');
+        Route::get('testimoni/create', [TestimoniController::class, 'create'])->name('admin.testimoni.create');
+        Route::get('testimoni/edit/{id}', [TestimoniController::class, 'edit'])->name('admin.testimoni.edit');
+        Route::post('testimoni', [TestimoniController::class, 'store'])->name('admin.testimoni.store');
+        Route::put('testimoni/{id}', [TestimoniController::class, 'update'])->name('admin.testimoni.update');
+        Route::delete('testimoni/{id}', [TestimoniController::class, 'destroy'])->name('admin.testimoni.delete');
 
         // upload image ckeditor
         Route::post('ckeditor/upload', [AdminController::class, 'uploadImage'])->name('admin.ckeditor.upload');

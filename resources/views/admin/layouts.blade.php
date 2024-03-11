@@ -258,6 +258,18 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href={{route('admin.testimoni.index')}} @if($menu == 'testimoni')
+            class="nav-link active"
+          @else
+            class="nav-link"
+          @endif>
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Testimoni
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href={{route('admin.minatbakat.index')}} @if($menu == 'minatbakat')
             class="nav-link active"
           @else
