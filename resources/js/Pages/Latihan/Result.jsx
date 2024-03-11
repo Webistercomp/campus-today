@@ -71,13 +71,11 @@ export default function LatihanResult({
                             <p>{soal.question}</p>
                             <p>
                                 Jawaban anda :{" "}
-                                {
-                                    soal.jawaban ?
-                                    soal.answers.find(
-                                        (a) => parseInt(soal.jawaban) === a.id
-                                    ).answer :
-                                    "Tidak diisi"
-                                }
+                                {soal.jawaban
+                                    ? soal.answers.find(
+                                          (a) => parseInt(soal.jawaban) === a.id
+                                      ).answer
+                                    : "Tidak diisi"}
                             </p>
                             <ol className="list-upper-alpha list-inside grid grid-cols-3 gap-2 my-2 ml-0">
                                 {soal.answers.map((choice) => (
@@ -122,17 +120,33 @@ export default function LatihanResult({
 
             <div className="flex flex-col w-1/4 gap-2 mx-auto mb-10">
                 {nextChapterId ? (
-                    <Link
-                        href={route("material.type.teks.subtype", [
-                            type,
-                            materialCode,
-                            nextChapterId,
-                        ])}
-                    >
-                        <button className="btn bg-white shadow-lg capitalize">
-                            Materi selanjutnya
-                        </button>
-                    </Link>
+                    <>
+                        {type === "teks" ? (
+                            <Link
+                                href={route("material.type.teks.subtype", [
+                                    type,
+                                    materialCode,
+                                    nextChapterId,
+                                ])}
+                            >
+                                <button className="btn bg-white shadow-lg capitalize">
+                                    Materi selanjutnya
+                                </button>
+                            </Link>
+                        ) : (
+                            <Link
+                                href={route("material.type.video.subtype", [
+                                    type,
+                                    materialCode,
+                                    nextChapterId,
+                                ])}
+                            >
+                                <button className="btn bg-white shadow-lg capitalize">
+                                    Materi selanjutnya
+                                </button>
+                            </Link>
+                        )}
+                    </>
                 ) : (
                     <Link href={route("material.complete", materialId)}>
                         <button className="btn bg-white shadow-lg capitalize">

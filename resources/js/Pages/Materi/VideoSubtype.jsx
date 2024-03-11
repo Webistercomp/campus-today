@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import ChevronRightIcon from "@/icons/ChevronRightIcon";
 import { Head, Link } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SkdVideoTwk({
     auth,
@@ -12,6 +12,18 @@ export default function SkdVideoTwk({
     nextChapter,
 }) {
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem(
+            "ACTIVE_CHAPTER",
+            JSON.stringify({
+                type,
+                materialId: material.id,
+                materialCode: material.code,
+                nextChapterId: nextChapter?.id,
+            })
+        );
+    }, []);
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -99,10 +111,17 @@ export default function SkdVideoTwk({
                             <h6 className="subjudul-materi font-bold">
                                 {chapter.subjudul}
                             </h6>
-                            <div className="isi-materi" dangerouslySetInnerHTML={{__html: chapter.body}} />
+                            <div
+                                className="isi-materi"
+                                dangerouslySetInnerHTML={{
+                                    __html: chapter.body,
+                                }}
+                            />
                             <div>
                                 <div className="font-semibold">Video :</div>
-                                {chapter.link === null ? 'Tidak ada video' : 
+                                {chapter.link === null ? (
+                                    "Tidak ada video"
+                                ) : (
                                     <iframe
                                         src={chapter.link}
                                         title={chapter.judul}
@@ -110,11 +129,10 @@ export default function SkdVideoTwk({
                                         allowFullScreen
                                         className="aspect-video w-full md:w-2/3 xl:w-4/5"
                                     ></iframe>
-                                }
+                                )}
                             </div>
-                            
                         </div>
-                        <Link 
+                        <Link
                             href={route("latihan.test", chapter.id)}
                             className="btn btn-grey text-dark capitalize mt-6 me-3 self-end px-6"
                         >

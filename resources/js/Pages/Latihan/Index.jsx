@@ -70,7 +70,7 @@ export default function Latihan({
         const postData = await axios.post(route("latihan.scoring"), {
             ...finalData,
         });
-        console.log(postData);
+
         return router.post(route("latihan.result", latihan.id), {
             data: postData.data,
         });

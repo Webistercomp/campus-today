@@ -15,9 +15,15 @@ export default function SkdVideo({
 }) {
     const tabGroup = materials.map((material) => material.group_type);
     const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
-    const [currentMaterials, setCurrentMaterials] = useState(() =>
-        materials.filter((material) => material.group_id === tabIndexActive)
-    );
+    const [currentMaterials, setCurrentMaterials] = useState(() => {
+        if (type !== "videoseries") {
+            return materials.filter(
+                (material) => material.group_id === tabIndexActive
+            );
+        }
+
+        return materials;
+    });
     const [searchkeyword, setSearchKeyword] = useState("");
     const [flashData, setFlashData] = useState({
         type: "success",
@@ -36,19 +42,29 @@ export default function SkdVideo({
     }, []);
 
     useEffect(() => {
-        setCurrentMaterials(
-            materials.filter((material) => material.group_id === tabIndexActive)
-        );
+        if (type !== "videoseries") {
+            setCurrentMaterials(
+                materials.filter(
+                    (material) => material.group_id === tabIndexActive
+                )
+            );
+        } else {
+            setCurrentMaterials(materials);
+        }
     }, [tabIndexActive]);
 
     useEffect(() => {
-        setCurrentMaterials(
-            materials.filter(
-                (material) =>
-                    material.title.match(new RegExp(searchkeyword, "i")) &&
-                    material.group_id === tabIndexActive
-            )
-        );
+        if (type !== "videoseries") {
+            setCurrentMaterials(
+                materials.filter(
+                    (material) =>
+                        material.title.match(new RegExp(searchkeyword, "i")) &&
+                        material.group_id === tabIndexActive
+                )
+            );
+        } else {
+            setCurrentMaterials(materials);
+        }
     }, [searchkeyword]);
 
     return (
