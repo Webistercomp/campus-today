@@ -81,6 +81,8 @@ class PacketController extends Controller
             'packet' => $packet,
             'user_data' => $request,
             'payment_method' => $payment_method,
+            'no_rek' => '0356 0103 7122 505',
+            'no_hp' => '0857 8674 2735'
         ]);
     }
 

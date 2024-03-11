@@ -4,7 +4,14 @@ import { Head, Link, router } from "@inertiajs/react";
 import axios from "axios";
 import { useState } from "react";
 
-export default function Payment({ auth, title, packet, user_data }) {
+export default function Payment({
+    auth,
+    title,
+    packet,
+    user_data,
+    no_rek,
+    no_hp,
+}) {
     const [paymentProof, setPaymentProof] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [alertData, setAlertData] = useState({
@@ -93,7 +100,7 @@ export default function Payment({ auth, title, packet, user_data }) {
                                 <b>Nizar Manarul Hidayat</b>.
                             </p>
                             <h3 className="text-4xl text-curious-blue mt-4">
-                                1209187276344
+                                {no_rek}
                             </h3>
                         </div>
                     ) : (
@@ -104,7 +111,7 @@ export default function Payment({ auth, title, packet, user_data }) {
                                 <b>Nizar Manarul Hidayat</b>.
                             </p>
                             <h3 className="text-4xl text-curious-blue mt-4">
-                                085786742735
+                                {no_hp}
                             </h3>
                         </div>
                     )}
