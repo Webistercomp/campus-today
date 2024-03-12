@@ -22,7 +22,7 @@ export default function Verification({ auth, title, nama_paket }) {
                     jam atau bisa menghubungi admin secara langsung melalui
                     Whatsapp di bawah ini <br /> <br />
                     <span className="text-curious-blue font-semibold text-xl">
-                        08123456789
+                        0857-8674-2735
                     </span>
                 </p>
                 <div className="flex flex-col gap-2 mt-4">
@@ -31,7 +31,7 @@ export default function Verification({ auth, title, nama_paket }) {
                             Home
                         </button>
                     </Link>
-                    <Link>
+                    <Link href="https://wa.me/6285786742735">
                         <button className="btn w-full">Chat Admin</button>
                     </Link>
                 </div>
