@@ -31,9 +31,9 @@ export default function Verification({ auth, title, nama_paket }) {
                             Home
                         </button>
                     </Link>
-                    <Link>
+                    <a href="https://wa.me/+6285786742735" target="_blank">
                         <button className="btn w-full">Chat Admin</button>
-                    </Link>
+                    </a>
                 </div>
             </section>
         </AuthenticatedLayout>
