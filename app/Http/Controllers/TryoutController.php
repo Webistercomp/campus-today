@@ -87,7 +87,7 @@ class TryoutController extends Controller
 
         // return view
         return Inertia::render('TryOut/Confirm', [
-            'title' => 'Nama TryOut',
+            'title' => $tryout->name,
             'user_id' => $user->id,
             'tryout' => $tryout,
             'jumlah_soal' => $jumlah_soal,
@@ -143,7 +143,7 @@ class TryoutController extends Controller
 
         // return view
         return Inertia::render('TryOut/Confirm', [
-            'title' => 'Nama TryOut',
+            'title' => $tryout->name,
             'user_id' => $user->id,
             'tryout' => $tryout,
             'jumlah_soal' => $jumlah_soal,
@@ -168,7 +168,7 @@ class TryoutController extends Controller
         $now = Carbon::now();
         $timeLeft = $finishTimestamp->diffInSeconds($now); // seconds
         $data = [
-            'title' => 'Nama Tryout',
+            'title' => $tryout->name,
             'user' => $user,
             'tryout' => $tryout,
             'tryoutHistory' => $tryoutHistory,
