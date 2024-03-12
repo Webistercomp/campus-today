@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\TryoutHistory;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +42,12 @@ class UserController extends Controller
         $selectedUser = User::find($id);
         $menu = Route::currentRouteName();
         $menu = explode('.', $menu)[1];
-        return view('admin.user.show', compact('user', 'menu', 'selectedUser'));
+        $now = Carbon::now();
+        $tryout_histories = TryoutHistory::where('user_id', $id)
+            ->where('finish_timestamp', '<=', $now)
+            ->join('tryouts', 'tryouts.id', '=', 'tryout_histories.tryout_id')
+            ->get(['tryout_histories.*', 'tryouts.name']);
+        return view('admin.user.show', compact('user', 'menu', 'selectedUser', 'tryout_histories'));
     }
 
     function edit($id)
