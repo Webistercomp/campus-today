@@ -120,7 +120,11 @@ class PacketHistoryController extends Controller
             $user = User::find($packetHistory->user_id);
             $packetHistory->load('packet');
             $user->role_id = $packetHistory->packet->role_id;
-            $user->save();         
+            // expired 1 year
+            $dateExpired = date('Y-m-d', strtotime('+1 year'));
+            $user->expired_at = $dateExpired;
+            $packetHistory->expired_at = $dateExpired;
+            $user->save();  
         }
         $packetHistory->save();
 
