@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="container">
     <div class="card p-3">
     <div class="row">
@@ -97,5 +98,64 @@
         </tbody>
     </table>
     </div>
+    <div class="card p-3">
+        <h5>Grafik Score Tryout</h5>
+        @if(count($tryout_histories) == 0)
+            <h6 class="mx-auto">User belum pernah mengerjakan tryout</h6>
+        @else
+            <canvas id="tryout_chart"></canvas>
+        @endif
+    </div>
 </div>
+<script>
+    const data = {!!json_encode($tryout_histories)!!};
+
+    const ctx = document.getElementById('tryout_chart');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.map(dt => dt.name),
+            datasets: [
+                {
+                    label: "Score Tryout",
+                    data: data.map(dt => dt.score),
+                },
+            ],
+        },
+        options: {
+            plugins: {
+                title: { display: true },
+                legend: {
+                    display: true,
+                },
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: "Tryout",
+                        color: "#2A8AC9",
+                        font: {
+                            size: 20,
+                            weight: 600,
+                        },
+                    },
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: "Score",
+                        color: "#2A8AC9",
+                        font: {
+                            size: 20,
+                            weight: 600,
+                        },
+                    },
+                },
+            },
+        }
+    })
+</script>
 @endsection
