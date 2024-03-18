@@ -16,41 +16,13 @@ import IconMateriSKB from "@/svg/icon-materiskb.svg";
 import IconMateriUM from "@/svg/icon-materium.svg";
 import IconMateriUTBK from "@/svg/icon-materiutbk.svg";
 import IconVideoSeries from "@/svg/icon-videoseries.svg";
+import { FAQData } from "@/static-data";
 
 export default function Dashboard({ auth, articles, materialTypes, role }) {
     const hideUserPacketNotif = () => {
         const paketUser = document.getElementById("paketUser");
         paketUser.style.display = "none";
     };
-
-    const FAQ = [
-        {
-            question: "Bagaimana cara membuat akun di Campus Today?",
-            answer: "asdnkasdnflkabsdfbsdf",
-        },
-        {
-            question:
-                "Bagaimana cara upgrade paket Premium / Platinum / Bimbel?",
-            answer: "Silakan daftar/login terlebih dahulu. Lalu pilih menu Paket dan pilih paket yang paling sesuai dengan kebutuhan belajar kamu.",
-        },
-        {
-            question: "Berapa lama masa berlaku paket yang saya beli?",
-            answer: "asdnkasdnflkabsdfbsdf",
-        },
-        {
-            question:
-                "Apakah pembayaran bisa melalui Bank, Indomaret dan E-Wallet?",
-            answer: "asdnkasdnflkabsdfbsdf",
-        },
-        {
-            question: "Bagaimana mengatasi lupa password?",
-            answer: "asdnkasdnflkabsdfbsdf",
-        },
-        {
-            question: "Apakah Campus Today dapat diakses di Smartphone?",
-            answer: "asdnkasdnflkabsdfbsdf",
-        },
-    ];
 
     const icons = [
         IconVideoSeries,
@@ -230,7 +202,7 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
                     Kamu Nanya, Kami Jawab
                 </h1>
                 <div className="flex flex-col gap-2 max-w-2xl mx-auto">
-                    {FAQ.map((dt, i) => (
+                    {FAQData.map((dt, i) => (
                         <FAQCard key={i} index={i} {...dt} />
                     ))}
                 </div>
