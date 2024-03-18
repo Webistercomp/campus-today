@@ -56,6 +56,9 @@ export default function Ranking({ auth, title, tryoutName, rankData }) {
                         </tbody>
                     </table>
                 </div>
+                <div className="mt-2">
+                    * Ranking user yang muncul hanya user yang lolos KKM
+                </div>
             </section>
         </AuthenticatedLayout>
     );

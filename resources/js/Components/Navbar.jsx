@@ -185,27 +185,27 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
             >
                 <a
                     onClick={() => setIsOpen(false)}
-                    href="#about-us"
+                    href={route('home') + "#about-us"}
                     className="py-2 px-4 bg-slate-200 hover:bg-slate-700 hover:text-white rounded-md transition-all duration-150"
                 >
                     Tentang
                 </a>
                 <a
                     onClick={() => setIsOpen(false)}
-                    href="#benefit"
+                    href={route('home') + "#benefit"}
                     className="py-2 px-4 bg-slate-200 hover:bg-slate-700 hover:text-white rounded-md transition-all duration-150"
                 >
                     Keunggulan
                 </a>
                 <a
                     onClick={() => setIsOpen(false)}
-                    href="#testimoni"
+                    href={route('home') + "#testimoni"}
                     className="py-2 px-4 bg-slate-200 hover:bg-slate-700 hover:text-white rounded-md transition-all duration-150"
                 >
                     Testimoni
                 </a>
                 <a
-                    href="#paket"
+                    href={route('home') + "#paket"}
                     className="py-2 px-4 bg-slate-200 hover:bg-slate-700 hover:text-white rounded-md transition-all duration-150"
                     onClick={() => setIsOpen(false)}
                 >
@@ -228,16 +228,16 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                     </Link>
                     <ul className="menu menu-horizontal px-1 gap-4 hidden md:flex md:items-center relative">
                         <li>
-                            <a href="#about-us">Tentang</a>
+                            <a href={route('home') + "#about-us"}>Tentang</a>
                         </li>
                         <li>
-                            <a href="#benefit">Keunggulan</a>
+                            <a href={route('home') + "#benefit"}>Keunggulan</a>
                         </li>
                         <li>
-                            <a href="#testimoni">Testimoni</a>
+                            <a href={route('home') + "#testimoni"}>Testimoni</a>
                         </li>
                         <li>
-                            <a href="#paket">Paket</a>
+                            <a href={route('home') + "#paket"}>Paket</a>
                         </li>
                     </ul>
                     <button
