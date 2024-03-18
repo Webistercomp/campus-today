@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\MaterialType;
 use App\Models\Packet;
+use App\Models\Role;
 use App\Models\Testimoni;
 use App\Models\User;
 use Carbon\Carbon;
@@ -32,14 +33,15 @@ class HomeController extends Controller
         $articles = Article::all();
 
         // update role user if expired
-        // $user = User::find(auth()->user()->id);
-        // $now = Carbon::now();
-        // $expired_at = Carbon::parse($user->expired_at);
-        // if($now > $expired_at) {
-        //     $user->role_id = 1;
-        //     $user->save();
-        // }
-        $role = auth()->user()->role;
+        $user = User::find(auth()->user()->id);
+        $now = Carbon::now();
+        $expired_at = Carbon::parse($user->expired_at);
+        if($now > $expired_at) {
+            $user->role_id = 1;
+            $user->expired_at = null;
+            $user->save();
+        }
+        $role = Role::find($user->role_id);
 
         return Inertia::render('Dashboard', [
             'materialTypes' => $materialTypes,

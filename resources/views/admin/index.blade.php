@@ -36,7 +36,8 @@ Dashboard Admin | Campus Today
               <p>Materials</p>
             </div>
             <div class="p-2" style="width: 60%; text-align: end;">
-              
+              <div class="badge bg-success border-0" style="width: auto">{{$jumlah_materi_teks}} Teks</div> <br>
+              <div class="badge bg-danger border-0" style="width: auto">{{$jumlah_materi_video}} Video</div>
             </div>
           </div>
           <a href={{route('admin.materi.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -158,14 +159,24 @@ Dashboard Admin | Campus Today
         <!-- small box -->
         <div class="small-box bg-dark">
           <div class="inner">
-            <h3>0</h3>
+            <h3>{{$jumlah_testimoni}}</h3>
+
+            <p>Testimoni</p>
+          </div>
+          <a href={{route('admin.testimoni.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-primary">
+          <div class="inner">
+            <h3>{{$jumlah_tes_minat_bakat}}</h3>
 
             <p>Tes Minat Bakat</p>
           </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <a href={{route('admin.minatbakat.index')}} class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
