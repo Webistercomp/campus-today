@@ -15,23 +15,28 @@ class GroupTypeSeeder extends Seeder
     {
         GroupType::create([
             'material_type_id' => 1,
-            'name' => 'Matematika',
-            'code' => 'mtk',
+            'name' => 'Literasi Bahasa Indonesia',
+            'code' => 'literasiindonesia',
         ]);
         GroupType::create([
             'material_type_id' => 1,
-            'name' => 'Fisika',
-            'code' => 'fis',
+            'name' => 'Literasi Bahasa Inggris',
+            'code' => 'literasiinggris',
         ]);
         GroupType::create([
             'material_type_id' => 1,
-            'name' => 'Biologi',
-            'code' => 'bio',
+            'name' => 'Penalaran Kuantitatif',
+            'code' => 'penalarankuantitatif',
         ]);
         GroupType::create([
             'material_type_id' => 1,
-            'name' => 'Kimia',
-            'code' => 'kim',
+            'name' => 'Penalaran Matematika',
+            'code' => 'penalaranmtk',
+        ]);
+        GroupType::create([
+            'material_type_id' => 1,
+            'name' => 'Penalaran Umum',
+            'code' => 'penalaranumum',
         ]);
         GroupType::create([
             'material_type_id' => 2,
