@@ -716,7 +716,7 @@ export default function Homepage({ title, packets, testimonis }) {
                                 Mulai Belajar
                             </Link>
                             <a
-                                href="https://wa.me/+6285786742735"
+                                href="https://wa.me/+6285786742735?text=Assalamualaikum wr wb%0ASaya ingin menanyakan terkait Tryout Online dan Bimbel SPASI.%0ABisakah bantu saya untuk menjawabnya, kak?"
                                 target="_blank"
                                 className="btn bg-white text-curious-blue border-none"
                             >
