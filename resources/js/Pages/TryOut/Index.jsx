@@ -1,12 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
-import DocRaf from "@/images/document-rafiki.png";
-import WebRaf from "@/images/webinar-rafiki.png";
-import IconTryoutSKD from "@/svg/icon-tryoutskd.svg";
+import { TryoutName } from "@/static-data";
+import IconHasilTryout from "@/svg/icon-hasiltryout.svg";
 import IconTryoutSKB from "@/svg/icon-tryoutskb.svg";
+import IconTryoutSKD from "@/svg/icon-tryoutskd.svg";
 import IconTryoutUM from "@/svg/icon-tryoutum.svg";
 import IconTryoutUTBK from "@/svg/icon-tryoututbk.svg";
-import IconHasilTryout from "@/svg/icon-hasiltryout.svg";
+import { Head, Link } from "@inertiajs/react";
 
 export default function Index({ auth, title, materialTypes }) {
     const icons = [
@@ -15,7 +14,7 @@ export default function Index({ auth, title, materialTypes }) {
         IconTryoutUM,
         IconTryoutUTBK,
         IconHasilTryout,
-    ]
+    ];
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -48,7 +47,7 @@ export default function Index({ auth, title, materialTypes }) {
                                     />
                                     <div className="flex flex-col basis-4/5 gap-2 w-full p-4 sm:p-0 md:p-4">
                                         <h4 className="uppercase text-black font-semibold text-2xl">
-                                            {materialType.name}
+                                            {TryoutName[materialType.code]}
                                         </h4>
                                         <p className="text-curious-blue">
                                             {materialType.description}
@@ -67,10 +66,13 @@ export default function Index({ auth, title, materialTypes }) {
                             />
                             <div className="flex flex-col basis-4/5 gap-2 w-full p-4 sm:p-0 md:p-4">
                                 <h4 className="uppercase text-black font-semibold text-2xl">
-                                    Hasil TryOut
+                                    Hasil dan Pembahasan Tryout
                                 </h4>
                                 <p className="text-curious-blue">
-                                    Hasil tryout memberikan gambaran prestasi dan kelemahan peserta dalam menghadapi ujian sesungguhnya, membantu perbaikan dan persiapan lebih lanjut.
+                                    Hasil tryout memberikan gambaran prestasi
+                                    dan kelemahan peserta dalam menghadapi ujian
+                                    sesungguhnya, membantu perbaikan dan
+                                    persiapan lebih lanjut.
                                 </p>
                             </div>
                         </div>

@@ -2,6 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import DocRafiki from "@/images/document-rafiki.png";
 import WebinarRafiki from "@/images/webinar-rafiki.png";
+import { MaterialTypeDescription } from "@/static-data";
 
 export default function SKD({ auth, title, type }) {
     return (
@@ -39,8 +40,7 @@ export default function SKD({ auth, title, type }) {
                                 Materi Teks
                             </h4>
                             <p className="text-curious-blue">
-                                Belajar TWK, TIU dan TKP untuk persiapan belajar
-                                tes SKD kami dengan teks
+                                {`${MaterialTypeDescription[type]}teks`}
                             </p>
                         </div>
                     </Link>
@@ -58,8 +58,7 @@ export default function SKD({ auth, title, type }) {
                                 Materi Video
                             </h4>
                             <p className="text-curious-blue">
-                                Belajar TWK, TIU dan TKP untuk persiapan belajar
-                                tes SKD kami dengan video
+                                {`${MaterialTypeDescription[type]}video`}
                             </p>
                         </div>
                     </Link>

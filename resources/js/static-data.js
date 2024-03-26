@@ -28,3 +28,17 @@ export const FAQData = [
         answer: "Tentu saja, Campus Today dapat diakses menggunakan Smartphone, Tablet, Laptop, atau Komputer",
     },
 ];
+
+export const MaterialTypeDescription = {
+    utbk: "Belajar Literasi Bahasa Indonesia, Literasi Bahasa Inggris, Penalaran Umum, Penalaran Kuantitaif dan Penalaran Matematika untuk persiapan belajar tes UTBK kami dengan ",
+    um: "Belajar Matematika, Fisika, Biologi, dan Kimia untuk persiapan belajar tes UM kami dengan ",
+    skb: "Belajar Matematika, Fisika dan Bahasa Inggris untuk persiapan belajar tes SKB kami dengan ",
+    skd: "Belajar TWK, TIU dan TKP untuk persiapan belajar tes SKD kami dengan "
+}
+
+export const TryoutName = {
+    utbk: "Tryout UTBK",
+    um: "Tryout Ujian Mandiri",
+    skb: "Tryout SKB",
+    skd: "Tryout SKD",
+}
