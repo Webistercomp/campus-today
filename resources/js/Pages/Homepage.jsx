@@ -432,7 +432,7 @@ export default function Homepage({ title, packets, testimonis }) {
                 </h1>
                 <div>
                     <iframe
-                        src="https://www.youtube.com/embed/0nfOlN9DoNw?si=iFu_9peG8XmvI1e1"
+                        src="https://www.youtube.com/embed/8KHIQkhtBLc"
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -688,7 +688,7 @@ export default function Homepage({ title, packets, testimonis }) {
                                 Mulai Belajar
                             </Link>
                             <a
-                                href={`https://wa.me/+6285786742735?text=${EncodeMessage}`}
+                                href="https://wa.me/+6285786742735?text=Assalamualaikum wr wb%0ASaya ingin menanyakan terkait Tryout Online dan Bimbel SPASI.%0ABisakah bantu saya untuk menjawabnya, kak?"
                                 target="_blank"
                                 className="btn bg-white text-curious-blue border-none"
                             >
