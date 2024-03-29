@@ -2,25 +2,33 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import { useState } from "react";
 import TryOutContent from "./Test";
-import axios from 'axios';
+import axios from "axios";
 
-export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soal, code, ambang_batas }) {
+export default function ConfirmTryOut({
+    auth,
+    title,
+    user_id,
+    tryout,
+    jumlah_soal,
+    code,
+    ambang_batas,
+}) {
     const [isReady, setIsReady] = useState(false);
 
     const start_tryout = async () => {
-        const postData = await axios.post(route('tryout.start', tryout.id), {
+        const postData = await axios.post(route("tryout.start", tryout.id), {
             tryout_id: tryout.id,
-            user_id: user_id
-        })
-        if(postData.status == 200) {
+            user_id: user_id,
+        });
+        if (postData.status == 200) {
             document.getElementById("confirmation-modal").close();
-            if(tryout.is_event) {
-                window.location.href = route('event-tryout.test', tryout.id);
+            if (tryout.is_event) {
+                window.location.href = route("event-tryout.test", tryout.id);
             } else {
-                window.location.href = route('tryout.test', tryout.id);
+                window.location.href = route("tryout.test", tryout.id);
             }
         }
-    }
+    };
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -38,10 +46,11 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
                         <form method="dialog" className="flex gap-4">
                             <button className="btn">Tidak</button>
                         </form>
-                        <button 
+                        <button
                             className="btn btn-primary"
                             as="button"
-                            onClick={start_tryout}>
+                            onClick={start_tryout}
+                        >
                             Mulai
                         </button>
                     </div>
@@ -54,17 +63,17 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
                         Soal TryOut {tryout.name}
                     </h1>
 
-                    {(code == 'skd' || code == 'skb') ? (
+                    {code == "skd" || code == "skb" ? (
                         <div className="mt-6">
                             <ol className="list-decimal list-inside [&>li]:mb-4">
                                 <li>
-                                    Waktu pengerjaan soal Try Out {code.toUpperCase()} {tryout.time}{" "}
-                                    Menit
+                                    Waktu pengerjaan soal Try Out{" "}
+                                    {code.toUpperCase()} {tryout.time} Menit
                                 </li>
                                 <li>
-                                    Jumlah soal {code.toUpperCase()} {tryout.jumlah_soal} soal, yang
-                                    terdiri dari 3 (tiga) bagian sub tes antara
-                                    lain:
+                                    Jumlah soal {code.toUpperCase()}{" "}
+                                    {tryout.jumlah_soal} soal, yang terdiri dari
+                                    3 (tiga) bagian sub tes antara lain:
                                     <ol className="list-inside list-lower-alpha">
                                         <li>
                                             Tes Wawasan Kebangsaan (TWK) :{" "}
@@ -83,10 +92,17 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
                                 <li>
                                     Perhatikan Ambang Batas dari setiap sub tes:
                                     <ol className="list-inside list-lower-alpha">
-                                        <li>Tes Wawasan Kebangsaan (TWK) : {ambang_batas.twk}</li>
-                                        <li>Tes Intelegensia Umum (TIU) : {ambang_batas.tiu}</li>
                                         <li>
-                                            Tes Karakteristik Pribadi (TKP) : {ambang_batas.tkp}
+                                            Tes Wawasan Kebangsaan (TWK) :{" "}
+                                            {ambang_batas.twk}
+                                        </li>
+                                        <li>
+                                            Tes Intelegensia Umum (TIU) :{" "}
+                                            {ambang_batas.tiu}
+                                        </li>
+                                        <li>
+                                            Tes Karakteristik Pribadi (TKP) :{" "}
+                                            {ambang_batas.tkp}
                                         </li>
                                     </ol>
                                 </li>
@@ -95,47 +111,60 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
                                     <ul className="list-inside list-stripe">
                                         <li>
                                             TKP benar bernilai paling rendah 1.
-                                            paling tinggi 5, dan tidak menjawab 0
-                                            (nol)
+                                            paling tinggi 5, dan tidak menjawab
+                                            0 (nol)
                                         </li>
                                         <li>
-                                            TIU dan TWK benar bernilai 5 dan salah
-                                            atau tidak menjawab bernilai 0 (nol)
+                                            TIU dan TWK benar bernilai 5 dan
+                                            salah atau tidak menjawab bernilai 0
+                                            (nol)
                                         </li>
                                     </ul>
                                 </li>
                             </ol>
                         </div>
-                        ) : ('')
-                    }
+                    ) : (
+                        ""
+                    )}
 
-                    {(code == 'um' || code == 'utbk') ? (
+                    {code === "utbk" && (
                         <div className="mt-6">
                             <ol className="list-decimal list-inside [&>li]:mb-4">
                                 <li>
-                                    Waktu pengerjaan soal Try Out {code.toUpperCase()} {tryout.time}{" "}
-                                    Menit
+                                    Waktu pengerjaan soal Try Out{" "}
+                                    {code.toUpperCase()} {tryout.time} Menit
                                 </li>
                                 <li>
-                                    Jumlah soal {code.toUpperCase()} {tryout.jumlah_soal} soal, yang
-                                    terdiri dari 4 (tiga) bagian sub tes antara
-                                    lain:
+                                    Jumlah soal {code.toUpperCase()}{" "}
+                                    {tryout.jumlah_soal} soal, yang terdiri dari
+                                    5 (lima) bagian sub tes antara lain:
                                     <ol className="list-inside list-lower-alpha">
                                         <li>
-                                            Matematika :{" "}
-                                            {jumlah_soal.mtk} Soal
+                                            Literasi Bahasa Indonesia:{" "}
+                                            {jumlah_soal.literasiindonesia ||
+                                                "-"}{" "}
+                                            Soal
                                         </li>
                                         <li>
-                                            Fisika :{" "}
-                                            {jumlah_soal.fis} Soal
+                                            Literasi Bahasa Inggris :{" "}
+                                            {jumlah_soal.literasiinggris || "-"}{" "}
+                                            Soal
                                         </li>
                                         <li>
-                                            Biologi :{" "}
-                                            {jumlah_soal.bio} Soal
+                                            Penalaran Kuantitatif:{" "}
+                                            {jumlah_soal.penalarankuantitatif ||
+                                                "-"}{" "}
+                                            Soal
                                         </li>
                                         <li>
-                                            Kimia :{" "}
-                                            {jumlah_soal.kim} Soal
+                                            Penalaran Matematika :{" "}
+                                            {jumlah_soal.penalaranmtk || "-"}{" "}
+                                            Soal
+                                        </li>
+                                        <li>
+                                            Penalaran Umum :{" "}
+                                            {jumlah_soal.penalaranumum || "-"}{" "}
+                                            Soal
                                         </li>
                                     </ol>
                                 </li>
@@ -143,20 +172,53 @@ export default function ConfirmTryOut({ auth, title, user_id, tryout, jumlah_soa
                                     Pembobotan Nilai Tes {code.toUpperCase()}
                                     <ul className="list-inside list-stripe">
                                         <li>
-                                            Benar bernilai 1, salah atau tidak menjawab bernilai 0 (nol) 
+                                            Benar bernilai 1, salah atau tidak
+                                            menjawab bernilai 0 (nol)
                                         </li>
                                     </ul>
                                 </li>
                             </ol>
                         </div>
-                        ) : ('')
-                    }
+                    )}
+
+                    {code === "um" && (
+                        <div className="mt-6">
+                            <ol className="list-decimal list-inside [&>li]:mb-4">
+                                <li>
+                                    Waktu pengerjaan soal Try Out{" "}
+                                    {code.toUpperCase()} {tryout.time} Menit
+                                </li>
+                                <li>
+                                    Jumlah soal {code.toUpperCase()}{" "}
+                                    {tryout.jumlah_soal} soal, yang terdiri dari
+                                    4 (empat) bagian sub tes antara lain:
+                                    <ol className="list-inside list-lower-alpha">
+                                        <li>
+                                            Matematika : {jumlah_soal.mtk} Soal
+                                        </li>
+                                        <li>Fisika: {jumlah_soal.fis} Soal</li>
+                                        <li>
+                                            Biologi : {jumlah_soal.bio} Soal
+                                        </li>
+                                        <li>Kimia : {jumlah_soal.kim} Soal</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    Pembobotan Nilai Tes {code.toUpperCase()}
+                                    <ul className="list-inside list-stripe">
+                                        <li>
+                                            Benar bernilai 1, salah atau tidak
+                                            menjawab bernilai 0 (nol)
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    )}
 
                     <div className="flex gap-4">
                         {tryout.is_event ? (
-                            <Link
-                                href={ route("dashboard") }
-                            >
+                            <Link href={route("dashboard")}>
                                 <button className="btn capitalize">
                                     &laquo; Kembali
                                 </button>
