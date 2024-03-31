@@ -4,8 +4,9 @@ import DocumentIcon from "@/icons/DocumentIcon";
 import { Head, Link } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Teks({ auth, title, type, materials, flash }) {
-    const tabGroup = materials.map((material) => material.group_type);
+export default function Teks({ auth, title, type, materials, groupTypes, flash }) {
+    // const tabGroup = materials.map((material) => material.group_type);
+    const tabGroup = groupTypes;
     const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
     const [currentMaterials, setCurrentMaterials] = useState(() =>
         materials.filter((material) => material.group_id === tabIndexActive)

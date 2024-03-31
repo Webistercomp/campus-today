@@ -3,7 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import DocRafiki from "@/images/document-rafiki.png";
 import WebinarRafiki from "@/images/webinar-rafiki.png";
 
-export default function SKD({ auth, title, type }) {
+export default function SKD({ auth, title, type, groups }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title={title} />
@@ -39,8 +39,15 @@ export default function SKD({ auth, title, type }) {
                                 Materi Teks
                             </h4>
                             <p className="text-curious-blue">
-                                Belajar TWK, TIU dan TKP untuk persiapan belajar
-                                tes SKD kami dengan teks
+                                Belajar {groups.map((group, i) => {
+                                    return (
+                                        <span key={i}>
+                                            {group.name}
+                                            {i < groups.length - 1 ? ", " : ""}
+                                        </span>
+                                    );
+                                })} untuk persiapan belajar
+                                tes {type.toUpperCase()} kami dengan teks
                             </p>
                         </div>
                     </Link>
@@ -58,8 +65,15 @@ export default function SKD({ auth, title, type }) {
                                 Materi Video
                             </h4>
                             <p className="text-curious-blue">
-                                Belajar TWK, TIU dan TKP untuk persiapan belajar
-                                tes SKD kami dengan video
+                            Belajar {groups.map((group, i) => {
+                                    return (
+                                        <span key={i}>
+                                            {group.name}
+                                            {i < groups.length - 1 ? ", " : ""}
+                                        </span>
+                                    );
+                                })} untuk persiapan belajar
+                                tes {type.toUpperCase()} kami dengan video
                             </p>
                         </div>
                     </Link>

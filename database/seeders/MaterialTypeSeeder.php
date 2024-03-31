@@ -20,22 +20,22 @@ class MaterialTypeSeeder extends Seeder
         ]);
         MaterialType::create([
             'code' => 'skd',
-            'name' => 'Materi SKD',
+            'name' => 'SKD',
             'description' => 'SKD (Seleksi Kompetensi Dasar) adalah latihan ujian tertulis yang mengevaluasi pemahaman dan keterampilan dasar calon pegawai.'
         ]);
         MaterialType::create([
             'code' => 'skb',
-            'name' => 'Materi SKB',
+            'name' => 'SKB',
             'description' => 'SKB adalah simulasi ujian komputer yang menilai kemampuan teknis dan keterampilan calon pegawai dalam suatu bidang pekerjaan.'
         ]);
         MaterialType::create([
             'code' => 'utbk',
-            'name' => 'Materi UTBK',
+            'name' => 'UTBK',
             'description' => 'UTBK (Ujian Tulis Berbasis Komputer) adalah simulasi ujian elektronik yang mempersiapkan peserta menghadapi ujian seleksi perguruan tinggi.'
         ]);
         MaterialType::create([
             'code' => 'um',
-            'name' => 'Materi UM',
+            'name' => 'UM',
             'description' => 'UM (Ujian Mandiri) adalah latihan tes yang membantu siswa mempersiapkan diri untuk ujian masuk perguruan tinggi secara mandiri.'
         ]);
     }

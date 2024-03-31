@@ -12,4 +12,7 @@ class GroupType extends Model
     function material() {
         return $this->hasMany(Material::class);
     }
+    function materialType() {
+        return $this->belongsTo(MaterialType::class);
+    }
 }

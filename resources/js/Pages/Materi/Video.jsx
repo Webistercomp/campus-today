@@ -11,9 +11,11 @@ export default function SkdVideo({
     type,
     materialType,
     materials,
+    groupTypes,
     flash,
 }) {
-    const tabGroup = materials.map((material) => material.group_type);
+    // const tabGroup = materials.map((material) => material.group_type);
+    const tabGroup = groupTypes;
     const [tabIndexActive, setTabIndexActive] = useState(tabGroup[0]?.id);
     const [currentMaterials, setCurrentMaterials] = useState(() => {
         if (type !== "videoseries") {

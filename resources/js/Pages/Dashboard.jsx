@@ -117,7 +117,7 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
                                 />
                                 <div className="basis-4/5 flex flex-col justify-center gap-2 pl-4">
                                     <h4 className="text-base md:text-lg lg:text-xl font-semibold">
-                                        {materialType.name}
+                                        Materi {materialType.name}
                                     </h4>
                                     <p className="text-curious-blue font-semibold flex items-end gap-6 text-sm md:text-base">
                                         Belajar{" "}

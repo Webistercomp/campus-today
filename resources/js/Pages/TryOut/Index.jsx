@@ -48,7 +48,7 @@ export default function Index({ auth, title, materialTypes }) {
                                     />
                                     <div className="flex flex-col basis-4/5 gap-2 w-full p-4 sm:p-0 md:p-4">
                                         <h4 className="uppercase text-black font-semibold text-2xl">
-                                            {materialType.name}
+                                            Tryout {materialType.name}
                                         </h4>
                                         <p className="text-curious-blue">
                                             {materialType.description}
