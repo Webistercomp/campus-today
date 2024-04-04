@@ -18,9 +18,13 @@ class MaterialController extends Controller
         if ($type == "videoseries") {
             return redirect()->route('material.type.video', $type);
         }
+        $groups = GroupType::whereHas('materialType', function ($q) use ($type) {
+            $q->where('code', $type);
+        })->get();
         return Inertia::render('Materi/Type', [
             'title' => 'Materi',
-            'type' => $type
+            'type' => $type,
+            'groups' => $groups
         ]);
     }
 
@@ -38,7 +42,7 @@ class MaterialController extends Controller
             'title' => "Materi Teks " . strtoupper($type),
             'type' => $type,
             'materials' => $materials,
-            'group_types' => $groupTypes
+            'groupTypes' => $groupTypes
         ]);
     }
 
@@ -63,7 +67,7 @@ class MaterialController extends Controller
         }
         foreach ($chapters as $chapter) {
             if ($chapter->file) {
-                $chapter->file = asset('storage/materi/file/' . $chapter->file);
+                $chapter->file = env('APP_URL') . '/storage/materi/file/' . $chapter->file;
             }
         }
         if ($id == null) {
@@ -107,7 +111,7 @@ class MaterialController extends Controller
             'type' => $type,
             'materialType' => $materialType,
             'materials' => $materials,
-            'group_types' => $groupTypes
+            'groupTypes' => $groupTypes
         ]);
     }
 
