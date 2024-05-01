@@ -148,6 +148,8 @@ class MaterialController extends Controller
             }
         }
 
+        $chapter->link = asset("storage/materi/video/" . $chapter->link);
+
         return Inertia::render('Materi/VideoSubtype', [
             'type' => $type,
             'material' => $material,
