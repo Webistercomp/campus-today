@@ -152,18 +152,17 @@
                     @if($chapter->link != null)
                     <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
                     <div class="video-container">
-                        <iframe 
-                            width="500px"
+                        <video width="500px" 
                             height="auto" 
-                            src={{$chapter->link}}>
-                        </iframe>
+                            controls="controls">
+                            <source 
+                                    src={{$chapter->link}}
+                                    type="video/mp4" />
+                        </video>
                     </div>
                     <style>
                         .video-container {
-                        position: relative;
-                        padding-bottom: calc(56.25% * 0.5); /* 16:9 */
-                        width: 50%;
-                        height: 0;
+                        position: block;
                         }
                         .video-container iframe {
                         position: absolute;
@@ -174,7 +173,7 @@
                         }
                     </style>
                     @else
-                    Tidak ada link video
+                    Tidak ada video
                     @endif
                 </div>
                 <form action={{route('admin.chapter.update', $chapter->id)}} method="post" style="display: inline-block; width: 100%;" enctype="multipart/form-data">
@@ -216,14 +215,17 @@
                             <a href={{$chapter->link}} target="_blank" class="badge bg-primary">Open in new tab</a> 
                             <br>
                             <div class="video-container">
-                                <iframe 
-                                    width="500px"
+                                <video width="500px" 
                                     height="auto" 
-                                    src={{$chapter->link}}>
-                                </iframe>
+                                    controls="controls">
+                                    <source 
+                                            src={{$chapter->link}}
+                                            type="video/mp4" />
+                                </video>
                             </div>
                             @endif
-                            <input type="text" name="link" id="input_video_{{$chapter->id}}" class="form-control" value="{{$chapter->link}}" style="display: block" placeholder="Masukkan link video">
+                            <input type="file" name="video" id="input_video_{{$chapter->id}}" class="form-control" value="{{$chapter->link}}" style="display: block">
+                            <div style="font-size: 14px; margin-bottom: 10px">*Maksimal ukuran video : 1GB</div>
                         </div>
                     </div>
                     <button type="button" class="badge bg-warning border-0" onclick="startEditChapter({{$chapter->id}})" id={{"editBtn_" . $chapter->id}}>Edit</button>
@@ -306,7 +308,7 @@
             </div>
             <div id="video_chapter_${newChapterUID}">
                 <span style="font-weight: 600">Video : </span>
-                Tidak ada link video
+                Tidak ada video
             </div>
             <form action="{{route('admin.chapter.create')}}" method="POST" style="display: inline-block; width: 100%;" enctype="multipart/form-data">
                 @csrf
@@ -332,7 +334,7 @@
                     </div>
                     <div>
                         <span style="font-weight: 600; display: block">Video : </span>
-                        <input type="text" name="link" id="input_video_${newChapterUID}" class="form-control" style="display: block" placeholder="Masukkan link video">
+                        <input type="file" name="video" id="input_video_${newChapterUID}" class="form-control" style="display: block">
                     </div>
                 </div>
                 <button type="button" class="badge bg-warning border-0" onclick="startEditChapter('${newChapterUID}')" id="editBtn_${newChapterUID}">edit</button>

@@ -14,24 +14,6 @@ class GroupTypeSeeder extends Seeder
     public function run(): void
     {
         GroupType::create([
-            'material_type_id' => 2,
-            'name' => 'Tes Wawasan Kebangsaan',
-            'code' => 'twk',
-            'ambang_batas' => 65,
-        ]);
-        GroupType::create([
-            'material_type_id' => 2,
-            'name' => 'Tes Intelegensi Umum',
-            'code' => 'tiu',
-            'ambang_batas' => 80,
-        ]);
-        GroupType::create([
-            'material_type_id' => 2,
-            'name' => 'Tes Karakteristik Pribadi',
-            'code' => 'tkp',
-            'ambang_batas' => 156,
-        ]);
-        GroupType::create([
             'material_type_id' => 3,
             'name' => 'Matematika SKB',
             'code' => 'mtkskb',
@@ -55,6 +37,24 @@ class GroupTypeSeeder extends Seeder
             'material_type_id' => 4,
             'name' => 'Literasi Bahasa Inggris',
             'code' => 'literasiinggris',
+        ]);
+        GroupType::create([
+            'material_type_id' => 2,
+            'name' => 'Tes Wawasan Kebangsaan',
+            'code' => 'twk',
+            'ambang_batas' => 65,
+        ]);
+        GroupType::create([
+            'material_type_id' => 2,
+            'name' => 'Tes Intelegensi Umum',
+            'code' => 'tiu',
+            'ambang_batas' => 80,
+        ]);
+        GroupType::create([
+            'material_type_id' => 2,
+            'name' => 'Tes Karakteristik Pribadi',
+            'code' => 'tkp',
+            'ambang_batas' => 156,
         ]);
         GroupType::create([
             'material_type_id' => 4,
