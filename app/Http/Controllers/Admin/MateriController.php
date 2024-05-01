@@ -100,6 +100,11 @@ class MateriController extends Controller
         $user = Auth::user();
         $menu = Route::getCurrentRoute()->getName();
         $menu = explode('.', $menu)[1];
+        foreach($material->chapters as $chapter) {
+            if($chapter->link != null) {
+                $chapter->link = '/storage/materi/video/' . $chapter->link;
+            }
+        }
         return view('admin.materi.edit', compact('materialTypes', 'material', 'groups', 'roles', 'user', 'menu'));
     }
 
@@ -194,19 +199,33 @@ class MateriController extends Controller
 
             $chapter->file = $fileName;
         }
-        if ($request->link) {
-            $url = $request->link;
-            $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
-            $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+        if ($request->hasFile('video')) {
+            $video = $request->file('video');
+            $videoName = time() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('storage/materi/video'), $videoName);
 
-            if (preg_match($longUrlRegex, $url, $matches)) {
-                $youtube_id = $matches[count($matches) - 1];
+            // remove old video
+            $oldVideo = $chapter->link;
+            if ($oldVideo != null) {
+                $oldVideo = public_path('storage/materi/video') . '/' . $oldVideo;
+                if (file_exists($oldVideo)) {
+                    unlink($oldVideo);
+                }
             }
+            $chapter->link = $videoName;
 
-            if (preg_match($shortUrlRegex, $url, $matches)) {
-                $youtube_id = $matches[count($matches) - 1];
-            }
-            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id;
+            // $url = $request->link;
+            // $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+            // $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+            // if (preg_match($longUrlRegex, $url, $matches)) {
+            //     $youtube_id = $matches[count($matches) - 1];
+            // }
+
+            // if (preg_match($shortUrlRegex, $url, $matches)) {
+            //     $youtube_id = $matches[count($matches) - 1];
+            // }
+            // $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id;
         }
         $chapter->save();
 
