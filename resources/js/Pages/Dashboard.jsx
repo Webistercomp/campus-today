@@ -16,41 +16,13 @@ import IconMateriSKB from "@/svg/icon-materiskb.svg";
 import IconMateriUM from "@/svg/icon-materium.svg";
 import IconMateriUTBK from "@/svg/icon-materiutbk.svg";
 import IconVideoSeries from "@/svg/icon-videoseries.svg";
+import { FAQData } from "@/static-data";
 
 export default function Dashboard({ auth, articles, materialTypes, role }) {
     const hideUserPacketNotif = () => {
         const paketUser = document.getElementById("paketUser");
         paketUser.style.display = "none";
     };
-
-    const FAQ = [
-        {
-            question: "Bagaimana cara membuat akun di Campus Today?",
-            answer: "Daftarkan dirimu secara langsung melalui web Campus Today dengan cara klik tombol daftar pada Homepage Campus Today, isikan data dirimu verifikasikan dirimu melalui email yang telah dikirim, kamu telah berhasil membuat akun di Campus Today.",
-        },
-        {
-            question:
-                "Bagaimana cara upgrade paket Premium / Platinum / Bimbel?",
-            answer: "Silakan daftar/login terlebih dahulu Pilih menu Paket dan pilih paket yang paling sesuai dengan kebutuhan belajar kamu.",
-        },
-        {
-            question: "Berapa lama masa berlaku paket yang saya beli?",
-            answer: "Paketmu akan aktif selama 1 tahun.",
-        },
-        {
-            question:
-                "Apakah pembayaran bisa melalui Bank, Indomaret dan E-Wallet?",
-            answer: "Pembayaran dapat dilakukan dengan melakukan transfer melalui Bank BRI atau dapat melakukan transaksi ke Gopay.",
-        },
-        {
-            question: "Bagaimana mengatasi lupa password?",
-            answer: "Pada menu login, klik 'Forgot Password' Masukkan email akunmu Password yang baru akan dikirimkan ke Emailmu.",
-        },
-        {
-            question: "Apakah Campus Today dapat diakses di Smartphone?",
-            answer: "Tentu saja, Campus Today dapat diakses menggunakan Smartphone, Tablet, Laptop, atau Komputer.",
-        },
-    ];
 
     const icons = [
         IconVideoSeries,
@@ -230,7 +202,7 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
                     Kamu Nanya, Kami Jawab
                 </h1>
                 <div className="flex flex-col gap-2 max-w-2xl mx-auto">
-                    {FAQ.map((dt, i) => (
+                    {FAQData.map((dt, i) => (
                         <FAQCard key={i} index={i} {...dt} />
                     ))}
                 </div>

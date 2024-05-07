@@ -136,7 +136,7 @@
                 <div id={{"file_chapter_" . $chapter->id}}>
                     <span style="font-weight: 600">File : </span>
                     @if($chapter->file != null)
-                    <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                    <a href={{asset('storage/materi/file/' . $chapter->file)}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
                     <iframe
                         src={{asset("storage/materi/file/" . $chapter->file)}}
                         height="200px"
@@ -199,7 +199,7 @@
                             @if($chapter->file == null)
                             File materi kosong
                             @else
-                            <a href={{env('APP_URL') . 'storage/materi/file/' . $chapter->file}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
+                            <a href={{asset('storage/materi/file/' . $chapter->file)}} target="_blank" class="badge bg-primary">Open in new tab</a> <br>
                             <iframe
                                 src={{asset("storage/materi/file/" . $chapter->file)}}
                                 height="200px"

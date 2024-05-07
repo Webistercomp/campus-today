@@ -60,7 +60,7 @@ class MaterialController extends Controller
             return redirect()->route('material.type.teks', $type);
         }
         $chapters = Chapter::where('material_id', $material->id)->get();
-        if($chapters->count() == 0) {
+        if ($chapters->count() == 0) {
             session()->flash('type', 'info');
             session()->flash('msg', 'Mohon maaf, materi ini belum tersedia');
             return redirect()->back();
@@ -122,7 +122,7 @@ class MaterialController extends Controller
             ->where('code', $materialcode)
             ->where('type', 'video')
             ->first();
-        if($material == null) {
+        if ($material == null) {
             return abort(404);
         }
         $material_roles = json_decode($material->roles);
@@ -147,6 +147,8 @@ class MaterialController extends Controller
                 return abort(404);
             }
         }
+
+        $chapter->link = asset("storage/materi/video/" . $chapter->link);
 
         return Inertia::render('Materi/VideoSubtype', [
             'type' => $type,

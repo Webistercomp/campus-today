@@ -2,6 +2,7 @@ import EnvelopeIcon from "@/icons/EnvelopeIcon";
 import IgIcon from "@/icons/IgIcon";
 import WAIcon from "@/icons/WaIcon";
 import CTLogo from "@/images/ct_ 2.png";
+import { EncodeMessage } from "@/static-data";
 
 export default function Footer() {
     return (
@@ -23,7 +24,7 @@ export default function Footer() {
                             <span>campustoday3100@gmail.com</span>
                         </a>
                         <a
-                            href="https://wa.me/+6285786742735"
+                            href={`https://wa.me/+6285786742735?text=${EncodeMessage}`}
                             target="_blank"
                             className="link link-hover underline flex gap-4 items-center"
                         >
