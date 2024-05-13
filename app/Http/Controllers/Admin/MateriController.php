@@ -156,21 +156,12 @@ class MateriController extends Controller
             $file->move(public_path('storage/materi/file'), $filename);
             $chapter->file = $filename;
         }
-        if ($request->link) {
-            $url = $request->link;
-            $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
-            $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+        if ($request->hasFile('video')) {
+            $video = $request->file('video');
+            $videoName = time() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('storage/materi/video'), $videoName);
 
-            if (preg_match($longUrlRegex, $url, $matches)) {
-                $youtube_id = $matches[count($matches) - 1];
-            }
-
-            if (preg_match($shortUrlRegex, $url, $matches)) {
-                $youtube_id = $matches[count($matches) - 1];
-            }
-            $chapter->link = 'https://www.youtube.com/embed/' . $youtube_id ;
-        } else {
-            $chapter->link = null;
+            $chapter->link = $videoName;
         }
         $chapter->save();
 
@@ -252,6 +243,8 @@ class MateriController extends Controller
 
     function deleteChapterFile($id) {
         $chapter = Chapter::find($id);
+        
+        // remove file
         $oldFile = $chapter->file;
         if($oldFile != null) {
             $oldFile = public_path('storage/materi/file') . '/' . $oldFile;
@@ -260,6 +253,17 @@ class MateriController extends Controller
             }
         }
         $chapter->file = null;
+
+        // remove video
+        $oldVideo = $chapter->video;
+        if($oldVideo != null) {
+            $oldVideo = public_path('storage/materi/video') . '/' . $oldVideo;
+            if(file_exists($oldVideo)) {
+                unlink($oldVideo);
+            }
+        }
+        $chapter->video = null;
+
         $chapter->save();
         
         return redirect()->route('admin.materi.edit', $chapter->material_id);
@@ -267,9 +271,14 @@ class MateriController extends Controller
 
     function deleteChapterVideo($id) {
         $chapter = Chapter::find($id);
-        $oldVideo = public_path('storage/materi/video') . '/' . $chapter->link;
-        $chapter->link = null;
-        unlink($oldVideo);
+        $oldVideo = $chapter->video;
+        if($oldVideo != null) {
+            $oldVideo = public_path('storage/materi/video') . '/' . $oldVideo;
+            if(file_exists($oldVideo)) {
+                unlink($oldVideo);
+            }
+        }
+        $chapter->video = null;
         $chapter->save();
         
         return redirect()->route('admin.materi.edit', $chapter->material_id);
