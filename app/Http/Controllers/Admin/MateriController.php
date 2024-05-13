@@ -267,7 +267,9 @@ class MateriController extends Controller
 
     function deleteChapterVideo($id) {
         $chapter = Chapter::find($id);
+        $oldVideo = public_path('storage/materi/video') . '/' . $chapter->link;
         $chapter->link = null;
+        unlink($oldVideo);
         $chapter->save();
         
         return redirect()->route('admin.materi.edit', $chapter->material_id);
