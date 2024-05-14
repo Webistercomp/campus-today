@@ -271,7 +271,7 @@
         newQuestion_LI.innerHTML = `<div id="div_question_${newQuestionID}" class="flex-column">
                     <span style="font-weight: 600">Pertanyaan : </span>
                     <span class="question">Pertanyaan Baru</span>
-                    <p class="m-0"  style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">@foreach ($groupTypes as $groupType) @if ($groupType->id == $question->group_type_id){{$groupType->name}}@endif @endforeach</span></p>
+                    <p class="m-0"  style="font-weight: 600">Tipe soal : <span class="material_type" style="font-weight: 400">Pilih tipe soal</span></p>
                 </div>
                 <p class="m-0" style="font-weight: 600" id="p_divider_${newQuestionID}">Pilihan jawaban: </p>
                 <ol type="A" class="row row-cols-3" id="div_answers_${newQuestionID}">
@@ -289,7 +289,7 @@
                     @csrf
                     <div id="input_question_${newQuestionID}" style="display:none">
                         <input type="hidden" name="question_id" value="${newQuestionID}">
-                        <input type="hidden" name="latihan_id" value={{$question->latihan_id}}>
+                        <input type="hidden" name="latihan_id" value={{$latihan->id}}>
                         <textarea name="question" id="question_${newQuestionID}" class="question form-control ckeditor" placeholder="Badan Artikel">Pertanyaan Baru</textarea>
                         <div class="mt-2 mb-2">
                             <label for="group_type_${newQuestionID}" class="m-0 col-2" >
@@ -297,7 +297,7 @@
                             </label>
                             <select name="group_type" id="group_type_${newQuestionID}" class="form-control form-control-sm form-select col-12" aria-label="Default select example">
                                 @foreach ($groupTypes as $groupType)
-                                <option value={{$groupType->id}} {{($groupType->id == $question->group_type_id ? "selected" : "")}}>{{$groupType->name}}</option>
+                                <option value={{$groupType->id}}>{{$groupType->name}}</option>
                                 @endforeach
                             </select>
                         </div>
