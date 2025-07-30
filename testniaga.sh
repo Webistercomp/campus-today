@@ -1,1 +1,0 @@
-echo "Halo, duniaaaaa"
