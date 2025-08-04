@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-6 text-right mb-3">
                 <a href="{{route('admin.tryout.index')}}" class="btn btn-secondary">Kembali</a>
-                <form class="d-inline-block" action="{{$tryout->is_event == 0 ? route("admin.tryout.delete", $tryout->id) : route("admin.event.delete", $tryout->id)}}" method="post">
+                <form class="d-inline-block" action="{{route('admin.event.delete', $tryout->id)}}" method="post">
                     @csrf
                     @method('DELETE')
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">Delete</button>

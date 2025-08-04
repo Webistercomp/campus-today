@@ -39,28 +39,18 @@ class TryoutController extends Controller
             ->get();
         $filteredHistories = [];
         foreach ($tryoutHistories as $tryoutHistory) {
-            if($tryoutHistory->tryout != null){
-                $tryoutHistory->tryout->jumlah_soal = $tryoutHistory->tryout->questions->count();
-                $tryoutHistory->tanggal = Carbon::parse($tryoutHistory->finish_timestamp)->format('d M Y - H:i:s');
-                array_push($filteredHistories, $tryoutHistory);
-            }
+            $tryoutHistory->tryout->jumlah_soal = $tryoutHistory->tryout->questions->count();
+            $tryoutHistory->tanggal = Carbon::parse($tryoutHistory->finish_timestamp)->format('d M Y - H:i:s');
         }
         return Inertia::render('TryOut/Hasil', [
             'title' => 'Hasil TryOut',
-            'tryoutHistories' => $filteredHistories
+            'tryoutHistories' => $tryoutHistories
         ]);
     }
 
     public function confirm($id)
     { // sebelum mengerjakan tryout
         $user = Auth::user();
-        // cek apakah user masuk ke role
-        $tryout_role = json_decode(Tryout::find($id)->roles);
-        if (!in_array($user->role->id, $tryout_role) && $user->role->id != 7) {
-            session()->flash('type', 'info');
-            session()->flash('msg', 'Paket ada masih ' . Auth::user()->role->name . ', upgrade paket Anda untuk menikmati layanan lainnya');
-            return redirect()->back();
-        }
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
             ->first();
@@ -285,6 +275,7 @@ class TryoutController extends Controller
         $tryoutHistory->finish_timestamp = $finishTimestamp;
         $detailScore = [];
         $dataAnswers = []; // array of answers
+        $score = 0; // initialize score
         foreach ($request->tryout_data as $data) {
             $answer = Answer::find($data['answer_id']);
             if ($answer == null) { // kalau jawaban kosong
@@ -294,7 +285,7 @@ class TryoutController extends Controller
                 ];
                 array_push($dataAnswers, $dataAnswer);
             } else {
-                $tryoutHistory->score += $answer->bobot; // penghitungan score
+                $score += $answer->bobot; // penghitungan score
                 $dataAnswer = [
                     'question_id' => $data['question_id'],
                     'answer_id' => $data['answer_id'],
@@ -307,6 +298,7 @@ class TryoutController extends Controller
             }
             $detailScore[$question->groupType->code] += $answer ? $answer->bobot : 0;
         }
+        $tryoutHistory->score = $score; // set score
         $tryoutHistory->detail_score = json_encode($detailScore); // set detail score
         $tryoutHistory->answers = json_encode($dataAnswers); // set answers
 

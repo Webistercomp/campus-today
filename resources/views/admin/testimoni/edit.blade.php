@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-6 text-right mb-3">
             <a href="{{route('admin.testimoni.index')}}" class="btn btn-secondary">Kembali</a>
-            <form action={{route('admin.testimoni.delete', $testimoni->id)}} method="post" style="display: inline-block">
+            <form action={{'admin.testimoni.delete', $testimoni->id}} method="post" style="display: inline-block">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">Hapus</button>
