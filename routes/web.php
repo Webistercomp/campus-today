@@ -151,7 +151,7 @@ Route::prefix('admin')->group(function () {
         Route::get('tryouts/{id}', [AdminTryoutController::class, 'show'])->name('admin.tryout.show');
         Route::get('tryouts/edit/{id}', [AdminTryoutController::class, 'edit'])->name('admin.tryout.edit');
         Route::put('tryouts/{id}', [AdminTryoutController::class, 'update'])->name('admin.tryout.update');
-        Route::delete('tryouts/{id}', [AdminTryoutController::class, 'destroy'])->name('admin.tryout.delete');
+        Route::delete('tryouts/{id}', [AdminTryoutController::class, 'delete'])->name('admin.tryout.delete');
 
         // event tryout
         Route::get('event-tryout', [AdminEventTryoutController::class, 'index'])->name('admin.event.index');

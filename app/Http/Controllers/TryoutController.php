@@ -37,19 +37,30 @@ class TryoutController extends Controller
         $tryoutHistories = TryoutHistory::where('user_id', $user->id)
             ->with('tryout.materialType', 'tryout.questions')
             ->get();
+        $filteredHistories = [];
         foreach ($tryoutHistories as $tryoutHistory) {
-            $tryoutHistory->tryout->jumlah_soal = $tryoutHistory->tryout->questions->count();
-            $tryoutHistory->tanggal = Carbon::parse($tryoutHistory->finish_timestamp)->format('d M Y - H:i:s');
+            if($tryoutHistory->tryout != null){
+                $tryoutHistory->tryout->jumlah_soal = $tryoutHistory->tryout->questions->count();
+                $tryoutHistory->tanggal = Carbon::parse($tryoutHistory->finish_timestamp)->format('d M Y - H:i:s');
+                array_push($filteredHistories, $tryoutHistory);
+            }
         }
         return Inertia::render('TryOut/Hasil', [
             'title' => 'Hasil TryOut',
-            'tryoutHistories' => $tryoutHistories
+            'tryoutHistories' => $filteredHistories
         ]);
     }
 
     public function confirm($id)
     { // sebelum mengerjakan tryout
         $user = Auth::user();
+        // cek apakah user masuk ke role
+        $tryout_role = json_decode(Tryout::find($id)->roles);
+        if (!in_array($user->role->id, $tryout_role) && $user->role->id != 7) {
+            session()->flash('type', 'info');
+            session()->flash('msg', 'Paket ada masih ' . Auth::user()->role->name . ', upgrade paket Anda untuk menikmati layanan lainnya');
+            return redirect()->back();
+        }
         $tryoutHistory = TryoutHistory::where('user_id', $user->id)
             ->where('tryout_id', $id)
             ->first();
