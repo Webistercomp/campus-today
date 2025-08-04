@@ -115,6 +115,8 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');
     Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
+    Route::get('fixScoring', [AdminController::class, 'fixScoring'])->name('admin.fixScoring');
+
     Route::middleware('checkAdmin')->group(function () {
         // dashboard
         Route::get('', [AdminController::class, 'index'])->name('admin.home');

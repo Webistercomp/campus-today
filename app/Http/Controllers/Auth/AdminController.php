@@ -13,6 +13,7 @@ use App\Models\Packet;
 use App\Models\PacketHistory;
 use App\Models\Testimoni;
 use App\Models\Tryout;
+use App\Models\TryoutHistory;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 class AdminController extends Controller
 {
-    function loginForm() {
+    function loginForm()
+    {
         return view('admin.auth.login');
     }
 
@@ -44,7 +46,8 @@ class AdminController extends Controller
         return redirect()->route('admin.loginForm');
     }
 
-    function index() {
+    function index()
+    {
         $user = Auth::user();
         $jumlah_user = User::get()->count();
         $jumlah_user_admin = User::where('is_admin', 1)->get()->count();
@@ -87,22 +90,54 @@ class AdminController extends Controller
         return view('admin.index', compact('user', 'menu', 'jumlah_user', 'jumlah_user_admin', 'jumlah_user_nonadmin', 'jumlah_tryout', 'jumlah_tryout_active', 'jumlah_tryout_nonactive', 'jumlah_latihan', 'jumlah_latihan_active', 'jumlah_latihan_nonactive', 'jumlah_event_tryout', 'jumlah_event_tryout_active', 'jumlah_event_tryout_nonactive', 'jumlah_article', 'jumlah_article_active', 'jumlah_article_nonactive', 'jumlah_packet_history', 'jumlah_packet_history_pending', 'jumlah_packet_history_verification', 'jumlah_packet_history_success', 'jumlah_packet_history_failed', 'jumlah_packet', 'jumlah_materi', 'jumlah_materi_teks', 'jumlah_materi_video', 'jumlah_latihan', 'jumlah_testimoni', 'jumlah_tes_minat_bakat'));
     }
 
-    function uploadImage(Request $request) {
-        if($request->hasFile('upload')) {
+    function uploadImage(Request $request)
+    {
+        if ($request->hasFile('upload')) {
             $originName = $request->file('upload')->getClientOriginalName();
             $fileName = pathinfo($originName, PATHINFO_FILENAME);
             $extension = $request->file('upload')->getClientOriginalExtension();
-            $fileName = $fileName.'_'.time().'.'.$extension;
-         
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+
             $request->file('upload')->move(public_path('images'), $fileName);
-    
+
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('images/'.$fileName); 
-            $msg = 'Image uploaded successfully'; 
+            $url = asset('images/' . $fileName);
+            $msg = 'Image uploaded successfully';
             $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
-                
-            @header('Content-type: text/html; charset=utf-8'); 
+
+            @header('Content-type: text/html; charset=utf-8');
             echo $response;
         }
+    }
+
+    function fixScoring(Request $request)
+    {
+        $tryoutHistories = TryoutHistory::all();
+        $tryoutHistoriesChanged = [];
+        foreach ($tryoutHistories as $tryoutHistory) {
+            if (!$tryoutHistory->detail_score) {
+                continue;
+            }
+            $detailScore = json_decode($tryoutHistory->detail_score);
+            $score = 0;
+            foreach ($detailScore as $groupCode => $groupScore) {
+                $score += $groupScore;
+            }
+            if ($score == $tryoutHistory->score) {
+                continue;
+            }
+            // simpan perubahan
+            $tryoutHistoryChanged = [
+                'tryout_history_id' => $tryoutHistory->id,
+                'old_score' => $tryoutHistory->score,
+                'new_score' => $score,
+            ];
+            array_push($tryoutHistoriesChanged, $tryoutHistoryChanged);
+            $tryoutHistory->score = $score;
+            $tryoutHistory->save();
+        }
+        // tampilkan perubahan
+        dd($tryoutHistoriesChanged);
+        return redirect()->back();
     }
 }

@@ -285,6 +285,7 @@ class TryoutController extends Controller
         $tryoutHistory->finish_timestamp = $finishTimestamp;
         $detailScore = [];
         $dataAnswers = []; // array of answers
+        $score = 0; // initialize score
         foreach ($request->tryout_data as $data) {
             $answer = Answer::find($data['answer_id']);
             if ($answer == null) { // kalau jawaban kosong
@@ -294,7 +295,7 @@ class TryoutController extends Controller
                 ];
                 array_push($dataAnswers, $dataAnswer);
             } else {
-                $tryoutHistory->score += $answer->bobot; // penghitungan score
+                $score += $answer->bobot; // penghitungan score
                 $dataAnswer = [
                     'question_id' => $data['question_id'],
                     'answer_id' => $data['answer_id'],
@@ -307,6 +308,7 @@ class TryoutController extends Controller
             }
             $detailScore[$question->groupType->code] += $answer ? $answer->bobot : 0;
         }
+        $tryoutHistory->score = $score; // set score
         $tryoutHistory->detail_score = json_encode($detailScore); // set detail score
         $tryoutHistory->answers = json_encode($dataAnswers); // set answers
 
