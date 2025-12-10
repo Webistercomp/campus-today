@@ -1,7 +1,7 @@
 # Gunakan Node & PHP
 [phases.setup]
 # Railway Nixpacks otomatis install PHP
-packages = ["nodejs", "npm"]
+packages = ["nodejs", "npm", "php", "php-pdo_mysql"]
 
 # Build dependencies
 [phases.build]
