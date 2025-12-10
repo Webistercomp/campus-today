@@ -1,0 +1,19 @@
+# Gunakan Node & PHP
+[phases.setup]
+# Railway Nixpacks otomatis install PHP
+packages = ["nodejs", "npm"]
+
+# Build dependencies
+[phases.build]
+cmds = [
+  "composer install --no-dev --optimize-autoloader",
+  "npm ci",
+  "npm run build",
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan view:cache"
+]
+
+[start]
+# Railway menyediakan $PORT otomatis
+cmd = "php artisan serve --host 0.0.0.0 --port $PORT"

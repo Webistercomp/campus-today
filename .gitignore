@@ -19,4 +19,6 @@ yarn-error.log
 /.idea
 /.vscode
 /storage/app/public
+/storage/*.key
+/storage/*.sqlite
 .DS_Store
