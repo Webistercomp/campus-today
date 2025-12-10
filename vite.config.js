@@ -15,6 +15,7 @@ export default defineConfig({
         host: '0.0.0.0',
         hmr: {
             host: 'fortunate-vitality-production.up.railway.app'
-        }
+        },
+        https: true,
     }
 });
