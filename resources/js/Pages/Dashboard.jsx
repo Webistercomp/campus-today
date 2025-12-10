@@ -24,6 +24,11 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
         paketUser.style.display = "none";
     };
 
+    const underConstruction = () => {
+        alert("Fitur ini masih Under Construction");
+    };
+
+
     const icons = [
         IconVideoSeries,
         IconMateriSKD,
@@ -43,7 +48,7 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
         >
             <Head title="Dashboard" />
 
-            <section
+            {/* <section
                 className="bg-white mt-7 px-4 md:px-14 lg:px-24 xl:px-32"
                 id="paketUser"
             >
@@ -70,7 +75,7 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
                         </button>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             <section className="bg-white mt-7 px-4 md:px-14 lg:px-24 xl:px-32">
                 <h1 className="font-bold text-3xl">Mulai Belajar</h1>
@@ -110,12 +115,18 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
                         <h4 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold">
                             Wujudkan Potensi Terbaik dengan Materi Premium
                         </h4>
-                        <Link
+                        {/* <Link
                             href={route("paket.index")}
                             className="btn bg-white border-none text-curious-blue-300 capitalize text-sm lg:text-lg xl:text-xl"
                         >
                             Beli Paket
-                        </Link>
+                        </Link> */}
+                        <button
+                            onClick={underConstruction}
+                            className="btn bg-white border-none text-curious-blue-300 capitalize text-sm lg:text-lg xl:text-xl"
+                        >
+                            Beli Paket
+                        </button>
                     </div>
                     <div className="basis-1/3 md:basis-1/2 lg:basis-1/3">
                         <img
@@ -185,13 +196,19 @@ export default function Dashboard({ auth, articles, materialTypes, role }) {
                             <h3 className="uppercase font-semibold text-base xl:text-xl text-center">
                                 Tes Minat Bakat
                             </h3>
-                            <Link
+                            {/* <Link
                                 as="button"
                                 href={""}
                                 className="btn btn-primary capitalize text-white px-8 mt-2"
                             >
                                 Mulai
-                            </Link>
+                            </Link> */}
+                            <button
+                                onClick={underConstruction}
+                                className="btn btn-primary capitalize text-white px-8 mt-2"
+                            >
+                                Mulai
+                            </button>
                         </div>
                     </div>
                 </div>

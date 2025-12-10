@@ -13,6 +13,10 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
         return router.post(route("logout"));
     };
 
+    const underConstruction = () => {
+        alert("Fitur ini masih Under Construction");
+    };
+
     if (isAuthed) {
         return (
             <>
@@ -38,11 +42,17 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                                 Artikel
                             </li>
                         </Link>
-                        <Link href={route("paket.index")}>
+                        <button
+                            onClick={underConstruction}
+                            className="py-2 px-4 bg-slate-200 hover:bg-slate-700 hover:text-white rounded-md transition-all duration-150"
+                        >
+                            Beli Paket
+                        </button>
+                        {/* <Link href={route("paket.index")}>
                             <li className="py-2 px-4 bg-slate-200 hover:bg-slate-700 hover:text-white rounded-md transition-all duration-150">
                                 Beli Paket
                             </li>
-                        </Link>
+                        </Link> */}
                     </ul>
                     <div className="divider divider-horizontal"></div>
                     <div className="dropdown dropdown-end">
@@ -100,9 +110,14 @@ export default forwardRef(function Navbar({ isAuthed, user }, ref) {
                                 </Link>
                             </li>
                             <li>
-                                <Link href={route("paket.index")}>
+                                <button
+                                    onClick={underConstruction}
+                                >
                                     Beli Paket
-                                </Link>
+                                </button>
+                                {/* <Link href={route("paket.index")}>
+                                    Beli Paket
+                                </Link> */}
                             </li>
                             <div className="divider divider-horizontal"></div>
                             <div className="dropdown dropdown-end">
