@@ -107,8 +107,8 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/article', [ArticleController::class, 'index'])->name('article.index');
-Route::get('/article/{id}', [ArticleController::class, 'show'])->name('article.show');
+// Route::get('/article', [ArticleController::class, 'index'])->name('article.index');
+// Route::get('/article/{id}', [ArticleController::class, 'show'])->name('article.show');
 
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
