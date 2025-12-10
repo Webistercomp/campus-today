@@ -85,20 +85,26 @@ export default function Homepage({ title, packets, testimonis }) {
     const [pauseInterval, setPauseInterval] = useState(false);
 
     useEffect(() => {
-        const testiCardWidth =
-            document.getElementById("testi-card").clientWidth;
-        setTestiScroll(() =>
-            testiData.map(
-                (_, i) => testiCardWidth * (i + 1) - testiCardWidth + 32
-            )
-        );
+        // Delay sedikit supaya DOM benar-benar tersedia
+        const timeout = setTimeout(() => {
+            const testiCardEl = document.getElementById("testi-card");
+            if (testiCardEl) {
+                const testiCardWidth = testiCardEl.clientWidth;
+                setTestiScroll(
+                    testiData.map((_, i) => testiCardWidth * (i + 1) - testiCardWidth + 32)
+                );
+            }
 
-        const bukuCardWidth = document.getElementById("buku-card").clientWidth;
-        setBukuScroll(() =>
-            testiBuku.map(
-                (_, i) => bukuCardWidth * (i + 1) - bukuCardWidth + 16
-            )
-        );
+            const bukuCardEl = document.getElementById("buku-card");
+            if (bukuCardEl) {
+                const bukuCardWidth = bukuCardEl.clientWidth;
+                setBukuScroll(
+                    testiBuku.map((_, i) => bukuCardWidth * (i + 1) - bukuCardWidth + 16)
+                );
+            }
+        }, 0); // 0 ms sudah cukup untuk menunggu render
+
+        return () => clearTimeout(timeout); // bersihkan jika komponen unmount
     }, []);
 
     useEffect(() => {
